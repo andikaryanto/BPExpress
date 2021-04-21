@@ -5,11 +5,6 @@ import M_groupusers from "../../Models/M_groupusers.js";
 
 class GroupuserApi {
 
-     /**
-      * 
-      * @param {import("express").Request} req 
-      * @param {import("express").Response} res 
-      */
      async getList() {
           try {
                var groupuser = await M_groupusers.collect();
@@ -31,13 +26,7 @@ class GroupuserApi {
           }
      }
 
-
-     /**
-      * 
-      * @param {import("express").Request} req 
-      * @param {import("express").Response} res 
-      */
-     static async store(req, res) {
+     async store() {
           try {
                let groupuser = new M_groupusers();
                groupuser.GroupName = "andik@gmail.com";
