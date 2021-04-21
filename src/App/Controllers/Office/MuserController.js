@@ -6,11 +6,6 @@ import M_users from "../../Models/M_users.js";
 
 class MuserController {
 
-     /**
-      * 
-      * @param {import("express").Request} req 
-      * @param {import("express").Response} res 
-      */
      async index() {
           try {
                return View.make('office/m_user/index', { title: 'Pengguna' });
@@ -26,11 +21,6 @@ class MuserController {
      }
 
 
-     /**
-      * POST /muser
-      * @param {import("express").Request} req 
-      * @param {import("express").Response} res 
-      */
      async getAllData() {
           try {
                let filter = {
@@ -101,12 +91,7 @@ class MuserController {
           }
      }
 
-     /**
-      * 
-      * @param {import("express").Request} req 
-      * @param {import("express").Response} res 
-      */
-     static async store(req, res) {
+     async store(req, res) {
 
           try {
                // throw new Error("Error dap");
@@ -148,12 +133,7 @@ class MuserController {
           }
      }
 
-     /**
-      * 
-      * @param {import("express").Request} req 
-      * @param {import("express").Response} res 
-      */
-     static async update(req, res) {
+      async update() {
           var id = req.params.id;
           var user = await M_users.find(id);
           user.Username = "test update 1";
@@ -161,12 +141,7 @@ class MuserController {
           res.send(user)
      }
 
-     /**
-      * 
-      * @param {import("express").Request} req 
-      * @param {import("express").Response} res 
-      */
-     static async destroy(req, res) {
+     async destroy() {
           try {
                let id = req.params.id;
                let user = await M_users.findOrFail(id);

@@ -27,9 +27,9 @@ class MgroupuserController extends BaseController {
         }
     }
 
-    async getById({...props}) {
+    async getById({request, ...props}) {
         try {
-            let Id = this.request.params.Id;
+            let Id = request.params.Id;
             return ResponseData.status(200).json({Id : Id, ...this.globalData, ...props})
             // res.render('office/m_groupuser/index', { title : 'Grup Pengguna' } );
         } catch (e) {
@@ -58,11 +58,6 @@ class MgroupuserController extends BaseController {
         }
     }
 
-    /**
-     * GET /mgroupuser
-     * @param {import("express").Request} req 
-     * @param {import("express").Response} res 
-     */
     async getAllData() {
         try {
             let filter = {}
@@ -120,13 +115,8 @@ class MgroupuserController extends BaseController {
         }
     }
 
-    /**
-     * 
-     * @param {import("express").Request} req 
-     * @param {import("express").Response} res 
-     */
-    static update(req, res) {
-        let group = M_groupusers.find(5)
+    static update() {
+        let group = await M_groupusers.find(5)
             .then(object => {
                 object.GroupName = "Ganti 5";
                 object.save().then(lastId => {
