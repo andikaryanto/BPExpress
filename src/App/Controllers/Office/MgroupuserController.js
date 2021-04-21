@@ -115,7 +115,7 @@ class MgroupuserController extends BaseController {
         }
     }
 
-    static update() {
+    async update() {
         let group = await M_groupusers.find(5)
             .then(object => {
                 object.GroupName = "Ganti 5";
