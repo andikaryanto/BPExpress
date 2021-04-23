@@ -11,6 +11,7 @@ const Web = () => {
      let routers = new Routers();
 
      routers.get("/",[], LoginController,"index");
+     routers.get("/test",[], TestController,"index");
 
      routers.get("/office", [], LoginController, "index");
      routers.get("/office/login", [], LoginController, "index");

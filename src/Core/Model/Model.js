@@ -194,7 +194,7 @@ class Model {
      /**
       * Collect data from datatabse
       * @param {{}} filter 
-      * @returns 
+      * @returns {Promise<CollectionModel>} 
       */
      static collect(filter = {}) {
           var instance = new this;
@@ -592,6 +592,22 @@ class Model {
       */
      getPropsName() {
           return Object.getOwnPropertyNames(this);
+     }
+
+     /**
+      * get primarykey
+      * @retrurn {string}
+      */
+     getPrimaryKey(){
+          return this.#_primaryKey;
+     }
+
+     /**
+      * Get table name
+      * @return {string}
+      */
+     getTable(){
+          return this.#_table;
      }
 
 }
