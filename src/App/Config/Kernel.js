@@ -1,3 +1,4 @@
+import VerifyCsrf from "../../Core/Middleware/VerifyCsrf.js";
 
 class Kernel {
 
@@ -20,7 +21,7 @@ class Kernel {
           return {
                web: [
                     //You middle ware goes here
-                    // TestMiddleware
+                    VerifyCsrf 
                ],
                api: [
                     //You middle ware goes here

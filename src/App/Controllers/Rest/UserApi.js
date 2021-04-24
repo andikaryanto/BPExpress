@@ -69,6 +69,26 @@ class UserApi extends Controller{
                return ResponseData.status(400).json(user);
           }
      }
+
+     async update({request}) {
+          let Id = request.params.Id;
+          let trx = await DbTrans.beginTransaction();
+          try {
+               let user = await M_users.find(Id);
+               user.Username = "andik";
+               await user.save(trx);
+               trx.commit();
+               return ResponseData.status(200).json(user);
+          } catch(e){
+               trx.rollback();
+               result = {
+                    Message: e.message,
+                    Data: null,
+                    Response: ResponseCode.FAILED_SAVE_DATA
+               }
+               return ResponseData.status(400).json(user);
+          }
+     }
 }
 
 export default UserApi;

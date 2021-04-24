@@ -9,6 +9,8 @@ import DbConnection from "../Database/Connection/DbConnection.js";
 import Kernel from "../../App/Config/Kernel.js";
 import Web from "../../App/Routes/Web.js";
 import Api from "../../App/Routes/Api.js";
+import csrf from 'csurf';
+import VerifyCsrf from "../Middleware/VerifyCsrf.js";
 const KnexSessionStore = require('connect-session-knex')(session);
 
 class AppOverride {
@@ -29,9 +31,10 @@ class AppOverride {
       */
      static use(app) {
           app.use(fileUpload());
+          
           app.use(Request.request);
           app.use(Response.response);
-
+         
           const store = new KnexSessionStore({
                tablename: 'sessions',
                createtable: true,
@@ -53,10 +56,14 @@ class AppOverride {
                store
           }));
           app.use(Session.session);
-          // app.use(csrf({
-          //      cookie :true,
-          //      ignoreMethods : ["GET", 'HEAD', 'OPTIONS']
-          // }))
+          
+          if(process.env.CSRF_USAGE == "true"){
+               app.use(csrf({
+                    cookie :false,
+                    
+               }))
+          }
+          
 
      }
 
@@ -66,8 +73,8 @@ class AppOverride {
       */
      static middleware(app) {
 
-          app.use("/",  [...Kernel.middlewares, ...Kernel.middlewareGroups.web], Web())
-          app.use("/api",  [...Kernel.middlewares, ...Kernel.middlewareGroups.web], Api())
+          app.use("/api",  [VerifyCsrf, ...Kernel.middlewares, ...Kernel.middlewareGroups.api], Api());
+          app.use("/",  [...Kernel.middlewares, ...Kernel.middlewareGroups.web], Web());
      }
 
      /**

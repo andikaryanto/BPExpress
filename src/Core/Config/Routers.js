@@ -3,6 +3,7 @@ import { Express } from 'express';
 import Redirect from "../Controller/Redirect";
 import ResponseData from "../Controller/ResponseData";
 import View from "../Controller/View";
+import Template from "../Template/Template";
 class Routers {
 
      #_router = null;
@@ -38,7 +39,7 @@ class Routers {
      }
 
      delete(route, middleware, controller, fn, additionalData = {}) {
-          this.doRoute(route, middleware, controller, fn, additionalData, "delete")
+          this.doRoute(route, middleware, controller, fn, additionalData, "DELETE")
      }
 
      put(route, middleware, controller, fn, additionalData = {}) {
@@ -102,7 +103,7 @@ class Routers {
                if (returnedData.type == "html")
                     res.send(returnedData.view);
                if (returnedData.type == "view")
-                    res.render(returnedData.view, returnedData.data);
+                    res.render(returnedData.view, {...returnedData.data, ...Template()});
           }
 
           if (returnedData instanceof Redirect) {

@@ -1,4 +1,5 @@
 import Routers from "../../Core/Config/Routers.js"
+import VerifyCsrf from "../../Core/Middleware/VerifyCsrf.js";
 import LoginController from "../Controllers/Office/LoginController.js";
 import MgroupuserController from "../Controllers/Office/MgroupuserController.js";
 import MuserController from "../Controllers/Office/MuserController.js";
@@ -12,6 +13,8 @@ const Web = () => {
 
      routers.get("/",[], LoginController,"index");
      routers.get("/test",[], TestController,"index");
+     routers.get("/test/form",[], TestController,"form");
+     routers.post("/test/formpost",[], TestController,"formPost");
 
      routers.get("/office", [], LoginController, "index");
      routers.get("/office/login", [], LoginController, "index");

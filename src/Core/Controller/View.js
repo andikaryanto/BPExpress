@@ -18,6 +18,12 @@ class View {
           return this.#_instance;
      }
 
+     /**
+      * Render View path
+      * @param {string} view 
+      * @param {{}} data 
+      * @returns 
+      */
      static make(view, data) {
           let instance = View.getInstance();
           instance.view = view;
@@ -25,6 +31,14 @@ class View {
           instance.type = "view";
           return instance;
      }
+
+     
+     /**
+      * Render View path
+      * @param {string} view 
+      * @param {{}} data 
+      * @returns 
+      */
      static html(view, data) {
           let instance = View.getInstance();
           instance.view = view;
@@ -33,6 +47,11 @@ class View {
           return instance;
      }
 
+     /**
+      * Send data
+      * @param {{}} data 
+      * @returns 
+      */
      data(data){
           this.data = data;
           return this;

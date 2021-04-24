@@ -1,5 +1,6 @@
 import Controller from "../../Core/Controller/Controller.js";
 import ResponseData from "../../Core/Controller/ResponseData.js";
+import View from "../../Core/Controller/View.js";
 import UploadedFileError from "../../Core/Errors/UploadedFileError.js";
 import DateFormat from "../../Core/Libraries/DateFormat.js";
 import File from "../../Core/Libraries/File.js";
@@ -11,14 +12,13 @@ class TestController extends Controller {
      constructor() {
           super();
      }
-     async index() {
-
+     async index({request}) {
 
           try {
                let users = await M_groupusers.collect();
                let n = new M_groupusers();
                users.add(n);
-               return ResponseData.status(200).json(users.avg("Id"))
+               return ResponseData.status(200).json({...users.getItems(), csrf : request.csrfToken()})
           } catch (e) {
                return ResponseData.status(200).json({ message: e.message })
           }
@@ -27,6 +27,15 @@ class TestController extends Controller {
           // M_groupusers.findAll();
           // res.send("asdasd");
 
+     }
+
+     form({request}){
+
+          return View.make("test/form");
+     }
+
+     formPost({error}){
+          return ResponseData.status(200).json({message : "berhasil"});
      }
 
 
@@ -54,13 +63,11 @@ class TestController extends Controller {
                          if (! await file.upload(files[img])) {
                               throw new UploadedFileError("Gagal")
                          }
-                         console.log(file.getFileUrl())
                     }
                } else {
                     if (! await file.upload(files)) {
                          throw new UploadedFileError("Gagal")
                     }
-                    console.log(file.getFileUrl())
                }
                res.send("upload");
           } catch (e) {

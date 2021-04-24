@@ -120,7 +120,6 @@ class MgroupuserController extends BaseController {
             .then(object => {
                 object.GroupName = "Ganti 5";
                 object.save().then(lastId => {
-                    console.log(lastId);
                     res.status(200).send('berhasil dengan kode ' + lastId);
                 });
             });

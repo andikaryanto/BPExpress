@@ -3,7 +3,7 @@ import Collection from "../Libraries/Collection.js";
 
 class CollectionModel extends Collection {
 
-     $_className = null;
+     #_className = null;
      constructor(items) {
           super(items);
      }

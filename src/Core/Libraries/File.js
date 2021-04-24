@@ -65,7 +65,6 @@ class File {
 
                uploadedFiles.move(appRoot + "/src/" + this.#_destination + "/" + newName, err => {
                     if (err) {
-                         console.log(err);
                          this.#_errorMessage = "Failed To upload file";
                          reject(new UploadedFileError(this.#_errorMessage));
                     } else {

@@ -9,7 +9,6 @@ import M_users from "../Models/M_users.js";
  */
 const OfficeMiddleware = async function (req, res, next) {
      try {
-          // console.log(req.session);
           if (req.session.token == undefined || req.session.token == null) {
                res.redirect("/office/login")
           } else {
