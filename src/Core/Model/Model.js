@@ -316,6 +316,9 @@ class Model {
                     let obj = new newClassName();
                     for (const [key, value] of Object.entries(e)) {
                          obj[key] = value;
+                         if(typeof obj["_change_" + key] === 'function'){
+                              obj["_change_" + key]();
+                         }
                     }
                     objects.push(obj)
                })
