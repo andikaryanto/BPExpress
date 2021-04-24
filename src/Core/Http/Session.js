@@ -1,6 +1,7 @@
 import { Express } from 'express';
 import dotenv from 'dotenv';
 import { v4 as uuidv4 } from 'uuid';
+import PlainObject from '../Libraries/PlainObject';
 dotenv.config();
 
 class Session {
@@ -8,7 +9,7 @@ class Session {
      static instance = null;
      session = null;
 
-     
+
      /**
       * @param {import("express").Request} expressRequest 
       */
@@ -23,21 +24,41 @@ class Session {
       */
      static session(req, res, next) {
 
+          req.session.flashData = function flashData(key, value) {
+               let instance = Session.getInstance();
+               if (instance.flash == undefined)
+                    instance.flash = {};
+               instance.flash = { ...instance.flash, [key]: value };
+          }
+
+          req.session.hasFlashData = function hasFlashData(key) {
+               let instance = Session.getInstance();
+               if (PlainObject.isEmpty(instance.flash))
+                    return false;
+
+               return instance.flash[key] != undefined && instance.flash[key] != null;
+          }
+
+          req.session.getFlashData = function getFlashData(key) {
+               let instance = Session.getInstance();
+               if (PlainObject.isEmpty(instance.flash))
+                    return null;
+               const value = instance.flash[key];
+               delete instance.flash[key];
+               return value;
+          }
+          
           Session.instance = new Session(req);
           next();
      }
 
      static getInstance() {
-          if(this.instance != null)
+          if (this.instance != null) {
                return this.instance.session;
+          }
           return this.instance;
      }
-     /**
-     * @param {Express} app 
-     */
-     static use(app) {
-          app.use()
-     }
+
 }
 
 export default Session;

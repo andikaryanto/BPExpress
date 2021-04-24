@@ -15,6 +15,7 @@ const Web = () => {
      routers.get("/test",[], TestController,"index");
      routers.get("/test/form",[], TestController,"form");
      routers.post("/test/formpost",[], TestController,"formPost");
+     routers.get("/test/params/:Id/:No",[], TestController,"param");
 
      routers.get("/office", [], LoginController, "index");
      routers.get("/office/login", [], LoginController, "index");

@@ -65,14 +65,14 @@ class Routers {
 
                let classController = controller;
                let controllerInstance = new classController();
-               let data = controllerInstance[fn]({request : req, session : req.session, ...additionalData});
+               let data = controllerInstance[fn]({request : req, session : req.session, params : req.params, ...additionalData});
                let returnedData = null;
                if (data instanceof Promise) {
                     returnedData = await data;
                } else {
                     returnedData = data;
                }
-               Routers.return(res, returnedData);
+               Routers.return(req, res, returnedData);
           }
 
           if(method.toUpperCase() == "GET")
@@ -92,7 +92,7 @@ class Routers {
           return this.#_router;
      }
 
-     static return(res, returnedData) {
+     static return(req, res, returnedData) {
           if (returnedData == undefined)
                res.status(400).send("Unexpexted Error, Method didnt return anything")
           if (returnedData instanceof ResponseData) {

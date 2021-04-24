@@ -80,6 +80,10 @@ class TestController extends Controller {
           this.reponse.send(users);
      }
 
+     param({session, params}){
+          return ResponseData.status(200).json({ Id : params.Id, No : params.No, ...session});
+     }
+
 }
 
 export default TestController;

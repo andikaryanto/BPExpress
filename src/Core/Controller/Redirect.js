@@ -1,8 +1,9 @@
 class Redirect {
      static #_instance = null;
      route = "";
+     data = {};
 
-     constructor(){
+     constructor() {
 
      }
 
@@ -10,9 +11,9 @@ class Redirect {
       * 
       * @returns {Redirect}
       */
-     static getInstance(){
-          if(this.#_instance == null);
-               this.#_instance = new this;
+     static getInstance() {
+          if (this.#_instance == null);
+          this.#_instance = new this;
           return this.#_instance;
      }
 
@@ -20,6 +21,11 @@ class Redirect {
           let instance = Redirect.getInstance();
           instance.route = route;
           return instance;
+     }
+
+     with(data) {
+          this.data = data;
+          return this;
      }
 }
 

@@ -8,11 +8,13 @@ import Controller from "../../../Core/Controller/Controller.js";
 import Redirect from "../../../Core/Controller/Redirect.js";
 import View from "../../../Core/Controller/View.js";
 import ResponseData from "../../../Core/Controller/ResponseData.js";
+import ModelError from "../../Errors/ModelError.js";
 
-class LoginController extends Controller{
+class LoginController extends Controller {
 
-  
-    async index({ request, ...props }) {
+
+    async index({ request, session, ...props }) {
+       
         try {
             if (this.session.token != undefined || this.session.token == null) {
                 let token = req.session.token;
@@ -28,25 +30,31 @@ class LoginController extends Controller{
         }
     }
 
-    async doLogin({request, session}) {
-        const body = request.body;
-        let muser = await UserProc.login(body.Username, body.Password, true);
-        if (CommonLib.isNull(muser))
-            throw new ModelError("Data pengguna tidak valid");
+    async doLogin({ request, session }) {
 
-        let token = jwt.sign(muser.toJson(), CommonLib.getKey());
-        session.token = token;
-        session.save();
-        return Redirect.to("/office/mgroupuser");
+        try {
+            const body = request.body;
+            let muser = await UserProc.login(body.Username, body.Password, true);
+            if (CommonLib.isNull(muser))
+                throw new ModelError("Data pengguna tidak valid");
+
+            let token = jwt.sign(muser.toJson(), CommonLib.getKey());
+            session.token = token;
+            session.save();
+            return Redirect.to("/office/mgroupuser");
+        } catch (e) {
+            session.flashData("error", e.message);
+            return Redirect.to("/office/login")
+        }
     }
 
-    async doLogout({request, session}) {
+    async doLogout({ request, session }) {
         session.destroy();
         return Redirect.to("/office/login");
-           
+
     }
 
-    test(){
+    test() {
         return View.html("aadasd");
     }
 }
