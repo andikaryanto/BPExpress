@@ -23,6 +23,15 @@ class Session {
       * @param {*} next 
       */
      static session(req, res, next) {
+          if(req.session.userlanguage == undefined)
+               req.session.userlanguage = null;
+               
+          if (req.session.language == undefined && req.session.language == null) {
+               req.session.language = process.env.APP_LANGUAGE;
+          } else {
+               if(req.session.language != process.env.APP_LANGUAGE)
+                    req.session.language = process.env.APP_LANGUAGE
+          }
 
           req.session.flashData = function flashData(key, value) {
                let instance = Session.getInstance();
@@ -47,7 +56,7 @@ class Session {
                delete instance.flash[key];
                return value;
           }
-          
+
           Session.instance = new Session(req);
           next();
      }
