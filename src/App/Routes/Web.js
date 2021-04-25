@@ -12,7 +12,7 @@ const Web = () => {
      let routers = new Routers();
 
      routers.get("/",[], LoginController,"index");
-     routers.get("/test",[], TestController,"index");
+     routers.get("/test",[], TestController,"index").named('named.test');
      routers.get("/test/form",[], TestController,"form");
      routers.post("/test/formpost",[], TestController,"formPost");
      routers.get("/test/params/:Id/:No",[], TestController,"param");

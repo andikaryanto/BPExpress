@@ -16,7 +16,7 @@ class LoginController extends Controller {
     async index({ request, session, ...props }) {
        
         try {
-            if (this.session.token != undefined || this.session.token == null) {
+            if (session.token != undefined || session.token == null) {
                 let token = req.session.token;
                 let decoded = jwt.decode(token, { complete: true });
                 let muser = decoded.payload;
@@ -40,6 +40,7 @@ class LoginController extends Controller {
 
             let token = jwt.sign(muser.toJson(), CommonLib.getKey());
             session.token = token;
+            session.userlanguage = "id";
             session.save();
             return Redirect.to("/office/mgroupuser");
         } catch (e) {

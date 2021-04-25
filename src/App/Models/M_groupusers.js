@@ -47,6 +47,10 @@ class M_groupusers extends BaseModel {
           return rulesAndError;
      }
 
+     // _change_GroupName(){
+     //      this.GroupName = "Changed";
+     // }
+
 }
 
 

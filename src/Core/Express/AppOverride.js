@@ -48,7 +48,7 @@ class AppOverride {
                },
                cookie: {
                     secure: process.env.APP_MODE == 'production' ? process.env.COOKIE_SECURE : false,
-                    httpOnly: process.env.COOKIE_HTTP_ONLY,
+                    httpOnly: process.env.COOKIE_HTTP_ONLY == "true" ? true : false,
                     maxAge: Number(process.env.COOKIE_EXPIRED) * 1000,
 
                },

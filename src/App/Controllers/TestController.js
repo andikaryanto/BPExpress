@@ -18,7 +18,7 @@ class TestController extends Controller {
                let users = await M_groupusers.collect();
                let n = new M_groupusers();
                users.add(n);
-               return ResponseData.status(200).json({...users.getItems(), csrf : request.csrfToken()})
+               return ResponseData.status(200).json(users.getItems())
           } catch (e) {
                return ResponseData.status(200).json({ message: e.message })
           }

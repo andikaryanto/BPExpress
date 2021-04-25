@@ -11,7 +11,7 @@ const Api = () => {
      });
 
      routers.group("/groupuser", [], routers => {
-          routers.get("/list", [], GroupuserApi, "getList");
+          routers.get("/list", [], GroupuserApi, "getList").named("groupuser.list");
      });
 
      return routers.getRouter();

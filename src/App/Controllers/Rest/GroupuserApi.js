@@ -8,6 +8,9 @@ class GroupuserApi {
      async getList() {
           try {
                var groupuser = await M_groupusers.collect();
+               // for(var group of groupuser){
+               //      console.log(group);
+               // }
                var result = {
                     Message: "Data Ditemukan",
                     Data: groupuser.getItems(),
