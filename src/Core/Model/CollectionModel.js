@@ -71,8 +71,8 @@ class CollectionModel extends Collection {
       * Get eloquent unsaved data means Id of eloquent is not null
       * @return {this}
       */
-      saved() {
-          return  this.filter(x => x[x.getPrimaryKey()] != null);
+     saved() {
+          return this.filter(x => x[x.getPrimaryKey()] != null);
      }
 
      /**
@@ -80,7 +80,7 @@ class CollectionModel extends Collection {
       * @param {string} columnName 
       * @returns {number}
       */
-     sum(columnName){
+     sum(columnName) {
           let total = 0;
           this.items.forEach((item, i) => {
                total += item[columnName];
@@ -89,13 +89,13 @@ class CollectionModel extends Collection {
 
      }
 
-      /**
-      * 
-      * Average a colum of Collection item
-      * @param {string} columnName 
-      * @returns {number}
-      */
-       avg(columnName){
+     /**
+     * 
+     * Average a colum of Collection item
+     * @param {string} columnName 
+     * @returns {number}
+     */
+     avg(columnName) {
           let total = 0;
           this.items.forEach((item, i) => {
                total += item[columnName];
@@ -109,15 +109,15 @@ class CollectionModel extends Collection {
       * @param {string} columnName 
       * @returns {{}}
       */
-      min(columnName){
+     min(columnName) {
           let min = 0;
           let data = null;
           this.items.forEach((item, i) => {
-               if(data == null){
+               if (data == null) {
                     min = item[columnName];
                     data = item;
                } else {
-                    if(min > item[columnName]){
+                    if (min > item[columnName]) {
                          min = item[columnName];
                          data = item
                     }
@@ -133,15 +133,15 @@ class CollectionModel extends Collection {
       * @param {string} columnName 
       * @returns {{}}
       */
-      max(columnName){
+     max(columnName) {
           let min = 0;
           let data = null;
           this.items.forEach((item, i) => {
-               if(data == null){
+               if (data == null) {
                     min = item[columnName];
                     data = item;
                } else {
-                    if(min < item[columnName]){
+                    if (min < item[columnName]) {
                          min = item[columnName];
                          data = item
                     }
@@ -150,6 +150,26 @@ class CollectionModel extends Collection {
           return data;
 
      }
+
+     [Symbol.iterator]() {
+          let counter = 0;
+          let nextIndex = 0;
+          let end = this.items.length - 1;
+          let interval = 1;
+          let item = null;
+          return {
+               next: () => {
+                    if (nextIndex <= end) {
+                         item = this.items[nextIndex];
+                         let result = { value: item, done: false }
+                         nextIndex += interval;
+                         counter++;
+                         return result;
+                    }
+                    return { value: item, done: true };
+               }
+          }
+     };
 
 }
 
