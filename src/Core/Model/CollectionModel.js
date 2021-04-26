@@ -152,23 +152,7 @@ class CollectionModel extends Collection {
      }
 
      [Symbol.iterator]() {
-          let counter = 0;
-          let nextIndex = 0;
-          let end = this.items.length - 1;
-          let interval = 1;
-          let item = null;
-          return {
-               next: () => {
-                    if (nextIndex <= end) {
-                         item = this.items[nextIndex];
-                         let result = { value: item, done: false }
-                         nextIndex += interval;
-                         counter++;
-                         return result;
-                    }
-                    return { value: item, done: true };
-               }
-          }
+          return this.items.values();
      };
 
 }
