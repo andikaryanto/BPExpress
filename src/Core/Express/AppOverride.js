@@ -59,8 +59,8 @@ class AppOverride {
           
           if(process.env.CSRF_USAGE == "true"){
                app.use(csrf({
-                    cookie :false,
-                    
+                    cookie :false
+
                }))
           }
           

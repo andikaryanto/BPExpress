@@ -48,6 +48,10 @@ class Collection {
           }
      }
 
+     size(){
+          return this.items.length;
+     }
+
      getItems() {
           return this.items;
      }
