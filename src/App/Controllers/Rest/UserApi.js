@@ -89,6 +89,20 @@ class UserApi extends Controller{
                return ResponseData.status(400).json(user);
           }
      }
+
+     async list({request}) {
+          try {
+               let users = await M_users.findAll();
+               return ResponseData.status(200).json(users);
+          } catch(e){
+               result = {
+                    Message: e.message,
+                    Data: null,
+                    Response: ResponseCode.FAILED_SAVE_DATA
+               }
+               return ResponseData.status(400).json(user);
+          }
+     }
 }
 
 export default UserApi;

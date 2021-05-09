@@ -15,10 +15,11 @@ class TestController extends Controller {
      async index({request}) {
 
           try {
-               let users = await M_groupusers.collect();
-               let n = new M_groupusers();
-               users.add(n);
-               return ResponseData.status(200).json(users.getItems())
+               let users = await M_users.collect();
+               // for(let user of users){
+               //      user.Is;
+               // }
+               return ResponseData.status(200).json(users)
           } catch (e) {
                return ResponseData.status(200).json({ message: e.message })
           }

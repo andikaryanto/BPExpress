@@ -1,5 +1,6 @@
 import ModelError from "../Errors/ModelError.js";
 import CommonLib from "../Libraries/CommonLib.js";
+import Cast from "../Traits/Cast.js";
 import BaseModel from "./BaseModel.js";
 import M_groupusers from "./M_groupusers.js";
 
@@ -16,13 +17,20 @@ class M_users extends BaseModel {
      Modified = null;
      ModifiedBy = null;
 
+     static #_cast = {
+          IsLoggedIn : "boolean",
+          IsActive : "boolean" 
+     }
+
      constructor(){
-          super("m_users", "Id");
+          super("m_users", "Id", M_users.#_cast);
           this.IsActive = 1;
           this.IsLoggedIn = 0;
+
      }
 
      setPassword(password){
+          
           if(this.Username == null)
                throw new ModelError("Username belum di set", this);
 

@@ -8,6 +8,7 @@ const Api = () => {
           routers.post("/login", [], UserApi, "login");
           routers.post("/save", [], UserApi, "store");
           routers.put("/update/:Id", [], UserApi, "update");
+          routers.get("/list", [], UserApi, "list");
      });
 
      routers.group("/groupuser", [], routers => {

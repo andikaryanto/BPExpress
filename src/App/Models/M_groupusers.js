@@ -1,4 +1,5 @@
 import ModelError from "../Errors/ModelError.js";
+import Cast from "../Traits/Cast.js";
 import BaseModel from "./BaseModel.js";
 
 class M_groupusers extends BaseModel {
@@ -13,6 +14,7 @@ class M_groupusers extends BaseModel {
 
      constructor() {
           super("m_groupusers", "Id");
+          this.addTrait(Cast);
      }
 
      validate() {

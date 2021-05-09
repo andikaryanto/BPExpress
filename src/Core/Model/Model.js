@@ -1,6 +1,7 @@
 import ModelError from "../../App/Errors/ModelError.js";
 import Db from "../Database/Connection/DbConnection.js";
 import Request from "../Http/Request.js";
+import Cast from "../Libraries/Cast.js";
 import PlainObject from "../Libraries/PlainObject.js";
 import CollectionModel from "./CollectionModel.js";
 import DatatablesModel from "./DatatablesModel.js";
@@ -14,16 +15,19 @@ class Model {
      #_primaryKey = null;
      #_db = null;
 
-     constructor(table, primaryKey) {
+     #_cast = {};
+
+     constructor(table, primaryKey, cast = {}) {
           this.#_table = table;
           this.#_primaryKey = primaryKey;
           this.#_db = Db.table(this.#_table);
+          this.#_cast = cast;
      }
 
-     parseFromRequest(){
+     parseFromRequest() {
           let request = Request.getInstance().body;
           for (const [key, value] of Object.entries(request)) {
-               if(this.getPropsName().includes(key))
+               if (this.getPropsName().includes(key))
                     this[key] = value;
           }
      }
@@ -215,14 +219,14 @@ class Model {
           if (filter.join != undefined) {
                for (const [key, value] of Object.entries(filter.join)) {
 
-                    if (value.type == undefined || value.type.toUpperCase() == "INNER"){
+                    if (value.type == undefined || value.type.toUpperCase() == "INNER") {
                          this.#_db.innerJoin(key, value.key[0], value.key[1]);
                     } else {
-                         if (value.type.toUpperCase() == "LEFT"){
+                         if (value.type.toUpperCase() == "LEFT") {
                               this.#_db.leftJoin(key, value.key[0], value.key[1]);
                          }
                     }
-                    
+
                }
           }
 
@@ -291,7 +295,7 @@ class Model {
      fetch(callback, filter = {}, columns = []) {
 
           this.#_columns = this.getPropsName();
-          if(columns.length > 0)
+          if (columns.length > 0)
                this.#_columns = columns;
 
           this.#_db.column(this.#_columns);
@@ -315,8 +319,14 @@ class Model {
                results.forEach((e, i) => {
                     let obj = new newClassName();
                     for (const [key, value] of Object.entries(e)) {
-                         obj[key] = value;
-                         if(typeof obj["_change_" + key] === 'function'){
+
+                         let found = Object.keys(this.#_cast).find(keys => keys == key);
+                         if (found) {
+                              obj[key] = Cast.to(value,this.#_cast[key]);
+                         } else {
+                              obj[key] = value;
+                         }
+                         if (typeof obj["_change_" + key] === 'function') {
                               obj["_change_" + key]();
                          }
                     }
@@ -601,7 +611,7 @@ class Model {
       * get primarykey
       * @retrurn {string}
       */
-     getPrimaryKey(){
+     getPrimaryKey() {
           return this.#_primaryKey;
      }
 
@@ -609,8 +619,16 @@ class Model {
       * Get table name
       * @return {string}
       */
-     getTable(){
+     getTable() {
           return this.#_table;
+     }
+
+     /**
+      * extends class traits
+      */
+     addTrait(trait, options = {}) {
+          let newTrait = new trait();
+          newTrait.register(this.constructor, options);
      }
 
 }
