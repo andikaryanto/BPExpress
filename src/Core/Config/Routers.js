@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { Express } from 'express';
+import ConfigView from "../../App/Config/View";
 import Redirect from "../Controller/Redirect";
 import ResponseData from "../Controller/ResponseData";
 import View from "../Controller/View";
@@ -133,7 +134,7 @@ class Routers {
                if (returnedData.type == "html")
                     res.send(returnedData.view);
                if (returnedData.type == "view")
-                    res.render(returnedData.view, { ...returnedData.data, ...Template() });
+                    res.render(returnedData.view, { ...returnedData.data, ...Template(), ...ConfigView.hook() });
           }
 
           if (returnedData instanceof Redirect) {
