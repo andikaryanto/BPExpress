@@ -1,5 +1,5 @@
 {
-  "name": "express",
+  "name": "nayo",
   "version": "1.0.0",
   "description": "express scratch",
   "main": "src/index.js",
@@ -23,6 +23,8 @@
     "babel-preset-react": "^6.24.1",
     "babel-register": "^6.26.0",
     "body-parser": "^1.19.0",
+    "boxen": "^4.0.0",
+    "chalk": "^2.4.2",
     "connect-session-knex": "^2.0.0",
     "csurf": "^1.11.0",
     "dotenv": "^8.2.0",
@@ -33,6 +35,7 @@
     "jsonwebtoken": "^8.5.1",
     "knex": "^0.95.4",
     "md5": "^2.3.0",
+    "moment": "^2.29.1",
     "mysql": "^2.18.1",
     "mysql2": "^2.2.5",
     "nodemon": "^2.0.7",
@@ -44,7 +47,8 @@
     "sequelize-auto": "^0.8.2",
     "sequelize-cli": "^6.2.0",
     "validatorjs": "^3.22.1",
-    "webpack": "^5.33.2"
+    "webpack": "^5.33.2",
+    "yargs": "^13.2.4"
   },
   "devDependencies": {
     "@babel/core": "^7.13.15",
@@ -56,5 +60,8 @@
     "@babel/register": "^7.13.14",
     "@babel/runtime": "^7.13.10",
     "webpack-cli": "^4.6.0"
+  },
+  "bin": {
+    "nayo": "./src/cli.js"
   }
 }

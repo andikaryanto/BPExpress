@@ -1,21 +1,55 @@
 import dotenv from 'dotenv';
-dotenv.config
+import approot from 'app-root-path';
+dotenv.config({path: approot + "/.env"});
 
 const database = {
-     mysql : {
+     development: {
           client: process.env.DB_CLIENT,
           connection: {
-               host: process.env.DB_HOST,
-               user: process.env.DB_USER,
-               password: process.env.DB_PASSWORD,
-               database: process.env.DB_NAME
+            host: process.env.DB_HOST,
+            user: process.env.DB_USER,
+            password: process.env.DB_PASSWORD,
+            database: process.env.DB_NAME
           },
           pool: { min: 0, max: 7 },
           acquireConnectionTimeout: 0,
           migrations: {
-               tableName: 'migrations'
+            tableName: 'migrations',
+            directory : approot + "/src/App/Databases/Migrations"
           }
-     }
+        },
+      
+        staging: {
+          client: process.env.DB_CLIENT,
+          connection: {
+            host: process.env.DB_HOST,
+            user: process.env.DB_USER,
+            password: process.env.DB_PASSWORD,
+            database: process.env.DB_NAME
+          },
+          pool: { min: 0, max: 7 },
+          acquireConnectionTimeout: 0,
+          migrations: {
+            tableName: 'migrations',
+            directory : approot + "/src/App/Databases/Migrations"
+          }
+        },
+      
+        production: {
+          client: process.env.DB_CLIENT,
+          connection: {
+            host: process.env.DB_HOST,
+            user: process.env.DB_USER,
+            password: process.env.DB_PASSWORD,
+            database: process.env.DB_NAME
+          },
+          pool: { min: 0, max: 7 },
+          acquireConnectionTimeout: 0,
+          migrations: {
+            tableName: 'migrations',
+            directory : approot + "/src/App/Databases/Migrations"
+          }
+        }
 }
 
 export default database;

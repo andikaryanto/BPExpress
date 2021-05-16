@@ -1,5 +1,3 @@
-// var isCLI = require.main === module;
-// console.log(isCLI);
 require('@babel/register')({
      presets: [
          [
@@ -11,5 +9,6 @@ require('@babel/register')({
              }
          ]
      ]
- });
- require("./app")
+});
+const { default: database } = require("./src/App/Config/Database");
+module.exports = database;

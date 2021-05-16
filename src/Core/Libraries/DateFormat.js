@@ -1,3 +1,4 @@
+import moment from 'moment';
 class DateFormat {
 
      static getFormattedCurrentDate(format = [], seprator = "_") {
@@ -14,6 +15,10 @@ class DateFormat {
                newFormat  = format;
 
           return newFormat.map(formated).join(seprator);
+     }
+
+     static getCurrentDate(format){
+          return moment().format(format);
      }
 }
 

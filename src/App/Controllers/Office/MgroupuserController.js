@@ -13,7 +13,7 @@ class MgroupuserController extends BaseController {
 
     async index() {
         try {
-            
+           
             return View.make('office/m_groupuser/index', { title : 'Grup Pengguna' });
             // res.render('office/m_groupuser/index', { title : 'Grup Pengguna' } );
         } catch (e) {
