@@ -1,147 +1,40 @@
-import Collection from "../Libraries/Collection";
-
+import DbConnection from "./Connection/DbConnection";
+import fs from 'fs';
+import StringLib from "../Libraries/StringLib";
+import approot from 'app-root-path';
 class Table {
 
-     #_table = null;
-     #_currentColumn = {};
-     #_columns = null;
-
-     constructor(table){
-          this.#_table = table;
-          this.#_columns = new Collection([]);
-     }
-
-     getColumns(){
-          return this.#_columns;
-     }
-
-     getTable(){
-          return this.#_table;
-     }
-
      /**
-      * 
-      * @param {string} type 
-      * @param {string} length 
-      * @param {string} column 
-      * @param {boolean} autoIncrement 
-      * @returns {Table}
+      * get table colum info
+      * @param {string} tableName 
       */
-     column(type, length, column, autoIncrement = false){
-          this.#_currentColumn = {
-               type : type,
-               length : length,
-               column : column,
-               autoIncrement : autoIncrement
+     static async columnInfo(tableName) {
+          return await DbConnection.table(tableName).columnInfo();
+     }
+
+     static async makeModel(tableName) {
+          let modelName = StringLib.ucFirst(tableName);
+          let actualColumns = await Table.columnInfo(tableName);
+          let columns = Object.keys(actualColumns);
+          let props = "";
+          columns.forEach((e, i) => {
+               props += `\n\t${e} = null;`;
+          });
+
+          let content = function () {
+               return `import Model from "../../Core/Model/Model.js";
+               \nclass ${modelName} extends Model {
+                    ${props}
+                    \n\tconstructor() { \n\t\tsuper("${tableName}", "Id");\n\t}
+               \n}
+               \nexport default ${modelName};`
           }
 
-          this.#_columns.add(this.#_currentColumn);
-
-          return this;
-     }
-
-     /**
-      * 
-      * @param {string} column 
-      * @param {bollean} autoIncrement 
-      * @returns {Table}
-      */
-     integer(column, autoIncrement = false){     
-          this.column("INT", "11", column, autoIncrement);
-          return this;
-     }
-
-     /**
-      * 
-      * @param {string} column 
-      * @param {bollean} autoIncrement 
-      * @returns {Table}
-      */
-      smallInteger(column, autoIncrement = false){     
-          this.column("SMALLINT", "11", column, autoIncrement);
-          return this;
-     }
-
-     /**
-      * 
-      * @param {string} column 
-      * @param {bollean} autoIncrement 
-      * @returns {Table}
-      */
-      tinyInteger(column, autoIncrement = false){     
-          this.column("TINYINT", "11", column, autoIncrement);
-          return this;
-     }
-
-     /**
-      * 
-      * @param {string} column 
-      * @param {bollean} autoIncrement 
-      * @returns {Table}
-      */
-      dateTme(column){     
-          this.column("DATETIME", "0", column);
-          return this;
-     }
-
-     /**
-      * 
-      * @param {string} column 
-      * @param {string} length 
-      * @returns {Table}
-      */
-     string(column, length){     
-          this.column("VARCHAR", length, column);
-          return this;
-     }
-
-     /**
-      * 
-      * @param {string} column 
-      * @param {string} length 
-      * @returns {Table}
-      */
-      text(column){     
-          this.column("TEXT", "0", column);
-          return this;
-     }
-
-     /**
-      * nullable column
-      * @returns {Table}
-      */
-     nullable(){
-          this.#_currentColumn.nullable = true;
-          return this;
-     }
-
-     static string10(){
-          return '10';
-     }
-
-
-     static string50(){
-          return '50';
-     }
-
-     static string100(){
-          return '100';
-     }
-
-     static string250(){
-          return '250';
-     }
-
-     static string300(){
-          return '300';
-     }
-
-     static string500(){
-          return '500';
-     }
-
-     static string1000(){
-          return '1000';
+          fs.writeFile(`${approot}/src/App/Models/${modelName}.js`, content(), function (err) {
+               if (err) throw err;
+               console.log('Saved!');
+          });
+          return;
      }
 
 }
