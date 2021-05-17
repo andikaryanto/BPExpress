@@ -19,11 +19,7 @@ exports.seed = async function (knex) {
 
   let isDataSeedExist = await Seeds.isSeedExist(knex, "Seed_20210517085435_defaultusers");
   if (!isDataSeedExist) {
-    await knex("seeds").insert({
-      id :null,
-      name: "Seed_20210517085435_defaultusers",
-      time: DateFormat.getCurrentDate("YYYY-MM-DD HH:mm:ss")
-    })
+    await Seeds.insertSeedBatch(knex, "Seed_20210517085435_defaultusers");
 
     return knex(Seed_20210517085435_defaultusers.table).insert(
       Seed_20210517085435_defaultusers.value

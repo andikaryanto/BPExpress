@@ -12,7 +12,7 @@ class App {
      static run(app, express){
           
           Application.init(app, express);
-          app.listen(process.env.APP_PORT, () => console.log(`Server Up And Running. Listening On Port ${process.env.APP_PORT}`));
+          app.listen(process.env.APP_PORT, () => console.log(`Server Up And Running. Listening On Port ${process.env.APP_PORT}. Press Ctrl + C to kill`  ));
      }
 }
 

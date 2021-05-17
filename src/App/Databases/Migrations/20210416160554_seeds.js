@@ -1,3 +1,4 @@
+// Do not remove this file. it's default
 
 exports.up = function(knex) {
      return knex.schema
