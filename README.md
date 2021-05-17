@@ -176,14 +176,26 @@ If you are php developer as CI/Laravel, it will look little bit the same, becaus
           //or
           trx.rollback(); // rollback data from saving
 
-          
+#### CLI
+first you should type 'npm i -g .', to install current command line for this app, (i havent created module to npm)
+
+     nayo --help
+- **Generate Model**
+
+          nayo make:model -n <tablename>
+
+- **Generate Controller**
+
+          nayo make:controller -n <controllername> -p <pathToControllerDirectory>
 #### What's Missing
-- Migration and seeder database using knex
 - Much
 - You tell me
 
 ### Install
-     clone and type 'npm i'
+     - clone and type 'npm i'
+     - create database and set to .env file DB_NAME, set your credential of your database
+     - type 'knex migration:latest'
+     - type 'knex seed:run'
 
 ### Run
      nodemon start src/index.js
