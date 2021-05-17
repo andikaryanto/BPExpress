@@ -28,13 +28,19 @@ class Table {
                     \n\tconstructor() { \n\t\tsuper("${tableName}", "Id");\n\t}
                \n}
                \nexport default ${modelName};`
-          }
+          };
 
-          fs.writeFile(`${approot}/src/App/Models/${modelName}.js`, content(), function (err) {
-               if (err) throw err;
-               console.log('Saved!');
+          let fileName = `${approot}/src/App/Models/${modelName}.js`;
+          fs.open(fileName, 'r', function (err, fd) {
+               if (err) {
+                    fs.writeFile(fileName, content(), function (err) {
+                         if (err) throw err;
+                         console.log('Saved!');
+                    });
+               } else {
+                    throw new Error("File is already exist !");
+               }
           });
-          return;
      }
 
 }
