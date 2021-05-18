@@ -390,6 +390,7 @@ class Model {
       */
      async delete(transaction = null) {
 
+          const obj = this;
           const primaryKey = obj.#_primaryKey;
           const table = obj.#_table;
           let ret = null;
