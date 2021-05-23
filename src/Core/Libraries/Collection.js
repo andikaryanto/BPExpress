@@ -12,7 +12,7 @@ class Collection {
      /**
       * add data to collection
       */
-     add(item){
+     add(item) {
           this.items.push(item);
           return this;
      }
@@ -33,6 +33,16 @@ class Collection {
           return this;
      }
 
+     where(callback) {
+          let newdata = [];
+          for(let item of this.items) {
+               if (callback(item)) {
+                    newdata.push(item);
+               }
+          }
+          return newdata;
+     }
+
      isEmpty() {
           return this.items.length == 0;
      }
@@ -48,7 +58,7 @@ class Collection {
           }
      }
 
-     size(){
+     size() {
           return this.items.length;
      }
 
