@@ -60,6 +60,23 @@ class CollectionModel extends Collection {
      }
 
      /**
+      * 
+      * @param {string} columnName 
+      * @return {[]}
+      */
+      chunkUnique(columnName) {
+          let chunk = []
+          this.items.forEach((item, i) => {
+               if (columnName in item) {
+                    if(chunk.find(x => x == item[columnName]) == undefined)
+                         chunk.push(item[columnName])
+               }
+          });
+          return chunk;
+
+     }
+
+     /**
       * Get eloquent unsaved data means Id of eloquent is null
       * @return {this}
       */

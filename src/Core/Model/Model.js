@@ -149,7 +149,7 @@ class Model {
       * @returns 
       */
      static async count(filter = {}, columns = []) {
-          let objects = await this.findAll(filter, columns); 
+          let objects = await this.findAll(filter, columns);
           return objects.length;
      }
 
@@ -159,19 +159,19 @@ class Model {
       * @returns {Promise<CollectionModel>} 
       */
      static async collect(filter = {}) {
-          let objects = await this.findAll(filter); 
+          let objects = await this.findAll(filter);
           return new CollectionModel(objects);
      }
 
      /**
      * Eeager Load Query 
      */
-     static with($relatedClasses) {
+     static with(relatedClasses) {
           let instance = new this;
-          for (let relatedClass of $relatedClasses) {
+          for (let relatedClass of relatedClasses) {
                instance.#_relatedClass.push(relatedClass);
           }
-          return $instance;
+          return instance;
      }
 
      /**
@@ -264,9 +264,14 @@ class Model {
                this.#_columns = columns;
 
           this.#_db.column(this.#_columns);
-
           this.setFilter(filter);
-          return this.setToEntity();
+
+          let withRelatedData = null;
+          let results = await this.#_db;
+
+          if (this.#_relatedClass.length > 0)
+               withRelatedData = await this.fetchRelatedData(results);
+          return this.setToEntity(results, withRelatedData);
           // return this.#_db;
      }
 
@@ -274,9 +279,7 @@ class Model {
       * Set to instance of current class
       * @param {Function} callback 
       */
-     async setToEntity() {
-          let results = await this.#_db;
-          // this.#_db.then(results => {
+     async setToEntity(results, withRelatedData = null) {
           let objects = [];
           let newClassName = this.constructor;
           results.forEach((e, i) => {
@@ -293,11 +296,51 @@ class Model {
                          obj["_change_" + key]();
                     }
                }
+               if (withRelatedData != null) {
+                    for (let relatedData of withRelatedData) {
+                         let findRelated = function (item) {
+                              return obj[relatedData.ForeignKey] == item[item.getPrimaryKey()];
+                         };
+                         let relatedDataFound = relatedData.Data.where(findRelated);
+                         obj[relatedData.ClassName] = relatedDataFound.length == 0 ? null : relatedDataFound[0];
+                    }
+               }
                objects.push(obj)
           });
           return objects;
-          // callback(objects);
-          // });
+     }
+
+     /**
+     * Get Related Data as array, used with "with" function for Eager Load
+     * @param array $results of object
+     * @return array
+     */
+     async fetchRelatedData(results) {
+          let resultRelatedData = [];
+          let collectionResult = new CollectionModel(results);
+          let fieldValues = null;
+          for (let related of this.#_relatedClass) {
+
+               let instance = new related.ClassName;
+               let nameSpace = related.ClassName;
+               let className = instance.constructor.name;
+               fieldValues = collectionResult.chunkUnique(related.ForeignKey);
+
+               let params = {
+                    whereIn: {
+                         [instance.getPrimaryKey()]: fieldValues
+                    }
+               };
+
+               let fetchedData = await nameSpace.collect(params);
+               let result = {
+                    ForeignKey: related["ForeignKey"],
+                    ClassName: className,
+                    Data: fetchedData
+               };
+               resultRelatedData.push(result);
+          }
+          return resultRelatedData;
      }
 
      /**
