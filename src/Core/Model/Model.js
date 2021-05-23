@@ -17,6 +17,8 @@ class Model {
 
      #_cast = {};
 
+     #_relatedClass = [];
+
      constructor(table, primaryKey, cast = {}) {
           this.#_table = table;
           this.#_primaryKey = primaryKey;
@@ -38,23 +40,19 @@ class Model {
       * @throws {Error}
       * @returns 
       */
-     static find(id) {
-          var instance = new this;
+     static async find(id) {
+          let instance = new this;
           var filter = {
                where: {
                     [instance.#_primaryKey]: id
                }
           };
-
-          return new Promise((resolve, reject) => {
-               instance.fetch(objects => {
-                    if (objects.length > 0)
-                         resolve(objects[0]);
-                    else {
-                         resolve(null);
-                    }
-               }, filter);
-          })
+          let objects = await this.findAll(filter);
+          if (objects.length > 0)
+               return objects[0];
+          else {
+               return null;
+          }
      }
 
      /**
@@ -63,23 +61,14 @@ class Model {
       * @throws {Error}
       * @returns 
       */
-     static findOrNew(id) {
-          var instance = new this;
-          var filter = {
-               where: {
-                    [instance.#_primaryKey]: id
-               }
-          };
-
-          return new Promise((resolve, reject) => {
-               instance.fetch(objects => {
-                    if (objects.length > 0)
-                         resolve(objects[0]);
-                    else {
-                         resolve(instance);
-                    }
-               }, filter);
-          })
+     static async findOrNew(id) {
+          let instance = new this;
+          let object = await this.find(id)
+          if (object != null)
+               return object;
+          else {
+               return instance;
+          }
      }
 
      /**
@@ -88,23 +77,14 @@ class Model {
       * @throws {Error}
       * @returns 
       */
-     static findOrFail(id) {
-          var instance = new this;
-          var filter = {
-               where: {
-                    [instance.#_primaryKey]: id
-               }
-          };
+     static async findOrFail(id) {
+          let object = await this.find(id)
+          if (object != null)
+               return object;
+          else {
+               throw new ModelError("Data not found")
+          }
 
-          return new Promise((resolve, reject) => {
-               instance.fetch(objects => {
-                    if (objects.length > 0)
-                         resolve(objects[0]);
-                    else {
-                         reject(new ModelError("Data not found"));
-                    }
-               }, filter);
-          })
      }
 
      /**
@@ -113,18 +93,13 @@ class Model {
       * @throws {Error}
       * @returns 
       */
-     static findOne(filter = {}) {
-          var instance = new this;
-          // return this.#_db.select().from(this.#_table).where({Id : 1});
-          return new Promise((resolve, reject) => {
-               instance.fetch(objects => {
-                    if (objects.length > 0)
-                         resolve(objects[0]);
-                    else {
-                         resolve(null);
-                    }
-               }, filter);
-          })
+     static async findOne(filter = {}) {
+          let objects = await this.findAll(filter);
+          if (objects.length > 0)
+               return objects[0];
+          else {
+               return null;
+          }
      }
 
      /**
@@ -133,18 +108,14 @@ class Model {
       * @throws {Error}
       * @returns 
       */
-     static findOneOrNew(filter = {}) {
+     static async findOneOrNew(filter = {}) {
           var instance = new this;
-          // return this.#_db.select().from(this.#_table).where({Id : 1});
-          return new Promise((resolve, reject) => {
-               instance.fetch(objects => {
-                    if (objects.length > 0)
-                         resolve(objects[0]);
-                    else {
-                         resolve(instance);
-                    }
-               }, filter);
-          })
+          let object = await this.findOne(filter);
+          if (object != null)
+               return object;
+          else {
+               return instance;
+          }
      }
 
      /**
@@ -153,18 +124,13 @@ class Model {
       * @throws {Error}
       * @returns 
       */
-     static findOneOrFail(filter = {}) {
-          var instance = new this;
-          // return this.#_db.select().from(this.#_table).where({Id : 1});
-          return new Promise((resolve, reject) => {
-               instance.fetch(objects => {
-                    if (objects.length > 0)
-                         resolve(objects[0]);
-                    else {
-                         reject(new ModelError("Data not found"));
-                    }
-               }, filter);
-          })
+     static async findOneOrFail(filter = {}) {
+          let object = await this.findOne(filter)
+          if (object != null)
+               return object;
+          else {
+               throw new ModelError("Data not found")
+          }
      }
 
      /**
@@ -172,13 +138,9 @@ class Model {
       * @param {*} filter 
       * @returns 
       */
-     static findAll(filter = {}, columns = []) {
+     static async findAll(filter = {}, columns = []) {
           var instance = new this;
-          return new Promise((resolve, reject) => {
-               instance.fetch(objects => {
-                    resolve(objects);
-               }, filter, columns);
-          })
+          return await instance.fetch(filter, columns);
      }
 
      /**
@@ -186,13 +148,9 @@ class Model {
       * @param {{}} filter 
       * @returns 
       */
-     static count(filter = {}, columns = []) {
-          var instance = new this;
-          return new Promise((resolve, reject) => {
-               instance.fetch(objects => {
-                    resolve(objects.length);
-               }, filter, columns);
-          })
+     static async count(filter = {}, columns = []) {
+          let objects = await this.findAll(filter, columns); 
+          return objects.length;
      }
 
      /**
@@ -200,13 +158,20 @@ class Model {
       * @param {{}} filter 
       * @returns {Promise<CollectionModel>} 
       */
-     static collect(filter = {}) {
-          var instance = new this;
-          return new Promise((resolve, reject) => {
-               instance.fetch(objects => {
-                    resolve(new CollectionModel(objects));
-               }, filter);
-          })
+     static async collect(filter = {}) {
+          let objects = await this.findAll(filter); 
+          return new CollectionModel(objects);
+     }
+
+     /**
+     * Eeager Load Query 
+     */
+     static with($relatedClasses) {
+          let instance = new this;
+          for (let relatedClass of $relatedClasses) {
+               instance.#_relatedClass.push(relatedClass);
+          }
+          return $instance;
      }
 
      /**
@@ -292,7 +257,7 @@ class Model {
       * @param {{}} filter 
       * @returns 
       */
-     fetch(callback, filter = {}, columns = []) {
+     async fetch(filter = {}, columns = []) {
 
           this.#_columns = this.getPropsName();
           if (columns.length > 0)
@@ -301,9 +266,7 @@ class Model {
           this.#_db.column(this.#_columns);
 
           this.setFilter(filter);
-          return this.setToEntity(objects => {
-               callback(objects)
-          });
+          return this.setToEntity();
           // return this.#_db;
      }
 
@@ -311,29 +274,30 @@ class Model {
       * Set to instance of current class
       * @param {Function} callback 
       */
-     setToEntity(callback) {
-          // console.log(this.#_db.toSQL().toNative());
-          this.#_db.then(results => {
-               let objects = [];
-               let newClassName = this.constructor;
-               results.forEach((e, i) => {
-                    let obj = new newClassName();
-                    for (const [key, value] of Object.entries(e)) {
+     async setToEntity() {
+          let results = await this.#_db;
+          // this.#_db.then(results => {
+          let objects = [];
+          let newClassName = this.constructor;
+          results.forEach((e, i) => {
+               let obj = new newClassName();
+               for (const [key, value] of Object.entries(e)) {
 
-                         let found = Object.keys(this.#_cast).find(keys => keys == key);
-                         if (found) {
-                              obj[key] = Cast.to(value,this.#_cast[key]);
-                         } else {
-                              obj[key] = value;
-                         }
-                         if (typeof obj["_change_" + key] === 'function') {
-                              obj["_change_" + key]();
-                         }
+                    let found = Object.keys(this.#_cast).find(keys => keys == key);
+                    if (found) {
+                         obj[key] = Cast.to(value, this.#_cast[key]);
+                    } else {
+                         obj[key] = value;
                     }
-                    objects.push(obj)
-               })
-               callback(objects);
+                    if (typeof obj["_change_" + key] === 'function') {
+                         obj["_change_" + key]();
+                    }
+               }
+               objects.push(obj)
           });
+          return objects;
+          // callback(objects);
+          // });
      }
 
      /**
