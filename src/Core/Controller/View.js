@@ -22,7 +22,7 @@ class View {
       * Render View path
       * @param {string} view 
       * @param {{}} data 
-      * @returns 
+      * @returns {View}
       */
      static make(view, data) {
           let instance = View.getInstance();
@@ -37,7 +37,7 @@ class View {
       * Render View path
       * @param {string} view 
       * @param {{}} data 
-      * @returns 
+      * @returns {View}
       */
      static html(view, data) {
           let instance = View.getInstance();
@@ -50,7 +50,7 @@ class View {
      /**
       * Send data
       * @param {{}} data 
-      * @returns 
+      * @returns {View}
       */
      data(data){
           this.data = data;

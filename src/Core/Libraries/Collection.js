@@ -33,6 +33,11 @@ class Collection {
           return this;
      }
 
+     /**
+      * 
+      * @param {Function} callback 
+      * @returns {[]}
+      */
      where(callback) {
           let newdata = [];
           for(let item of this.items) {
@@ -43,10 +48,19 @@ class Collection {
           return newdata;
      }
 
+     /**
+      * 
+      * @returns {boolean}
+      */
      isEmpty() {
           return this.items.length == 0;
      }
 
+     /**
+      * 
+      * @param {number} number 
+      * @returns {[]}
+      */
      take(number) {
           if (number <= 0)
                throw new Error("Number must be greater than 0 (zero)");
@@ -57,15 +71,28 @@ class Collection {
                return this.items.slice(0, number);
           }
      }
-
+     
+     /**
+      * 
+      * @returns {number}
+      */
      size() {
           return this.items.length;
      }
 
+     /**
+      * 
+      * @returns {[]}
+      */
      getItems() {
           return this.items;
      }
 
+     /**
+      * 
+      * @returns {[]}
+      * @throws {Error}
+      */
      getItemsOrFail() {
           if (this.isEmpty())
                throw new Error("No Data Found");

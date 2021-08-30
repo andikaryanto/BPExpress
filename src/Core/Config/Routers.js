@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { Express } from 'express';
 import ConfigView from "../../App/Config/View";
+import Controller from "../Controller/Controller";
 import Redirect from "../Controller/Redirect";
 import ResponseData from "../Controller/ResponseData";
 import View from "../Controller/View";
@@ -45,28 +46,74 @@ class Routers {
           callback(intance);
      }
 
+     /**
+      * 
+      * @param {string} route 
+      * @param {[]} middleware 
+      * @param {Controller} controller 
+      * @param {string} fn 
+      * @param {{}} additionalData 
+      */
      delete(route, middleware, controller, fn, additionalData = {}) {
           this.doRoute(route, middleware, controller, fn, additionalData, "DELETE")
      }
 
+     /**
+      * 
+      * @param {string} route 
+      * @param {[]} middleware 
+      * @param {Controller} controller 
+      * @param {string} fn 
+      * @param {{}} additionalData 
+      */
      put(route, middleware, controller, fn, additionalData = {}) {
           this.doRoute(route, middleware, controller, fn, additionalData, "PUT")
      }
 
+     /**
+      * 
+      * @param {string} route 
+      * @param {[]} middleware 
+      * @param {Controller} controller 
+      * @param {string} fn 
+      * @param {{}} additionalData 
+      */
      post(route, middleware, controller, fn, additionalData = {}) {
           this.doRoute(route, middleware, controller, fn, additionalData, "POST")
      }
 
+     /**
+      * 
+      * @param {string} route 
+      * @param {[]} middleware 
+      * @param {Controller} controller 
+      * @param {string} fn 
+      * @param {{}} additionalData 
+      */
      get(route, middleware, controller, fn, additionalData = {}) {
           this.doRoute(route, middleware, controller, fn, additionalData, "GET");
           return this;
      }
 
+     /**
+      * 
+      * @param {string} name 
+      */
      named(name) {
 
           this.doRoute(name, this.#_namedMiddleware, this.#_namedController, this.#_namedFunction, this.#_namedData, this.#_namedMethod, true);
      }
 
+     /**
+      * 
+      * @param {string} route 
+      * @param {[]} middleware 
+      * @param {Controller} controller 
+      * @param {string} fn 
+      * @param {{}} additionalData 
+      * @param {string} method 
+      * @param {boolean} isNamed 
+      */
      doRoute(route, middleware, controller, fn, additionalData = {}, method = "GET", isNamed = false) {
 
           let currentRoute = route;
@@ -119,10 +166,20 @@ class Routers {
                this.#_router.delete(`${currentRoute}`, [...this.#_middleware, ...middleware], resReq);
      }
 
+     /**
+      * 
+      * @returns {Routers}
+      */
      getRouter() {
           return this.#_router;
      }
 
+     /**
+      * 
+      * @param {import("express").Request} req 
+      * @param {import("express").Response} res 
+      * @param {ResponseData|View|Redirect} returnedData 
+      */
      static return(req, res, returnedData) {
           if (returnedData == undefined)
                res.status(400).send("Unexpexted Error, Method didnt return anything")

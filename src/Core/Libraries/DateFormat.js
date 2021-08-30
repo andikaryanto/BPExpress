@@ -17,6 +17,11 @@ class DateFormat {
           return newFormat.map(formated).join(seprator);
      }
 
+     /**
+      * Formatted date using moment js
+      * @param {string} format 
+      * @returns 
+      */
      static getCurrentDate(format){
           return moment().format(format);
      }

@@ -33,7 +33,7 @@ class File {
       * @param {Function} callback 
       * @param {boolean} usePrefixName default true
       * @param {boolean} useHashName default true
-      * @returns boolean
+      * @returns {boolean}
       */
      upload(uploadedFiles, usePrefixName = true, useHashName = true) {
           return new Promise((resolve, reject) => {
@@ -77,10 +77,18 @@ class File {
 
      }
 
+     /**
+      * 
+      * @returns {string}
+      */
      getFileUrl(){
           return this.#_urlfile;
      }
 
+     /**
+      * 
+      * @param {string} ext 
+      */
      addExtention(ext) {
           this.#_allowedType.push(ext);
      }
