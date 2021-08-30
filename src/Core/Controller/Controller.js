@@ -8,6 +8,12 @@ class Controller {
           
      }
 
+     /**
+      * 
+      * @param {string} path 
+      * @param {string} controllerName 
+      * @throws {Error}
+      */
      static makeController(path, controllerName){
 
           controllerName = StringLib.ucFirst(controllerName);

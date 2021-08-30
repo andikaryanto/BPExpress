@@ -17,12 +17,22 @@ class ResponseData {
           return this.#_instance;
      }
 
+     /**
+      * 
+      * @param {number} code 
+      * @returns {ResponseData}
+      */
      static status(code) {
           let instance = ResponseData.getInstance();
           instance.code = code;
           return instance;
      }
 
+     /**
+      * 
+      * @param {{}} data 
+      * @returns 
+      */
      json(data){
           this.data = data;
           return this;

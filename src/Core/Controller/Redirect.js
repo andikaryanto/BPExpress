@@ -17,12 +17,22 @@ class Redirect {
           return this.#_instance;
      }
 
+     /**
+      * 
+      * @param {string} route 
+      * @returns {Redirect}
+      */
      static to(route) {
           let instance = Redirect.getInstance();
           instance.route = route;
           return instance;
      }
 
+     /**
+      * 
+      * @param {{}} data 
+      * @returns {Redirect}
+      */
      with(data) {
           this.data = data;
           return this;
