@@ -4,8 +4,9 @@
   "description": "express scratch",
   "main": "src/index.js",
   "scripts": {
-    "build": "babel ./src -d build",
-    "dev": "nodemon src/index.js"
+    "build": "babel ./src -d build --copy-files",
+    "dev": "nodemon src/index.js",
+    "prod": "nodemon build/index.js"
   },
   "keywords": [
     "express"
@@ -30,8 +31,10 @@
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "express-fileupload": "^1.2.1",
+    "express-graphql": "^0.12.0",
     "express-group-routes": "^1.1.0",
     "express-session": "^1.17.1",
+    "graphql": "^16.3.0",
     "jsonwebtoken": "^8.5.1",
     "knex": "^0.95.4",
     "md5": "^2.3.0",

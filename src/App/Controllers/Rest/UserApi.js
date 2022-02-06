@@ -11,6 +11,11 @@ import ResponseData from "../../../Core/Controller/ResponseData.js";
 
 class UserApi extends Controller{
 
+     /**
+      * 
+      * @param {*} request 
+      * @returns {ResponseData}
+      */
      async login({request}) {
           try {
                let body = request.body;

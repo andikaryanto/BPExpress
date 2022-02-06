@@ -210,14 +210,14 @@ class Model {
           }
 
           if (filter.like != undefined) {
-               for (const [key, value] of Object.entries(filter.whereIn)) {
-                    this.where(key, "like", `%${value}%`);
+               for (const [key, value] of Object.entries(filter.like)) {
+                    this.#_db.where(key, "like", `%${value}%`);
                }
           }
 
           if (filter.orLike != undefined) {
                for (const [key, value] of Object.entries(filter.whereIn)) {
-                    this.orWhere(key, "like", `%${value}%`);
+                    this.#_db.orWhere(key, "like", `%${value}%`);
                }
           }
 

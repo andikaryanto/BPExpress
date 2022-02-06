@@ -12,6 +12,19 @@ import Api from "../../App/Routes/Api.js";
 import csrf from 'csurf';
 import VerifyCsrf from "../Middleware/VerifyCsrf.js";
 const KnexSessionStore = require('connect-session-knex')(session);
+import {
+     GraphQLObjectType,
+     GraphQLString,
+     GraphQLSchema,
+     GraphQLID,
+     GraphQLBoolean,
+     GraphQLFloat,
+     GraphQLNonNull,
+     GraphQLList,
+     Source
+} from 'graphql';
+import { graphqlHTTP } from 'express-graphql';
+import GraphQL from "../../App/Config/GraphQL.js";
 
 class AppOverride {
 
@@ -23,6 +36,37 @@ class AppOverride {
           AppOverride.use(app);
           // AppOverride.csrf(app);
           AppOverride.middleware(app);
+          AppOverride.graphQL(app);
+     }
+
+     /**
+      * 
+      * @param {Express} app 
+      */
+     static graphQL(app) {
+          const RootQuery = new GraphQLObjectType({
+               name: "Query",
+               fields: GraphQL.query
+          });
+
+          const RootMutation = new GraphQLObjectType({
+               name: "Mutation",
+               fields: GraphQL.mutation
+          });
+
+          app.use('/graphql', 
+               [...Kernel.middlewareGroups.graphql], 
+               graphqlHTTP(
+                    (request) => ({
+                         schema: new GraphQLSchema({
+                              query: RootQuery,
+                              mutation: RootMutation
+                         }),
+                         graphiql: true,
+                         context: {...GraphQL.context, request : request }
+                    })
+               )
+          )
      }
 
      /**
@@ -31,10 +75,10 @@ class AppOverride {
       */
      static use(app) {
           app.use(fileUpload());
-          
+
           app.use(Request.request);
           app.use(Response.response);
-         
+
           const store = new KnexSessionStore({
                tablename: 'sessions',
                createtable: true,
@@ -56,15 +100,13 @@ class AppOverride {
                store
           }));
           app.use(Session.session);
-          
-          if(process.env.CSRF_USAGE == "true"){
+
+          if (process.env.CSRF_USAGE == "true") {
                app.use(csrf({
-                    cookie :false
+                    cookie: false
 
                }))
           }
-          
-
      }
 
      /**
@@ -73,8 +115,8 @@ class AppOverride {
       */
      static middleware(app) {
 
-          app.use("/api",  [VerifyCsrf, ...Kernel.middlewares, ...Kernel.middlewareGroups.api], Api());
-          app.use("/",  [...Kernel.middlewares, ...Kernel.middlewareGroups.web], Web());
+          app.use("/api", [VerifyCsrf, ...Kernel.middlewares, ...Kernel.middlewareGroups.api], Api());
+          app.use("/", [...Kernel.middlewares, ...Kernel.middlewareGroups.web], Web());
      }
 
      /**

@@ -41,7 +41,6 @@ class M_users extends BaseModel {
           var groupuser = await M_groupusers.find(this.M_Groupuser_Id)
           return groupuser;
      }    
-
 }
 
 export default M_users;
