@@ -39,12 +39,7 @@ class BaseCollection {
      * Add item element
      */
     async addItem(viewModel) {
-        var item = viewModel.toJson();
-        
-        if(viewModel.getAutoAddResource()){
-            await viewModel.addResource(item);
-        } 
-
+        var item = await viewModel.toJson();
         this.#_element.push(item);
         
     }

@@ -20,6 +20,10 @@ class BaseViewModel {
         return this.#_autoAddResource
     }
 
+    toJson(){
+        
+    }
+
 }
 
 export default BaseViewModel;

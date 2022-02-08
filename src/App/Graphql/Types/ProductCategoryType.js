@@ -10,12 +10,14 @@ import {
     GraphQLInt
 } from 'graphql';
 
-const GroupuserType = new GraphQLObjectType({
-    name: "Groupuser",
+const ProductCategoryType = new GraphQLObjectType({
+    name: "ProductCategory",
     fields: () => ({
         Id: { type: GraphQLInt },
-        GroupName: { type: GraphQLString }
+        Name: { type: GraphQLString },
+        Description: { type: GraphQLString },
+        Picture: { type: GraphQLString }
     })
 })
 
-export default GroupuserType;
+export default ProductCategoryType;

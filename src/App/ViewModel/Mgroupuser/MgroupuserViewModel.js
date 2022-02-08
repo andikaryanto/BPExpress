@@ -11,15 +11,20 @@ class MgroupuserViewModel extends BaseViewModel {
 
     }
 
-    toJson() {
+    async toJson() {
         
         if (this.model == null)
             return null;
             
-        return {
+        var json = {
             Id: this.model.Id,
             GroupName: this.model.GroupName
         }
+
+        if(this.getAutoAddResource()){
+            await this.addResource(json)
+        }
+        return json;
     }
 }
 

@@ -1,28 +1,25 @@
-import M_users from "../../Models/M_users";
 import BaseViewModel from "../BaseViewModel";
 
-class MshopViewModel extends BaseViewModel {
+class MproductcategoryViewModel extends BaseViewModel {
 
     constructor(model) {
         super(true, model);
     }
 
     async addResource(object) {
-
+        // object.Product = await this.model.M_Product();
     }
 
     async toJson() {
         
         if (this.model == null)
             return null;
-        
-        var json = {
+
+        var json =  {
             Id: this.model.Id,
             Name: this.model.Name,
-            Owner: this.model.Owner,
-            Phone: this.model.Phone,
-            MapAddress: this.model.MapAddress,
-            Address: this.model.Address
+            Picture: this.model.Picture,
+            Description: this.model.Description
         }
         
         if(this.getAutoAddResource()){
@@ -33,4 +30,4 @@ class MshopViewModel extends BaseViewModel {
     }
 }
 
-export default MshopViewModel;
+export default MproductcategoryViewModel;

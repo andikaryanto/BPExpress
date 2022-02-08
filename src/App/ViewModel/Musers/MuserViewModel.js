@@ -13,14 +13,24 @@ class MuserViewModel extends BaseViewModel {
 
     async addResource(object){
         var groupuser = await this.model.M_Groupuser();
-        object.Groupuser = (new MgroupuserViewModel(groupuser)).toJson();
+        object.Groupuser = await (new MgroupuserViewModel(groupuser)).toJson();
     }
 
-    toJson(){
-        return {
+    async toJson(){
+
+        if (this.model == null)
+            return null;
+
+        var json = {
             Id : this.model.Id,
             Username : this.model.Username
         }
+
+        if(this.getAutoAddResource()){
+            await this.addResource(json)
+        }
+
+        return json;
     }
 }
 
