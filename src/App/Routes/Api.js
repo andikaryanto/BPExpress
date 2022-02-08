@@ -1,6 +1,8 @@
 import Routers from "../../Core/Config/Routers.js"
 import GroupuserApi from "../Controllers/Rest/GroupuserApi.js";
+import Shop from "../Controllers/Rest/Customer/Shop.js";
 import UserApi from "../Controllers/Rest/UserApi.js";
+import ApiMiddleware from "../Middlewares/ApiMiddleware.js";
 
 const Api = () => {
      let routers = new Routers();
@@ -13,6 +15,10 @@ const Api = () => {
 
      routers.group("/groupuser", [], routers => {
           routers.get("/list", [], GroupuserApi, "getList").named("groupuser.list");
+     });
+
+     routers.group("/shop", [ApiMiddleware], routers => {
+          routers.get("/list", [], Shop, "getList");
      });
 
      return routers.getRouter();

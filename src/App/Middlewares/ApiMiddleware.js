@@ -10,9 +10,8 @@ import jwt from "jsonwebtoken";
 const ApiMiddleware = function (req, res, next) {
      try {
           let token = req.headers.authorization;
-          // let token = "asdasd";
           if (token == undefined || token == null) {
-               throw new Error("Token anda Kosong")
+               throw new Error("Cannot verify empty token")
           }
 
           let decoded = jwt.decode(token, {complete : true});

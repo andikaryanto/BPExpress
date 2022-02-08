@@ -20,7 +20,7 @@ class GraphQL {
 
     static get context(){
         return {
-            testContext : "Context"
+            
         }
     }
 }
