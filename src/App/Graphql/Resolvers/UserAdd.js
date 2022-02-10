@@ -1,4 +1,4 @@
-import M_users from "../../Models/M_users";
+import M_users from '../../Models/M_users';
 import {
     GraphQLObjectType,
     GraphQLString,
@@ -7,30 +7,35 @@ import {
     GraphQLBoolean,
     GraphQLFloat,
     GraphQLNonNull,
-    GraphQLList
+    GraphQLList,
 } from 'graphql';
-import UserType from "../Types/UserType";
+import UserType from '../Types/UserType';
 
-
+/**
+ * @clas UserAdd
+ */
 class UserAdd {
-
-    static execute(){
+    /**
+     * Execute graphql to return object of
+     * @return {{}}
+     */
+    static execute() {
         return {
-            type : UserType,
-            args : {
-                Username : { type : GraphQLString },
-                Password : { type : GraphQLString },
-                GroupuserId : { type : GraphQLID },
+            type: UserType,
+            args: {
+                Username: {type: GraphQLString},
+                Password: {type: GraphQLString},
+                GroupuserId: {type: GraphQLID},
             },
-            resolve : async function(parent, args){
-                var user = new M_users();
+            resolve: async function(parent, args) {
+                const user = new M_users();
                 user.Username = args.Username;
                 user.M_Groupuser_Id = args.GroupuserId;
                 user.setPassword(args.Password);
                 await user.save();
                 return user.toJson();
-            }
-        }
+            },
+        };
     }
 }
 

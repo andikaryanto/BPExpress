@@ -7,17 +7,17 @@ import {
     GraphQLFloat,
     GraphQLNonNull,
     GraphQLList,
-    GraphQLInt
+    GraphQLInt,
 } from 'graphql';
 
 const ProductCategoryType = new GraphQLObjectType({
-    name: "ProductCategory",
+    name: 'ProductCategory',
     fields: () => ({
-        Id: { type: GraphQLInt },
-        Name: { type: GraphQLString },
-        Description: { type: GraphQLString },
-        Picture: { type: GraphQLString }
-    })
-})
+        Id: {type: GraphQLInt},
+        Name: {type: GraphQLString},
+        Description: {type: GraphQLString},
+        Picture: {type: GraphQLString},
+    }),
+});
 
 export default ProductCategoryType;

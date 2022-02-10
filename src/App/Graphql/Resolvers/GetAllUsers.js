@@ -1,4 +1,4 @@
-import M_users from "../../Models/M_users";
+import M_users from '../../Models/M_users';
 import {
     GraphQLObjectType,
     GraphQLString,
@@ -7,41 +7,47 @@ import {
     GraphQLBoolean,
     GraphQLFloat,
     GraphQLNonNull,
-    GraphQLList
+    GraphQLList,
 } from 'graphql';
-import UserType from "../Types/UserType";
-import { parserConfiguration } from "yargs";
-import MuserCollection from "../../ViewModel/Musers/MuserCollection";
+import UserType from '../Types/UserType';
+import {parserConfiguration} from 'yargs';
+import MuserCollection from '../../ViewModel/Musers/MuserCollection';
 
-
+/**
+ * @class GetAllUser
+ */
 class GetAllUsers {
-
-    static execute(){
+    /**
+     * Execute graphql to return object of
+     * @return {{}}
+     */
+    static execute() {
         return {
-            type : new GraphQLList(UserType),
-            args : {
-                Username : { type : GraphQLString}
+            type: new GraphQLList(UserType),
+            args: {
+                Username: {type: GraphQLString},
             },
-            resolve : async function(parent, args, context){
-                var request = context.request;
-                if(request.graphqlError != undefined)
+            resolve: async function(parent, args, context) {
+                const request = context.request;
+                if (request.graphqlError != undefined) {
                     throw request.graphqlError;
+                }
 
-                var search = {}
-                if(args.Username != undefined){
-                    if(args.Username != null && args.Username != ''){
+                let search = {};
+                if (args.Username != undefined) {
+                    if (args.Username != null && args.Username != '') {
                         search = {
-                            like : {
-                                Username : args.Username
-                            }
-                        }
+                            like: {
+                                Username: args.Username,
+                            },
+                        };
                     }
                 }
 
-                var userList =  await M_users.collect(search);
+                const userList = await M_users.collect(search);
                 return await (new MuserCollection(userList)).proceedAndGetData();
-            }
-        }
+            },
+        };
     }
 }
 

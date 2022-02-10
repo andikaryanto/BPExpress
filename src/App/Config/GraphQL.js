@@ -1,29 +1,28 @@
-import Request from "../../Core/Http/Request";
-import GetAllShopProducts from "../Graphql/Resolvers/GetAllShopProducts";
-import GetAllUsers from "../Graphql/Resolvers/GetAllUsers";
-import UserAdd from "../Graphql/Resolvers/UserAdd";
+import Request from '../../Core/Http/Request';
+import GetAllShopProducts from '../Graphql/Resolvers/GetAllShopProducts';
+import GetAllUsers from '../Graphql/Resolvers/GetAllUsers';
+import UserAdd from '../Graphql/Resolvers/UserAdd';
 
 class GraphQL {
-
-    static get query(){
+    static get query() {
         return {
             // register all your graphql query here
-            getAllUsers : GetAllUsers.execute(),
-            getAllShopProducts : GetAllShopProducts.execute()
-        }
+            getAllUsers: GetAllUsers.execute(),
+            getAllShopProducts: GetAllShopProducts.execute(),
+        };
     }
 
-    static get mutation(){
+    static get mutation() {
         return {
             // register all your graphql mutation here
-            userAdd : UserAdd.execute()
-        }
+            userAdd: UserAdd.execute(),
+        };
     }
 
-    static get context(){
+    static get context() {
         return {
-            
-        }
+
+        };
     }
 }
 

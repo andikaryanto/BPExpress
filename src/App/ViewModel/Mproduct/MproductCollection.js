@@ -1,16 +1,25 @@
-import BaseCollection from "../BaseCollection";
-import MproductViewModel from "./MproductViewModel";
-
+import M_products from '../../Models/M_products';
+import BaseCollection from '../BaseCollection';
+import MproductViewModel from './MproductViewModel';
+/**
+ * @class MproductCollection
+ */
 class MproductCollection extends BaseCollection {
-
+    /**
+    *
+    * @param {CollectionModel|array} collection
+    */
     constructor(collection) {
         super(collection);
     }
 
-    async shape(model) {;
+    /**
+     *
+     * @param {M_products} model
+     */
+    async shape(model) {
         await this.addItem(new MproductViewModel(model));
     }
-
 }
 
 export default MproductCollection;

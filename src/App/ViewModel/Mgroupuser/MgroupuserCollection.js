@@ -1,16 +1,25 @@
-import BaseCollection from "../BaseCollection";
-import MgroupuserViewModel from "./MgroupuserViewModel";
-
+import M_groupusers from '../../Models/M_groupusers';
+import BaseCollection from '../BaseCollection';
+import MgroupuserViewModel from './MgroupuserViewModel';
+/**
+ * @class MgroupuserCollection
+ */
 class MgroupuserCollection extends BaseCollection {
-
+    /**
+    *
+    * @param {CollectionModel|array} collection
+    */
     constructor(collection) {
         super(collection);
     }
 
-    async shape(model) {;
+    /**
+     *
+     * @param {M_groupusers} model
+     */
+    async shape(model) {
         await this.addItem(new MgroupuserViewModel(model));
     }
-
 }
 
 export default MgroupuserCollection;

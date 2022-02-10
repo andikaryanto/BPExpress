@@ -1,26 +1,26 @@
 
-import ShopProc from "../../../BusinessProcess/ShopProc";
-import ResponseCode from "../../../Constants/ResponseCode";
-import SuccessResponse from "../../../Responses/SuccessResponse";
-import MshopCollection from "../../../ViewModel/Mshop/MshopCollection";
-import MshopproductCollection from "../../../ViewModel/Mshopproduct/MshopproductCollection";
+import ShopProc from '../../../BusinessProcess/ShopProc';
+import ResponseCode from '../../../Constants/ResponseCode';
+import SuccessResponse from '../../../Responses/SuccessResponse';
+import MshopCollection from '../../../ViewModel/Mshop/MshopCollection';
+import MshopproductCollection from '../../../ViewModel/Mshopproduct/MshopproductCollection';
 
 class Shop {
-    async getList({request}){
-        var name = request.query.Name;
+    async getList({request}) {
+        const name = request.query.Name;
 
-        var shoplist = await ShopProc.search(name);
-        var shopCollection = await (new MshopCollection(shoplist)).proceedAndGetData();
-        
+        const shoplist = await ShopProc.search(name);
+        const shopCollection = await (new MshopCollection(shoplist)).proceedAndGetData();
+
         return (new SuccessResponse('Success', ResponseCode.OK, shopCollection)).send();
     }
 
-    async products({params, query}){
-        var shopId = params.shopId;
-        var name = query.Name;
+    async products({request, params, query}) {
+        const shopId = params.shopId;
+        const name = query.Name;
 
-        var shopProducts = await ShopProc.products(shopId, name);
-        var shopProductCollection = await (new MshopproductCollection(shopProducts)).proceedAndGetData();
+        const shopProducts = await ShopProc.products(shopId, name);
+        const shopProductCollection = await (new MshopproductCollection(shopProducts)).proceedAndGetData();
 
         return (new SuccessResponse('Success', ResponseCode.OK, shopProductCollection)).send();
     }

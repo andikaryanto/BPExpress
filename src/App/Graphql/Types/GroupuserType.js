@@ -7,15 +7,15 @@ import {
     GraphQLFloat,
     GraphQLNonNull,
     GraphQLList,
-    GraphQLInt
+    GraphQLInt,
 } from 'graphql';
 
 const GroupuserType = new GraphQLObjectType({
-    name: "Groupuser",
+    name: 'Groupuser',
     fields: () => ({
-        Id: { type: GraphQLInt },
-        GroupName: { type: GraphQLString }
-    })
-})
+        Id: {type: GraphQLInt},
+        GroupName: {type: GraphQLString},
+    }),
+});
 
 export default GroupuserType;

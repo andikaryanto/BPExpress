@@ -1,32 +1,36 @@
-import ResponseCode from "../Constants/ResponseCode.js";
-import jwt from "jsonwebtoken";
+import ResponseCode from '../Constants/ResponseCode.js';
+import jwt from 'jsonwebtoken';
+import {Request, Response, NextFunction} from 'express';
 
 /**
- * 
- * @param {import("express").Request} req 
- * @param {import("express").Response} res 
- * @param {import("express").NextFunction} next 
+ *
+ * @param {Request} req
+ * @param {Response} res
+ * @param {NextFunction} next
  */
-const ApiMiddleware = function (req, res, next) {
-     try {
-          let token = req.headers.authorization;
-          if (token == undefined || token == null) {
-               throw new Error("Cannot verify empty token")
-          }
+const ApiMiddleware = function(req, res, next) {
+    try {
+        const token = req.headers.authorization;
+        if (token == undefined || token == null) {
+            throw new Error('Cannot verify empty token');
+        }
 
-          let decoded = jwt.decode(token, {complete : true});
-          if(decoded == null)
-               throw new Error("Invalid Token");
+        const decoded = jwt.decode(token, {complete: true});
+        if (decoded == null) {
+            throw new Error('Invalid Token');
+        }
 
-          next();
-     } catch (e) {
-          let result = {
-               Message : e.message,
-               Data : null,
-               Response : ResponseCode.FAILED_TO_VERIFY
-          }
-          res.status(400).json(result);
-     }
-}
+        req.user = decoded.payload;
+
+        next();
+    } catch (e) {
+        const result = {
+            Message: e.message,
+            Data: null,
+            Response: ResponseCode.FAILED_TO_VERIFY,
+        };
+        res.status(400).json(result);
+    }
+};
 
 export default ApiMiddleware;

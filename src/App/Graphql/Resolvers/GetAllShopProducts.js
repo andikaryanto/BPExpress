@@ -1,4 +1,3 @@
-import M_users from "../../Models/M_users";
 import {
     GraphQLObjectType,
     GraphQLString,
@@ -8,46 +7,44 @@ import {
     GraphQLFloat,
     GraphQLNonNull,
     GraphQLList,
-    GraphQLInt
+    GraphQLInt,
 } from 'graphql';
-import UserType from "../Types/UserType";
-import { parserConfiguration } from "yargs";
-import MuserCollection from "../../ViewModel/Musers/MuserCollection";
-import ShopProductType from "../Types/ShopProductType";
-import M_shopproducts from "../../Models/M_shopproducts";
-import MshopproductCollection from "../../ViewModel/Mshopproduct/MshopproductCollection";
+import ShopProductType from '../Types/ShopProductType';
+import MshopproductCollection from '../../ViewModel/Mshopproduct/MshopproductCollection';
+import ShopProc from '../../BusinessProcess/ShopProc';
 
-
+/**
+ * @class GetAllShopProducts
+ */
 class GetAllShopProducts {
-
-    static execute(){
+    /**
+     * Execute graphql to return object of
+     * @return {{}}
+     */
+    static execute() {
         return {
-            type : new GraphQLList(ShopProductType),
-            args : {
-                ShopId : { 
-                    type : GraphQLInt,
-                }
+            type: new GraphQLList(ShopProductType),
+            args: {
+                ShopId: {
+                    type: new GraphQLNonNull(GraphQLInt),
+                },
+                ProductName: {
+                    type: GraphQLString,
+                },
             },
-            resolve : async function(parent, args, context){
-                var request = context.request;
-                if(request.graphqlError != undefined)
+            resolve: async function(parent, args, context) {
+                const request = context.request;
+                if (request.graphqlError != undefined) {
                     throw request.graphqlError;
-
-                var search = {}
-                if(args.ShopId != undefined){
-                    if(args.ShopId != null && args.ShopId != ''){
-                        search = {
-                            where : {
-                                M_Shop_Id : args.ShopId
-                            }
-                        }
-                    }
                 }
 
-                var shopProducts =  await M_shopproducts.collect(search);
+                const shopId = args.ShopId;
+                const productName = args.ProductName;
+
+                const shopProducts = await ShopProc.products(shopId, productName);
                 return (new MshopproductCollection(shopProducts)).proceedAndGetData();
-            }
-        }
+            },
+        };
     }
 }
 

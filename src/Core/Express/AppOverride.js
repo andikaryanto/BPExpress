@@ -1,132 +1,132 @@
-import Request from "../Http/Request.js";
-import Response from "../Http/Response.js";
-import { Express } from 'express';
+import Request from '../Http/Request.js';
+import Response from '../Http/Response.js';
+import {Express} from 'express';
 import fileUpload from 'express-fileupload';
 import session from 'express-session';
-import Session from "../Http/Session.js";
-import { v4 as uuidv4 } from 'uuid';
-import DbConnection from "../Database/Connection/DbConnection.js";
-import Kernel from "../../App/Config/Kernel.js";
-import Web from "../../App/Routes/Web.js";
-import Api from "../../App/Routes/Api.js";
+import Session from '../Http/Session.js';
+import {v4 as uuidv4} from 'uuid';
+import DbConnection from '../Database/Connection/DbConnection.js';
+import Kernel from '../../App/Config/Kernel.js';
+import Web from '../../App/Routes/Web.js';
+import Api from '../../App/Routes/Api.js';
 import csrf from 'csurf';
-import VerifyCsrf from "../Middleware/VerifyCsrf.js";
+import VerifyCsrf from '../Middleware/VerifyCsrf.js';
 const KnexSessionStore = require('connect-session-knex')(session);
 import {
-     GraphQLObjectType,
-     GraphQLString,
-     GraphQLSchema,
-     GraphQLID,
-     GraphQLBoolean,
-     GraphQLFloat,
-     GraphQLNonNull,
-     GraphQLList,
-     Source
+    GraphQLObjectType,
+    GraphQLString,
+    GraphQLSchema,
+    GraphQLID,
+    GraphQLBoolean,
+    GraphQLFloat,
+    GraphQLNonNull,
+    GraphQLList,
+    Source,
 } from 'graphql';
-import { graphqlHTTP } from 'express-graphql';
-import GraphQL from "../../App/Config/GraphQL.js";
+import {graphqlHTTP} from 'express-graphql';
+import GraphQL from '../../App/Config/GraphQL.js';
 
+/**
+ * @class AppOverride
+ */
 class AppOverride {
-
-     /**
-      * 
-      * @param {Express} app 
+    /**
+      *
+      * @param {Express} app
       */
-     static override(app) {
-          AppOverride.use(app);
-          // AppOverride.csrf(app);
-          AppOverride.middleware(app);
-          AppOverride.graphQL(app);
-     }
+    static override(app) {
+        AppOverride.use(app);
+        // AppOverride.csrf(app);
+        AppOverride.middleware(app);
+        AppOverride.graphQL(app);
+    }
 
-     /**
-      * 
-      * @param {Express} app 
+    /**
+      *
+      * @param {Express} app
       */
-     static graphQL(app) {
-          const RootQuery = new GraphQLObjectType({
-               name: "Query",
-               fields: GraphQL.query
-          });
+    static graphQL(app) {
+        const RootQuery = new GraphQLObjectType({
+            name: 'Query',
+            fields: GraphQL.query,
+        });
 
-          const RootMutation = new GraphQLObjectType({
-               name: "Mutation",
-               fields: GraphQL.mutation
-          });
+        const RootMutation = new GraphQLObjectType({
+            name: 'Mutation',
+            fields: GraphQL.mutation,
+        });
 
-          app.use('/graphql', 
-               [...Kernel.middlewareGroups.graphql], 
-               graphqlHTTP(
-                    (request) => ({
-                         schema: new GraphQLSchema({
-                              query: RootQuery,
-                              mutation: RootMutation
-                         }),
-                         graphiql: true,
-                         context: {...GraphQL.context, request : request }
-                    })
-               )
-          )
-     }
+        app.use('/graphql',
+            [...Kernel.middlewareGroups.graphql],
+            graphqlHTTP(
+                (request) => ({
+                    schema: new GraphQLSchema({
+                        query: RootQuery,
+                        mutation: RootMutation,
+                    }),
+                    graphiql: true,
+                    context: {...GraphQL.context, request: request},
+                }),
+            ),
+        );
+    }
 
-     /**
-      * 
-      * @param {Express} app 
+    /**
+      *
+      * @param {Express} app
       */
-     static use(app) {
-          app.use(fileUpload());
+    static use(app) {
+        app.use(fileUpload());
 
-          app.use(Request.request);
-          app.use(Response.response);
+        app.use(Request.request);
+        app.use(Response.response);
 
-          const store = new KnexSessionStore({
-               tablename: 'sessions',
-               createtable: true,
-               knex: DbConnection
-          });
+        const store = new KnexSessionStore({
+            tablename: 'sessions',
+            createtable: true,
+            knex: DbConnection,
+        });
 
-          app.use(session({
-               name: process.env.SESSION_NAME,
-               genid: function (req) {
-                    return uuidv4(); // use UUIDs for session IDs
-               },
-               cookie: {
-                    secure: process.env.APP_MODE == 'production' ? process.env.COOKIE_SECURE : false,
-                    httpOnly: process.env.COOKIE_HTTP_ONLY == "true" ? true : false,
-                    maxAge: Number(process.env.COOKIE_EXPIRED) * 1000,
+        app.use(session({
+            name: process.env.SESSION_NAME,
+            genid: function(req) {
+                return uuidv4(); // use UUIDs for session IDs
+            },
+            cookie: {
+                secure: process.env.APP_MODE == 'production' ? process.env.COOKIE_SECURE : false,
+                httpOnly: process.env.COOKIE_HTTP_ONLY == 'true' ? true : false,
+                maxAge: Number(process.env.COOKIE_EXPIRED) * 1000,
 
-               },
-               secret: process.env.APP_KEY,
-               store
-          }));
-          app.use(Session.session);
+            },
+            secret: process.env.APP_KEY,
+            store,
+        }));
+        app.use(Session.session);
 
-          if (process.env.CSRF_USAGE == "true") {
-               app.use(csrf({
-                    cookie: false
+        if (process.env.CSRF_USAGE == 'true') {
+            app.use(csrf({
+                cookie: false,
 
-               }))
-          }
-     }
+            }));
+        }
+    }
 
-     /**
-      * 
-      * @param {Express} app 
+    /**
+      *
+      * @param {Express} app
       */
-     static middleware(app) {
+    static middleware(app) {
+        app.use('/api', [VerifyCsrf, ...Kernel.middlewares, ...Kernel.middlewareGroups.api], Api());
+        app.use('/', [...Kernel.middlewares, ...Kernel.middlewareGroups.web], Web());
+    }
 
-          app.use("/api", [VerifyCsrf, ...Kernel.middlewares, ...Kernel.middlewareGroups.api], Api());
-          app.use("/", [...Kernel.middlewares, ...Kernel.middlewareGroups.web], Web());
-     }
-
-     /**
-      * 
-      * @param {Express} app 
+    /**
+      *
+      * @param {Express} app
       */
-     static csrf(app) {
+    static csrf(app) {
 
-     }
-
+    }
 }
 
 export default AppOverride;

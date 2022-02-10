@@ -1,15 +1,12 @@
-import Controller from "../../Core/Controller/Controller";
+import Controller from '../../Core/Controller/Controller';
 
-class BaseController extends Controller{
+class BaseController extends Controller {
+    globalData = {
+        title: 'this is parent data',
+    };
 
-     globalData = {
-          title : 'this is parent data'
-     };
-
-     constructor(){
-          super();
-     }
-
-     
+    constructor() {
+        super();
+    }
 }
-export default BaseController;     
+export default BaseController;

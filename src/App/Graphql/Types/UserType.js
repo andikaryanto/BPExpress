@@ -8,18 +8,18 @@ import {
     GraphQLBoolean,
     GraphQLFloat,
     GraphQLNonNull,
-    GraphQLList
+    GraphQLList,
 } from 'graphql';
 import GroupuserType from './GroupuserType';
 
 const UserType = new GraphQLObjectType({
-    name: "User",
+    name: 'User',
     fields: () => ({
-        Id: { type: GraphQLID },
-        Username: { type: GraphQLString },
-        Photo: { type: GraphQLString },
-        Groupuser: { type: GroupuserType }
-    })
-})
+        Id: {type: GraphQLID},
+        Username: {type: GraphQLString},
+        Photo: {type: GraphQLString},
+        Groupuser: {type: GroupuserType},
+    }),
+});
 
 export default UserType;

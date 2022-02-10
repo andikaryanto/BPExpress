@@ -1,33 +1,37 @@
+import {Request, Response as ExpressResponse} from 'express';
+/**
+ * @clas Response
+ */
 class Response {
-     static instance = null;
-     response = null;
+    static instance = null;
+    response = null;
 
-     /**
-      * @param {import("express").Response} expressResponse 
+    /**
+      * @param {ExpressResponse} expressResponse
       */
-     constructor(expressResponse){
-          this.response = expressResponse;
-     }
+    constructor(expressResponse) {
+        this.response = expressResponse;
+    }
 
-     /**
-      * @param {import("express").Request} req 
-      * @param {import("express").Response} res 
-      * @param {*} next 
+    /**
+      * @param {Request} req
+      * @param {ExpressResponse} res
+      * @param {*} next
       */
-     static response(req, res, next) {
-          
-          Response.instance = new Response(res);
-          next();
-     }
+    static response(req, res, next) {
+        Response.instance = new Response(res);
+        next();
+    }
 
-     /**
-      * @return {import("express").Response}
+    /**
+     * Get instance
+      * @return {ExpressResponse}
       */
-     static getInstance(){
-          // if(this.instance != null)
-          return this.instance.response;
-          // return this.instance;
-     }     
-} 
+    static getInstance() {
+        // if(this.instance != null)
+        return this.instance.response;
+        // return this.instance;
+    }
+}
 
 export default Response;

@@ -1,29 +1,52 @@
-class BaseViewModel {
+import Model from '../../Core/Model/Model';
 
+/**
+ * @clas BaseviewModel
+ */
+class BaseViewModel {
     model = null;
     #_autoAddResource = false;
 
-    constructor(autoAddResource, model){
+    /**
+     *
+     * @param {bool} autoAddResource
+     * @param {Model} model
+     */
+    constructor(autoAddResource, model) {
         this.model = model;
         this.#_autoAddResource = autoAddResource;
     }
 
-    addResource(viewModel){
+    /**
+     * Add Resource
+     * @param {BaseViewModel} viewModel
+     */
+    addResource(viewModel) {
 
     }
 
-    setAutoAddResource(addResource = true){
+    /**
+     * Set auto add resource
+     * @param {*} addResource
+     */
+    setAutoAddResource(addResource = true) {
         this.#_autoAddResource = addResource;
     }
 
-    getAutoAddResource(){
-        return this.#_autoAddResource
+    /**
+     * Get auto add resouce
+     * @return {boolean}
+     */
+    getAutoAddResource() {
+        return this.#_autoAddResource;
     }
 
-    toJson(){
-        
-    }
+    /**
+     *
+     */
+    toJson() {
 
+    }
 }
 
 export default BaseViewModel;

@@ -1,75 +1,80 @@
+/**
+ * @class View
+ */
 class View {
-     static #_instance = null;
-     view = "";
-     data = {};
-     type = "view";
+    static #_instance = null;
+    view = '';
+    data = {};
+    type = 'view';
 
-     constructor(){
+    /**
+     *
+     */
+    constructor() {
 
-     }
+    }
 
-     /**
-      * 
-      * @returns {View}
+    /**
+      *
+      * @return {View}
       */
-     static getInstance(){
-          if(this.#_instance == null);
-               this.#_instance = new this;
-          return this.#_instance;
-     }
+    static getInstance() {
+        if (this.#_instance == null);
+        this.#_instance = new this;
+        return this.#_instance;
+    }
 
-     /**
+    /**
       * Render View path
-      * @param {string} view 
-      * @param {{}} data 
-      * @returns {View}
+      * @param {string} view
+      * @param {{}} data
+      * @return {View}
       */
-     static make(view, data) {
-          let instance = View.getInstance();
-          instance.view = view;
-          instance.data = data;
-          instance.type = "view";
-          return instance;
-     }
+    static make(view, data) {
+        const instance = View.getInstance();
+        instance.view = view;
+        instance.data = data;
+        instance.type = 'view';
+        return instance;
+    }
 
-     /**
+    /**
       * Render View path
-      * @param {string} view 
-      * @param {{}} data 
-      * @returns {View}
+      * @param {string} view
+      * @param {{}} data
+      * @return {View}
       */
-     static html(view, data) {
-          let instance = View.getInstance();
-          instance.view = view;
-          instance.data = data;
-          instance.type = "html";
-          return instance;
-     }
+    static html(view, data) {
+        const instance = View.getInstance();
+        instance.view = view;
+        instance.data = data;
+        instance.type = 'html';
+        return instance;
+    }
 
-     /**
+    /**
       * Render View path
-      * @param {string} view 
-      * @param {{}} data 
-      * @returns {View}
+      * @param {string} view
+      * @param {{}} data
+      * @return {View}
       */
-      static sendFile(view, data) {
-          let instance = View.getInstance();
-          instance.view = view;
-          instance.data = data;
-          instance.type = "sendFile";
-          return instance;
-     }
+    static sendFile(view, data) {
+        const instance = View.getInstance();
+        instance.view = view;
+        instance.data = data;
+        instance.type = 'sendFile';
+        return instance;
+    }
 
-     /**
+    /**
       * Send data
-      * @param {{}} data 
-      * @returns {View}
+      * @param {{}} data
+      * @return {View}
       */
-     data(data){
-          this.data = data;
-          return this;
-     }
-
+    data(data) {
+        this.data = data;
+        return this;
+    }
 }
 
 export default View;

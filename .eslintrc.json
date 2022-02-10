@@ -1,0 +1,37 @@
+{
+    "env": {
+        "browser": true,
+        "es2021": true
+    },
+    "extends": [
+        "google"
+    ],
+    "parserOptions": {
+        "ecmaVersion": "latest",
+        "sourceType": "module"
+    },
+    "ignorePatterns": ["src/assets/*"],
+    "rules": {
+        "max-len": [
+            2, {
+                "code": 120
+             }
+        ],
+        "camelcase" : 0,
+        "indent": [2, 4],
+        "no-unused-vars": 0,
+        "new-cap" : [
+            2,{
+                "newIsCap": false,
+                "capIsNew": false
+            }
+        ],
+        "no-tabs": [
+            2, {
+                "allowIndentationTabs": true    
+            }
+        ],
+        "no-use-before-define": [2, {"classes": true}],
+        "no-invalid-this": "off"
+    }
+}

@@ -1,23 +1,39 @@
-import BaseViewModel from "../BaseViewModel";
-import MproductViewModel from "../Mproduct/MproductViewModel";
+import M_shopproducts from '../../Models/M_shopproducts';
+import BaseViewModel from '../BaseViewModel';
+import MproductViewModel from '../Mproduct/MproductViewModel';
 
+/**
+ * @clas MshopproductViewModel
+ */
 class MshopproductViewModel extends BaseViewModel {
-
+    /**
+     *
+     * @param {M_shopproducts} model
+     */
     constructor(model) {
         super(true, model);
     }
 
+    /**
+     *
+     * @param {{}} object
+     * @return {void}
+     */
     async addResource(object) {
-        var product = await this.model.M_Product();
+        const product = await this.model.M_Product();
         object.Product = await (new MproductViewModel(product)).toJson();
     }
 
+    /**
+     * Model to json data
+     * @return {{}}
+     */
     async toJson() {
-        
-        if (this.model == null)
+        if (this.model == null) {
             return null;
+        }
 
-        var json = {
+        const json = {
             Id: this.model.Id,
             M_Shop_Id: this.model.M_Shop_Id,
             PurchasePrice: this.model.PurchasePrice,
@@ -27,13 +43,13 @@ class MshopproductViewModel extends BaseViewModel {
             DiscountValue: this.model.DiscountValue,
             IsFeatured: this.model.IsFeatured,
             IsActive: this.model.IsActive,
-            Ordering: this.model.Ordering
+            Ordering: this.model.Ordering,
+        };
+
+        if (this.getAutoAddResource()) {
+            await this.addResource(json);
         }
 
-        if(this.getAutoAddResource()){
-            await this.addResource(json)
-        }
-        
         return json;
     }
 }

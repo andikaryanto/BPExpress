@@ -1,9 +1,16 @@
-import BaseResponse from "./BaseResponse";
-
-class NoDataResponse extends BaseResponse{
-
-    constructor(message, responseCode, data){
-        super(message, 204, responseCode, data)
+import BaseResponse from './BaseResponse';
+/**
+ * @class NoDataResponse
+ */
+class NoDataResponse extends BaseResponse {
+    /**
+     *
+     * @param {string} message
+     * @param {[]} responseCode
+     * @param {{}} data
+     */
+    constructor(message, responseCode, data) {
+        super(message, 204, responseCode, data);
     }
 }
 

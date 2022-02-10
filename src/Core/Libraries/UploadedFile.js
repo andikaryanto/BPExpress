@@ -1,34 +1,69 @@
-import Request from "../Http/Request.js";
+import Request from '../Http/Request.js';
 
+/**
+ * @class UploadedFile
+ */
 class UploadedFile {
-     #_item = null;
-     constructor(item){
-          this.#_item = item;
-     }
+    #_item = null;
+    /**
+     *
+     * @param {{}} item
+     */
+    constructor(item) {
+        this.#_item = item;
+    }
 
-     getItem(){
-          return this.#_item;
-     }
+    /**
+     * Get item
+     * @return {{}}
+     */
+    getItem() {
+        return this.#_item;
+    }
 
-     getName(){
-          return this.#_item.name;
-     }
+    /**
+     * Get Item name
+     * @return {string}
+     */
+    getName() {
+        return this.#_item.name;
+    }
 
-     getExtension(){
-          return this.getName().split(".")[1];
-     }
+    /**
+     * Get item extension
+     *
+     * @return {string}
+     */
+    getExtension() {
+        return this.getName().split('.')[1];
+    }
 
-     getSize(){
-          return this.#_item.size;
-     }
+    /**
+     * Get item size
+     * @return {number}
+     */
+    getSize() {
+        return this.#_item.size;
+    }
 
-     getMimeType(){
-          return this.#_item.mimetype;
-     }
+    /**
+     * Get Item mimetype
+     * @return {string}
+     */
+    getMimeType() {
+        return this.#_item.mimetype;
+    }
 
-     move(uploadPath, callback){
-          return this.#_item.mv(uploadPath, callback);
-     }
+    /**
+     * Upload file to specific path
+     *
+     * @param {string} uploadPath
+     * @param {Function} callback
+     * @return {void}
+     */
+    move(uploadPath, callback) {
+        return this.#_item.mv(uploadPath, callback);
+    }
 }
 
 export default UploadedFile;
