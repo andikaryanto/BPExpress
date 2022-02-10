@@ -24,7 +24,9 @@ class GetAllShopProducts {
         return {
             type : new GraphQLList(ShopProductType),
             args : {
-                ShopId : { type : GraphQLInt}
+                ShopId : { 
+                    type : GraphQLInt,
+                }
             },
             resolve : async function(parent, args, context){
                 var request = context.request;

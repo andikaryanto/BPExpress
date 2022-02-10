@@ -259,7 +259,7 @@ class Model {
       */
      async fetch(filter = {}, columns = []) {
 
-          this.#_columns = this.getPropsName();
+          this.#_columns = this.getSelectColumns();
           if (columns.length > 0)
                this.#_columns = columns;
 
@@ -637,6 +637,18 @@ class Model {
      addTrait(trait, options = {}) {
           let newTrait = new trait();
           newTrait.register(this.constructor, options);
+     }
+
+     /**
+      * Get select column of current table
+      * @returns {[]}
+      */
+     getSelectColumns(){
+          var selectColumns = [];
+          for(var column of this.getPropsName()){
+               selectColumns.push(this.getTable() + '.' + column)
+          }
+          return selectColumns;
      }
 
 }

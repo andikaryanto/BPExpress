@@ -19,8 +19,21 @@ class ShopProc {
     
     static async products(shopId, name = null){
         var param = {
+            join : {
+                'm_products' : {
+                    key : [
+                        'm_products.Id', 'm_shopproducts.M_Product_Id'
+                    ]
+                }
+            },
             where: {
-                M_Shop_Id: shopId
+                'm_shopproducts.M_Shop_Id': shopId
+            }
+        };
+
+        if(name != null){
+            param['like'] = {
+                'm_products.Name' : name
             }
         }
 

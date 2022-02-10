@@ -32,7 +32,6 @@ class View {
           return instance;
      }
 
-     
      /**
       * Render View path
       * @param {string} view 
@@ -44,6 +43,20 @@ class View {
           instance.view = view;
           instance.data = data;
           instance.type = "html";
+          return instance;
+     }
+
+     /**
+      * Render View path
+      * @param {string} view 
+      * @param {{}} data 
+      * @returns {View}
+      */
+      static sendFile(view, data) {
+          let instance = View.getInstance();
+          instance.view = view;
+          instance.data = data;
+          instance.type = "sendFile";
           return instance;
      }
 

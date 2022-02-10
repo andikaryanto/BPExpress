@@ -15,9 +15,9 @@ class Shop {
         return (new SuccessResponse('Success', ResponseCode.OK, shopCollection)).send();
     }
 
-    async products({request}){
-        var shopId = request.params.shopId;
-        var name = request.params.name;
+    async products({params, query}){
+        var shopId = params.shopId;
+        var name = query.Name;
 
         var shopProducts = await ShopProc.products(shopId, name);
         var shopProductCollection = await (new MshopproductCollection(shopProducts)).proceedAndGetData();

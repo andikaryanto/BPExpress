@@ -6,6 +6,7 @@ import Redirect from "../Controller/Redirect";
 import ResponseData from "../Controller/ResponseData";
 import View from "../Controller/View";
 import Template from "../Template/Template";
+import appRoot from 'app-root-path';
 class Routers {
 
      #_router = null;
@@ -143,7 +144,7 @@ class Routers {
 
                let classController = controller;
                let controllerInstance = new classController();
-               let data = controllerInstance[fn]({ request: req, session: req.session, params: req.params, ...additionalData });
+               let data = controllerInstance[fn]({ request: req, session: req.session, params: req.params, query: req.query, ...additionalData });
                let returnedData = null;
                if (data instanceof Promise) {
                     returnedData = await data;
@@ -192,6 +193,8 @@ class Routers {
                     res.send(returnedData.view);
                if (returnedData.type == "view")
                     res.render(returnedData.view, { ...returnedData.data, ...Template(), ...ConfigView.hook() });
+               if (returnedData.type == "sendFile")
+                    res.sendFile(appRoot + '/src/App/Views/' + returnedData.view);
           }
 
           if (returnedData instanceof Redirect) {
