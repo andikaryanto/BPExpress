@@ -31,5 +31,5 @@ jobs:
     - name: Install dependencies
       run: yarn install
     
-    - name: Run All Unit Test
+    - name: Run linting for js using eslint
       run: npx eslint --fix src
