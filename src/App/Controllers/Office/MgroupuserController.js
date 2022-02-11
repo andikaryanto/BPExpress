@@ -7,12 +7,21 @@ import BaseController from '../BaseController.js';
 import Redirect from '../../../Core/Controller/Redirect.js';
 import DbConnection from '../../../Core/Database/Connection/DbConnection.js';
 import M_users from '../../Models/M_users.js';
-
+/**
+ * @class MgroupuserController
+ */
 class MgroupuserController extends BaseController {
+    /**
+     *
+     */
     constructor() {
         super();
     }
 
+    /**
+     * Go to groupuser list /office/mgroupuser
+     * @return {View}
+     */
     async index() {
         try {
             return View.make('office/m_groupuser/index', {title: 'Grup Pengguna'});
@@ -28,6 +37,13 @@ class MgroupuserController extends BaseController {
         }
     }
 
+    /**
+     *
+     * Get data by id /office/mgroupuser/getById
+     * @method GET
+     * @param {*} {}
+     * @return {ResponseData}
+     */
     async getById({request, ...props}) {
         try {
             const Id = request.params.Id;
@@ -44,6 +60,13 @@ class MgroupuserController extends BaseController {
         }
     }
 
+    /**
+     *
+     * Get data list /office/mgroupuser/data/list
+     * @method GET
+     * @param {*} {}
+     * @return {ResponseData}
+     */
     async list() {
         try {
             return ResponseData.status(200).json({list: 'list'});
@@ -59,6 +82,12 @@ class MgroupuserController extends BaseController {
         }
     }
 
+    /**
+     *
+     * Get data list for datatables /office/mgroupuser/getalldata
+     * @method GET
+     * @return {ResponseData}
+     */
     async getAllData() {
         try {
             const filter = {};
@@ -97,8 +126,16 @@ class MgroupuserController extends BaseController {
                     '',
                     null,
                     function(row, id) {
-                        return `<a href='#' class='btn btn-info edit' data-bs-toggle='modal' data-bs-target='#ubahModal'>Ubah</a>
-                        <a href='#' class='btn btn-danger delete' data-bs-toggle='modal' data-bs-target='#hapusModal'>Hapus</a>`;
+                        return `<a href='#' 
+                            class='btn btn-info edit' 
+                            data-bs-toggle='modal' 
+                            data-bs-target='#ubahModal'>Ubah
+                        </a>
+                        <a href='#' 
+                            class='btn btn-danger delete' 
+                            data-bs-toggle='modal' 
+                            data-bs-target='#hapusModal'>Hapus
+                        </a>`;
                     },
                     false,
                     false,
@@ -114,20 +151,6 @@ class MgroupuserController extends BaseController {
 
             return ResponseData.status(400).json(result);
         }
-    }
-
-    async update() {
-        const group = await M_groupusers.find(5)
-            .then((object) => {
-                object.GroupName = 'Ganti 5';
-                object.save().then((lastId) => {
-                    res.status(200).send('berhasil dengan kode ' + lastId);
-                });
-            });
-    }
-
-    test() {
-        this.reponse.send('test');
     }
 }
 

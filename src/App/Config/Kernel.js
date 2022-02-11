@@ -1,7 +1,9 @@
 import VerifyCsrf from '../../Core/Middleware/VerifyCsrf.js';
 import ApiMiddleware from '../Middlewares/ApiMiddleware.js';
 import GraphqlMiddleware from '../Middlewares/GraphqlMiddleware.js';
-
+/**
+ * @class Kernel
+ */
 class Kernel {
     /**
       * global middlewares will be applied to any request if you set the middlewares in array bellow

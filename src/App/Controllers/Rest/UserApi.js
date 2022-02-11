@@ -3,18 +3,20 @@ import ResponseCode from '../../Constants/ResponseCode.js';
 import ModelError from '../../Errors/ModelError.js';
 import jwt from 'jsonwebtoken';
 import CommonLib from '../../Libraries/CommonLib.js';
-import Db from '../../../Core/Database/Connection/DbConnection.js';
 import M_users from '../../Models/M_users.js';
 import DbTrans from '../../../Core/Database/DbTrans.js';
 import Controller from '../../../Core/Controller/Controller.js';
 import ResponseData from '../../../Core/Controller/ResponseData.js';
-
+/**
+ * @class UserApi
+ */
 class UserApi extends Controller {
     /**
-      *
-      * @param {*} request
-      * @return {ResponseData}
-      */
+     * User Login \api\user\login
+     * @method POST
+     * @param {*} request
+     * @return {ResponseData}
+     */
     async login({request}) {
         try {
             const body = request.body;
@@ -53,6 +55,12 @@ class UserApi extends Controller {
         }
     }
 
+    /**
+      * Create user data \api\user\save
+      * @method POST
+      * @param {*} request
+      * @return {ResponseData}
+      */
     async store({request}) {
         const body = request.body;
         const trx = await DbTrans.beginTransaction();
@@ -74,6 +82,12 @@ class UserApi extends Controller {
         }
     }
 
+    /**
+      * Create user data \api\user\update\:id
+      * @method PUT
+      * @param {*} request
+      * @return {ResponseData}
+      */
     async update({request}) {
         const Id = request.params.Id;
         const trx = await DbTrans.beginTransaction();
@@ -94,6 +108,12 @@ class UserApi extends Controller {
         }
     }
 
+    /**
+      * Get user data list \api\user\list
+      * @method PUT
+      * @param {*} request
+      * @return {ResponseData}
+      */
     async list({request}) {
         try {
             const users = await M_users.findAll();

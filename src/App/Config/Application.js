@@ -6,10 +6,14 @@ import {Express} from 'express';
 import appRoot from 'app-root-path';
 const path = require('path');
 dotenv.config();
+/**
+ * @class Application
+ */
 class Application {
     /**
      *
      * @param {Express} app
+     * @param {express} express
      */
     static init(app, express) {
         Application.global(app, express);
@@ -37,6 +41,7 @@ class Application {
     /**
      *
      * @param {Express} app
+     * @param {express} express
      */
     static global(app, express) {
         app.use('/assets', express.static(path.resolve(appRoot.path+'/src/', 'assets')));

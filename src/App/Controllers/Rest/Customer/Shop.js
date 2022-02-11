@@ -1,11 +1,21 @@
 
+import ResponseData from '../../../../Core/Controller/ResponseData';
 import ShopProc from '../../../BusinessProcess/ShopProc';
 import ResponseCode from '../../../Constants/ResponseCode';
 import SuccessResponse from '../../../Responses/SuccessResponse';
 import MshopCollection from '../../../ViewModel/Mshop/MshopCollection';
 import MshopproductCollection from '../../../ViewModel/Mshopproduct/MshopproductCollection';
 
+/**
+ * @clas Shop
+ */
 class Shop {
+    /**
+     * Get all shop list /api/customer/shop/list
+     * @method GET
+     * @param {*} object
+     * @return {ResponseData}
+     */
     async getList({request}) {
         const name = request.query.Name;
 
@@ -15,6 +25,12 @@ class Shop {
         return (new SuccessResponse('Success', ResponseCode.OK, shopCollection)).send();
     }
 
+    /**
+     * Get all shop product /api/customer/shop/:shopId/products
+     * @method GET
+     * @param {*} object
+     * @return {ResponseData}
+     */
     async products({request, params, query}) {
         const shopId = params.shopId;
         const name = query.Name;

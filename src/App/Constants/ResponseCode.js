@@ -1,3 +1,6 @@
+/**
+ * @class ResponseCode
+ */
 class ResponseCode {
     static OK = {
         'Status': 'OK',

@@ -2,6 +2,9 @@ import {Express} from 'express';
 import dotenv from 'dotenv';
 import appRoot from 'app-root-path';
 dotenv.config({path: appRoot + '/.env'});
+/**
+ * @class View
+ */
 class View {
     /**
       *

@@ -3,11 +3,19 @@ import ResponseCode from '../../Constants/ResponseCode.js';
 import ModelError from '../../Errors/ModelError.js';
 import M_groupusers from '../../Models/M_groupusers.js';
 
+/**
+ * @class GroupuserApi
+ */
 class GroupuserApi {
+    /**
+     * Get all data groupuser /api/groupuser/list
+     * @method GET
+     * @return {ResponseData}
+     */
     async getList() {
         try {
             const groupuser = await M_groupusers.collect();
-            var result = {
+            const result = {
                 Message: 'Data Ditemukan',
                 Data: groupuser.getItems(),
                 Response: ResponseCode.OK,
@@ -15,7 +23,7 @@ class GroupuserApi {
 
             return ResponseData.status(200).json(result);
         } catch (e) {
-            var result = {
+            const result = {
                 Message: e.message,
                 Data: null,
                 Response: ResponseCode.DATA_NOT_FOUND,
@@ -25,6 +33,11 @@ class GroupuserApi {
         }
     }
 
+    /**
+     * Store new groupuser /api/groupuser
+     * @method POST
+     * @return {ResponseData}
+     */
     async store() {
         try {
             const groupuser = new M_groupusers();

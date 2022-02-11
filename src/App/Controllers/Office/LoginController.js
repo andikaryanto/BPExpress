@@ -10,7 +10,16 @@ import View from '../../../Core/Controller/View.js';
 import ResponseData from '../../../Core/Controller/ResponseData.js';
 import ModelError from '../../Errors/ModelError.js';
 
+/**
+ * @clsas LoginController
+ */
 class LoginController extends Controller {
+    /**
+     * Go to user login /office/login
+     * @method GET
+     * @param {*} param0
+     * @return {Redirect|View}
+     */
     async index({request, session, ...props}) {
         try {
             if (session.token != undefined || session.token == null) {
@@ -27,6 +36,12 @@ class LoginController extends Controller {
         }
     }
 
+    /**
+     * do login for a user /office/login/dologin
+     * @method POST
+     * @param {*} param0
+     * @return {Redirect}
+     */
     async doLogin({request, session}) {
         try {
             const body = request.body;
@@ -46,13 +61,16 @@ class LoginController extends Controller {
         }
     }
 
+
+    /**
+     * do login for a user /office/login/dologout
+     * @method GET
+     * @param {*} param0
+     * @return {Redirect|View}
+     */
     async doLogout({request, session}) {
         session.destroy();
         return Redirect.to('/office/login');
-    }
-
-    test() {
-        return View.html('aadasd');
     }
 }
 
