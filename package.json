@@ -6,7 +6,8 @@
   "scripts": {
     "build": "babel ./src -d build --copy-files",
     "dev": "nodemon src/index.js",
-    "prod": "nodemon build/index.js"
+    "prod": "nodemon build/index.js",
+    "test": "jest src/Test"
   },
   "keywords": [
     "express"
@@ -27,6 +28,7 @@
     "babel-register": "^6.26.0",
     "body-parser": "^1.19.0",
     "boxen": "^4.0.0",
+    "chai": "^4.3.6",
     "chalk": "^2.4.2",
     "connect-session-knex": "^2.0.0",
     "csurf": "^1.11.0",
@@ -37,6 +39,7 @@
     "express-group-routes": "^1.1.0",
     "express-session": "^1.17.1",
     "graphql": "15.3.0",
+    "jest": "^27.5.1",
     "jsonwebtoken": "^8.5.1",
     "knex": "^0.95.4",
     "md5": "^2.3.0",

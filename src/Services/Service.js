@@ -9,8 +9,7 @@ import UserService from '../App/Services/UserService';
  */
 export default (container) => {
     container.register('shop.service', ShopService)
-        .addArgument(new Reference('shop.repository'))
-        .addArgument(new Reference('product.repository'));
+        .addArgument(new Reference('shop.repository'));
 
     container.register('library.common.service', CommonService);
     container.register('library.request.service', RequestService);

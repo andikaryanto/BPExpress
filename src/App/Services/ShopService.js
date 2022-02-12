@@ -9,11 +9,16 @@ import MshopRepository from '../Repositories/MshopRepository';
 class ShopService {
     /**
      *
-     * @param {MshopRepository} shopRepository
-     * @param {MproductRepository} productRepository
+     * @var {MshopRepository} shopRepository
      */
-    constructor(shopRepository, productRepository) {
+    #_shopRepository;
 
+    /**
+     *
+     * @param {MshopRepository} shopRepository
+     */
+    constructor(shopRepository) {
+        this.#_shopRepository = shopRepository;
     }
     /**
      * Search for shop
@@ -31,7 +36,7 @@ class ShopService {
             };
         }
 
-        const shop = await M_shops.collect(param);
+        const shop = await this.#_shopRepository.collect(param);
         return shop;
     }
     /**

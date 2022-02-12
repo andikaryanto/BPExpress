@@ -33,3 +33,6 @@ jobs:
     
     - name: Run linting for js using eslint
       run: npx eslint --fix src
+    
+    - name: Run linting for js using eslint
+      run: yarn jest src/Test
