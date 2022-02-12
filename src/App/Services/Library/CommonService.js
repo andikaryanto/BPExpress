@@ -1,14 +1,14 @@
-import CommonLib from "../../Libraries/CommonLib";
+import CommonLib from '../../Libraries/CommonLib';
 /**
  * @class CommonService
  */
 class CommonService {
     /**
-     * 
-     * @param {string} value 
-     * @returns {string}
+     *
+     * @param {string} value
+     * @return {string}
      */
-    encryptMd5(value){
+    encryptMd5(value) {
         return CommonLib.encryptMd5(value);
     }
 }

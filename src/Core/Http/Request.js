@@ -5,7 +5,6 @@ import {Response as ExpressResponse, Request as ExpressRequest} from 'express';
  * @class Request
  */
 class Request {
-
     /**
      * @var {Request} instance
      */
@@ -14,10 +13,10 @@ class Request {
 
 
     /**
-      * 
+      *
       */
     constructor() {
-        
+
     }
 
     /**
@@ -31,11 +30,11 @@ class Request {
     }
 
     /**
-     * 
-     * @param {*} req 
+     *
+     * @param {*} req
      * @return {Request}
      */
-    setRequest(req){
+    setRequest(req) {
         req = Request.files(req);
         this.request = req;
 
@@ -43,10 +42,10 @@ class Request {
     }
 
     /**
-     * 
+     *
      * @return {{}}
      */
-    getRequest(){
+    getRequest() {
         return this.request;
     }
 
@@ -55,8 +54,9 @@ class Request {
       * @return {ExpressRequest}
       */
     static getInstance() {
-        if(this.instance == null)
+        if (this.instance == null) {
             this.instance = new this;
+        }
 
         return this.instance;
     }

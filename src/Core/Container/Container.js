@@ -1,23 +1,46 @@
-class Container{
+import {ContainerBuilder} from 'node-dependency-injection';
+
+/**
+ * @class Container
+ */
+class Container {
     static #_instance;
     containerBuilder = null;
 
-    constructor(){
+    /**
+     *
+     */
+    constructor() {
 
     }
 
-    static getInstance(){
-        if(this.#_instance == null)
+    /**
+     * Get instance
+     * @return {Container}
+     */
+    static getInstance() {
+        if (this.#_instance == null) {
             this.#_instance = new this;
+        }
         return this.#_instance;
     }
 
-    setContainerBuilder(containerBuilder){
+    /**
+     * Set conatiner builder
+     * @param {ContainerBuilder} containerBuilder
+     * @return {Container}
+     */
+    setContainerBuilder(containerBuilder) {
         this.containerBuilder = containerBuilder;
         return this;
     }
 
-    get(key){ 
+    /**
+     * Get service instance
+     * @param {string} key
+     * @return {*}
+     */
+    get(key) {
         return this.containerBuilder.get(key);
     }
 }

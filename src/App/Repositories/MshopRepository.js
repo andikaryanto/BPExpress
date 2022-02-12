@@ -1,14 +1,13 @@
-import M_shops from "../Models/M_shops";
-import BaseRepository from "./BaseRespositoy";
+import M_shops from '../Models/M_shops';
+import BaseRepository from './BaseRespositoy';
 /**
  * @class MshopRepository
  */
-class MshopRepository extends BaseRepository{
-    
+class MshopRepository extends BaseRepository {
     /**
      * @inheritdoc
      */
-    getClass(){
+    getClass() {
         return M_shops;
     }
 }

@@ -40,7 +40,7 @@ class GetAllShopProducts {
 
                 const shopId = args.ShopId;
                 const productName = args.ProductName;
-                
+
                 const shopService = context.container.get('shop.service');
                 const shopProducts = await shopService.products(shopId, productName);
                 return (new MshopproductCollection(shopProducts)).proceedAndGetData();

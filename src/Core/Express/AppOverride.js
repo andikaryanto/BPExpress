@@ -1,10 +1,10 @@
 import Request from '../Http/Request.js';
 import Response from '../Http/Response.js';
-import { Express } from 'express';
+import {Express} from 'express';
 import fileUpload from 'express-fileupload';
 import session from 'express-session';
 import Session from '../Http/Session.js';
-import { v4 as uuidv4 } from 'uuid';
+import {v4 as uuidv4} from 'uuid';
 import DbConnection from '../Database/Connection/DbConnection.js';
 import Kernel from '../../App/Config/Kernel.js';
 import Web from '../../App/Routes/Web.js';
@@ -23,11 +23,11 @@ import {
     GraphQLList,
     Source,
 } from 'graphql';
-import { graphqlHTTP } from 'express-graphql';
+import {graphqlHTTP} from 'express-graphql';
 import GraphQL from '../../App/Config/GraphQL.js';
 import Container from '../../App/Config/Container.js';
 import CoreContainer from '../Container/Container.js';
-import { ContainerBuilder } from 'node-dependency-injection';
+import {ContainerBuilder} from 'node-dependency-injection';
 import RequestInstance from '../Middleware/RequestInstance.js';
 
 /**
@@ -42,13 +42,14 @@ class AppOverride {
         AppOverride.use(app);
         // AppOverride.csrf(app);
         AppOverride.middleware(app);
-        let container = AppOverride.container();
+        const container = AppOverride.container();
         AppOverride.graphQL(app, container);
     }
 
     /**
       *
       * @param {Express} app
+      * @param {CoreContainer} container
       */
     static graphQL(app, container) {
         const RootQuery = new GraphQLObjectType({
@@ -70,7 +71,7 @@ class AppOverride {
                         mutation: RootMutation,
                     }),
                     graphiql: true,
-                    context: { ...GraphQL.context(), container, request },
+                    context: {...GraphQL.context(), container, request},
                 }),
             ),
         );
@@ -94,7 +95,7 @@ class AppOverride {
 
         app.use(session({
             name: process.env.SESSION_NAME,
-            genid: function (req) {
+            genid: function(req) {
                 return uuidv4(); // use UUIDs for session IDs
             },
             cookie: {
@@ -133,9 +134,12 @@ class AppOverride {
 
     }
 
+    /**
+     * Create conatainer for dependency injection
+     * @return {CoreContainer}
+     */
     static container() {
-
-        let containerBuilder = new ContainerBuilder()
+        const containerBuilder = new ContainerBuilder();
 
         for (const service of Container.service) {
             service(containerBuilder);
@@ -143,7 +147,6 @@ class AppOverride {
 
         return CoreContainer.getInstance().setContainerBuilder(containerBuilder);
         // console.log(containerBuilder.getAllService());
-
     }
 }
 

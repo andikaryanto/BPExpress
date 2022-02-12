@@ -11,25 +11,24 @@ import RequestService from '../../../Services/Library/RequestService';
  * @clas Shop
  */
 class Shop {
-
     /**
-     * 
-     * @var {RequestService} requestService 
+     *
+     * @var {RequestService} requestService
      */
-     #_requestService;
+    #_requestService;
 
     /**
-     * 
-     * @var {ShopService} shopService 
+     *
+     * @var {ShopService} shopService
      */
     #_shopService;
 
     /**
-     * 
-     * @param {RequestService} requestService 
-     * @param {ShopService} shopService 
+     *
+     * @param {RequestService} requestService
+     * @param {ShopService} shopService
      */
-    constructor(requestService, shopService){
+    constructor(requestService, shopService) {
         this.#_requestService = requestService;
         this.#_shopService = shopService;
     }

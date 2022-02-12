@@ -7,23 +7,22 @@ import CommonService from './Library/CommonService.js';
  * @class UserService
  */
 class UserService {
-
     /**
-     * @private {CommonService} #_commonService; 
+     * @private {CommonService} #_commonService;
      */
     #_commonService;
 
     /**
-     * @private {MuserRepository} #_userRepository; 
+     * @private {MuserRepository} #_userRepository;
      */
-     #_userRepository;
+    #_userRepository;
 
     /**
-     * 
-     * @param {CommonService} commonService 
-     * @param {MuserRepository} userRepository 
+     *
+     * @param {CommonService} commonService
+     * @param {MuserRepository} userRepository
      */
-    constructor(commonService, userRepository){
+    constructor(commonService, userRepository) {
         this.#_commonService = commonService;
         this.#_userRepository = userRepository;
     }

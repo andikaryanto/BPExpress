@@ -1,57 +1,58 @@
-import Request from "../../../Core/Http/Request";
+import Request from '../../../Core/Http/Request';
 
 
 /**
  * @clas RequestService
  */
 class RequestService {
-
     /**
-     * 
+     *
      */
-    constructor(){
+    constructor() {
 
     }
 
     /**
-     * 
-     * @param {string} key 
-     * @returns {any}
+     *
+     * @param {string} key
+     * @return {*}
      */
-    getQuery(key = null){
-        let request = Request.getInstance().getRequest();
-        if(key == null)
+    getQuery(key = null) {
+        const request = Request.getInstance().getRequest();
+        if (key == null) {
             returnrequest.query;
+        }
 
         return request.query[key];
     }
 
     /**
-     * 
-     * @param {string} key 
-     * @returns 
+     *
+     * @param {string} key
+     * @return {#}
      */
-    getParams(key){
-        let request = Request.getInstance().getRequest();
-        if(key == null)
+    getParams(key) {
+        const request = Request.getInstance().getRequest();
+        if (key == null) {
             return request.params;
+        }
 
         return request.params[key];
     }
 
     /**
-     * 
-     * @param {string} key 
-     * @returns 
+     *
+     * @param {string} key
+     * @return {*}
      */
-    getBody(key){
-        let request = Request.getInstance().getRequest();
-        if(key == null)
+    getBody(key) {
+        const request = Request.getInstance().getRequest();
+        if (key == null) {
             return request.body;
-            
+        }
+
         return request.body[key];
     }
-
 }
 
 export default RequestService;

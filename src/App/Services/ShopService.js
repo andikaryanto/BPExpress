@@ -7,14 +7,13 @@ import MshopRepository from '../Repositories/MshopRepository';
  * @class ShopService
  */
 class ShopService {
-
     /**
-     * 
-     * @param {MshopRepository} shopRepository 
-     * @param {MproductRepository} productRepository 
+     *
+     * @param {MshopRepository} shopRepository
+     * @param {MproductRepository} productRepository
      */
-    constructor(shopRepository, productRepository){
-        
+    constructor(shopRepository, productRepository) {
+
     }
     /**
      * Search for shop

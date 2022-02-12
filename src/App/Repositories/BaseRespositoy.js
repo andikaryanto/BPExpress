@@ -1,30 +1,29 @@
 /**
  * @class BaseRepository
  */
-class BaseRepository{
-
+class BaseRepository {
     /**
      * Get class model
      */
-    getClass(){
+    getClass() {
 
     }
 
     /**
      * Get data by Id
-     * @param {number|string} id 
+     * @param {number|string} id
      */
-    async find(id){
-        let className = this.getClass();
+    async find(id) {
+        const className = this.getClass();
         return await className['find'](id);
     }
 
     /**
      * Get data by Id
-     * @param {number|string} id 
+     * @param {number|string} id
      */
-     async findOrNew(id){
-        let className = this.getClass();
+    async findOrNew(id) {
+        const className = this.getClass();
         return await className['findOrNew'](id);
     }
 
@@ -34,8 +33,8 @@ class BaseRepository{
       * @throws {Error}
       * @return {object}
       */
-     async findOrFail(id) {
-        let className = this.getClass();
+    async findOrFail(id) {
+        const className = this.getClass();
         return await className['findOrFail'](id);
     }
 
@@ -45,8 +44,8 @@ class BaseRepository{
       * @throws {Error}
       * @return {object|null}
      */
-     async findOne(filter = {}){
-        let className = this.getClass();
+    async findOne(filter = {}) {
+        const className = this.getClass();
         return await className['findOne'](filter);
     }
 
@@ -56,8 +55,8 @@ class BaseRepository{
       * @throws {Error}
       * @return {object}
       */
-     async findOneOrFail(filter = {}) {
-        let className = this.getClass();
+    async findOneOrFail(filter = {}) {
+        const className = this.getClass();
         return await className['findOneOrFail'](filter);
     }
 
@@ -66,8 +65,8 @@ class BaseRepository{
       * @param {{}} filter
       * @param {[]} columns
       */
-     async findAll(filter = {}, columns = []) {
-        let className = this.getClass();
+    async findAll(filter = {}, columns = []) {
+        const className = this.getClass();
         return await className['findAll'](filter, columns);
     }
 
@@ -78,7 +77,7 @@ class BaseRepository{
       * @return {number}
       */
     async count(filter = {}, columns = []) {
-        let className = this.getClass();
+        const className = this.getClass();
         return await className['count'](filter, columns);
     }
 
@@ -86,8 +85,8 @@ class BaseRepository{
      * Get collection data
      * @param {{}} param
      */
-    async collect(param = {}){
-        let className = this.getClass();
+    async collect(param = {}) {
+        const className = this.getClass();
         return await className['collect'](param);
     }
 
@@ -96,8 +95,8 @@ class BaseRepository{
      * @param {[]} relatedClasses
      * @return {object}
      */
-     async with(relatedClasses) {
-        let className = this.getClass();
+    async with(relatedClasses) {
+        const className = this.getClass();
         return await className['with'](relatedClasses);
     }
 }

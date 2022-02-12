@@ -11,18 +11,17 @@ import ResponseData from '../../../Core/Controller/ResponseData.js';
  * @class UserApi
  */
 class UserApi extends Controller {
+    /**
+     *
+     * @property {UserService} userService
+     */
+    #_userService;
 
     /**
-     * 
-     * @property {UserService} userService 
+     *
+     * @param {UserService} userService
      */
-    #_userService ;
-
-    /**
-     * 
-     * @param {UserService} userService 
-     */
-    constructor(userService){
+    constructor(userService) {
         super();
         this.#_userService = userService;
     }

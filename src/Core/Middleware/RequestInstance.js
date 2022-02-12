@@ -1,6 +1,6 @@
-import Request from "../Http/Request";
+import Request from '../Http/Request';
 
-const RequestInstance = async function (err, req, res, next) {
+const RequestInstance = async function(err, req, res, next) {
     Request.getInstance().setRequest(req);
     next();
 };

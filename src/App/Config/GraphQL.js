@@ -31,7 +31,7 @@ class GraphQL {
      */
     static context() {
         return {
-            
+
         };
     }
 }
