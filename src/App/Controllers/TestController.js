@@ -1,4 +1,5 @@
 
+import Container from '../../Core/Container/Container.js';
 import Controller from '../../Core/Controller/Controller.js';
 import ResponseData from '../../Core/Controller/ResponseData.js';
 import View from '../../Core/Controller/View.js';
@@ -21,20 +22,7 @@ class TestController extends Controller {
      * @return {View}
      */
     async index({request, response}) {
-        return View.sendFile('html/index.html', {messsage: 'asdasd'});
-        // try {
-        //      let users = await M_users.collect();
-        //      // for(let user of users){
-        //      //      user.Is;
-        //      // }
-        //      return ResponseData.status(200).json(users)
-        // } catch (e) {
-        //      return ResponseData.status(200).json({ message: e.message })
-        // }
-
-        // var g = new M_groupusers();
-        // M_groupusers.findAll();
-        // res.send("asdasd");
+        Container.getService('rest.shop.controller');
     }
 
     /**

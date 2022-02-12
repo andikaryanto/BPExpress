@@ -6,6 +6,8 @@ import ResponseData from '../Controller/ResponseData';
 import View from '../Controller/View';
 import Template from '../Template/Template';
 import appRoot from 'app-root-path';
+import Container from '../Container/Container';
+import CoreRequest from '../Http/Request';
 /**
  * @class Router
  */
@@ -144,12 +146,10 @@ class Routers {
         } else {
             currentRoute = `/${route}`;
         }
-        // console.log(currentRoute, this.#_namedMiddleware);
-
 
         const resReq = async (req, res) => {
-            const classController = controller;
-            const controllerInstance = new classController();
+            const container = Container.getInstance().get(controller);
+            const controllerInstance = container;
             const data = controllerInstance[fn](
                 {
                     request: req,

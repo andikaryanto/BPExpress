@@ -1,4 +1,3 @@
-import Request from '../../Core/Http/Request';
 import GetAllShopProducts from '../Graphql/Resolvers/GetAllShopProducts';
 import GetAllUsers from '../Graphql/Resolvers/GetAllUsers';
 import UserAdd from '../Graphql/Resolvers/UserAdd';
@@ -9,7 +8,7 @@ class GraphQL {
     /**
      * @return {{}}
      */
-    static get query() {
+    static query() {
         return {
             // register all your graphql query here
             getAllUsers: GetAllUsers.execute(),
@@ -20,7 +19,7 @@ class GraphQL {
     /**
      * @return {{}}
      */
-    static get mutation() {
+    static mutation() {
         return {
             // register all your graphql mutation here
             userAdd: UserAdd.execute(),
@@ -30,9 +29,9 @@ class GraphQL {
     /**
      * @return {{}}
      */
-    static get context() {
+    static context() {
         return {
-
+            
         };
     }
 }

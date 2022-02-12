@@ -44,7 +44,8 @@ class GetAllUsers {
                     }
                 }
 
-                const userList = await M_users.collect(search);
+                const muserRepository = context.container.get('user.repository');
+                const userList = await muserRepository.collect(search);
                 return await (new MuserCollection(userList)).proceedAndGetData();
             },
         };

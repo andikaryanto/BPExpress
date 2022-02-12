@@ -1,4 +1,4 @@
-import UserProc from '../../BusinessProcess/UserProc.js';
+import UserService from '../../Services/UserService.js';
 import CommonLib from '../../Libraries/CommonLib.js';
 import BaseController from '../BaseController.js';
 import jwt from 'jsonwebtoken';
@@ -45,7 +45,7 @@ class LoginController extends Controller {
     async doLogin({request, session}) {
         try {
             const body = request.body;
-            const muser = await UserProc.login(body.Username, body.Password, true);
+            const muser = await UserService.login(body.Username, body.Password, true);
             if (CommonLib.isNull(muser)) {
                 throw new ModelError('Data pengguna tidak valid');
             }

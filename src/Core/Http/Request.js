@@ -5,15 +5,19 @@ import {Response as ExpressResponse, Request as ExpressRequest} from 'express';
  * @class Request
  */
 class Request {
+
+    /**
+     * @var {Request} instance
+     */
     static instance = null;
     request = null;
 
 
     /**
-      * @param {ExpressRequest} expressRequest
+      * 
       */
-    constructor(expressRequest) {
-        this.request = expressRequest;
+    constructor() {
+        
     }
 
     /**
@@ -22,10 +26,28 @@ class Request {
       * @param {*} next
       */
     static request(req, res, next) {
-        // if (Request.instance == null)
-        req = Request.files(req);
-        Request.instance = new Request(req);
+        Request.getInstance().setRequest(req);
         next();
+    }
+
+    /**
+     * 
+     * @param {*} req 
+     * @return {Request}
+     */
+    setRequest(req){
+        req = Request.files(req);
+        this.request = req;
+
+        return this;
+    }
+
+    /**
+     * 
+     * @return {{}}
+     */
+    getRequest(){
+        return this.request;
     }
 
     /**
@@ -33,9 +55,10 @@ class Request {
       * @return {ExpressRequest}
       */
     static getInstance() {
-        // if(this.instance != null)
-        return this.instance.request;
-        // return this.instance;
+        if(this.instance == null)
+            this.instance = new this;
+
+        return this.instance;
     }
 
     /**
@@ -70,7 +93,6 @@ class Request {
                 }
                 return uploaded[0];
             }
-
             return req.uploadedFiles;
         };
 

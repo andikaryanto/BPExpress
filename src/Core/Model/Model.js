@@ -38,7 +38,7 @@ class Model {
      * Parse data from request to model
      */
     parseFromRequest() {
-        const request = Request.getInstance().body;
+        const request = Request.getInstance().getRequest().body;
         for (const [key, value] of Object.entries(request)) {
             if (this.getPropsName().includes(key)) {
                 this[key] = value;

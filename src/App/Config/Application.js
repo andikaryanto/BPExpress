@@ -37,7 +37,6 @@ class Application {
         ExpressOverride.override(app);
     }
 
-
     /**
      *
      * @param {Express} app

@@ -1,4 +1,4 @@
-import UserProc from '../../BusinessProcess/UserProc.js';
+import UserService from '../../Services/UserService.js';
 import ResponseCode from '../../Constants/ResponseCode.js';
 import ModelError from '../../Errors/ModelError.js';
 import jwt from 'jsonwebtoken';
@@ -11,6 +11,21 @@ import ResponseData from '../../../Core/Controller/ResponseData.js';
  * @class UserApi
  */
 class UserApi extends Controller {
+
+    /**
+     * 
+     * @property {UserService} userService 
+     */
+    #_userService ;
+
+    /**
+     * 
+     * @param {UserService} userService 
+     */
+    constructor(userService){
+        super();
+        this.#_userService = userService;
+    }
     /**
      * User Login \api\user\login
      * @method POST
@@ -20,7 +35,7 @@ class UserApi extends Controller {
     async login({request}) {
         try {
             const body = request.body;
-            const user = await UserProc.login(body.Username, body.Password);
+            const user = await this.#_userService.login(body.Username, body.Password);
 
             if (CommonLib.isNull(user)) {
                 throw new ModelError('Data pengguna tidak valid');

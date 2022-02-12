@@ -11,7 +11,7 @@ import {
 } from 'graphql';
 import ShopProductType from '../Types/ShopProductType';
 import MshopproductCollection from '../../ViewModel/Mshopproduct/MshopproductCollection';
-import ShopProc from '../../BusinessProcess/ShopProc';
+import ShopService from '../../Services/ShopService';
 
 /**
  * @class GetAllShopProducts
@@ -40,8 +40,9 @@ class GetAllShopProducts {
 
                 const shopId = args.ShopId;
                 const productName = args.ProductName;
-
-                const shopProducts = await ShopProc.products(shopId, productName);
+                
+                const shopService = context.container.get('shop.service');
+                const shopProducts = await shopService.products(shopId, productName);
                 return (new MshopproductCollection(shopProducts)).proceedAndGetData();
             },
         };

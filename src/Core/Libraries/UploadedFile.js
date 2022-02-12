@@ -1,5 +1,3 @@
-import Request from '../Http/Request.js';
-
 /**
  * @class UploadedFile
  */

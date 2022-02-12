@@ -18,8 +18,8 @@ class ResponseData {
       * @return {ResponseData}
       */
     static getInstance() {
-        if (this.#_instance == null);
-        this.#_instance = new this;
+        if (this.#_instance == null)
+          this.#_instance = new this;
         return this.#_instance;
     }
 

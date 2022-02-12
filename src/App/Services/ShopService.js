@@ -1,16 +1,27 @@
 import CollectionModel from '../../Core/Model/CollectionModel';
 import M_shopproducts from '../Models/M_shopproducts';
 import M_shops from '../Models/M_shops';
+import MproductRepository from '../Repositories/MproductRepository';
+import MshopRepository from '../Repositories/MshopRepository';
 /**
- * @class ShopProc
+ * @class ShopService
  */
-class ShopProc {
+class ShopService {
+
+    /**
+     * 
+     * @param {MshopRepository} shopRepository 
+     * @param {MproductRepository} productRepository 
+     */
+    constructor(shopRepository, productRepository){
+        
+    }
     /**
      * Search for shop
      * @param {string} name
      * @return {CollectionModel}
      */
-    static async search(name = null) {
+    async search(name = null) {
         let param = {};
 
         if (name != null) {
@@ -30,7 +41,7 @@ class ShopProc {
      * @param {string} name
      * @return {[]}
      */
-    static async products(shopId, name = null) {
+    async products(shopId, name = null) {
         const param = {
             join: {
                 'm_products': {
@@ -56,4 +67,4 @@ class ShopProc {
     }
 }
 
-export default ShopProc;
+export default ShopService;

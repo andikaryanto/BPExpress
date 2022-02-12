@@ -29,7 +29,7 @@ class DatatablesModel {
 	 * @return {void}
 	 */
     constructor(model, filter = {}, method = 'POST', useIndex = true) {
-        const req = Request.getInstance();
+        const req = Request.getInstance().getRequest();
         if (method == 'POST') {
             this.#_request = req.body;
         } else {
