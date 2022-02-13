@@ -5,23 +5,23 @@ import appRoot from 'app-root-path';
  * @class FileLoader
  */
 class FileLoader {
-    #_path = null;
+    private path!: string;
 
     /**
      *
      * @param {string} path
      */
-    constructor(path) {
-        this.#_path = appRoot + '/' + path;
+    constructor(path: string) {
+        this.path = appRoot + '/' + path;
     }
 
     /**
      * Get data as object
-     * @return {{}}
+     * @return {any}
      */
-    getData() {
-        const rawdata = fs.readFileSync(this.#_path);
-        const json = JSON.parse(rawdata);
+    getData(): any {
+        const rawdata = fs.readFileSync(this.path);
+        const json = JSON.parse(rawdata.toString());
         return json;
     }
 }

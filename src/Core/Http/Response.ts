@@ -3,13 +3,13 @@ import {Request, Response as ExpressResponse} from 'express';
  * @clas Response
  */
 class Response {
-    static instance = null;
-    response = null;
+    static instance: Response;
+    response: ExpressResponse | undefined;
 
     /**
       * @param {ExpressResponse} expressResponse
       */
-    constructor(expressResponse) {
+    constructor(expressResponse: ExpressResponse) {
         this.response = expressResponse;
     }
 
@@ -18,7 +18,7 @@ class Response {
       * @param {ExpressResponse} res
       * @param {*} next
       */
-    static response(req, res, next) {
+    static response(req: Request, res: ExpressResponse, next: any) {
         Response.instance = new Response(res);
         next();
     }
@@ -27,7 +27,7 @@ class Response {
      * Get instance
       * @return {ExpressResponse}
       */
-    static getInstance() {
+    static getInstance(): ExpressResponse | undefined {
         // if(this.instance != null)
         return this.instance.response;
         // return this.instance;

@@ -13,7 +13,7 @@ import CoreRequest from '../Http/Request';
  */
 class Routers {
     private router: Router;
-    private middleware: [] = [];
+    private middleware: any = [];
     private route: string = '';
     private namedRoute: string = '';
     private namedMiddleware: [] = [];
@@ -33,10 +33,10 @@ class Routers {
     /**
       *
       * @param {string} route
-      * @param {[]} middleware
+      * @param {any} middleware
       * @param {Function} callback
       */
-    group(route: string, middleware: [], callback: Function) {
+    group(route: string, middleware: any, callback: Function) {
         const intance = new Routers();
 
 

@@ -9,25 +9,25 @@ class MgroupuserViewModel extends BaseViewModel {
      *
      * @param {M_groupusers} model
      */
-    constructor(model) {
+    constructor(model: M_groupusers) {
         super(true, model);
     }
 
     /**
      *
-     * @param {{}} object
+     * @param {any} object
      */
-    async addResource(object) {
+    async addResource(object: any) {
 
     }
 
     /**
      *
-     * @return {{}}
+     * @return {Promise<{}>}
      */
-    async toJson() {
+    async toJson(): Promise<{}> {
         if (this.model == null) {
-            return null;
+            return {};
         }
 
         const json = {

@@ -3,11 +3,11 @@ import {Request, Response, NextFunction} from 'express';
 
 /**
  *
- * @param {Request} req
+ * @param {any} req
  * @param {Response} res
  * @param {NextFunction} next
  */
-const GraphqlMiddleware = function(req, res, next) {
+const GraphqlMiddleware = function(req: any, res: Response, next: NextFunction) {
     try {
         const token = req.headers.authorization;
         if (token == undefined || token == null) {

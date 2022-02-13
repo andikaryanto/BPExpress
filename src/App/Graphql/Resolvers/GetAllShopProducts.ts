@@ -32,7 +32,7 @@ class GetAllShopProducts {
                     type: GraphQLString,
                 },
             },
-            resolve: async function(parent, args, context) {
+            resolve: async function(parent: any, args: any, context: any) {
                 const request = context.request;
                 if (request.graphqlError != undefined) {
                     throw request.graphqlError;

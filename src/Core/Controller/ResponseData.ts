@@ -2,7 +2,7 @@
  * @class ResponseData
  */
 class ResponseData {
-    static #_instance = null;
+    private static instance: ResponseData;
     code = 200;
     data = {};
 
@@ -17,11 +17,11 @@ class ResponseData {
       *
       * @return {ResponseData}
       */
-    static getInstance() {
-        if (this.#_instance == null) {
-            this.#_instance = new this;
+    static getInstance(): ResponseData {
+        if (this.instance == null) {
+            this.instance = new this;
         }
-        return this.#_instance;
+        return this.instance;
     }
 
     /**
@@ -29,7 +29,7 @@ class ResponseData {
       * @param {number} code
       * @return {ResponseData}
       */
-    static status(code) {
+    static status(code: number): ResponseData {
         const instance = ResponseData.getInstance();
         instance.code = code;
         return instance;
@@ -40,7 +40,7 @@ class ResponseData {
       * @param {{}} data
       * @return {ResponseData}
       */
-    json(data) {
+    json(data: {}): ResponseData {
         this.data = data;
         return this;
     }

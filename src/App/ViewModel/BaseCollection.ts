@@ -6,22 +6,22 @@ import BaseViewModel from './BaseViewModel';
  * @class BaseCollection
  */
 class BaseCollection {
-    #_collection = null;
-    #_element = [];
+    private collection: CollectionModel | Array<any>;
+    private element:{}[] = [];
 
     /**
      *
      * @param {CollectionModel|array} collection
      */
-    constructor(collection) {
-        this.#_collection = collection;
+    constructor(collection: CollectionModel | Array<any>) {
+        this.collection = collection;
     }
 
     /**
      *
      * @param {Model} model
      */
-    shape(model) {
+    shape(model: Model) {
 
     }
 
@@ -30,10 +30,10 @@ class BaseCollection {
      */
     async proceed() {
         let arrayCollection = [];
-        if (this.#_collection instanceof CollectionModel) {
-            arrayCollection = this.#_collection.getItems();
+        if (this.collection instanceof CollectionModel) {
+            arrayCollection = this.collection.getItems();
         } else {
-            arrayCollection = this.#_collection;
+            arrayCollection = this.collection;
         }
 
         for (const item of arrayCollection) {
@@ -47,7 +47,7 @@ class BaseCollection {
      * Process all data and return it
      * @return {Promise<[]>}
      */
-    async proceedAndGetData() {
+    async proceedAndGetData(): Promise<{}[]> {
         return (await this.proceed()).getElements();
     }
 
@@ -56,17 +56,17 @@ class BaseCollection {
      * @param {BaseViewModel} viewModel
      * @return {void}
      */
-    async addItem(viewModel) {
+    async addItem(viewModel: BaseViewModel):Promise<void> {
         const item = await viewModel.toJson();
-        this.#_element.push(item);
+        this.element.push(item);
     }
 
     /**
      * Get elemet
      * @return {[]}
      */
-    getElements() {
-        return this.#_element;
+    getElements(): {}[] {
+        return this.element;
     }
 }
 

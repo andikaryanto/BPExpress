@@ -1,4 +1,4 @@
-import ResponseCode from '../Constants/ResponseCode.js';
+import ResponseCode from '../Constants/ResponseCode';
 import jwt from 'jsonwebtoken';
 import {Request, Response, NextFunction} from 'express';
 
@@ -8,14 +8,14 @@ import {Request, Response, NextFunction} from 'express';
  * @param {Response} res
  * @param {NextFunction} next
  */
-const ApiMiddleware = function(req, res, next) {
+const ApiMiddleware = (req: any, res: Response, next: NextFunction) => {
     try {
         const token = req.headers.authorization;
         if (token == undefined || token == null) {
             throw new Error('Cannot verify empty token');
         }
 
-        const decoded = jwt.decode(token, {complete: true});
+        const decoded = jwt.decode(token, { complete: true });
         if (decoded == null) {
             throw new Error('Invalid Token');
         }
@@ -23,7 +23,7 @@ const ApiMiddleware = function(req, res, next) {
         req.user = decoded.payload;
 
         next();
-    } catch (e) {
+    } catch (e: any) {
         const result = {
             Message: e.message,
             Data: null,

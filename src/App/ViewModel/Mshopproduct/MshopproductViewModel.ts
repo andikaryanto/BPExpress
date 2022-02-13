@@ -6,12 +6,14 @@ import MproductViewModel from '../Mproduct/MproductViewModel';
  * @clas MshopproductViewModel
  */
 class MshopproductViewModel extends BaseViewModel {
+
     /**
      *
      * @param {M_shopproducts} model
      */
-    constructor(model) {
+    constructor(model: M_shopproducts) {
         super(true, model);
+        this.model = model;
     }
 
     /**
@@ -19,18 +21,18 @@ class MshopproductViewModel extends BaseViewModel {
      * @param {{}} object
      * @return {void}
      */
-    async addResource(object) {
+    async addResource(object: any): Promise<void> {
         const product = await this.model.M_Product();
         object.Product = await (new MproductViewModel(product)).toJson();
     }
 
     /**
      * Model to json data
-     * @return {{}}
+     * @return {Promise<{}>}
      */
-    async toJson() {
+    async toJson(): Promise<{}>{
         if (this.model == null) {
-            return null;
+            return {};
         }
 
         const json = {

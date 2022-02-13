@@ -1,26 +1,24 @@
-import CollectionError from '../Errors/CollectionError.js';
-import Collection from '../Libraries/Collection.js';
+import CollectionError from '../Errors/CollectionError';
+import Collection from '../Libraries/Collection';
 
 /**
  * @class CollectionModel
  */
 class CollectionModel extends Collection {
-    #_className = null;
-
     /**
      *
-     * @param {{}} items instance of object model
+     * @param {any[]} items instance of object model
      */
-    constructor(items) {
+    constructor(items: any[][]) {
         super(items);
     }
 
     /**
       *
-      * @param {{}} item instance of object model
+      * @param {any} item instance of object model
       * @return {CollectionModel}
       */
-    add(item) {
+    add(item: any): CollectionModel {
         this.items.push(item);
         return this;
     }
@@ -28,36 +26,36 @@ class CollectionModel extends Collection {
     /**
       * find data with primary key data
       *
-      * @param {int|string} id
+      * @param {number|string} id
       * @return {CollectionModel}
       */
-    find(id) {
-        return this.filter((x) => x[x.getPrimaryKey()] == id);
-    }
+    // find(id: number | string): CollectionModel {
+    //     return this.filter((x: any) => x[x.getPrimaryKey()] == id);
+    // }
 
-    /**
-      *
-      * @param {[]} ids
-      * @return {this}
-      */
-    except(ids) {
-        if (!Array.isArray(ids)) {
-            throw new CollectionError('expect an array for ids');
-        }
+    // /**
+    //   *
+    //   * @param {[]} ids
+    //   * @return {CollectionModel}
+    //   */
+    // except(ids: []): CollectionModel {
+    //     if (!Array.isArray(ids)) {
+    //         throw new CollectionError('expect an array for ids');
+    //     }
 
-        return this.filter(function(x) {
-            const found = ids.find((id) => id == x[x.getPrimaryKey()]);
-            return found == undefined;
-        });
-    }
+    //     return this.filter(function(x: any) {
+    //         const found = ids.find((id) => id == x[x.getPrimaryKey()]);
+    //         return found == undefined;
+    //     });
+    // }
 
     /**
       *
       * @param {string} columnName
-      * @return {[]}
+      * @return {any[]}
       */
-    chunk(columnName) {
-        const chunk = [];
+    chunk(columnName: string): any[] {
+        const chunk: any[] = [];
         this.items.forEach((item, i) => {
             if (columnName in item) {
                 chunk.push(item[columnName]);
@@ -71,8 +69,8 @@ class CollectionModel extends Collection {
       * @param {string} columnName
       * @return {[]}
       */
-    chunkUnique(columnName) {
-        const chunk = [];
+    chunkUnique(columnName: string): any[] {
+        const chunk: any[] = [];
         this.items.forEach((item, i) => {
             if (columnName in item) {
                 if (chunk.find((x) => x == item[columnName]) == undefined) {
@@ -83,28 +81,28 @@ class CollectionModel extends Collection {
         return chunk;
     }
 
-    /**
-      * Get eloquent unsaved data means Id of eloquent is null
-      * @return {this}
-      */
-    unSaved() {
-        return this.filter((x) => x[x.getPrimaryKey()] == null);
-    }
+    // /**
+    //   * Get eloquent unsaved data means Id of eloquent is null
+    //   * @return {CollectionModel}
+    //   */
+    // unSaved(): CollectionModel {
+    //     return this.filter((x: any) => x[x.getPrimaryKey()] == null);
+    // }
 
-    /**
-      * Get eloquent unsaved data means Id of eloquent is not null
-      * @return {this}
-      */
-    saved() {
-        return this.filter((x) => x[x.getPrimaryKey()] != null);
-    }
+    // /**
+    //   * Get eloquent unsaved data means Id of eloquent is not null
+    //   * @return {this}
+    //   */
+    // saved(): this {
+    //     return this.filter((x: any) => x[x.getPrimaryKey()] != null);
+    // }
 
     /**
       * Sum a colum of Collection item
       * @param {string} columnName
       * @return {number}
       */
-    sum(columnName) {
+    sum(columnName: string): number {
         let total = 0;
         this.items.forEach((item, i) => {
             total += item[columnName];
@@ -118,7 +116,7 @@ class CollectionModel extends Collection {
      * @param {string} columnName
      * @return {number}
      */
-    avg(columnName) {
+    avg(columnName: string): number {
         let total = 0;
         this.items.forEach((item, i) => {
             total += item[columnName];
@@ -131,9 +129,9 @@ class CollectionModel extends Collection {
       * @param {string} columnName
       * @return {{}}
       */
-    min(columnName) {
+    min(columnName: string): {} {
         let min = 0;
-        let data = null;
+        let data: any = null;
         this.items.forEach((item, i) => {
             if (data == null) {
                 min = item[columnName];
@@ -154,9 +152,9 @@ class CollectionModel extends Collection {
       * @param {string} columnName
       * @return {{}}
       */
-    max(columnName) {
+    max(columnName: string): {} {
         let min = 0;
-        let data = null;
+        let data: any = null;
         this.items.forEach((item, i) => {
             if (data == null) {
                 min = item[columnName];

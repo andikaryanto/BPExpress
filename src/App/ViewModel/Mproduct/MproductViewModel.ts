@@ -10,26 +10,26 @@ class MproductViewModel extends BaseViewModel {
      *
      * @param {M_products} model
      */
-    constructor(model) {
+    constructor(model: M_products) {
         super(true, model);
     }
 
     /**
      * Add resource
-     * @param {{}} object
+     * @param {any} object
      */
-    async addResource(object) {
+    async addResource(object: any) {
         const category = await this.model.M_Productcategory();
         object.ProductCategory = await (new MproductcategoryViewModel(category)).toJson();
     }
 
     /**
      * Get json data
-     * @return {{}}
+     * @return {Promise<{}>}
      */
-    async toJson() {
+    async toJson(): Promise<{}> {
         if (this.model == null) {
-            return null;
+            return {};
         }
 
         const json = {

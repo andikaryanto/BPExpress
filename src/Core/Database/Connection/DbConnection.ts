@@ -1,7 +1,7 @@
 import conn from 'knex';
-import database from '../../../App/Config/Database.js';
+import database from '../../../App/Config/Database';
 import dotenv from 'dotenv';
-import TypeHelper from '../../Libraries/TypeHelper.js';
+import TypeHelper from '../../Libraries/TypeHelper';
 dotenv.config;
 
 const appMode = TypeHelper.getString(process.env.APP_MODE);

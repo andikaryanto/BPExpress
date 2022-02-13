@@ -1,25 +1,25 @@
-import ModelError from '../Errors/ModelError.js';
-import CommonLib from '../Libraries/CommonLib.js';
-import Cast from '../Traits/Cast.js';
-import BaseModel from './BaseModel.js';
-import M_groupusers from './M_groupusers.js';
+import ModelError from '../Errors/ModelError';
+import CommonLib from '../Libraries/CommonLib';
+import Cast from '../Traits/Cast';
+import BaseModel from './BaseModel';
+import M_groupusers from './M_groupusers';
 
 /**
  * @class M_users
  */
 class M_users extends BaseModel {
-    Id = null;
-    M_Groupuser_Id = null;
-    Username = null;
-    Password = null;
-    Photo = null;
-    IsLoggedIn = null;
-    IsActive = null;
-    CreatedBy = null;
-    Modified = null;
-    ModifiedBy = null;
+    public Id?: number;
+    public M_Groupuser_Id?: number;
+    public Username?: string;
+    public Password?: string;
+    public Photo?: string;
+    public IsLoggedIn?: number;
+    public IsActive?: number;
+    public CreatedBy?: string;
+    public Modified?: string;
+    public ModifiedBy?: string;
 
-    static #_cast = {
+    private static cast = {
         IsLoggedIn: 'boolean',
         IsActive: 'boolean',
     };
@@ -28,7 +28,7 @@ class M_users extends BaseModel {
      *
      */
     constructor() {
-        super('m_users', 'Id', M_users.#_cast);
+        super('m_users', 'Id', M_users.cast);
         this.IsActive = 1;
         this.IsLoggedIn = 0;
     }
@@ -38,7 +38,7 @@ class M_users extends BaseModel {
      * @param {string} password
      * @return {void}
      */
-    setPassword(password) {
+    setPassword(password: string): void {
         if (this.Username == null) {
             throw new ModelError('Username belum di set', this);
         }
@@ -48,9 +48,9 @@ class M_users extends BaseModel {
 
     /**
      * Get groupuser object
-     * @return {Promise<M_groupusers>}
+     * @return {Promise<M_groupusers | null>}
      */
-    async M_Groupuser() {
+    async M_Groupuser(): Promise<M_groupusers | null> {
         const groupuser = await M_groupusers.find(this.M_Groupuser_Id);
         return groupuser;
     }

@@ -27,7 +27,7 @@ class UserAdd {
                 Password: {type: GraphQLString},
                 GroupuserId: {type: GraphQLID},
             },
-            resolve: async function(parent, args) {
+            resolve: async function(parent: any, args: any) {
                 const user = new M_users();
                 user.Username = args.Username;
                 user.M_Groupuser_Id = args.GroupuserId;

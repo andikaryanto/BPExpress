@@ -1,9 +1,9 @@
-import Routers from '../../Core/Config/Routers.js';
-import LoginController from '../Controllers/Office/LoginController.js';
-import MgroupuserController from '../Controllers/Office/MgroupuserController.js';
-import MuserController from '../Controllers/Office/MuserController.js';
-import TestController from '../Controllers/TestController.js';
-import OfficeMiddleware from '../Middlewares/OfficeMiddleware.js';
+import Routers from '../../Core/Config/Routers';
+import LoginController from '../Controllers/Office/LoginController';
+import MgroupuserController from '../Controllers/Office/MgroupuserController';
+import MuserController from '../Controllers/Office/MuserController';
+import TestController from '../Controllers/TestController';
+import OfficeMiddleware from '../Middlewares/OfficeMiddleware';
 
 const Web = () => {
     const routers = new Routers();

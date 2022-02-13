@@ -4,8 +4,8 @@ import {ContainerBuilder} from 'node-dependency-injection';
  * @class Container
  */
 class Container {
-    static #_instance;
-    containerBuilder = null;
+    private static instance: Container;
+    containerBuilder!: ContainerBuilder;
 
     /**
      *
@@ -18,11 +18,11 @@ class Container {
      * Get instance
      * @return {Container}
      */
-    static getInstance() {
-        if (this.#_instance == null) {
-            this.#_instance = new this;
+    static getInstance(): Container {
+        if (this.instance == null) {
+            this.instance = new this;
         }
-        return this.#_instance;
+        return this.instance;
     }
 
     /**
@@ -30,7 +30,7 @@ class Container {
      * @param {ContainerBuilder} containerBuilder
      * @return {Container}
      */
-    setContainerBuilder(containerBuilder) {
+    setContainerBuilder(containerBuilder: ContainerBuilder): Container {
         this.containerBuilder = containerBuilder;
         return this;
     }
@@ -40,7 +40,7 @@ class Container {
      * @param {string} key
      * @return {*}
      */
-    get(key) {
+    get(key: string): any {
         return this.containerBuilder.get(key);
     }
 }

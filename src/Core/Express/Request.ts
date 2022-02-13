@@ -1,7 +1,8 @@
+import UploadedFile from "../Libraries/UploadedFile";
 
 declare namespace Express {
     export interface Request {
-        uploadedFiles?: {}
+        uploadedFiles?:UploadedFile[] | undefined,
         getFiles: () => {
 
         }

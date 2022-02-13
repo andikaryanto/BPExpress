@@ -1,8 +1,8 @@
-import Routers from '../../Core/Config/Routers.js';
-import GroupuserApi from '../Controllers/Rest/GroupuserApi.js';
-import Shop from '../Controllers/Rest/Customer/Shop.js';
-import UserApi from '../Controllers/Rest/UserApi.js';
-import ApiMiddleware from '../Middlewares/ApiMiddleware.js';
+import Routers from '../../Core/Config/Routers';
+import GroupuserApi from '../Controllers/Rest/GroupuserApi';
+import Shop from '../Controllers/Rest/Customer/Shop';
+import UserApi from '../Controllers/Rest/UserApi';
+import ApiMiddleware from '../Middlewares/ApiMiddleware';
 
 const Api = () => {
     const routers = new Routers();
@@ -17,8 +17,8 @@ const Api = () => {
     //     routers.get('/list', [], GroupuserApi, 'getList').named('groupuser.list');
     // });
 
-    routers.group('/customer', [ApiMiddleware], (routers: Routers) => {
-        routers.group('/shop', [ApiMiddleware], (routers : Routers) => {
+    routers.group('/customer', ApiMiddleware, (routers: Routers) => {
+        routers.group('/shop', [ ApiMiddleware ], (routers : Routers) => {
             routers.get('/list', [], 'rest.customer.shop.controller', 'getList');
             routers.get('/:shopId/products', [], 'rest.customer.shop.controller', 'products');
         });

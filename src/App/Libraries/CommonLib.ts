@@ -12,7 +12,7 @@ class CommonLib {
       * @param {string} value
       * @return {string}
       */
-    static encryptMd5(value) {
+    static encryptMd5(value: string) {
         const hash = md5(value);
         const lastString = hash.substr(hash.length - 5, 5);
         const reversed = lastString.split('').reverse().join('');
@@ -25,7 +25,7 @@ class CommonLib {
      * @param {any} value
      * @return {boolean}
      */
-    static isNull(value) {
+    static isNull(value: any) {
         return value == null;
     }
 
@@ -34,7 +34,7 @@ class CommonLib {
      * @param {any} value
      * @return {boolean}
      */
-    static isUndefined(value) {
+    static isUndefined(value: any) {
         return value == undefined;
     }
 

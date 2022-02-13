@@ -9,7 +9,7 @@ class Request {
      * @var {Request} instance
      */
     static instance: Request;
-    request: ExpressRequest | undefined;
+    request!: ExpressRequest;
 
 
     /**
@@ -43,9 +43,9 @@ class Request {
 
     /**
      *
-     * @return {ExpressRequest|undefined}
+     * @return {ExpressRequest}
      */
-    getRequest(): ExpressRequest|undefined {
+    getRequest(): ExpressRequest {
         return this.request;
     }
 
@@ -67,36 +67,36 @@ class Request {
      * @return {ExpressRequest}
      */
     static files(req: ExpressRequest): ExpressRequest {
-        req.uploadedFiles = {
-            key: UploadedFile,
-            name: String
-        };
-        const files = req.files;
+    //     req.uploadedFiles = {
+    //         key: UploadedFile | UploadedFile[] | undefined,
+    //         name: String
+    //     };
+    //     const files = req.files;
 
-        if ( req.files != null && req.files != undefined ) {
-            for (const [key, value] of Object.entries(files)) {
-                if (Array.isArray(value)) {
-                    value.forEach((element) => {
-                        const uploadedFile = new UploadedFile(element);
-                        req.uploadedFiles.key.push(uploadedFile);
-                    });
-                } else {
-                    const uploadedFile = new UploadedFile(value);
-                    req.uploadedFiles[key].push(uploadedFile);
-                }
-            }
-        }
+    //     if ( req.files != null && req.files != undefined ) {
+    //         for (const [key, value] of Object.entries(files)) {
+    //             if (Array.isArray(value)) {
+    //                 value.forEach((element) => {
+    //                     const uploadedFile = new UploadedFile(element);
+    //                     req.uploadedFiles.key.push(uploadedFile);
+    //                 });
+    //             } else {
+    //                 const uploadedFile = new UploadedFile(value);
+    //                 req.uploadedFiles[key].push(uploadedFile);
+    //             }
+    //         }
+    //     }
 
-        req.getFiles = (name = null) => {
-            if (name != null) {
-                const uploaded = req.uploadedFiles.name;
-                if (uploaded.length > 1) {
-                    return uploaded;
-                }
-                return uploaded[0];
-            }
-            return req.uploadedFiles;
-        };
+    //     req.getFiles = (name = null) => {
+    //         if (name != null) {
+    //             const uploaded = req.uploadedFiles.name;
+    //             if (uploaded.length > 1) {
+    //                 return uploaded;
+    //             }
+    //             return uploaded[0];
+    //         }
+    //         return req.uploadedFiles;
+    //     };
 
         return req;
     }

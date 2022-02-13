@@ -6,7 +6,7 @@ import M_products from './M_products.js';
  * @class M_shopproducts
  */
 class M_shopproducts extends BaseModel {
-    Id = null;
+    public Id?: number;
     M_Shop_Id = null;
     M_Product_Id = null;
     PurchasePrice = null;

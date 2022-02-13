@@ -2,15 +2,15 @@
  * @class View
  */
 class View {
-    static #_instance = null;
-    view = '';
-    data = {};
-    type = 'view';
+    private static instance: View;
+    view:string = '';
+    data: {} = {};
+    type: string = 'view';
 
     /**
      *
      */
-    constructor() {
+    private constructor() {
 
     }
 
@@ -18,11 +18,11 @@ class View {
       *
       * @return {View}
       */
-    static getInstance() {
-        if (this.#_instance == null) {
-            this.#_instance = new this;
+    static getInstance(): View {
+        if (this.instance == null) {
+            this.instance = new this;
         }
-        return this.#_instance;
+        return this.instance;
     }
 
     /**
@@ -31,7 +31,7 @@ class View {
       * @param {{}} data
       * @return {View}
       */
-    static make(view, data) {
+    static make(view: string, data: {}): View {
         const instance = View.getInstance();
         instance.view = view;
         instance.data = data;
@@ -45,7 +45,7 @@ class View {
       * @param {{}} data
       * @return {View}
       */
-    static html(view, data) {
+    static html(view: string, data: {}): View {
         const instance = View.getInstance();
         instance.view = view;
         instance.data = data;
@@ -59,7 +59,7 @@ class View {
       * @param {{}} data
       * @return {View}
       */
-    static sendFile(view, data) {
+    static sendFile(view: string, data: {}): View {
         const instance = View.getInstance();
         instance.view = view;
         instance.data = data;
@@ -72,7 +72,7 @@ class View {
       * @param {{}} data
       * @return {View}
       */
-    data(data) {
+    setData(data: {}): View {
         this.data = data;
         return this;
     }

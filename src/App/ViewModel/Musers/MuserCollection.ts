@@ -11,7 +11,7 @@ class MuserCollection extends BaseCollection {
      *
      * @param {CollectionModel|array} collection
      */
-    constructor(collection) {
+    constructor(collection: CollectionModel | Array<any>) {
         super(collection);
     }
 
@@ -19,7 +19,7 @@ class MuserCollection extends BaseCollection {
      *
      * @param {M_users} model
      */
-    async shape(model) {
+    async shape(model: M_users) {
         await this.addItem(new MuserViewModel(model));
     }
 }

@@ -9,16 +9,16 @@ class MuserViewModel extends BaseViewModel {
      *
      * @param {M_users} model
      */
-    constructor(model) {
+    constructor(model: M_users) {
         super(true, model);
     }
 
     /**
      *
-     * @param {{}} object
-     * @return {void}
+     * @param {any} object
+     * @return {Promise<void>}
      */
-    async addResource(object) {
+    async addResource(object: any): Promise<void> {
         let groupUserViewModel = null;
         if (this.model.M_Groupuser_Id != null) {
             const groupuser = await this.model.M_Groupuser();
@@ -29,11 +29,11 @@ class MuserViewModel extends BaseViewModel {
 
     /**
      * Model to json data
-     * @return {{}}
+     * @return {Promise<{}>}
      */
-    async toJson() {
+    async toJson(): Promise<{}> {
         if (this.model == null) {
-            return null;
+            return {};
         }
 
         const json = {

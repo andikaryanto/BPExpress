@@ -1,4 +1,4 @@
-import Model from '../../Core/Model/Model.js';
+import Model from '../../Core/Model/Model';
 
 /**
  * @class BaseModel
@@ -10,7 +10,7 @@ class BaseModel extends Model {
      * @param {string} primaryKey
      * @param {{}} cast
      */
-    constructor(table, primaryKey, cast) {
+    constructor(table: string, primaryKey: string, cast: {}) {
         super(table, primaryKey, cast);
     }
 }

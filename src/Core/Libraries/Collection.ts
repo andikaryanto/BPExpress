@@ -2,23 +2,23 @@
  * @class Collection
  */
 class Collection {
-    items = [];
+    items: any[] = [];
 
     /**
       *
-      * @param {[]} items
+      * @param {any[]} items
       */
-    constructor(items) {
+    constructor(items: any[]) {
         this.items = items;
     }
 
     /**
       * add data to collection
       *
-      * @param {[]} item
+      * @param {any} item
       * @return {Collection}
       */
-    add(item) {
+    add(item: any): Collection {
         this.items.push(item);
         return this;
     }
@@ -28,8 +28,8 @@ class Collection {
       * @param {Function} callback
       * @return {Collection}
       */
-    filter(callback) {
-        const newdata = [];
+    filter(callback: Function): Collection {
+        const newdata: any[] = [];
         this.items.forEach((item, i) => {
             if (callback(item)) {
                 newdata.push(item);
@@ -44,8 +44,8 @@ class Collection {
       * @param {Function} callback
       * @return {[]}
       */
-    where(callback) {
-        const newdata = [];
+    where(callback: Function): any[] {
+        const newdata: any[] = [];
         for (const item of this.items) {
             if (callback(item)) {
                 newdata.push(item);
@@ -58,16 +58,16 @@ class Collection {
       *
       * @return {boolean}
       */
-    isEmpty() {
+    isEmpty(): boolean {
         return this.items.length == 0;
     }
 
     /**
       *
       * @param {number} number
-      * @return {[]}
+      * @return {any[]}
       */
-    take(number) {
+    take(number: number): any[] {
         if (number <= 0) {
             throw new Error('Number must be greater than 0 (zero)');
         }
@@ -83,15 +83,15 @@ class Collection {
       *
       * @return {number}
       */
-    size() {
+    size(): number {
         return this.items.length;
     }
 
     /**
       *
-      * @return {[]}
+      * @return {any[]}
       */
-    getItems() {
+    getItems(): any[] {
         return this.items;
     }
 
@@ -100,7 +100,7 @@ class Collection {
       * @return {[]}
       * @throws {Error}
       */
-    getItemsOrFail() {
+    getItemsOrFail(): any[] {
         if (this.isEmpty()) {
             throw new Error('No Data Found');
         }

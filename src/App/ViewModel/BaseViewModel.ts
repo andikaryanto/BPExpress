@@ -4,24 +4,24 @@ import Model from '../../Core/Model/Model';
  * @clas BaseviewModel
  */
 class BaseViewModel {
-    model = null;
-    #_autoAddResource = false;
+    model: any;
+    private autoAddResource: boolean = false;
 
     /**
      *
-     * @param {bool} autoAddResource
+     * @param {boolean} autoAddResource
      * @param {Model} model
      */
-    constructor(autoAddResource, model) {
+    constructor(autoAddResource: boolean, model: Model) {
         this.model = model;
-        this.#_autoAddResource = autoAddResource;
+        this.autoAddResource = autoAddResource;
     }
 
     /**
      * Add Resource
      * @param {BaseViewModel} viewModel
      */
-    addResource(viewModel) {
+    addResource(viewModel: BaseViewModel) {
 
     }
 
@@ -29,23 +29,23 @@ class BaseViewModel {
      * Set auto add resource
      * @param {*} addResource
      */
-    setAutoAddResource(addResource = true) {
-        this.#_autoAddResource = addResource;
+    setAutoAddResource(addResource: any = true) {
+        this.autoAddResource = addResource;
     }
 
     /**
      * Get auto add resouce
      * @return {boolean}
      */
-    getAutoAddResource() {
-        return this.#_autoAddResource;
+    getAutoAddResource(): boolean {
+        return this.autoAddResource;
     }
 
     /**
-     *
+     * @returns {Promise<{}>}
      */
-    toJson() {
-
+    async toJson(): Promise<{}> {
+        return {};
     }
 }
 

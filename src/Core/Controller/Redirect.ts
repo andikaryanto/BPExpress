@@ -2,7 +2,7 @@
  * @class Redirect
  */
 class Redirect {
-    static #_instance = null;
+    static #_instance: Redirect;
     route = '';
     data = {};
 
@@ -29,7 +29,7 @@ class Redirect {
       * @param {string} route
       * @return {Redirect}
       */
-    static to(route) {
+    static to(route: string) {
         const instance = Redirect.getInstance();
         instance.route = route;
         return instance;
@@ -40,7 +40,7 @@ class Redirect {
       * @param {{}} data
       * @return {Redirect}
       */
-    with(data) {
+    with(data: {}) {
         this.data = data;
         return this;
     }

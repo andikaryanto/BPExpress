@@ -1,3 +1,4 @@
+import { Knex } from 'knex';
 import Validator from 'validatorjs';
 import ModelError from '../../App/Errors/ModelError.js';
 import Db from '../Database/Connection/DbConnection.js';
@@ -12,14 +13,14 @@ import ValidatorModel from './ValidatorModel.js';
  * @class Model
  */
 class Model {
-    #_table = null;
-    #_columns = null;
-    #_primaryKey = null;
-    #_db = null;
+    private table?: string;
+    private columns?: [];
+    private primaryKey?: string;
+    private db!: Knex.QueryBuilder;
 
-    #_cast = {};
+    private cast = {};
 
-    #_relatedClass = [];
+    private relatedClass = [];
 
     /**
      *
@@ -27,11 +28,11 @@ class Model {
      * @param {string} primaryKey
      * @param {{}} cast
      */
-    constructor(table, primaryKey, cast = {}) {
-        this.#_table = table;
-        this.#_primaryKey = primaryKey;
-        this.#_db = Db.table(this.#_table);
-        this.#_cast = cast;
+    constructor(table: string, primaryKey: string, cast: {} = {}) {
+        this.table = table;
+        this.primaryKey = primaryKey;
+        this.db = Db.table(this.table);
+        this.cast = cast;
     }
 
     /**
@@ -50,13 +51,13 @@ class Model {
       * Get one data from database by id primary key, If Data not found will reeturn null
       * @param {number|string} id
       * @throws {Error}
-      * @return {{}|null}
+      * @return {Model | null}
       */
-    static async find(id) {
+    static async find(id: number | string): Model | null {
         const instance = new this;
         const filter = {
             where: {
-                [instance.#_primaryKey]: id,
+                [instance.primaryKey]: id,
             },
         };
         const objects = await this.findAll(filter);
@@ -73,7 +74,7 @@ class Model {
       * @throws {Error}
       * @return {object}
       */
-    static async findOrNew(id) {
+    static async findOrNew(id: number | string): object {
         const instance = new this;
         const object = await this.find(id);
         if (object != null) {
@@ -89,7 +90,7 @@ class Model {
       * @throws {Error}
       * @return {object}
       */
-    static async findOrFail(id) {
+    static async findOrFail(id: number | string): {} | null {
         const object = await this.find(id);
         if (object != null) {
             return object;
@@ -104,7 +105,7 @@ class Model {
       * @throws {Error}
       * @return {object|null}
       */
-    static async findOne(filter = {}) {
+    static async findOne(filter: {} = {}): object | null {
         const objects = await this.findAll(filter);
         if (objects.length > 0) {
             return objects[0];
@@ -119,7 +120,7 @@ class Model {
       * @throws {Error}
       * @return {object}
       */
-    static async findOneOrNew(filter = {}) {
+    static async findOneOrNew(filter: {} = {}): object {
         const instance = new this;
         const object = await this.findOne(filter);
         if (object != null) {
@@ -135,7 +136,7 @@ class Model {
       * @throws {Error}
       * @return {object}
       */
-    static async findOneOrFail(filter = {}) {
+    static async findOneOrFail(filter: {} = {}): object {
         const object = await this.findOne(filter);
         if (object != null) {
             return object;
@@ -149,7 +150,7 @@ class Model {
       * @param {{}} filter
       * @param {[]} columns
       */
-    static async findAll(filter = {}, columns = []) {
+    static async findAll(filter: {} = {}, columns: [] = []) {
         const instance = new this;
         return await instance.fetch(filter, columns);
     }
@@ -160,7 +161,7 @@ class Model {
       * @param {[]} columns
       * @return {number}
       */
-    static async count(filter = {}, columns = []) {
+    static async count(filter: {} = {}, columns: [] = []): number {
         const objects = await this.findAll(filter, columns);
         return objects.length;
     }
@@ -170,7 +171,7 @@ class Model {
       * @param {{}} filter
       * @return {Promise<CollectionModel>}
       */
-    static async collect(filter = {}) {
+    static async collect(filter: {} = {}): Promise<CollectionModel> {
         const objects = await this.findAll(filter);
         return new CollectionModel(objects);
     }
@@ -180,61 +181,61 @@ class Model {
      * @param {[]} relatedClasses
      * @return {object}
      */
-    static with(relatedClasses) {
+    static with(relatedClasses: []): object {
         const instance = new this;
         for (const relatedClass of relatedClasses) {
-            instance.#_relatedClass.push(relatedClass);
+            instance.relatedClass.push(relatedClass);
         }
         return instance;
     }
 
     /**
       * Set filter before fecthing data from database
-      * @param {{}} filter
+      * @param {any} filter
       * @return {this}
       */
-    setFilter(filter = {}) {
+    setFilter(filter: any = {}): this {
         if (filter.join != undefined) {
             for (const [key, value] of Object.entries(filter.join)) {
                 if (value.type == undefined || value.type.toUpperCase() == 'INNER') {
-                    this.#_db.innerJoin(key, value.key[0], value.key[1]);
+                    this.db.innerJoin(key, value.key[0], value.key[1]);
                 } else {
                     if (value.type.toUpperCase() == 'LEFT') {
-                        this.#_db.leftJoin(key, value.key[0], value.key[1]);
+                        this.db.leftJoin(key, value.key[0], value.key[1]);
                     }
                 }
             }
         }
 
         if (filter.where != undefined) {
-            this.#_db.where(filter.where);
+            this.db.where(filter.where);
         }
 
         if (filter.whereNot != undefined) {
-            this.#_db.whereNot(filter.whereNot);
+            this.db.whereNot(filter.whereNot);
         }
 
         if (filter.whereIn != undefined) {
             for (const [key, value] of Object.entries(filter.whereIn)) {
-                this.#_db.whereIn(key, value);
+                this.db.whereIn(key, value);
             }
         }
 
         if (filter.like != undefined) {
             for (const [key, value] of Object.entries(filter.like)) {
-                this.#_db.where(key, 'like', `%${value}%`);
+                this.db.where(key, 'like', `%${value}%`);
             }
         }
 
         if (filter.orLike != undefined) {
             for (const [key, value] of Object.entries(filter.whereIn)) {
-                this.#_db.orWhere(key, 'like', `%${value}%`);
+                this.db.orWhere(key, 'like', `%${value}%`);
             }
         }
 
         if (filter.group != undefined) {
             if (filter.group.orLike != undefined) {
-                this.#_db.where(function() {
+                this.db.where(function() {
                     let i = 0;
                     for (const [key, value] of Object.entries(filter.group.orLike)) {
                         if (i == 0) {
@@ -250,13 +251,13 @@ class Model {
 
         if (filter.order != undefined) {
             for (const [key, value] of Object.entries(filter.order)) {
-                this.#_db.orderBy(key, value);
+                this.db.orderBy(key, value);
             }
         }
 
         if (filter.page != undefined && filter.size != undefined) {
             const offset = filter.size * (filter.page - 1);
-            this.#_db.limit(filter.size).offset(offset);
+            this.db.limit(filter.size).offset(offset);
         }
 
         return this;
@@ -267,23 +268,23 @@ class Model {
       * @param {{}} filter
       * @param {[]} columns
       */
-    async fetch(filter = {}, columns = []) {
-        this.#_columns = this.getSelectColumns();
+    async fetch(filter: {} = {}, columns: [] = []) {
+        this.columns = this.getSelectColumns();
         if (columns.length > 0) {
-            this.#_columns = columns;
+            this.columns = columns;
         }
 
-        this.#_db.column(this.#_columns);
+        this.db.column(this.columns);
         this.setFilter(filter);
 
         let withRelatedData = null;
-        const results = await this.#_db;
+        const results = await this.db;
 
-        if (this.#_relatedClass.length > 0) {
+        if (this.relatedClass.length > 0) {
             withRelatedData = await this.fetchRelatedData(results);
         }
         return this.setToEntity(results, withRelatedData);
-        // return this.#_db;
+        // return this.db;
     }
 
     /**
@@ -291,15 +292,15 @@ class Model {
       * @param {[]} results
       * @param {any} withRelatedData
       */
-    async setToEntity(results, withRelatedData = null) {
+    async setToEntity(results: [], withRelatedData: any = null) {
         const objects = [];
         const newClassName = this.constructor;
         results.forEach((e, i) => {
             const obj = new newClassName();
             for (const [key, value] of Object.entries(e)) {
-                const found = Object.keys(this.#_cast).find((keys) => keys == key);
+                const found = Object.keys(this.cast).find((keys) => keys == key);
                 if (found) {
-                    obj[key] = Cast.to(value, this.#_cast[key]);
+                    obj[key] = Cast.to(value, this.cast[key]);
                 } else {
                     obj[key] = value;
                 }
@@ -325,11 +326,11 @@ class Model {
      * Get Related Data as array, used with "with" function for Eager Load
      * @param {array} results of object
      */
-    async fetchRelatedData(results) {
+    async fetchRelatedData(results: Array<any>) {
         const resultRelatedData = [];
         const collectionResult = new CollectionModel(results);
         let fieldValues = null;
-        for (const related of this.#_relatedClass) {
+        for (const related of this.relatedClass) {
             const instance = new related.ClassName;
             const nameSpace = related.ClassName;
             const className = instance.constructor.name;
@@ -356,7 +357,7 @@ class Model {
       * Set to plain object
       * @return {{}}
       */
-    toJson() {
+    toJson(): {} {
         const json = {};
         for (const [key, value] of Object.entries(this)) {
             json[key] = value;
@@ -369,10 +370,10 @@ class Model {
       * @param {*} transaction
       * @param {boolean} isIncrement
       */
-    async save(transaction = null, isIncrement = true) {
+    async save(transaction: any = null, isIncrement: boolean = true) {
         const obj = this;
-        const primaryKey = obj.#_primaryKey;
-        const table = obj.#_table;
+        const primaryKey = obj.primaryKey;
+        const table = obj.table;
         let result = null;
         if (obj[primaryKey] == null) {
             if (transaction != null) {
@@ -402,10 +403,10 @@ class Model {
       * Delete data from current instance
       * @param {*} transaction
       */
-    async delete(transaction = null) {
+    async delete(transaction: any = null) {
         const obj = this;
-        const primaryKey = obj.#_primaryKey;
-        const table = obj.#_table;
+        const primaryKey = obj.primaryKey;
+        const table = obj.table;
         let ret = null;
         if (transaction != null) {
             ret = await Db.transacting(transaction).table(table).where(primaryKey, obj[primaryKey]).del();
@@ -425,7 +426,7 @@ class Model {
      *
      * Get parent related table data
      */
-    async hasOne(relatedEloquent, foreignKey, filter = {}) {
+    async hasOne(relatedEloquent: string, foreignKey: string, filter: {} = {}) {
         let result = null;
         if (this[foreignKey] != null) {
             if (PlainObject.isEmpty(filter)) {
@@ -454,7 +455,7 @@ class Model {
      *
      * Get parent related table data
      */
-    async hasOneOrNew(relatedEloquent, foreignKey, filter = {}) {
+    async hasOneOrNew(relatedEloquent: string, foreignKey: string, filter: {} = {}) {
         const result = await this.hasOne(relatedEloquent, foreignKey, filter);
         if (result != null) {
             return result;
@@ -470,7 +471,7 @@ class Model {
      *
      * Get parent related table data
      */
-    async hasOneOrFail(relatedEloquent, foreignKey, filter = {}) {
+    async hasOneOrFail(relatedEloquent: string, foreignKey: string, filter: {} = {}) {
         const result = await this.hasOne(relatedEloquent, foreignKey, filter);
         if (result != null) {
             return result;
@@ -485,8 +486,8 @@ class Model {
      *
      * Get child related table data
      */
-    async hasMany(relatedEloquent, foreignKey, filter = {}) {
-        const primaryKey = this.#_primaryKey;
+    async hasMany(relatedEloquent: string, foreignKey: string, filter: {} = {}) {
+        const primaryKey = this.primaryKey;
         if (this[primaryKey] != null) {
             if (filter.where != undefined) {
                 filter.where[foreignKey] = this[primaryKey];
@@ -511,7 +512,7 @@ class Model {
      *
      * Get child related table data
      */
-    async hasManyOrFail(relatedEloquent, foreignKey, filter = {}) {
+    async hasManyOrFail(relatedEloquent: string, foreignKey: string, filter: {} = {}) {
         const result = await this.hasMany(relatedEloquent, foreignKey, filter);
         if (result != null) {
             return result;
@@ -526,8 +527,8 @@ class Model {
      *
      * Get child related table data
      */
-    async hasFirst(relatedEloquent, foreignKey, filter = []) {
-        const primaryKey = this.#_primaryKey;
+    async hasFirst(relatedEloquent: Class, foreignKey: string, filter: string = []) {
+        const primaryKey = this.primaryKey;
         if (this[primaryKey] != null) {
             if (filter.where != undefined) {
                 filter.where[foreignKey] = this[primaryKey];
@@ -551,7 +552,7 @@ class Model {
      *
      * Get child related table data
      */
-    async hasFirstOrNew(relatedEloquent, foreignKey, filter = {}) {
+    async hasFirstOrNew(relatedEloquent: Class, foreignKey: string, filter: {} = {}) {
         const result = await this.hasFirst(relatedEloquent, foreignKey, filter);
         if (result != null) {
             return result;
@@ -566,7 +567,7 @@ class Model {
      *
      * Get child related table data
      */
-    async hasFirstOrFail(relatedEloquent, foreignKey, filter = {}) {
+    async hasFirstOrFail(relatedEloquent: Class, foreignKey: string, filter: {} = {}) {
         const result = await this.hasFirst(relatedEloquent, foreignKey, filter);
         if (result != null) {
             return result;
@@ -581,7 +582,7 @@ class Model {
       * @param {{}} customError
       * @return {Validator}
       */
-    validateRules(rules, customError = {}) {
+    validateRules(rules: {}, customError: {} = {}): Validator {
         return ValidatorModel.validate(this.toJson(), rules, customError);
     }
 
@@ -591,7 +592,7 @@ class Model {
       * @param {string} method
       * @return {DatatablesModel}
       */
-    static datatables(filter = {}, method = 'POST') {
+    static datatables(filter: {} = {}, method: string = 'POST'): DatatablesModel {
         return new DatatablesModel(this, filter, method);
     }
 
@@ -601,8 +602,8 @@ class Model {
       * This method is valid when your table has auto incerement primary key
       * @return {boolean}
       */
-    isSaved() {
-        return this[this.#_primaryKey] != null;
+    isSaved(): boolean {
+        return this[this.primaryKey] != null;
     }
 
     /**
@@ -614,7 +615,7 @@ class Model {
       * @param {{}} queryParams
       * @return {Promise<{}>}
       */
-    static async paginate(filter = {}, page = 1, size = 6, showedPage = 5, queryParams = {}) {
+    static async paginate(filter: {} = {}, page: number = 1, size: number = 6, showedPage: number = 5, queryParams: {} = {}): Promise<{}> {
         return await new PagingModel(this, filter, page, size, showedPage, queryParams).fetch();
     }
 
@@ -622,7 +623,7 @@ class Model {
       * Get array of props name
       * @return {string[]}
       */
-    getPropsName() {
+    getPropsName(): string[] {
         return Object.getOwnPropertyNames(this);
     }
 
@@ -630,16 +631,16 @@ class Model {
       * get primarykey
       * @return {string}
       */
-    getPrimaryKey() {
-        return this.#_primaryKey;
+    getPrimaryKey(): string {
+        return this.primaryKey;
     }
 
     /**
       * Get table name
       * @return {string}
       */
-    getTable() {
-        return this.#_table;
+    getTable(): string {
+        return this.table;
     }
 
     /**
@@ -648,7 +649,7 @@ class Model {
       * @param {{}} options
       * @return {void}
       */
-    addTrait(trait, options = {}) {
+    addTrait(trait: any, options: {} = {}): void {
         const newTrait = new trait();
         newTrait.register(this.constructor, options);
     }
@@ -657,7 +658,7 @@ class Model {
       * Get select column of current table
       * @return {[]}
       */
-    getSelectColumns() {
+    getSelectColumns(): [] {
         const selectColumns = [];
         for (const column of this.getPropsName()) {
             selectColumns.push(this.getTable() + '.' + column);

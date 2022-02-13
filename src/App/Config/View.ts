@@ -10,7 +10,7 @@ class View {
       *
       * @param {Express} app
       */
-    static set(app) {
+    static set(app: Express) {
         const appMode = process.env.APP_MODE;
         const rootDir = appMode == 'production' ? '/build' : '/src';
 
