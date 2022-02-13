@@ -1,5 +1,5 @@
 import UploadedFile from '../Libraries/UploadedFile.js';
-import {Response as ExpressResponse, Request as ExpressRequest} from 'express';
+import {Response as ExpressResponse, Request as ExpressRequest, NextFunction} from 'express';
 
 /**
  * @class Request
@@ -8,8 +8,8 @@ class Request {
     /**
      * @var {Request} instance
      */
-    static instance = null;
-    request = null;
+    static instance: Request;
+    request: ExpressRequest | undefined;
 
 
     /**
@@ -22,19 +22,19 @@ class Request {
     /**
       * @param {ExpressRequest} req
       * @param {ExpressResponse} res
-      * @param {*} next
+      * @param {NextFunction} next
       */
-    static request(req, res, next) {
+    static request(req: ExpressRequest, res: ExpressResponse, next: NextFunction): void {
         Request.getInstance().setRequest(req);
         next();
     }
 
     /**
      *
-     * @param {*} req
+     * @param {ExpressRequest} req
      * @return {Request}
      */
-    setRequest(req) {
+    setRequest(req: ExpressRequest): Request {
         req = Request.files(req);
         this.request = req;
 
@@ -43,17 +43,17 @@ class Request {
 
     /**
      *
-     * @return {{}}
+     * @return {ExpressRequest|undefined}
      */
-    getRequest() {
+    getRequest(): ExpressRequest|undefined {
         return this.request;
     }
 
     /**
      * Get instance
-      * @return {ExpressRequest}
+      * @return {Request}
       */
-    static getInstance() {
+    static getInstance(): Request {
         if (this.instance == null) {
             this.instance = new this;
         }
@@ -66,17 +66,19 @@ class Request {
      * @param {ExpressRequest} req
      * @return {ExpressRequest}
      */
-    static files(req) {
-        req.uploadedFiles = {};
+    static files(req: ExpressRequest): ExpressRequest {
+        req.uploadedFiles = {
+            key: UploadedFile,
+            name: String
+        };
         const files = req.files;
 
         if ( req.files != null && req.files != undefined ) {
             for (const [key, value] of Object.entries(files)) {
-                req.uploadedFiles[key] = [];
                 if (Array.isArray(value)) {
                     value.forEach((element) => {
                         const uploadedFile = new UploadedFile(element);
-                        req.uploadedFiles[key].push(uploadedFile);
+                        req.uploadedFiles.key.push(uploadedFile);
                     });
                 } else {
                     const uploadedFile = new UploadedFile(value);
@@ -87,7 +89,7 @@ class Request {
 
         req.getFiles = (name = null) => {
             if (name != null) {
-                const uploaded = req.uploadedFiles[name];
+                const uploaded = req.uploadedFiles.name;
                 if (uploaded.length > 1) {
                     return uploaded;
                 }

@@ -14,7 +14,7 @@ class ExpressOverride {
       * read more about express API override http://expressjs.com/en/guide/overriding-express-api.html
       * @param {Express} app
       */
-    static override(app) {
+    static override(app: Express) {
         AppOverride.override(app);
     }
 }

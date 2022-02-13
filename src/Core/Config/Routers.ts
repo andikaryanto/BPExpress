@@ -12,22 +12,22 @@ import CoreRequest from '../Http/Request';
  * @class Router
  */
 class Routers {
-    #_router = null;
-    #_middleware = [];
-    #_route = null;
-    #_namedRoute = '';
-    #_namedMiddleware = '';
-    #_namedController = '';
-    #_namedFunction = '';
-    #_namedData = '';
-    #_namedMethod = '';
+    private router: Router;
+    private middleware: [] = [];
+    private route: string = '';
+    private namedRoute: string = '';
+    private namedMiddleware: [] = [];
+    private namedController: string = '';
+    private namedFunction: string = '';
+    private namedData: {} = {};
+    private namedMethod: string = '';
 
     /**
       *
       * @param {Express} app
       */
     constructor() {
-        this.#_router = Router();
+        this.router = Router();
     }
 
     /**
@@ -36,17 +36,17 @@ class Routers {
       * @param {[]} middleware
       * @param {Function} callback
       */
-    group(route, middleware, callback) {
+    group(route: string, middleware: [], callback: Function) {
         const intance = new Routers();
 
 
-        if (this.#_route != null) {
-            intance.#_route = `${this.#_route}${route}`;
+        if (this.route != null) {
+            intance.route = `${this.route}${route}`;
         } else {
-            intance.#_route = `${route}`;
+            intance.route = `${route}`;
         }
-        this.#_router.use(intance.#_router);
-        intance.#_middleware = [...this.#_middleware, ...middleware];
+        this.router.use(intance.router);
+        intance.middleware = [...this.middleware, ...middleware];
         callback(intance);
     }
 
@@ -58,7 +58,7 @@ class Routers {
       * @param {string} fn
       * @param {{}} additionalData
       */
-    delete(route, middleware, controller, fn, additionalData = {}) {
+    delete(route: string, middleware: [], controller: string, fn: string, additionalData: {} = {}): void {
         this.doRoute(route, middleware, controller, fn, additionalData, 'DELETE');
     }
 
@@ -70,7 +70,7 @@ class Routers {
       * @param {string} fn
       * @param {{}} additionalData
       */
-    put(route, middleware, controller, fn, additionalData = {}) {
+    put(route: string, middleware: [], controller: string, fn: string, additionalData: {} = {}) {
         this.doRoute(route, middleware, controller, fn, additionalData, 'PUT');
     }
 
@@ -82,7 +82,7 @@ class Routers {
       * @param {string} fn
       * @param {{}} additionalData
       */
-    post(route, middleware, controller, fn, additionalData = {}) {
+    post(route: string, middleware: [], controller: string, fn: string, additionalData: {} = {}) {
         this.doRoute(route, middleware, controller, fn, additionalData, 'POST');
     }
 
@@ -93,9 +93,9 @@ class Routers {
       * @param {Controller} controller
       * @param {string} fn
       * @param {{}} additionalData
-      * @return {Router}
+      * @return {Routers}
       */
-    get(route, middleware, controller, fn, additionalData = {}) {
+    get(route: string, middleware: [], controller: string, fn: string, additionalData: {} = {}): Routers {
         this.doRoute(route, middleware, controller, fn, additionalData, 'GET');
         return this;
     }
@@ -104,13 +104,13 @@ class Routers {
       *
       * @param {string} name
       */
-    named(name) {
+    named(name: any): void {
         this.doRoute(name,
-            this.#_namedMiddleware,
-            this.#_namedController,
-            this.#_namedFunction,
-            this.#_namedData,
-            this.#_namedMethod,
+            this.namedMiddleware,
+            this.namedController,
+            this.namedFunction,
+            this.namedData,
+            this.namedMethod,
             true,
         );
     }
@@ -125,29 +125,29 @@ class Routers {
       * @param {string} method
       * @param {boolean} isNamed
       */
-    doRoute(route, middleware, controller, fn, additionalData = {}, method = 'GET', isNamed = false) {
+    doRoute(route: string, middleware: [], controller: string, fn: string, additionalData: {} = {}, method: string = 'GET', isNamed: boolean = false) {
         let currentRoute = route;
         if (!isNamed) {
-            if (this.#_route != null) {
-                currentRoute = `${this.#_route}${route}`;
-                // this.#_namedRoute = currentRoute;
-                this.#_namedMiddleware = middleware;
-                this.#_namedController = controller;
-                this.#_namedFunction = fn;
-                this.#_namedMethod = method;
-                this.#_namedData = additionalData;
+            if (this.route != null) {
+                currentRoute = `${this.route}${route}`;
+                // this.namedRoute = currentRoute;
+                this.namedMiddleware = middleware;
+                this.namedController = controller;
+                this.namedFunction = fn;
+                this.namedMethod = method;
+                this.namedData = additionalData;
             } else {
-                this.#_namedMiddleware = middleware;
-                this.#_namedController = controller;
-                this.#_namedFunction = fn;
-                this.#_namedMethod = method;
-                this.#_namedData = additionalData;
+                this.namedMiddleware = middleware;
+                this.namedController = controller;
+                this.namedFunction = fn;
+                this.namedMethod = method;
+                this.namedData = additionalData;
             }
         } else {
             currentRoute = `/${route}`;
         }
 
-        const resReq = async (req, res) => {
+        const resReq = async (req: { session: any; params: any; query: any; body: any; }, res: any) => {
             const container = Container.getInstance().get(controller);
             const controllerInstance = container;
             const data = controllerInstance[fn](
@@ -171,28 +171,28 @@ class Routers {
         };
 
         if (method.toUpperCase() == 'GET') {
-            this.#_router.get(`${currentRoute}`, [...this.#_middleware, ...middleware], resReq);
+            this.router.get(`${currentRoute}`, [...this.middleware, ...middleware], resReq);
         }
 
         if (method.toUpperCase() == 'POST') {
-            this.#_router.post(`${currentRoute}`, [...this.#_middleware, ...middleware], resReq);
+            this.router.post(`${currentRoute}`, [...this.middleware, ...middleware], resReq);
         }
 
         if (method.toUpperCase() == 'PUT') {
-            this.#_router.put(`${currentRoute}`, [...this.#_middleware, ...middleware], resReq);
+            this.router.put(`${currentRoute}`, [...this.middleware, ...middleware], resReq);
         }
 
         if (method.toUpperCase() == 'DELETE') {
-            this.#_router.delete(`${currentRoute}`, [...this.#_middleware, ...middleware], resReq);
+            this.router.delete(`${currentRoute}`, [...this.middleware, ...middleware], resReq);
         }
     }
 
     /**
       *
-      * @return {Routers}
+      * @return {Router}
       */
-    getRouter() {
-        return this.#_router;
+    getRouter(): Router {
+        return this.router;
     }
 
     /**
@@ -201,7 +201,7 @@ class Routers {
       * @param {Response} res
       * @param {ResponseData|View|Redirect} returnedData
       */
-    static return(req, res, returnedData) {
+    static return(req: any, res: { status: (arg0: number) => { (): any; new(): any; send: { (arg0: string): void; new(): any; }; json: { (arg0: {}): void; new(): any; }; }; send: (arg0: string) => void; render: (arg0: string, arg1: { csrfToken: string | null; lang: (string: any) => any; }) => void; sendFile: (arg0: string) => void; redirect: (arg0: string) => void; }, returnedData: { code: any; data: any; type: string; view: string; route: any; } | undefined) {
         if (returnedData == undefined) {
             res.status(400).send('Unexpexted Error, Method didnt return anything');
         }

@@ -1,30 +1,31 @@
-import {Request, Response} from 'express';
+import { Request, Response } from 'express';
 import dotenv from 'dotenv';
-import {v4 as uuidv4} from 'uuid';
+import { v4 as uuidv4 } from 'uuid';
 import PlainObject from '../Libraries/PlainObject';
+import { NextFunction } from 'express-serve-static-core';
 dotenv.config();
 
 /**
  * @class Session
  */
 class Session {
-    static instance = null;
+    static instance: Session | undefined;
     session = null;
 
 
     /**
       * @param {Request} expressRequest
       */
-    constructor(expressRequest) {
+    constructor(expressRequest: Request) {
         this.session = expressRequest.session;
     }
 
     /**
       * @param {Request} req
       * @param {Response} res
-      * @param {*} next
+      * @param {NextFunction} next
       */
-    static session(req, res, next) {
+    static session(req: Request, res: Response, next: NextFunction) {
         if (req.session.userlanguage == undefined) {
             req.session.userlanguage = null;
         }
@@ -42,7 +43,7 @@ class Session {
             if (instance.flash == undefined) {
                 instance.flash = {};
             }
-            instance.flash = {...instance.flash, [key]: value};
+            instance.flash = { ...instance.flash, [key]: value };
         };
 
         req.session.hasFlashData = function hasFlashData(key) {

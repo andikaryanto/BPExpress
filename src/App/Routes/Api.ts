@@ -6,7 +6,7 @@ import ApiMiddleware from '../Middlewares/ApiMiddleware.js';
 
 const Api = () => {
     const routers = new Routers();
-    routers.group('/user', [], (routers) => {
+    routers.group('/user', [], (routers: Routers) => {
         routers.post('/login', [], 'rest.user.controller', 'login');
         routers.post('/save', [], 'rest.user.controller', 'store');
         routers.put('/update/:Id', [], 'rest.user.controller', 'update');
@@ -17,8 +17,8 @@ const Api = () => {
     //     routers.get('/list', [], GroupuserApi, 'getList').named('groupuser.list');
     // });
 
-    routers.group('/customer', [ApiMiddleware], (routers) => {
-        routers.group('/shop', [ApiMiddleware], (routers) => {
+    routers.group('/customer', [ApiMiddleware], (routers: Routers) => {
+        routers.group('/shop', [ApiMiddleware], (routers : Routers) => {
             routers.get('/list', [], 'rest.customer.shop.controller', 'getList');
             routers.get('/:shopId/products', [], 'rest.customer.shop.controller', 'products');
         });
