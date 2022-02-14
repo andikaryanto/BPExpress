@@ -5,35 +5,35 @@ class BaseRepository {
     /**
      * Get class model
      */
-    getClass() {
+    getClass(): any {
 
     }
 
     /**
      * Get data by Id
-     * @param {number|string} id
+     * @param {number|string|undefined} id
      */
-    async find(id) {
+    async find(id: any) {
         const className = this.getClass();
         return await className['find'](id);
     }
 
     /**
      * Get data by Id
-     * @param {number|string} id
+     * @param {number|string|undefined} id
      */
-    async findOrNew(id) {
+    async findOrNew(id: any) {
         const className = this.getClass();
         return await className['findOrNew'](id);
     }
 
     /**
       * Get one data from database by id primary key, If Data not found will Throw Error
-      * @param {number|string} id
+      * @param {number|string|undefined} id
       * @throws {Error}
       * @return {object}
       */
-    async findOrFail(id) {
+    async findOrFail(id: any) {
         const className = this.getClass();
         return await className['findOrFail'](id);
     }
@@ -95,7 +95,7 @@ class BaseRepository {
      * @param {[]} relatedClasses
      * @return {object}
      */
-    async with(relatedClasses) {
+    async with(relatedClasses: any) {
         const className = this.getClass();
         return await className['with'](relatedClasses);
     }

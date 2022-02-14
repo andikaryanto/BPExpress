@@ -1,5 +1,5 @@
 import { Knex } from 'knex';
-import Validator from 'validatorjs';
+import {Validator} from 'validatorjs';
 import ModelError from '../../App/Errors/ModelError.js';
 import Db from '../Database/Connection/DbConnection.js';
 import Request from '../Http/Request.js';
@@ -13,9 +13,9 @@ import ValidatorModel from './ValidatorModel.js';
  * @class Model
  */
 class Model {
-    private table?: string;
-    private columns?: [];
-    private primaryKey?: string;
+    private table!: string;
+    private columns?: string[];
+    private primaryKey!: any;
     private db!: Knex.QueryBuilder;
 
     private cast = {};
@@ -49,11 +49,11 @@ class Model {
 
     /**
       * Get one data from database by id primary key, If Data not found will reeturn null
-      * @param {number|string} id
+      * @param {number|string|undefined} id
       * @throws {Error}
-      * @return {Model | null}
+      * @return {any}
       */
-    static async find(id: number | string): Model | null {
+    static async find(id: number | string | undefined): Promise<any> {
         const instance = new this;
         const filter = {
             where: {
@@ -90,7 +90,7 @@ class Model {
       * @throws {Error}
       * @return {object}
       */
-    static async findOrFail(id: number | string): {} | null {
+    static async findOrFail(id: number | string | undefined): Promise<{} | null> {
         const object = await this.find(id);
         if (object != null) {
             return object;
@@ -105,7 +105,7 @@ class Model {
       * @throws {Error}
       * @return {object|null}
       */
-    static async findOne(filter: {} = {}): object | null {
+    static async findOne(filter: {} = {}): Promise<{} | null> {
         const objects = await this.findAll(filter);
         if (objects.length > 0) {
             return objects[0];
@@ -120,7 +120,7 @@ class Model {
       * @throws {Error}
       * @return {object}
       */
-    static async findOneOrNew(filter: {} = {}): object {
+    static async findOneOrNew(filter: {} = {}): Promise<{} | null> {
         const instance = new this;
         const object = await this.findOne(filter);
         if (object != null) {
@@ -136,7 +136,7 @@ class Model {
       * @throws {Error}
       * @return {object}
       */
-    static async findOneOrFail(filter: {} = {}): object {
+    static async findOneOrFail(filter: {} = {}): Promise<{} | null> {
         const object = await this.findOne(filter);
         if (object != null) {
             return object;
@@ -161,7 +161,7 @@ class Model {
       * @param {[]} columns
       * @return {number}
       */
-    static async count(filter: {} = {}, columns: [] = []): number {
+    static async count(filter: {} = {}, columns: [] = []): Promise<number> {
         const objects = await this.findAll(filter, columns);
         return objects.length;
     }
@@ -426,7 +426,11 @@ class Model {
      *
      * Get parent related table data
      */
-    async hasOne(relatedEloquent: string, foreignKey: string, filter: {} = {}) {
+    async hasOne(
+        relatedEloquent: string, 
+        foreignKey: string, 
+        filter: any = {}
+    ) {
         let result = null;
         if (this[foreignKey] != null) {
             if (PlainObject.isEmpty(filter)) {
@@ -527,7 +531,7 @@ class Model {
      *
      * Get child related table data
      */
-    async hasFirst(relatedEloquent: Class, foreignKey: string, filter: string = []) {
+    async hasFirst(relatedEloquent: any, foreignKey: string, filter: any = {}) {
         const primaryKey = this.primaryKey;
         if (this[primaryKey] != null) {
             if (filter.where != undefined) {
@@ -546,13 +550,13 @@ class Model {
     }
 
     /**
-     * @param {Class} relatedEloquent Relates Table
+     * @param {any} relatedEloquent Relates Table
      * @param {string} foreignKey key name of this Eloquent
      * @param {{}} filter filter data
      *
      * Get child related table data
      */
-    async hasFirstOrNew(relatedEloquent: Class, foreignKey: string, filter: {} = {}) {
+    async hasFirstOrNew(relatedEloquent: any, foreignKey: string, filter: {} = {}) {
         const result = await this.hasFirst(relatedEloquent, foreignKey, filter);
         if (result != null) {
             return result;
@@ -561,13 +565,13 @@ class Model {
     }
 
     /**
-     * @param {Class} relatedEloquent Relates Table
+     * @param {any} relatedEloquent Relates Table
      * @param {string} foreignKey key name of this Eloquent
      * @param {{}} filter filter data
      *
      * Get child related table data
      */
-    async hasFirstOrFail(relatedEloquent: Class, foreignKey: string, filter: {} = {}) {
+    async hasFirstOrFail(relatedEloquent: any, foreignKey: string, filter: {} = {}) {
         const result = await this.hasFirst(relatedEloquent, foreignKey, filter);
         if (result != null) {
             return result;
@@ -582,7 +586,7 @@ class Model {
       * @param {{}} customError
       * @return {Validator}
       */
-    validateRules(rules: {}, customError: {} = {}): Validator {
+    validateRules(rules: {}, customError: {} = {}): Validator<any> {
         return ValidatorModel.validate(this.toJson(), rules, customError);
     }
 
@@ -603,7 +607,8 @@ class Model {
       * @return {boolean}
       */
     isSaved(): boolean {
-        return this[this.primaryKey] != null;
+        let primaryKey = this.primaryKey;
+        return this["primaryKey"] != null;
     }
 
     /**
@@ -656,9 +661,9 @@ class Model {
 
     /**
       * Get select column of current table
-      * @return {[]}
+      * @return {string[]}
       */
-    getSelectColumns(): [] {
+    getSelectColumns(): string[] {
         const selectColumns = [];
         for (const column of this.getPropsName()) {
             selectColumns.push(this.getTable() + '.' + column);
