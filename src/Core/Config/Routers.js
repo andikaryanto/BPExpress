@@ -8,6 +8,7 @@ import Template from '../Template/Template';
 import appRoot from 'app-root-path';
 import Container from '../Container/Container';
 import CoreRequest from '../Http/Request';
+import BaseResponse from '../../App/Responses/BaseResponse';
 /**
  * @class Router
  */
@@ -167,7 +168,7 @@ class Routers {
             } else {
                 returnedData = data;
             }
-            Routers.return(req, res, returnedData);
+            Routers.response(req, res, returnedData);
         };
 
         if (method.toUpperCase() == 'GET') {
@@ -201,12 +202,18 @@ class Routers {
       * @param {Response} res
       * @param {ResponseData|View|Redirect} returnedData
       */
-    static return(req, res, returnedData) {
+    static response(req, res, returnedData) {
         if (returnedData == undefined) {
             res.status(400).send('Unexpexted Error, Method didnt return anything');
         }
-        if (returnedData instanceof ResponseData) {
-            res.status(returnedData.code).json(returnedData.data);
+
+        var response = null;
+        if(returnedData instanceof BaseResponse){
+            response = returnedData.send();
+        }
+
+        if (response instanceof ResponseData) {
+            res.status(response.code).json(response.data);
         }
 
         if (returnedData instanceof View) {

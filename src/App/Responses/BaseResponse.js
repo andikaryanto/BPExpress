@@ -26,13 +26,21 @@ class BaseResponse {
      * @return {ResponseData}
      */
     send() {
+        return ResponseData.status(this.#_code).json(this.getResult());
+    }
+
+    getResult(){
         const result = {
             Message: this.#_message,
             Data: this.#_data,
             Response: this.#_responseCode,
         };
 
-        return ResponseData.status(this.#_code).json(result);
+        return result;
+    }
+
+    getStatusCode(){
+        return this.#_code;
     }
 }
 
