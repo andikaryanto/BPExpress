@@ -1,7 +1,5 @@
 import CollectionModel from '../../Core/Model/CollectionModel';
-import M_shopproducts from '../Models/M_shopproducts';
-import M_shops from '../Models/M_shops';
-import MproductRepository from '../Repositories/MproductRepository';
+import MshopProductRepository from '../Repositories/MshopProductRepository';
 import MshopRepository from '../Repositories/MshopRepository';
 /**
  * @class ShopService
@@ -15,10 +13,18 @@ class ShopService {
 
     /**
      *
-     * @param {MshopRepository} shopRepository
+     * @var {MshopProductRepository} shopProductRepository
      */
-    constructor(shopRepository) {
+    #_shopProductRepository;
+
+    /**
+     *
+     * @param {MshopRepository} shopRepository
+     * @param {MshopProductRepository} shopProductRepository
+     */
+    constructor(shopRepository, shopProductRepository) {
         this.#_shopRepository = shopRepository;
+        this.#_shopProductRepository = shopProductRepository;
     }
     /**
      * Search for shop
@@ -65,7 +71,7 @@ class ShopService {
             };
         }
 
-        const shopProducts = (await M_shopproducts.collect(param)).getItems();
+        const shopProducts = (await this.#_shopProductRepository.collect(param));
 
         return shopProducts;
     }

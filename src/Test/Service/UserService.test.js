@@ -1,27 +1,40 @@
-import sinon from 'sinon';
-import {expect} from 'chai';
 import CommonService from '../../App/Services/Library/CommonService';
 import MuserRepository from '../../App/Repositories/MuserRepository';
 import M_users from '../../App/Models/M_users';
 import UserService from '../../App/Services/UserService';
+import MockModule from '../../Core/Test/MockModule';
 
-describe('search', () => {
-    it('should return return array', async () => {
-        const commonService = new CommonService();
-        sinon.stub(commonService, 'encryptMd5').returns('123h12b3h12314b14');
-        const userRepos = new MuserRepository();
-        const user = new M_users;
-        user.Id = 1;
-        user.Username = 'Andik';
-        sinon.stub(userRepos, 'findOne').returns(user);
+describe('beforeRun', () => {
+    const commonServiceMd5 = MockModule.mockModule(CommonService, 'encryptMd5', 'this-is-md5');
+    const commonService = new CommonService();
+    const userRepos = new MuserRepository();
+    describe('login', () => {
+        it('should return return M_user instance', async () => {
+            const userRepoFind = MockModule.mockModule(MuserRepository, 'findOne', () => {
+                const user = new M_users();
+                user.Id = 1;
+                user.Username = 'Andik';
+                user.Photo = 'photo';
+                return user;
+            });
 
-        const userService = new UserService(commonService, userRepos);
-        const result = await userService.login('Andik', 'Password');
+            const service = new UserService(commonService, userRepos);
+            const result = await service.login('Andik', 'password');
 
-        expect(result).to.be.instanceOf(M_users);
-        expect(result.Username).to.deep.equals('Andik');
+            expect(result).toBeInstanceOf(M_users);
+            expect(commonServiceMd5).toHaveBeenCalled();
+            expect(userRepoFind).toHaveBeenCalled();
+        });
 
-        commonService.encryptMd5.restore();
-        userRepos.findOne.restore();
+        it('should return return null', async () => {
+            const userRepoFind = MockModule.mockModule(MuserRepository, 'findOne', null);
+
+            const service = new UserService(commonService, userRepos);
+            const result = await service.login('Andik', 'password');
+
+            expect(result).toBeNull();
+            expect(commonServiceMd5).toHaveBeenCalled();
+            expect(userRepoFind).toHaveBeenCalled();
+        });
     });
 });

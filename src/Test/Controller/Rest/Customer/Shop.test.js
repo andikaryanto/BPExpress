@@ -1,81 +1,77 @@
-import sinon from 'sinon';
-import {expect} from 'chai';
 import RequestService from '../../../../App/Services/Library/RequestService';
 import ShopService from '../../../../App/Services/ShopService';
 import CollectionModel from '../../../../Core/Model/CollectionModel';
 import Shop from '../../../../App/Controllers/Rest/Customer/Shop';
 import SuccessResponse from '../../../../App/Responses/SuccessResponse';
 import M_shops from '../../../../App/Models/M_shops';
+import ResponseCode from '../../../../App/Constants/ResponseCode';
+import Container from '../../../../Core/Container/Container';
 import M_shopproducts from '../../../../App/Models/M_shopproducts';
-import M_products from '../../../../App/Models/M_products';
-
+import MockModule from '../../../../Core/Test/MockModule';
 
 describe('beforeRun', () => {
-    const requestService = new RequestService;
-    const shopService = new ShopService;
+    // let container = Container.getInstance();
+    // const requestService = container.get('request.service');
+    // const shopService = container.get('shop.service');
+
+    const requestService = new RequestService();
+    const shopService = new ShopService();
+
+    const requestServiceGetQuery = jest
+        .spyOn(RequestService.prototype, 'getQuery')
+        .mockImplementation(() => 'shop123');
+
+    const requestServiceGetParam = jest
+        .spyOn(RequestService.prototype, 'getParams')
+        .mockImplementation(() => 'Citos');
+
+
     describe('getList', () => {
         it('should return return array of', async () => {
-            const modelCollection = new CollectionModel([
-                {Id: 1, Name: 'shop123'},
-                {Id: 2, Name: 'shop234'},
-            ]);
-
-            sinon.stub(requestService, 'getQuery').withArgs('Name').returns('shop123');
-            sinon.stub(shopService, 'search').withArgs('shop123').returns(modelCollection);
+            const shopServiceSearch = MockModule.mockModule(ShopService, 'search', () => {
+                const shop = new M_shops();
+                shop.Id = 1;
+                const modelCollection = new CollectionModel([shop]);
+                return modelCollection;
+            });
 
             const context = new Shop(requestService, shopService);
             const result = await context.getList();
 
-            expect(result).to.be.instanceOf(SuccessResponse);
-            expect(result.getResult()).to.deep.equals({
+            expect(result).toBeInstanceOf(SuccessResponse);
+            expect(result.getResult()).toEqual({
                 Message: 'Success',
                 Data: [
                     {
                         Id: 1,
-                        Name: 'shop123',
-                        Owner: undefined,
-                        Phone: undefined,
-                        MapAddress: undefined,
-                        Address: undefined,
-                    }, {
-                        Id: 2,
-                        Name: 'shop234',
-                        Owner: undefined,
-                        Phone: undefined,
-                        MapAddress: undefined,
-                        Address: undefined,
+                        Name: null,
+                        Owner: null,
+                        Phone: null,
+                        MapAddress: null,
+                        Address: null,
                     },
                 ],
-                Response: {Status: 'OK', Code: 1000},
+                Response: ResponseCode.OK,
             });
-            expect(result.getStatusCode()).to.deep.equals(200);
-            requestService.getQuery.restore();
-            shopService.search.restore();
+            expect(shopServiceSearch).toHaveBeenCalledTimes(1);
+            expect(requestServiceGetQuery).toHaveBeenCalledTimes(1);
         });
     });
 
     describe('products', () => {
         it('should return return array of', async () => {
-            const shopProduct1 = new M_shopproducts();
-            shopProduct1.Id = 100;
-            shopProduct1.M_Shop_Id = 1;
-            shopProduct1.M_Product_Id = 100;
-            shopProduct1.PurchasePrice = 12000;
-            const modelCollection = new CollectionModel([
-                shopProduct1,
-            ]);
-            sinon.stub(requestService, 'getParams').withArgs('shopId').callsFake(() => 'shop123');
-            sinon.stub(requestService, 'getQuery').withArgs('Name').callsFake(() => 'Citos');
-            sinon.stub(shopService, 'products').callsFake(() => modelCollection);
+            const shopServiceProducts = MockModule.mockModule(ShopService, 'products', () => {
+                const shopProduct = new M_shopproducts();
+                shopProduct.Id = 1;
+                const modelCollection = new CollectionModel([shopProduct]);
+                return modelCollection;
+            });
 
             const context = new Shop(requestService, shopService);
             const result = await context.products();
-
-            expect(result).to.be.instanceOf(SuccessResponse);
-            expect(result.getStatusCode()).to.deep.equals(200);
-            requestService.getParams.restore();
-            requestService.getQuery.restore();
-            shopService.products.restore();
+            expect(shopServiceProducts).toHaveBeenCalledTimes(1);
+            expect(requestServiceGetQuery).toHaveBeenCalledTimes(1);
+            expect(requestServiceGetParam).toHaveBeenCalledTimes(1);
         });
     });
 });

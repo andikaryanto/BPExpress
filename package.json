@@ -28,7 +28,6 @@
     "babel-register": "^6.26.0",
     "body-parser": "^1.19.0",
     "boxen": "^4.0.0",
-    "chai": "^4.3.6",
     "chalk": "^2.4.2",
     "connect-session-knex": "^2.0.0",
     "csurf": "^1.11.0",
@@ -55,7 +54,6 @@
     "sequelize": "^6.6.2",
     "sequelize-auto": "^0.8.2",
     "sequelize-cli": "^6.2.0",
-    "sinon": "^13.0.1",
     "validatorjs": "^3.22.1",
     "webpack": "^5.33.2",
     "yargs": "^13.2.4"

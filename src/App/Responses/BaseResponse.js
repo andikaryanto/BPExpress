@@ -31,7 +31,7 @@ class BaseResponse {
 
     /**
      * get result body
-     * @returns {{}}
+     * @return {{}}
      */
     getResult() {
         const result = {
@@ -45,7 +45,7 @@ class BaseResponse {
 
     /**
      * Get status code
-     * @returns {int}
+     * @return {int}
      */
     getStatusCode() {
         return this.#_code;
