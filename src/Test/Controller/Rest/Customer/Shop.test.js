@@ -25,6 +25,7 @@ describe('beforeRun', () => {
         .spyOn(RequestService.prototype, 'getParams')
         .mockImplementation(() => 'Citos');
 
+    const service = new Shop(requestService, shopService);
 
     describe('getList', () => {
         it('should return return array of', async () => {
@@ -35,8 +36,7 @@ describe('beforeRun', () => {
                 return modelCollection;
             });
 
-            const context = new Shop(requestService, shopService);
-            const result = await context.getList();
+            const result = await service.getList();
 
             expect(result).toBeInstanceOf(SuccessResponse);
             expect(result.getResult()).toEqual({
@@ -53,8 +53,8 @@ describe('beforeRun', () => {
                 ],
                 Response: ResponseCode.OK,
             });
-            expect(shopServiceSearch).toHaveBeenCalledTimes(1);
-            expect(requestServiceGetQuery).toHaveBeenCalledTimes(1);
+            expect(shopServiceSearch).toHaveBeenCalled();
+            expect(requestServiceGetQuery).toHaveBeenCalled();
         });
     });
 
@@ -67,11 +67,12 @@ describe('beforeRun', () => {
                 return modelCollection;
             });
 
-            const context = new Shop(requestService, shopService);
-            const result = await context.products();
+            const result = await service.products();
+            console.log(result.getResult());
+            expect(result).toBeInstanceOf(SuccessResponse);
             expect(shopServiceProducts).toHaveBeenCalledTimes(1);
-            expect(requestServiceGetQuery).toHaveBeenCalledTimes(1);
-            expect(requestServiceGetParam).toHaveBeenCalledTimes(1);
+            expect(requestServiceGetQuery).toHaveBeenCalled();
+            expect(requestServiceGetParam).toHaveBeenCalled();
         });
     });
 });
