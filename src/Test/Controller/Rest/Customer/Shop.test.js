@@ -1,5 +1,5 @@
 import sinon from 'sinon';
-import { expect } from 'chai';
+import {expect} from 'chai';
 import RequestService from '../../../../App/Services/Library/RequestService';
 import ShopService from '../../../../App/Services/ShopService';
 import CollectionModel from '../../../../Core/Model/CollectionModel';
@@ -11,14 +11,13 @@ import M_products from '../../../../App/Models/M_products';
 
 
 describe('beforeRun', () => {
-
     const requestService = new RequestService;
-    const shopService = new ShopService;   
+    const shopService = new ShopService;
     describe('getList', () => {
         it('should return return array of', async () => {
             const modelCollection = new CollectionModel([
-                { Id: 1, Name: 'shop123' },
-                { Id: 2, Name: 'shop234' }
+                {Id: 1, Name: 'shop123'},
+                {Id: 2, Name: 'shop234'},
             ]);
 
             sinon.stub(requestService, 'getQuery').withArgs('Name').returns('shop123');
@@ -37,17 +36,17 @@ describe('beforeRun', () => {
                         Owner: undefined,
                         Phone: undefined,
                         MapAddress: undefined,
-                        Address: undefined
+                        Address: undefined,
                     }, {
                         Id: 2,
                         Name: 'shop234',
                         Owner: undefined,
                         Phone: undefined,
                         MapAddress: undefined,
-                        Address: undefined
-                    }
+                        Address: undefined,
+                    },
                 ],
-                Response: { Status: 'OK', Code: 1000 }
+                Response: {Status: 'OK', Code: 1000},
             });
             expect(result.getStatusCode()).to.deep.equals(200);
             requestService.getQuery.restore();
@@ -57,14 +56,13 @@ describe('beforeRun', () => {
 
     describe('products', () => {
         it('should return return array of', async () => {
-
-            let shopProduct1 = new M_shopproducts();
+            const shopProduct1 = new M_shopproducts();
             shopProduct1.Id = 100;
             shopProduct1.M_Shop_Id = 1;
             shopProduct1.M_Product_Id = 100;
             shopProduct1.PurchasePrice = 12000;
             const modelCollection = new CollectionModel([
-                shopProduct1
+                shopProduct1,
             ]);
             sinon.stub(requestService, 'getParams').withArgs('shopId').callsFake(() => 'shop123');
             sinon.stub(requestService, 'getQuery').withArgs('Name').callsFake(() => 'Citos');

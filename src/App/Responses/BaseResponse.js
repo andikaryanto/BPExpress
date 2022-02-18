@@ -29,7 +29,11 @@ class BaseResponse {
         return ResponseData.status(this.#_code).json(this.getResult());
     }
 
-    getResult(){
+    /**
+     * get result body
+     * @returns {{}}
+     */
+    getResult() {
         const result = {
             Message: this.#_message,
             Data: this.#_data,
@@ -39,7 +43,11 @@ class BaseResponse {
         return result;
     }
 
-    getStatusCode(){
+    /**
+     * Get status code
+     * @returns {int}
+     */
+    getStatusCode() {
         return this.#_code;
     }
 }

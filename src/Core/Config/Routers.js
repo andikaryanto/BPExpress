@@ -207,8 +207,8 @@ class Routers {
             res.status(400).send('Unexpexted Error, Method didnt return anything');
         }
 
-        var response = null;
-        if(returnedData instanceof BaseResponse){
+        let response = null;
+        if (returnedData instanceof BaseResponse) {
             response = returnedData.send();
         }
 

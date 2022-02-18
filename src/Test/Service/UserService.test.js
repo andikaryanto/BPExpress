@@ -10,7 +10,7 @@ describe('search', () => {
         const commonService = new CommonService();
         sinon.stub(commonService, 'encryptMd5').returns('123h12b3h12314b14');
         const userRepos = new MuserRepository();
-        let user = new M_users;
+        const user = new M_users;
         user.Id = 1;
         user.Username = 'Andik';
         sinon.stub(userRepos, 'findOne').returns(user);
