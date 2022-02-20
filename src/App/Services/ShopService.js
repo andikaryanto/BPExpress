@@ -71,7 +71,7 @@ class ShopService {
             };
         }
 
-        const shopProducts = (await this.#_shopProductRepository.collect(param));
+        const shopProducts = await this.#_shopProductRepository.collect(param);
 
         return shopProducts;
     }
