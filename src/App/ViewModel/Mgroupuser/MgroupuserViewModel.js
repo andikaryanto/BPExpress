@@ -1,5 +1,4 @@
-import M_groupusers from '../../Models/M_groupusers';
-import M_users from '../../Models/M_users';
+import Mgroupuser from '../../Entity/Mgroupuser';
 import BaseViewModel from '../BaseViewModel';
 /**
  * @class MgroupuserViewModel
@@ -7,7 +6,7 @@ import BaseViewModel from '../BaseViewModel';
 class MgroupuserViewModel extends BaseViewModel {
     /**
      *
-     * @param {M_groupusers} model
+     * @param {Mgroupuser} model
      */
     constructor(model) {
         super(true, model);

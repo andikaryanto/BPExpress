@@ -1,5 +1,4 @@
-import M_products from '../../Models/M_products';
-import M_users from '../../Models/M_users';
+import Mproduct from '../../Entity/Mproduct';
 import BaseViewModel from '../BaseViewModel';
 import MproductcategoryViewModel from '../Mproductcategory/MproductcategoryViewModel';
 /**
@@ -8,7 +7,7 @@ import MproductcategoryViewModel from '../Mproductcategory/MproductcategoryViewM
 class MproductViewModel extends BaseViewModel {
     /**
      *
-     * @param {M_products} model
+     * @param {Mproduct} model
      */
     constructor(model) {
         super(true, model);
@@ -19,7 +18,7 @@ class MproductViewModel extends BaseViewModel {
      * @param {{}} object
      */
     async addResource(object) {
-        const category = await this.model.M_Productcategory();
+        const category = await this.model.getProductcategory();
         object.ProductCategory = await (new MproductcategoryViewModel(category)).toJson();
     }
 

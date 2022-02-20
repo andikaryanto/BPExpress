@@ -3,17 +3,14 @@ import ShopService from '../../../../App/Services/ShopService';
 import CollectionModel from '../../../../Core/Model/CollectionModel';
 import Shop from '../../../../App/Controllers/Rest/Customer/Shop';
 import SuccessResponse from '../../../../App/Responses/SuccessResponse';
-import M_shops from '../../../../App/Models/M_shops';
 import ResponseCode from '../../../../App/Constants/ResponseCode';
-import Container from '../../../../Core/Container/Container';
-import M_shopproducts from '../../../../App/Models/M_shopproducts';
 import MockModule from '../../../../Core/Test/MockModule';
+import MshopproductCollection from '../../../../App/ViewModel/Mshopproduct/MshopproductCollection';
+import Mshop from '../../../../App/Entity/Mshop';
+import Collection from '../../../../Core/Libraries/Collection';
+import Mshopproduct from '../../../../App/Entity/Mshopproduct';
 
 describe('beforeRun', () => {
-    // let container = Container.getInstance();
-    // const requestService = container.get('request.service');
-    // const shopService = container.get('shop.service');
-
     const requestService = new RequestService();
     const shopService = new ShopService();
 
@@ -30,9 +27,9 @@ describe('beforeRun', () => {
     describe('getList', () => {
         it('should return return array of', async () => {
             const shopServiceSearch = MockModule.mockModule(ShopService, 'search', () => {
-                const shop = new M_shops();
-                shop.Id = 1;
-                const modelCollection = new CollectionModel([shop]);
+                const shop = new Mshop();
+                shop.setId(1);
+                const modelCollection = new Collection([shop]);
                 return modelCollection;
             });
 
@@ -44,11 +41,11 @@ describe('beforeRun', () => {
                 Data: [
                     {
                         Id: 1,
-                        Name: null,
-                        Owner: null,
-                        Phone: null,
-                        MapAddress: null,
-                        Address: null,
+                        Name: undefined,
+                        Owner: undefined,
+                        Phone: undefined,
+                        MapAddress: undefined,
+                        Address: undefined,
                     },
                 ],
                 Response: ResponseCode.OK,
@@ -61,16 +58,21 @@ describe('beforeRun', () => {
     describe('products', () => {
         it('should return return array of', async () => {
             const shopServiceProducts = MockModule.mockModule(ShopService, 'products', () => {
-                const shopProduct = new M_shopproducts();
-                shopProduct.Id = 1;
+                const shopProduct = (new Mshopproduct()).setId(1);
+                const modelCollection = new CollectionModel([shopProduct]);
+                return modelCollection;
+            });
+
+            const shopServiceProceedAndGetData = MockModule.mockModule(MshopproductCollection, 'proceedAndGetData', () => {
+                const shopProduct = (new Mshopproduct()).setId(1);
                 const modelCollection = new CollectionModel([shopProduct]);
                 return modelCollection;
             });
 
             const result = await service.products();
-            console.log(result.getResult());
             expect(result).toBeInstanceOf(SuccessResponse);
-            expect(shopServiceProducts).toHaveBeenCalledTimes(1);
+            expect(shopServiceProducts).toHaveBeenCalled();
+            expect(shopServiceProceedAndGetData).toHaveBeenCalled();
             expect(requestServiceGetQuery).toHaveBeenCalled();
             expect(requestServiceGetParam).toHaveBeenCalled();
         });

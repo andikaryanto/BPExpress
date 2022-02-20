@@ -1,4 +1,4 @@
-import M_productcategories from '../../Models/M_productcategories';
+import Mproductcategory from '../../Entity/Mproductcategory';
 import BaseViewModel from '../BaseViewModel';
 
 /**
@@ -7,7 +7,7 @@ import BaseViewModel from '../BaseViewModel';
 class MproductcategoryViewModel extends BaseViewModel {
     /**
      *
-     * @param {M_productcategories} model
+     * @param {Mproductcategory} model
      */
     constructor(model) {
         super(true, model);

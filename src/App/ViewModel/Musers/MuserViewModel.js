@@ -1,4 +1,4 @@
-import M_users from '../../Models/M_users';
+import Muser from '../../Entity/Muser';
 import BaseViewModel from '../BaseViewModel';
 import MgroupuserViewModel from '../Mgroupuser/MgroupuserViewModel';
 /**
@@ -7,7 +7,7 @@ import MgroupuserViewModel from '../Mgroupuser/MgroupuserViewModel';
 class MuserViewModel extends BaseViewModel {
     /**
      *
-     * @param {M_users} model
+     * @param {Muser} model
      */
     constructor(model) {
         super(true, model);

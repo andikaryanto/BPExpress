@@ -1,14 +1,12 @@
-import M_shops from '../Models/M_shops';
-import BaseRepository from './BaseRespositoy';
+import Repository from '../../Core/Repository/Repository';
+import Mshop from '../Entity/Mshop';
 /**
  * @class MshopRepository
  */
-class MshopRepository extends BaseRepository {
-    /**
-     * @inheritdoc
-     */
-    getClass() {
-        return M_shops;
+class MshopRepository extends Repository {
+    
+    constructor() {
+        super(Mshop);
     }
 }
 

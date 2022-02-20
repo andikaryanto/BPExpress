@@ -3,6 +3,7 @@ import MuserRepository from '../../App/Repositories/MuserRepository';
 import M_users from '../../App/Models/M_users';
 import UserService from '../../App/Services/UserService';
 import MockModule from '../../Core/Test/MockModule';
+import Muser from '../../App/Entity/Muser';
 
 describe('beforeRun', () => {
     const commonServiceMd5 = MockModule.mockModule(CommonService, 'encryptMd5', 'this-is-md5');
@@ -11,17 +12,14 @@ describe('beforeRun', () => {
     describe('login', () => {
         it('should return return M_user instance', async () => {
             const userRepoFind = MockModule.mockModule(MuserRepository, 'findOne', () => {
-                const user = new M_users();
-                user.Id = 1;
-                user.Username = 'Andik';
-                user.Photo = 'photo';
+                const user = (new Muser()).setId(1).setUsername('Andik');
                 return user;
             });
 
             const service = new UserService(commonService, userRepos);
             const result = await service.login('Andik', 'password');
 
-            expect(result).toBeInstanceOf(M_users);
+            expect(result).toBeInstanceOf(Muser);
             expect(commonServiceMd5).toHaveBeenCalled();
             expect(userRepoFind).toHaveBeenCalled();
         });

@@ -1,4 +1,4 @@
-import CollectionModel from '../../Core/Model/CollectionModel';
+import Collection from '../../Core/Libraries/Collection';
 import Model from '../../Core/Model/Model';
 import BaseViewModel from './BaseViewModel';
 
@@ -11,7 +11,7 @@ class BaseCollection {
 
     /**
      *
-     * @param {CollectionModel|array} collection
+     * @param {Collection|array} collection
      */
     constructor(collection) {
         this.#_collection = collection;
@@ -30,7 +30,7 @@ class BaseCollection {
      */
     async proceed() {
         let arrayCollection = [];
-        if (this.#_collection instanceof CollectionModel) {
+        if (this.#_collection instanceof Collection) {
             arrayCollection = this.#_collection.getItems();
         } else {
             arrayCollection = this.#_collection;

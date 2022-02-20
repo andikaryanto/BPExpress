@@ -1,3 +1,4 @@
+import Mshop from '../../Entity/Mshop';
 import M_shops from '../../Models/M_shops';
 import BaseViewModel from '../BaseViewModel';
 
@@ -7,7 +8,7 @@ import BaseViewModel from '../BaseViewModel';
 class MshopViewModel extends BaseViewModel {
     /**
      *
-     * @param {M_shops} model
+     * @param {Mshop} model
      */
     constructor(model) {
         super(true, model);
@@ -32,12 +33,12 @@ class MshopViewModel extends BaseViewModel {
         }
 
         const json = {
-            Id: this.model.Id,
-            Name: this.model.Name,
-            Owner: this.model.Owner,
-            Phone: this.model.Phone,
-            MapAddress: this.model.MapAddress,
-            Address: this.model.Address,
+            Id: this.model.getId(),
+            Name: this.model.getName(),
+            Owner: this.model.getOwner(),
+            Phone: this.model.getPhone(),
+            MapAddress: this.model.getMapAddress(),
+            Address: this.model.getAddress(),
         };
 
         if (this.getAutoAddResource()) {
