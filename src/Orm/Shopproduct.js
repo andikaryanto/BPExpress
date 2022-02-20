@@ -1,8 +1,8 @@
-import Mcity from "../App/Entity/Mcity";
-import Mproduct from "../App/Entity/Mproduct";
-import Mproductcategory from "../App/Entity/Mproductcategory";
-import Mprovince from "../App/Entity/Mprovince";
-import Mshop from "../App/Entity/Mshop";
+import Mcity from '../App/Entity/Mcity';
+import Mproduct from '../App/Entity/Mproduct';
+import Mproductcategory from '../App/Entity/Mproductcategory';
+import Mprovince from '../App/Entity/Mprovince';
+import Mshop from '../App/Entity/Mshop';
 
 export default {
     table: 'm_shopproducts',
@@ -10,71 +10,71 @@ export default {
     props: {
         Id: {
             type: 'number',
-            isPrimitive: true
+            isPrimitive: true,
         },
         Shop: {
             type: Mshop,
             isPrimitive: false,
             foreignKey: 'M_Shop_Id',
-            relationType: 'one_to_one'
+            relationType: 'one_to_one',
         },
         Product: {
             type: Mproduct,
             isPrimitive: false,
             foreignKey: 'M_Product_Id',
-            relationType: 'one_to_one'
+            relationType: 'one_to_one',
         },
         PurchasePrice: {
             type: 'decimal',
-            isPrimitive: true
+            isPrimitive: true,
         },
         SellPrice: {
             type: 'decimal',
-            isPrimitive: true
+            isPrimitive: true,
         },
         Stock: {
             type: 'number',
-            isPrimitive: true
+            isPrimitive: true,
         },
         DiscountType: {
             type: 'number',
-            isPrimitive: true
+            isPrimitive: true,
         },
         DiscountType: {
             type: 'number',
-            isPrimitive: true
+            isPrimitive: true,
         },
         DiscountValue: {
             type: 'decimal',
-            isPrimitive: true
+            isPrimitive: true,
         },
         IsFeatured: {
             type: 'boolean',
-            isPrimitive: true
+            isPrimitive: true,
         },
         IsActive: {
             type: 'boolean',
-            isPrimitive: true
+            isPrimitive: true,
         },
         Ordering: {
             type: 'number',
-            isPrimitive: true
+            isPrimitive: true,
         },
         Created: {
             type: 'string',
-            isPrimitive: true
+            isPrimitive: true,
         },
         CreatedBy: {
             type: 'string',
-            isPrimitive: true
+            isPrimitive: true,
         },
         Modified: {
             type: 'string',
-            isPrimitive: true
+            isPrimitive: true,
         },
         ModifiedBy: {
             type: 'string',
-            isPrimitive: true
-        }
-    }
-}
+            isPrimitive: true,
+        },
+    },
+};

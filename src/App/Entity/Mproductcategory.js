@@ -1,6 +1,6 @@
-import BaseEntity from "./BaseEntity";
+import BaseEntity from './BaseEntity';
 
-class Mproductcategory extends BaseEntity{
+class Mproductcategory extends BaseEntity {
     Id;
     Name;
     Picture;
@@ -41,7 +41,6 @@ class Mproductcategory extends BaseEntity{
         this.Description = Description;
         return this;
     }
-
 }
 
 export default Mproductcategory;

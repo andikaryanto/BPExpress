@@ -1,4 +1,4 @@
-import Entity from "../../Core/Entity/Entity";
+import Entity from '../../Core/Entity/Entity';
 
 class Mproduct extends Entity {
     Id;
@@ -91,7 +91,6 @@ class Mproduct extends Entity {
         this.Picture = Picture;
         return this;
     }
-
 }
 
 export default Mproduct;

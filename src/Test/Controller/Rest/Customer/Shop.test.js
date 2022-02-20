@@ -63,11 +63,15 @@ describe('beforeRun', () => {
                 return modelCollection;
             });
 
-            const shopServiceProceedAndGetData = MockModule.mockModule(MshopproductCollection, 'proceedAndGetData', () => {
-                const shopProduct = (new Mshopproduct()).setId(1);
-                const modelCollection = new CollectionModel([shopProduct]);
-                return modelCollection;
-            });
+            const shopServiceProceedAndGetData = MockModule.mockModule(
+                MshopproductCollection,
+                'proceedAndGetData',
+                () => {
+                    const shopProduct = (new Mshopproduct()).setId(1);
+                    const modelCollection = new CollectionModel([shopProduct]);
+                    return modelCollection;
+                },
+            );
 
             const result = await service.products();
             expect(result).toBeInstanceOf(SuccessResponse);

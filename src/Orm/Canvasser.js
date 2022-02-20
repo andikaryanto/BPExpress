@@ -4,43 +4,43 @@ export default {
     props: {
         Id: {
             type: 'number',
-            isPrimitive: true
+            isPrimitive: true,
         },
         Name: {
             type: 'string',
-            isPrimitive: true
+            isPrimitive: true,
         },
         Email: {
             type: 'string',
-            isPrimitive: true
+            isPrimitive: true,
         },
         Phone: {
             type: 'string',
-            isPrimitive: true
+            isPrimitive: true,
         },
         Supervisor: {
             type: 'string',
-            isPrimitive: true
+            isPrimitive: true,
         },
         Address: {
             type: 'string',
-            isPrimitive: true
+            isPrimitive: true,
         },
         Created: {
             type: 'string',
-            isPrimitive: true
+            isPrimitive: true,
         },
         CreatedBy: {
             type: 'string',
-            isPrimitive: true
+            isPrimitive: true,
         },
         Modified: {
             type: 'string',
-            isPrimitive: true
+            isPrimitive: true,
         },
         ModifiedBy: {
             type: 'string',
-            isPrimitive: true
-        }
-    }
-}
+            isPrimitive: true,
+        },
+    },
+};

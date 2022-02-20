@@ -16,16 +16,16 @@ class Mgroupuser extends BaseEntity {
 
     /**
      * Get Id
-     * @returns {number} 
+     * @return {number}
      */
-     getId() {
+    getId() {
         return this.Id;
     }
 
     /**
      * set Id
      * @param {number} id
-     * @returns {this} 
+     * @return {this}
      */
     setId(id) {
         this.Id = id;
@@ -34,16 +34,16 @@ class Mgroupuser extends BaseEntity {
 
     /**
      * Get Id
-     * @returns {string} 
+     * @return {string}
      */
-     getGroupName() {
+    getGroupName() {
         return this.GroupName;
     }
 
     /**
      * set Id
      * @param {number} id
-     * @returns {this} 
+     * @return {this}
      */
     setGroupName(groupname) {
         this.GroupName = groupname;
@@ -52,22 +52,21 @@ class Mgroupuser extends BaseEntity {
 
     /**
      * Get Id
-     * @returns {string} 
+     * @return {string}
      */
-     getDescription() {
+    getDescription() {
         return this.Description;
     }
 
     /**
      * set Id
      * @param {number} id
-     * @returns {this} 
+     * @return {this}
      */
     setDescription(description) {
         this.Description = description;
         return this;
     }
-
 }
 
 

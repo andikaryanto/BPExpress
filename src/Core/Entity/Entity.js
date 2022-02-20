@@ -1,12 +1,12 @@
 /**
- * @class Entiry 
+ * @class Entiry
  */
 class Entity {
     /**
-     * 
+     *
      */
-    constructor(){
-        
+    constructor() {
+
     }
 }
 

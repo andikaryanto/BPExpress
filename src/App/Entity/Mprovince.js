@@ -33,7 +33,6 @@ class Mprovince extends BaseEntity {
         this.Description = Description;
         return this;
     }
-
 }
 
 export default Mprovince;

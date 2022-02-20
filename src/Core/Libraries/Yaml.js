@@ -6,13 +6,16 @@ import approot from 'app-root-path';
  */
 class Yaml {
     /**
-     * 
-     * @param {string} path 
+     *
+     * @param {string} path
+     * @param {string} key
+     * @return {{}}
      */
-    static load(path, key = null){
+    static load(path, key = null) {
         const value = yaml.load(fs.readFileSync(approot + '/' + path + '.yml', 'utf8'));
-        if(key != null)
+        if (key != null) {
             return value[key];
+        }
         return value;
     }
 }

@@ -1,7 +1,6 @@
-import BaseEntity from "./BaseEntity";
+import BaseEntity from './BaseEntity';
 
 class Mshopproduct extends BaseEntity {
-
     Id;
     Shop;
     Product;
@@ -112,7 +111,6 @@ class Mshopproduct extends BaseEntity {
         this.Ordering = Ordering;
         return this;
     }
-
 }
 
 export default Mshopproduct;

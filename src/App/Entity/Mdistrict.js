@@ -14,7 +14,7 @@ class Mdistrict extends BaseEntity {
 
     setId(Id) {
         this.Id = Id;
-        
+
         return this;
     }
 
@@ -44,7 +44,6 @@ class Mdistrict extends BaseEntity {
         this.Description = Description;
         return this;
     }
-
 }
 
 export default Mdistrict;

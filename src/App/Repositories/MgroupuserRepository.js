@@ -9,7 +9,7 @@ class MgroupuserRepository extends Repository {
      * @inheritdoc
      */
     constructor() {
-        super(Mgroupuser)
+        super(Mgroupuser);
     }
 }
 

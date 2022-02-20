@@ -1,4 +1,4 @@
-import Mgroupuser from "../App/Entity/Mgroupuser";
+import Mgroupuser from '../App/Entity/Mgroupuser';
 
 export default {
     table: 'm_users',
@@ -6,45 +6,45 @@ export default {
     props: {
         Id: {
             type: 'number',
-            isPrimitive: true
+            isPrimitive: true,
         },
         Groupuser: {
             type: Mgroupuser,
             isPrimitive: false,
             foreignKey: 'M_Groupuser_Id',
-            relationType: 'one_to_one'
+            relationType: 'one_to_one',
         },
         Username: {
             type: 'string',
-            isPrimitive: true
+            isPrimitive: true,
         },
         Password: {
             type: 'string',
-            isPrimitive: true
+            isPrimitive: true,
         },
         IsLoggedIn: {
             type: 'boolean',
-            isPrimitive: true
+            isPrimitive: true,
         },
         IsActive: {
             type: 'boolean',
-            isPrimitive: true
+            isPrimitive: true,
         },
         Created: {
             type: 'string',
-            isPrimitive: true
+            isPrimitive: true,
         },
         CreatedBy: {
             type: 'string',
-            isPrimitive: true
+            isPrimitive: true,
         },
         Modified: {
             type: 'string',
-            isPrimitive: true
+            isPrimitive: true,
         },
         ModifiedBy: {
             type: 'string',
-            isPrimitive: true
-        }
-    }
-}
+            isPrimitive: true,
+        },
+    },
+};

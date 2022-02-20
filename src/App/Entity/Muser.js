@@ -1,7 +1,6 @@
-import BaseEntity from "./BaseEntity";
+import BaseEntity from './BaseEntity';
 
 class Muser extends BaseEntity {
-
     Id;
     Groupuser;
     Username;
@@ -10,7 +9,7 @@ class Muser extends BaseEntity {
     IsLoggedIn;
     IsActive;
 
-    /**  
+    /**
      *
      */
     constructor() {
@@ -19,7 +18,7 @@ class Muser extends BaseEntity {
 
     /**
      * Get Id
-     * @returns {number} 
+     * @return {number}
      */
     getId() {
         return this.Id;
@@ -28,7 +27,7 @@ class Muser extends BaseEntity {
     /**
      * set Id
      * @param {number} id
-     * @returns {this} 
+     * @return {this}
      */
     setId(id) {
         this.Id = id;
@@ -37,7 +36,7 @@ class Muser extends BaseEntity {
 
     /**
      * Get Id
-     * @returns {number} 
+     * @return {number}
      */
     getMgroupuser() {
         return this.Mgroupuser;
@@ -46,7 +45,7 @@ class Muser extends BaseEntity {
     /**
      * set Id
      * @param {M_groupusers} groupuser
-     * @returns {this} 
+     * @return {this}
      */
     setMgroupuser(groupuser) {
         this.Groupuser = groupuser;
@@ -55,7 +54,7 @@ class Muser extends BaseEntity {
 
     /**
      * Get Id
-     * @returns {string} 
+     * @return {string}
      */
     getUsername() {
         return this.Username;
@@ -64,7 +63,7 @@ class Muser extends BaseEntity {
     /**
      * set Id
      * @param {number} id
-     * @returns {this} 
+     * @return {this}
      */
     setUsername(username) {
         this.Username = username;
@@ -73,7 +72,7 @@ class Muser extends BaseEntity {
 
     /**
      * Get Id
-     * @returns {string} 
+     * @return {string}
      */
     getPassword() {
         return this.Password;
@@ -82,7 +81,7 @@ class Muser extends BaseEntity {
     /**
      * set Id
      * @param {string} id
-     * @returns {this} 
+     * @return {this}
      */
     setPassword(password) {
         this.Password = password;
@@ -91,7 +90,7 @@ class Muser extends BaseEntity {
 
     /**
      * Get Id
-     * @returns {string} 
+     * @return {string}
      */
     getIsLoggedIn() {
         return this.IsLoggedIn;
@@ -100,7 +99,7 @@ class Muser extends BaseEntity {
     /**
      * set Id
      * @param {boolean} id
-     * @returns {this} 
+     * @return {this}
      */
     setPassword(isLoggedIn) {
         this.IsLoggedIn = isLoggedIn;
@@ -109,7 +108,7 @@ class Muser extends BaseEntity {
 
     /**
      * Get Id
-     * @returns {string} 
+     * @return {string}
      */
     getIsLoggedIn() {
         return this.IsLoggedIn;
@@ -118,7 +117,7 @@ class Muser extends BaseEntity {
     /**
      * set Id
      * @param {boolean} id
-     * @returns {this} 
+     * @return {this}
      */
     setIsLoggedIn(isLoggedIn) {
         this.IsLoggedIn = isLoggedIn;
@@ -127,7 +126,7 @@ class Muser extends BaseEntity {
 
     /**
      * Get Id
-     * @returns {string} 
+     * @return {string}
      */
     getIsActive() {
         return this.IsActive;
@@ -136,7 +135,7 @@ class Muser extends BaseEntity {
     /**
      * set Id
      * @param {boolean} id
-     * @returns {this} 
+     * @return {this}
      */
     setIsActive(isActive) {
         this.IsActive = isActive;

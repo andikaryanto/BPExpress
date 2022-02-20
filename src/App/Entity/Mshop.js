@@ -21,7 +21,7 @@ class Mshop extends BaseEntity {
     Latitude;
     Longitude;
     Fund;
-    Status
+    Status;
     HasDelivery;
     IsOpen;
 
@@ -213,7 +213,6 @@ class Mshop extends BaseEntity {
         this.IsOpen = IsOpen;
         return this;
     }
-
 }
 
 

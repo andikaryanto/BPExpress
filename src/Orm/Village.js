@@ -1,4 +1,4 @@
-import Mdistrict from "../App/Entity/Mdistrict";
+import Mdistrict from '../App/Entity/Mdistrict';
 
 export default {
     table: 'm_villages',
@@ -6,37 +6,37 @@ export default {
     props: {
         Id: {
             type: 'number',
-            isPrimitive: true
+            isPrimitive: true,
         },
         District: {
             type: Mdistrict,
             isPrimitive: false,
             foreignKey: 'M_District_Id',
-            relationType: 'one_to_one'
+            relationType: 'one_to_one',
         },
         Name: {
             type: 'string',
-            isPrimitive: true
+            isPrimitive: true,
         },
         Description: {
             type: 'string',
-            isPrimitive: true
+            isPrimitive: true,
         },
         Created: {
             type: 'string',
-            isPrimitive: true
+            isPrimitive: true,
         },
         CreatedBy: {
             type: 'string',
-            isPrimitive: true
+            isPrimitive: true,
         },
         Modified: {
             type: 'string',
-            isPrimitive: true
+            isPrimitive: true,
         },
         ModifiedBy: {
             type: 'string',
-            isPrimitive: true
-        }
-    }
-}
+            isPrimitive: true,
+        },
+    },
+};

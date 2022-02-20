@@ -1,7 +1,9 @@
-import Entity from "../../Core/Entity/Entity";
+import Entity from '../../Core/Entity/Entity';
 
+/**
+ * @class BaseEntity
+ */
 class BaseEntity extends Entity {
-
     Created;
     CreatedBy;
     Modified;
@@ -9,7 +11,7 @@ class BaseEntity extends Entity {
 
     /**
      * Get Id
-     * @returns {string} 
+     * @return {string}
      */
     getCreated() {
         return this.Created;
@@ -17,8 +19,8 @@ class BaseEntity extends Entity {
 
     /**
      * set Id
-     * @param {boolean} id
-     * @returns {this} 
+     * @param {boolean} created
+     * @return {this}
      */
     setCreated(created) {
         this.Created = created;
@@ -27,15 +29,16 @@ class BaseEntity extends Entity {
 
     /**
      * Get Id
-     * @returns {string} 
+     * @return {string}
      */
     getCreatedBy() {
         return this.CreatedBy;
     }
 
     /**
-     * Get Id
-     * @returns {string} 
+     * Get createdBy
+     * @param {boolean} createdBy
+     * @return {string}
      */
     setCreatedBy(createdBy) {
         this.CreatedBy = createdBy;
@@ -44,7 +47,7 @@ class BaseEntity extends Entity {
 
     /**
      * Get Id
-     * @returns {string} 
+     * @return {string}
      */
     getModified() {
         return this.Modified;
@@ -52,8 +55,8 @@ class BaseEntity extends Entity {
 
     /**
      * set Id
-     * @param {boolean} id
-     * @returns {this} 
+     * @param {boolean} modified
+     * @return {this}
      */
     setModified(modified) {
         this.Modified = modified;
@@ -62,7 +65,7 @@ class BaseEntity extends Entity {
 
     /**
      * Get Id
-     * @returns {string} 
+     * @return {string}
      */
     getModifiedBy() {
         return this.ModifiedBy;
@@ -70,14 +73,13 @@ class BaseEntity extends Entity {
 
     /**
      * set Id
-     * @param {boolean} id
-     * @returns {this} 
+     * @param {boolean} modifiedBy
+     * @return {this}
      */
-     setModifiedBy(modifiedBy) {
+    setModifiedBy(modifiedBy) {
         this.ModifiedBy = modifiedBy;
         return this;
     }
-
 }
 
 export default BaseEntity;

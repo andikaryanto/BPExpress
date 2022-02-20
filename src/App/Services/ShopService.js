@@ -52,7 +52,7 @@ class ShopService {
      * @return {[]}
      */
     async products(shopId, name = null) {
-        try{
+        try {
             const param = {
                 join: {
                     'm_products': {
@@ -75,7 +75,7 @@ class ShopService {
             const shopProducts = await this.#_shopProductRepository.findAll(param);
 
             return shopProducts;
-        } catch(e){
+        } catch (e) {
             console.log(e);
         }
     }

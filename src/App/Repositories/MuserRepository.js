@@ -7,7 +7,9 @@ import BaseRepository from './BaseRespositoy';
  * @class MuserRepository
  */
 class MuserRepository extends Repository {
-
+    /**
+     *
+     */
     constructor() {
         super(Muser);
     }

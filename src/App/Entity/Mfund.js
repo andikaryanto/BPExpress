@@ -1,4 +1,4 @@
-import BaseEntity from "./BaseEntity";
+import BaseEntity from './BaseEntity';
 
 class Mfund extends BaseEntity {
     Id;
@@ -41,7 +41,6 @@ class Mfund extends BaseEntity {
         this.Value = Value;
         return this;
     }
-
 }
 
 export default Mfund;

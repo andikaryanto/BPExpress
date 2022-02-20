@@ -1,5 +1,5 @@
-import Mcity from "../App/Entity/Mcity";
-import Mprovince from "../App/Entity/Mprovince";
+import Mcity from '../App/Entity/Mcity';
+import Mprovince from '../App/Entity/Mprovince';
 
 export default {
     table: 'm_districts',
@@ -7,37 +7,37 @@ export default {
     props: {
         Id: {
             type: 'number',
-            isPrimitive: true
+            isPrimitive: true,
         },
         City: {
             type: Mcity,
             isPrimitive: false,
             foreignKey: 'M_City_Id',
-            relationType: 'one_to_one'
+            relationType: 'one_to_one',
         },
         Name: {
             type: 'string',
-            isPrimitive: true
+            isPrimitive: true,
         },
         Description: {
             type: 'string',
-            isPrimitive: true
+            isPrimitive: true,
         },
         Created: {
             type: 'string',
-            isPrimitive: true
+            isPrimitive: true,
         },
         CreatedBy: {
             type: 'string',
-            isPrimitive: true
+            isPrimitive: true,
         },
         Modified: {
             type: 'string',
-            isPrimitive: true
+            isPrimitive: true,
         },
         ModifiedBy: {
             type: 'string',
-            isPrimitive: true
-        }
-    }
-}
+            isPrimitive: true,
+        },
+    },
+};

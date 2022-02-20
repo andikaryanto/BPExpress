@@ -83,7 +83,6 @@ class Mcanvasser extends BaseEntity {
         this.Address = Address;
         return this;
     }
-
 }
 
 export default Mcanvasser;

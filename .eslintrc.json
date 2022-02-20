@@ -10,7 +10,7 @@
         "ecmaVersion": "latest",
         "sourceType": "module"
     },
-    "ignorePatterns": ["src/assets/*"],
+    "ignorePatterns": ["src/assets/*", "src/App/Entity/*"],
     "rules": {
         "max-len": [
             2, {

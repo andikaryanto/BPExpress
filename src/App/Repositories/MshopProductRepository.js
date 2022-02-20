@@ -7,8 +7,7 @@ class MshopProductRepository extends Repository {
     /**
      * @inheritdoc
      */
-    
-     constructor() {
+    constructor() {
         super(Mshopproduct);
     }
 }
