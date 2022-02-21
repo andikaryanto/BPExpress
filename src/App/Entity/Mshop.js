@@ -1,7 +1,7 @@
 import BaseEntity from './BaseEntity.js';
-import Mcanvasser from './MCanvasser.js';
 import Mfund from './Mfund.js';
 import Mvillage from './Mvillage.js';
+import Mcanvasser from './Mcanvasser';
 /**
  * @class Mgroupuser
  */
