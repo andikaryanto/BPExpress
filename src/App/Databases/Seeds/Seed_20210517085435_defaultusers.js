@@ -1,28 +1,30 @@
-const {default: Seeds} = require('../../../Core/Database/Seeds');
-const {default: DateFormat} = require('../../../Core/Libraries/DateFormat');
-const {default: CommonLib} = require('../../Libraries/CommonLib');
+const { default: Seeds } = require("../../../Core/Database/Seeds");
+const { default: DateFormat } = require("../../../Core/Libraries/DateFormat");
+const { default: CommonLib } = require("../../Libraries/CommonLib");
 
-const Seed_20210517085435_defaultusers = {
-    table: 'm_users',
-    value: [
-        {
-            Id: 1,
-            Username: CommonLib.defaultUser(),
-            Password: CommonLib.encryptMd5(CommonLib.getKey() + CommonLib.defaultUser() + 'koroko11'),
-            IsActive: 1,
-        },
-    ],
+let Seed_20210517085435_defaultusers = {
+  table: "m_users",
+  value: [
+    {
+      Id: 1,
+      Username: CommonLib.defaultUser(),
+      Password: CommonLib.encryptMd5(CommonLib.getKey() + CommonLib.defaultUser() + "koroko11"),
+      IsActive: 1
+    }
+  ]
 
 };
 
-exports.seed = async function(knex) {
-    const isDataSeedExist = await Seeds.isSeedExist(knex, 'Seed_20210517085435_defaultusers');
-    if (!isDataSeedExist) {
-        await Seeds.insertSeedBatch(knex, 'Seed_20210517085435_defaultusers');
+exports.seed = async function (knex) {
 
-        return knex(Seed_20210517085435_defaultusers.table).insert(
-            Seed_20210517085435_defaultusers.value,
-        );
-    }
-    return;
+  let isDataSeedExist = await Seeds.isSeedExist(knex, "Seed_20210517085435_defaultusers");
+  if (!isDataSeedExist) {
+    await Seeds.insertSeedBatch(knex, "Seed_20210517085435_defaultusers");
+
+    return knex(Seed_20210517085435_defaultusers.table).insert(
+      Seed_20210517085435_defaultusers.value
+    );
+  }
+  return;
+
 };

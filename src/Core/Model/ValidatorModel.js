@@ -1,19 +1,11 @@
-import Validator from 'validatorjs';
-/**
- * @class ValidatorModel
- */
+import Validator from "validatorjs";
+
 class ValidatorModel {
-    /**
-	 *
-	 * @param {{}} object
-	 * @param {[]} rules
-	 * @param {{}} customError
-	 * @return {Validator}
-	 */
-    static validate(object, rules, customError = {}) {
-        const validator = new Validator(object, rules, customError);
-        return validator;
-    }
+
+     static validate(object, rules, customError = {}){
+          let validator = new Validator(object, rules, customError);
+          return validator;
+     }
 }
 
 export default ValidatorModel;

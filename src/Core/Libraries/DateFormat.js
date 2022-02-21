@@ -1,44 +1,30 @@
 import moment from 'moment';
-/**
- * @class DateFormat
- */
 class DateFormat {
-    /**
-     * Get formatted current date
-     * @param {[]} format
-     * @param {string} seprator
-     * @return {string}
-     */
-    static getFormattedCurrentDate(format = [], seprator = '_') {
-        /**
-         *
-         * @param {*} m
-         * @return {string}
-         */
-        function formated(m) {
-            const t = new Date();
-            const f = new Intl.DateTimeFormat('en', m);
-            return f.format(t);
-        }
 
-        let newFormat = [];
-        if (newFormat.length == 0) {
-            newFormat = [{year: 'numeric'}, {month: 'short'}, {day: 'numeric'}];
-        } else {
-            newFormat = format;
-        }
+     static getFormattedCurrentDate(format = [], seprator = "_") {
+          function formated(m) {
+               let t = new Date();
+               let f = new Intl.DateTimeFormat('en', m);
+               return f.format(t);
+          }
 
-        return newFormat.map(formated).join(seprator);
-    }
+          let newFormat = [];
+          if(newFormat.length == 0)
+               newFormat = [{year: 'numeric'}, {month: 'short'}, {day: 'numeric'}];
+          else 
+               newFormat  = format;
 
-    /**
+          return newFormat.map(formated).join(seprator);
+     }
+
+     /**
       * Formatted date using moment js
-      * @param {string} format
-      * @return {string}
+      * @param {string} format 
+      * @returns 
       */
-    static getCurrentDate(format) {
-        return moment().format(format);
-    }
+     static getCurrentDate(format){
+          return moment().format(format);
+     }
 }
 
 export default DateFormat;

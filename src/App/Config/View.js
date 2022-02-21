@@ -1,38 +1,32 @@
-import {Express} from 'express';
-import dotenv from 'dotenv';
+import { Express } from 'express';
 import appRoot from 'app-root-path';
-dotenv.config({path: appRoot + '/.env'});
-/**
- * @class View
- */
 class View {
-    /**
-      *
-      * @param {Express} app
+     /**
+      * 
+      * @param {Express} app 
       */
-    static set(app) {
-        const appMode = process.env.APP_MODE;
-        const rootDir = appMode == 'production' ? '/build' : '/src';
+     static set(app) {
 
-        // app.set('view engine', 'pug');
-        app.set('views', appRoot + rootDir + '/App/Views');
-    }
+          app.set('view engine', 'pug');
+          app.set('views', appRoot + '/src/App/Views');
+     }
 
-    /**
+     /**
       * Register functions and variables to be used in view
-      * @return {{}}
+      * @returns {{}}
       */
-    static hook() {
-        // current reserved variables are :
-        // * csrfToken
-        // * lang
+     static hook() {
 
-        return {
+          // current reserved variables are : 
+          // * csrfToken
+          // * lang
 
-            // ...
+          return {
+
+               //... 
 
 
-        };
-    }
+          }
+     }
 }
 export default View;

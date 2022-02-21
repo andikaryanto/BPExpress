@@ -1,25 +1,13 @@
-/**
- * @class UploadedFileError
- */
-class UploadedFileError extends Error {
-    #_message = '';
+class UploadedFileError extends Error{
+     #_message = "";
+     constructor(message) {
+          super(message);
+          this.#_message = message;
+     }
 
-    /**
-     *
-     * @param {string} message
-     */
-    constructor(message) {
-        super(message);
-        this.#_message = message;
-    }
-
-    /**
-     * Get error message
-     * @return {string}
-     */
-    getMessage() {
-        return this.#_message;
-    }
+     getMessage(){
+          return this.#_message;
+     }
 }
 
 export default UploadedFileError;
