@@ -1,6 +1,5 @@
 import CommonService from '../../App/Services/Library/CommonService';
 import MuserRepository from '../../App/Repositories/MuserRepository';
-import M_users from '../../App/Models/M_users';
 import UserService from '../../App/Services/UserService';
 import MockModule from '../../Core/Test/MockModule';
 import Muser from '../../App/Entity/Muser';
