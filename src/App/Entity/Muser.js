@@ -1,5 +1,7 @@
 import BaseEntity from './BaseEntity';
-
+/**
+ * @class Muser
+ */
 class Muser extends BaseEntity {
     Id;
     Groupuser;
@@ -62,7 +64,7 @@ class Muser extends BaseEntity {
 
     /**
      * set Id
-     * @param {number} id
+     * @param {number} username
      * @return {this}
      */
     setUsername(username) {
@@ -80,7 +82,7 @@ class Muser extends BaseEntity {
 
     /**
      * set Id
-     * @param {string} id
+     * @param {string} password
      * @return {this}
      */
     setPassword(password) {
@@ -98,25 +100,7 @@ class Muser extends BaseEntity {
 
     /**
      * set Id
-     * @param {boolean} id
-     * @return {this}
-     */
-    setPassword(isLoggedIn) {
-        this.IsLoggedIn = isLoggedIn;
-        return this;
-    }
-
-    /**
-     * Get Id
-     * @return {string}
-     */
-    getIsLoggedIn() {
-        return this.IsLoggedIn;
-    }
-
-    /**
-     * set Id
-     * @param {boolean} id
+     * @param {boolean} isLoggedIn
      * @return {this}
      */
     setIsLoggedIn(isLoggedIn) {
@@ -134,7 +118,7 @@ class Muser extends BaseEntity {
 
     /**
      * set Id
-     * @param {boolean} id
+     * @param {boolean} isActive
      * @return {this}
      */
     setIsActive(isActive) {

@@ -1,4 +1,3 @@
-import ORM from '../Database/ORM';
 import Db from '../Database/Connection/DbConnection.js';
 import Entity from './Entity';
 
@@ -10,16 +9,17 @@ class EntityManager {
     entity;
 
     /**
-     * 
+     *
      */
     constructor() {
     }
 
     /**
      * Set entity
-     * @param {Entity} entity 
+     * @param {Entity} entity
+     * @return {EntityManager}
      */
-    setEntity(entity){
+    setEntity(entity) {
         this.entity = entity;
         return this;
     }
@@ -27,14 +27,14 @@ class EntityManager {
     /**
      * Store data to storage / database
      * @param {any} transaction
-     * @returns {boolean}
+     * @return {boolean}
      */
-    async persist(transaction = null){
-        let obj = this.entity;
+    async persist(transaction = null) {
+        const obj = this.entity;
         const primaryKey = obj.constructor.getPrimaryKey();
         const table = obj.constructor.getTable();
         let result = null;
-        let getPrimaryKey  = 'get' + primaryKey;
+        const getPrimaryKey = 'get' + primaryKey;
         if (obj[getPrimaryKey]() == null) {
             if (transaction != null) {
                 result = Db.transacting(transaction).into(table).insert(obj);
@@ -42,7 +42,7 @@ class EntityManager {
                 result = Db.into(table).insert(obj);
             }
             const id = await result;
-            let setPrimaryKey  = 'set' + primaryKey;
+            const setPrimaryKey = 'set' + primaryKey;
             obj[setPrimaryKey](id[0]);
             if (id[0] > 0) {
                 return true;
@@ -65,12 +65,12 @@ class EntityManager {
      * @param {any} transaction
      * @return {boolean}
      */
-    async remove(transaction = null){
-        let obj = this.entity;
+    async remove(transaction = null) {
+        const obj = this.entity;
         const primaryKey = obj.constructor.getPrimaryKey();
         const table = obj.constructor.getTable();
         let ret = null;
-        let getPrimaryKey  = 'get' + primaryKey;
+        const getPrimaryKey = 'get' + primaryKey;
         if (transaction != null) {
             ret = await Db.transacting(transaction).table(table).where(primaryKey, obj[getPrimaryKey]()).del();
         } else {
@@ -81,7 +81,6 @@ class EntityManager {
         }
         return false;
     }
-
 }
 
 export default EntityManager;

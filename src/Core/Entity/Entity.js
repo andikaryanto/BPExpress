@@ -1,4 +1,4 @@
-import ORM from "../Database/ORM";
+import ORM from '../Database/ORM';
 
 /**
  * @class Entiry
@@ -15,7 +15,7 @@ class Entity {
      * Get all props name
      * @return {[]}
      */
-     static getProps() {
+    static getProps() {
         return ORM.getProps(this.name);
     }
 
@@ -39,7 +39,7 @@ class Entity {
      * Get select columns
      * @return {{}}
      */
-     static getSelectColumns() {
+    static getSelectColumns() {
         const selectedColumn =[];
         const colums = this.getProps();
         for (const [key, value] of Object.entries(colums)) {

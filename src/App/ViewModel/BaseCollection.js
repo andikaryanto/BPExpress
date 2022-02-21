@@ -27,6 +27,7 @@ class BaseCollection {
 
     /**
      * proceed shaping to view model
+     * @return {this}
      */
     proceed() {
         let arrayCollection = [];

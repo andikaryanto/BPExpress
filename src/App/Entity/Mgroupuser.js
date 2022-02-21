@@ -42,7 +42,7 @@ class Mgroupuser extends BaseEntity {
 
     /**
      * set Id
-     * @param {number} id
+     * @param {number} groupname
      * @return {this}
      */
     setGroupName(groupname) {
@@ -60,7 +60,7 @@ class Mgroupuser extends BaseEntity {
 
     /**
      * set Id
-     * @param {number} id
+     * @param {number} description
      * @return {this}
      */
     setDescription(description) {

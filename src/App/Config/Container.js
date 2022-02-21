@@ -16,7 +16,7 @@ class Container {
             Repository,
             Service,
             Controller,
-            Entity
+            Entity,
         ];
     }
 }
