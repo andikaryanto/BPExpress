@@ -1,10 +1,18 @@
-import Model from "../../Core/Model/Model.js";
+import Model from '../../Core/Model/Model.js';
 
+/**
+ * @class BaseModel
+ */
 class BaseModel extends Model {
-     constructor(table, primaryKey, cast){
-          super(table, primaryKey, cast)
-     }
-
+    /**
+     *
+     * @param {string} table
+     * @param {string} primaryKey
+     * @param {{}} cast
+     */
+    constructor(table, primaryKey, cast) {
+        super(table, primaryKey, cast);
+    }
 }
 
 export default BaseModel;

@@ -1,104 +1,112 @@
+/**
+ * @class Collection
+ */
 class Collection {
-     items = [];
+    items = [];
 
-     /**
-      * 
-      * @param {[]} items 
+    /**
+      *
+      * @param {[]} items
       */
-     constructor(items) {
-          this.items = items;
-     }
+    constructor(items) {
+        this.items = items;
+    }
 
-     /**
+    /**
       * add data to collection
+      *
+      * @param {[]} item
+      * @return {Collection}
       */
-     add(item) {
-          this.items.push(item);
-          return this;
-     }
+    add(item) {
+        this.items.push(item);
+        return this;
+    }
 
-     /**
+    /**
       * Filter data with Function parameter
-      * @param {Function} callback 
-      * @returns 
+      * @param {Function} callback
+      * @return {Collection}
       */
-     filter(callback) {
-          let newdata = [];
-          this.items.forEach((item, i) => {
-               if (callback(item)) {
-                    newdata.push(item);
-               }
-          });
-          this.items = newdata;
-          return this;
-     }
+    filter(callback) {
+        const newdata = [];
+        this.items.forEach((item, i) => {
+            if (callback(item)) {
+                newdata.push(item);
+            }
+        });
+        this.items = newdata;
+        return this;
+    }
 
-     /**
-      * 
-      * @param {Function} callback 
-      * @returns {[]}
+    /**
+      *
+      * @param {Function} callback
+      * @return {[]}
       */
-     where(callback) {
-          let newdata = [];
-          for(let item of this.items) {
-               if (callback(item)) {
-                    newdata.push(item);
-               }
-          }
-          return newdata;
-     }
+    where(callback) {
+        const newdata = [];
+        for (const item of this.items) {
+            if (callback(item)) {
+                newdata.push(item);
+            }
+        }
+        return newdata;
+    }
 
-     /**
-      * 
-      * @returns {boolean}
+    /**
+      *
+      * @return {boolean}
       */
-     isEmpty() {
-          return this.items.length == 0;
-     }
+    isEmpty() {
+        return this.items.length == 0;
+    }
 
-     /**
-      * 
-      * @param {number} number 
-      * @returns {[]}
+    /**
+      *
+      * @param {number} number
+      * @return {[]}
       */
-     take(number) {
-          if (number <= 0)
-               throw new Error("Number must be greater than 0 (zero)");
+    take(number) {
+        if (number <= 0) {
+            throw new Error('Number must be greater than 0 (zero)');
+        }
 
-          if (this.items.length < number) {
-               return this.items;
-          } else {
-               return this.items.slice(0, number);
-          }
-     }
-     
-     /**
-      * 
-      * @returns {number}
+        if (this.items.length < number) {
+            return this.items;
+        } else {
+            return this.items.slice(0, number);
+        }
+    }
+
+    /**
+      *
+      * @return {number}
       */
-     size() {
-          return this.items.length;
-     }
+    size() {
+        return this.items.length;
+    }
 
-     /**
-      * 
-      * @returns {[]}
+    /**
+      *
+      * @return {[]}
       */
-     getItems() {
-          return this.items;
-     }
+    getItems() {
+        return this.items;
+    }
 
-     /**
-      * 
-      * @returns {[]}
+    /**
+      *
+      * @return {[]}
       * @throws {Error}
       */
-     getItemsOrFail() {
-          if (this.isEmpty())
-               throw new Error("No Data Found");
+    getItemsOrFail() {
+        if (this.isEmpty()) {
+            throw new Error('No Data Found');
+        }
 
-          return this.items;
-     }
+        return this.items;
+    }
 }
 
 export default Collection;

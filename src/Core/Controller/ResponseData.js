@@ -1,43 +1,49 @@
+/**
+ * @class ResponseData
+ */
 class ResponseData {
-     static #_instance = null;
-     code = 200;
-     data = {};
+    static #_instance = null;
+    code = 200;
+    data = {};
 
-     constructor(){
+    /**
+     *
+     */
+    constructor() {
 
-     }
+    }
 
-     /**
-      * 
-      * @returns {ResponseData}
+    /**
+      *
+      * @return {ResponseData}
       */
-     static getInstance(){
-          if(this.#_instance == null);
-               this.#_instance = new this;
-          return this.#_instance;
-     }
+    static getInstance() {
+        if (this.#_instance == null) {
+            this.#_instance = new this;
+        }
+        return this.#_instance;
+    }
 
-     /**
-      * 
-      * @param {number} code 
-      * @returns {ResponseData}
+    /**
+      *
+      * @param {number} code
+      * @return {ResponseData}
       */
-     static status(code) {
-          let instance = ResponseData.getInstance();
-          instance.code = code;
-          return instance;
-     }
+    static status(code) {
+        const instance = ResponseData.getInstance();
+        instance.code = code;
+        return instance;
+    }
 
-     /**
-      * 
-      * @param {{}} data 
-      * @returns 
+    /**
+      *
+      * @param {{}} data
+      * @return {ResponseData}
       */
-     json(data){
-          this.data = data;
-          return this;
-     }
-
+    json(data) {
+        this.data = data;
+        return this;
+    }
 }
 
 export default ResponseData;
