@@ -35,7 +35,7 @@ class Controller {
             if (err) {
                 fs.writeFile(fileName, content(), function(err) {
                     if (err) throw err;
-                    console.log('Saved!');
+                    // console.log('Saved!');
                 });
             } else {
                 throw new Error('File is already exist !');

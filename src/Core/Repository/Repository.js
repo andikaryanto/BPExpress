@@ -23,6 +23,14 @@ class Repository {
     }
 
     /**
+     * create new Entity
+     * @return {any}
+     */
+    newEntity() {
+        return new this.entity;
+    }
+
+    /**
       * Fetch the data from database
       * @param {{}} filter
       * @param {[]} columns

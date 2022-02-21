@@ -40,8 +40,8 @@ class Muser extends BaseEntity {
      * Get Id
      * @return {number}
      */
-    getMgroupuser() {
-        return this.Mgroupuser;
+    getGroupuser() {
+        return this.Groupuser;
     }
 
     /**
@@ -49,7 +49,7 @@ class Muser extends BaseEntity {
      * @param {M_groupusers} groupuser
      * @return {this}
      */
-    setMgroupuser(groupuser) {
+    setGroupuser(groupuser) {
         this.Groupuser = groupuser;
         return this;
     }
