@@ -18,49 +18,8 @@ class Repository {
      */
     constructor(entity) {
         this.entity = entity;
-        this.table = this.getTable();
-        this.db = Db.table(this.table);
-    }
-
-    /**
-     * Get all props name
-     * @return {[]}
-     */
-    getProps() {
-        return ORM.getProps(this.entity.name);
-    }
-
-    /**
-     * get Table Name
-     * @return {string}
-     */
-    getTable() {
-        return ORM.getTable(this.entity.name);
-    }
-
-    /**
-     * GetP primary key field
-     * @return {string}
-     */
-    getPrimaryKey() {
-        return ORM.getPrimaryKey(this.entity.name);
-    }
-
-    /**
-     * Get select columns
-     * @return {{}}
-     */
-    getSelectColumns() {
-        const selectedColumn =[];
-        const colums = this.getProps();
-        for (const [key, value] of Object.entries(colums)) {
-            if (value.isPrimitive) {
-                selectedColumn.push(this.table+ '.' + key);
-            } else {
-                selectedColumn.push(this.table+ '.' + value.foreignKey);
-            }
-        }
-        return selectedColumn;
+        const table = this.entity.getTable();
+        this.db = Db.table(table);
     }
 
     /**
@@ -152,7 +111,7 @@ class Repository {
       * @param {[]} columns
       */
     async fetch(filter = {}, columns = []) {
-        this.columns = this.getSelectColumns();
+        this.columns = this.entity.getSelectColumns();
         if (columns.length > 0) {
             this.columns = columns;
         }
@@ -179,7 +138,7 @@ class Repository {
     async setToEntity(results) {
         const objects = [];
         const newClassName = this.entity;
-        const props = this.getProps();
+        const props = this.entity.getProps();
         for (const result of results) {
             const e = result;
             const obj = new newClassName();
@@ -204,7 +163,7 @@ class Repository {
       * @return {{}|null}
       */
     async find(id) {
-        const primaryKey = this.getPrimaryKey();
+        const primaryKey = this.entity.getPrimaryKey();
         const filter = {
             where: {
                 [primaryKey]: id,
