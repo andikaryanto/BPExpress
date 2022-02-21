@@ -18,8 +18,8 @@ class MproductcategoryCollection extends BaseCollection {
      *
      * @param {M_productcategories} model
      */
-    async shape(model) {
-        await this.addItem(new MproductcategoryViewModel(model));
+    shape(model) {
+        this.addItem(new MproductcategoryViewModel(model));
     }
 }
 

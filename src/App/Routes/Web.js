@@ -9,8 +9,13 @@ const Web = () => {
     const routers = new Routers();
 
     // routers.get('/', [], LoginController, 'index');
-    // routers.get('/test', [], TestController, 'index').named('named.test');
-    // routers.get('/test/form', [], TestController, 'form');
+    routers.get('/test', [], 'web.test.controller', 'index').named('named.test');
+    routers.get('/test/store', [], 'web.test.controller', 'store');
+    routers.get('/test/update', [], 'web.test.controller', 'update');
+    routers.get('/test/remove', [], 'web.test.controller', 'destroy');
+    routers.get('/test2/store', [], 'web.test2.controller', 'store');
+    routers.get('/test2/update', [], 'web.test2.controller', 'update');
+    routers.get('/test2/remove', [], 'web.test2.controller', 'destroy');
     // routers.post('/test/formpost', [], TestController, 'formPost');
     // routers.get('/test/params/:Id/:No', [], TestController, 'param');
 

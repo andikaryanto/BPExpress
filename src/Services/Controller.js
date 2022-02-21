@@ -14,5 +14,7 @@ export default (container) => {
     container.register('rest.user.controller', UserApi)
         .addArgument(new Reference('user.service'));
 
-    container.register('web.test.controller', TestController);
+    container.register('web.test.controller', TestController)
+        .addArgument(new Reference('entity-manager'))
+        .addArgument(new Reference('groupuser.repository'));
 };

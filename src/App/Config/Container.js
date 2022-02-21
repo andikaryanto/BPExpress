@@ -1,4 +1,5 @@
 import Controller from '../../Services/Controller';
+import Entity from '../../Services/Entity';
 import Repository from '../../Services/Repository';
 import Service from '../../Services/Service';
 
@@ -15,6 +16,7 @@ class Container {
             Repository,
             Service,
             Controller,
+            Entity,
         ];
     }
 }

@@ -204,7 +204,7 @@ class Routers {
       */
     static response(req, res, returnedData) {
         if (returnedData == undefined) {
-            res.status(400).send('Unexpexted Error, Method didnt return anything');
+            res.status(400).send('Unexpected Error, Method didnt return anything');
         }
 
         let response = null;

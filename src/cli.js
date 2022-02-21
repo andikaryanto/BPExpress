@@ -21,14 +21,12 @@ yargs
     .option('p', {alias: 'path', describe: 'Path', type: 'string', demandOption: false})
 // make model
     .command('make:model', 'Create Model', () => {
-        console.log('one');
     }, (options) => {
         Table.makeModel(options.name);
     })
 
 // make controller
     .command('make:controller', 'Create Controller', () => {
-        console.log('one');
     }, (options) => {
         Controller.makeController(options.path, options.name);
     })

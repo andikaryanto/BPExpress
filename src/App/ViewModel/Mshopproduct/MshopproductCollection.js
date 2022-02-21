@@ -18,8 +18,8 @@ class MshopproductCollection extends BaseCollection {
      *
      * @param {M_shopproducts} model
      */
-    async shape(model) {
-        await this.addItem(new MshopproductViewModel(model));
+    shape(model) {
+        this.addItem(new MshopproductViewModel(model));
     }
 }
 

@@ -52,28 +52,32 @@ class ShopService {
      * @return {[]}
      */
     async products(shopId, name = null) {
-        const param = {
-            join: {
-                'm_products': {
-                    key: [
-                        'm_products.Id', 'm_shopproducts.M_Product_Id',
-                    ],
+        try {
+            const param = {
+                join: {
+                    'm_products': {
+                        key: [
+                            'm_products.Id', 'm_shopproducts.M_Product_Id',
+                        ],
+                    },
                 },
-            },
-            where: {
-                'm_shopproducts.M_Shop_Id': shopId,
-            },
-        };
-
-        if (name != null) {
-            param['like'] = {
-                'm_products.Name': name,
+                where: {
+                    'm_shopproducts.M_Shop_Id': shopId,
+                },
             };
+
+            if (name != null) {
+                param['like'] = {
+                    'm_products.Name': name,
+                };
+            }
+
+            const shopProducts = await this.#_shopProductRepository.findAll(param);
+
+            return shopProducts;
+        } catch (e) {
+            // console.log(e);
         }
-
-        const shopProducts = await this.#_shopProductRepository.collect(param);
-
-        return shopProducts;
     }
 }
 

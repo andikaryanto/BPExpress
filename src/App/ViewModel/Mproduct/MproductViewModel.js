@@ -1,5 +1,4 @@
-import M_products from '../../Models/M_products';
-import M_users from '../../Models/M_users';
+import Mproduct from '../../Entity/Mproduct';
 import BaseViewModel from '../BaseViewModel';
 import MproductcategoryViewModel from '../Mproductcategory/MproductcategoryViewModel';
 /**
@@ -8,7 +7,7 @@ import MproductcategoryViewModel from '../Mproductcategory/MproductcategoryViewM
 class MproductViewModel extends BaseViewModel {
     /**
      *
-     * @param {M_products} model
+     * @param {Mproduct} model
      */
     constructor(model) {
         super(true, model);
@@ -18,33 +17,32 @@ class MproductViewModel extends BaseViewModel {
      * Add resource
      * @param {{}} object
      */
-    async addResource(object) {
-        const category = await this.model.M_Productcategory();
-        object.ProductCategory = await (new MproductcategoryViewModel(category)).toJson();
+    addResource(object) {
+        const category = this.model.getProductcategory();
+        object.ProductCategory = (new MproductcategoryViewModel(category)).toJson();
     }
 
     /**
      * Get json data
      * @return {{}}
      */
-    async toJson() {
+    toJson() {
         if (this.model == null) {
             return null;
         }
 
         const json = {
-            Id: this.model.Id,
-            M_Productcategory_Id: this.model.M_Productcategory_Id,
-            Name: this.model.Name,
-            Description: this.model.Description,
-            Producer: this.model.Producer,
-            PackSize: this.model.PackSize,
-            Quality: this.model.Quality,
-            Picture: this.model.Picture,
+            Id: this.model.getId(),
+            Name: this.model.getName(),
+            Description: this.model.getDescription(),
+            Producer: this.model.getProducer(),
+            PackSize: this.model.getPackSize(),
+            Quality: this.model.getQuality(),
+            Picture: this.model.getPicture(),
         };
 
         if (this.getAutoAddResource()) {
-            await this.addResource(json);
+            this.addResource(json);
         }
         return json;
     }

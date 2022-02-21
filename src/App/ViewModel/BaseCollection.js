@@ -1,4 +1,4 @@
-import CollectionModel from '../../Core/Model/CollectionModel';
+import Collection from '../../Core/Libraries/Collection';
 import Model from '../../Core/Model/Model';
 import BaseViewModel from './BaseViewModel';
 
@@ -11,7 +11,7 @@ class BaseCollection {
 
     /**
      *
-     * @param {CollectionModel|array} collection
+     * @param {Collection|array} collection
      */
     constructor(collection) {
         this.#_collection = collection;
@@ -27,17 +27,18 @@ class BaseCollection {
 
     /**
      * proceed shaping to view model
+     * @return {this}
      */
-    async proceed() {
+    proceed() {
         let arrayCollection = [];
-        if (this.#_collection instanceof CollectionModel) {
+        if (this.#_collection instanceof Collection) {
             arrayCollection = this.#_collection.getItems();
         } else {
             arrayCollection = this.#_collection;
         }
 
         for (const item of arrayCollection) {
-            await this.shape(item);
+            this.shape(item);
         }
 
         return this;
@@ -45,10 +46,10 @@ class BaseCollection {
 
     /**
      * Process all data and return it
-     * @return {Promise<[]>}
+     * @return {[]}
      */
-    async proceedAndGetData() {
-        return (await this.proceed()).getElements();
+    proceedAndGetData() {
+        return (this.proceed()).getElements();
     }
 
     /**
@@ -56,8 +57,8 @@ class BaseCollection {
      * @param {BaseViewModel} viewModel
      * @return {void}
      */
-    async addItem(viewModel) {
-        const item = await viewModel.toJson();
+    addItem(viewModel) {
+        const item = viewModel.toJson();
         this.#_element.push(item);
     }
 

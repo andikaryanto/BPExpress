@@ -1,5 +1,4 @@
-import M_groupusers from '../../Models/M_groupusers';
-import M_users from '../../Models/M_users';
+import Mgroupuser from '../../Entity/Mgroupuser';
 import BaseViewModel from '../BaseViewModel';
 /**
  * @class MgroupuserViewModel
@@ -7,7 +6,7 @@ import BaseViewModel from '../BaseViewModel';
 class MgroupuserViewModel extends BaseViewModel {
     /**
      *
-     * @param {M_groupusers} model
+     * @param {Mgroupuser} model
      */
     constructor(model) {
         super(true, model);
@@ -17,7 +16,7 @@ class MgroupuserViewModel extends BaseViewModel {
      *
      * @param {{}} object
      */
-    async addResource(object) {
+    addResource(object) {
 
     }
 
@@ -25,18 +24,18 @@ class MgroupuserViewModel extends BaseViewModel {
      *
      * @return {{}}
      */
-    async toJson() {
+    toJson() {
         if (this.model == null) {
             return null;
         }
 
         const json = {
-            Id: this.model.Id,
-            GroupName: this.model.GroupName,
+            Id: this.model.getId(),
+            GroupName: this.model.getGroupName(),
         };
 
         if (this.getAutoAddResource()) {
-            await this.addResource(json);
+            this.addResource(json);
         }
         return json;
     }
