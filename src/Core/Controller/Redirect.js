@@ -1,49 +1,42 @@
-/**
- * @class Redirect
- */
 class Redirect {
-    static #_instance = null;
-    route = '';
-    data = {};
+     static #_instance = null;
+     route = "";
+     data = {};
 
-    /**
-     *
-     */
-    constructor() {
+     constructor() {
 
-    }
+     }
 
-    /**
-      *
-      * @return {Redirect}
+     /**
+      * 
+      * @returns {Redirect}
       */
-    static getInstance() {
-        if (this.#_instance == null) {
-            this.#_instance = new this;
-        }
-        return this.#_instance;
-    }
+     static getInstance() {
+          if (this.#_instance == null);
+          this.#_instance = new this;
+          return this.#_instance;
+     }
 
-    /**
-      *
-      * @param {string} route
-      * @return {Redirect}
+     /**
+      * 
+      * @param {string} route 
+      * @returns {Redirect}
       */
-    static to(route) {
-        const instance = Redirect.getInstance();
-        instance.route = route;
-        return instance;
-    }
+     static to(route) {
+          let instance = Redirect.getInstance();
+          instance.route = route;
+          return instance;
+     }
 
-    /**
-      *
-      * @param {{}} data
-      * @return {Redirect}
+     /**
+      * 
+      * @param {{}} data 
+      * @returns {Redirect}
       */
-    with(data) {
-        this.data = data;
-        return this;
-    }
+     with(data) {
+          this.data = data;
+          return this;
+     }
 }
 
 export default Redirect;
