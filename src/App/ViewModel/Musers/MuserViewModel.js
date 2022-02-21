@@ -18,11 +18,11 @@ class MuserViewModel extends BaseViewModel {
      * @param {{}} object
      * @return {void}
      */
-    async addResource(object) {
+    addResource(object) {
         let groupUserViewModel = null;
-        if (this.model.M_Groupuser_Id != null) {
-            const groupuser = await this.model.M_Groupuser();
-            groupUserViewModel = await (new MgroupuserViewModel(groupuser)).toJson();
+        if (this.model.getGroupuser() != null) {
+            const groupuser = this.model.getGroupuser();
+            groupUserViewModel = (new MgroupuserViewModel(groupuser)).toJson();
             object.Groupuser = groupUserViewModel;
         }
     }
@@ -31,7 +31,7 @@ class MuserViewModel extends BaseViewModel {
      * Model to json data
      * @return {{}}
      */
-    async toJson() {
+    toJson() {
         if (this.model == null) {
             return null;
         }
@@ -42,7 +42,7 @@ class MuserViewModel extends BaseViewModel {
         };
 
         if (this.getAutoAddResource()) {
-            await this.addResource(json);
+            this.addResource(json);
         }
 
         return json;

@@ -16,7 +16,7 @@ class MgroupuserViewModel extends BaseViewModel {
      *
      * @param {{}} object
      */
-    async addResource(object) {
+    addResource(object) {
 
     }
 
@@ -24,18 +24,18 @@ class MgroupuserViewModel extends BaseViewModel {
      *
      * @return {{}}
      */
-    async toJson() {
+    toJson() {
         if (this.model == null) {
             return null;
         }
 
         const json = {
-            Id: this.model.Id,
-            GroupName: this.model.GroupName,
+            Id: this.model.getId(),
+            GroupName: this.model.getGroupName(),
         };
 
         if (this.getAutoAddResource()) {
-            await this.addResource(json);
+            this.addResource(json);
         }
         return json;
     }

@@ -10,7 +10,8 @@ const Web = () => {
 
     // routers.get('/', [], LoginController, 'index');
     routers.get('/test', [], 'web.test.controller', 'index').named('named.test');
-    // routers.get('/test/form', [], TestController, 'form');
+    routers.get('/test/store', [], 'web.test.controller', 'store');
+    routers.get('/test/remove', [], 'web.test.controller', 'destroy');
     // routers.post('/test/formpost', [], TestController, 'formPost');
     // routers.get('/test/params/:Id/:No', [], TestController, 'param');
 

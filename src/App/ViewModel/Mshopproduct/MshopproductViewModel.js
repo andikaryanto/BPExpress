@@ -20,16 +20,16 @@ class MshopproductViewModel extends BaseViewModel {
      * @param {{}} object
      * @return {void}
      */
-    async addResource(object) {
+    addResource(object) {
         const product = this.model.getProduct();
-        object.Product = await (new MproductViewModel(product)).toJson();
+        object.Product = (new MproductViewModel(product)).toJson();
     }
 
     /**
      * Model to json data
      * @return {{}}
      */
-    async toJson() {
+    toJson() {
         if (this.model == null) {
             return null;
         }
@@ -47,7 +47,7 @@ class MshopproductViewModel extends BaseViewModel {
         };
 
         if (this.getAutoAddResource()) {
-            await this.addResource(json);
+            this.addResource(json);
         }
 
         return json;

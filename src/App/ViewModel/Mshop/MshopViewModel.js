@@ -27,7 +27,7 @@ class MshopViewModel extends BaseViewModel {
      * Model to json data
      * @return {{}}
      */
-    async toJson() {
+    toJson() {
         if (this.model == null) {
             return null;
         }
@@ -42,7 +42,7 @@ class MshopViewModel extends BaseViewModel {
         };
 
         if (this.getAutoAddResource()) {
-            await this.addResource(json);
+            this.addResource(json);
         }
 
         return json;

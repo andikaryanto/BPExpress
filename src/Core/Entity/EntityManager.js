@@ -1,37 +1,87 @@
 import ORM from '../Database/ORM';
 import Db from '../Database/Connection/DbConnection.js';
+import Entity from './Entity';
 
 /**
  * @class EntityManager
  */
 class EntityManager {
-    entity;
     db;
+    entity;
 
     /**
-     *
-     * @param {*} entity
+     * 
      */
-    constructor(entity) {
+    constructor() {
+    }
+
+    /**
+     * Set entity
+     * @param {Entity} entity 
+     */
+    setEntity(entity){
         this.entity = entity;
-        this.db = Db.table(this.getTable());
+        return this;
     }
 
     /**
-     * Get all props name
-     * @return {[]}
+     * Store data to storage / database
+     * @param {any} transaction
+     * @returns {boolean}
      */
-    getProps() {
-        return ORM.getProps(this.entity.constructor.name);
+    async persist(transaction = null){
+        let obj = this.entity;
+        const primaryKey = obj.constructor.getPrimaryKey();
+        const table = obj.constructor.getTable();
+        let result = null;
+        let getPrimaryKey  = 'get' + primaryKey;
+        if (obj[getPrimaryKey]() == null) {
+            if (transaction != null) {
+                result = Db.transacting(transaction).into(table).insert(obj);
+            } else {
+                result = Db.into(table).insert(obj);
+            }
+            const id = await result;
+            let setPrimaryKey  = 'set' + primaryKey;
+            obj[setPrimaryKey](id[0]);
+            if (id[0] > 0) {
+                return true;
+            }
+            return false;
+        } else {
+            if (transaction != null) {
+                result = Db.table(table).transacting(transaction).where(primaryKey, obj[getPrimaryKey]()).update(obj);
+            } else {
+                result = Db.table(table).where(primaryKey, obj[primaryKey]).update(obj);
+            }
+
+            await result;
+            return true;
+        }
     }
 
     /**
-     * get Table Name
-     * @return {string}
+     * Remove data from database
+     * @param {any} transaction
+     * @return {boolean}
      */
-    getTable() {
-        return ORM.getTable(this.entity.constructor.name);
+    async remove(transaction = null){
+        let obj = this.entity;
+        const primaryKey = obj.constructor.getPrimaryKey();
+        const table = obj.constructor.getTable();
+        let ret = null;
+        let getPrimaryKey  = 'get' + primaryKey;
+        if (transaction != null) {
+            ret = await Db.transacting(transaction).table(table).where(primaryKey, obj[getPrimaryKey]()).del();
+        } else {
+            ret = await Db.table(table).where(primaryKey, obj[getPrimaryKey]()).del();
+        }
+        if (ret > 0) {
+            return true;
+        }
+        return false;
     }
+
 }
 
 export default EntityManager;
