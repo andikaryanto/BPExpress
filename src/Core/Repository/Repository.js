@@ -33,7 +33,7 @@ class Repository {
     /**
       * Fetch the data from database
       * @param {{}} filter
-      * @param {[]} columns
+      * @param {Promise<[]>} columns
       */
     async findAll(filter = {}, columns = []) {
         return this.fetch(filter, columns);

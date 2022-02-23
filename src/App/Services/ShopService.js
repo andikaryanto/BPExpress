@@ -49,7 +49,7 @@ class ShopService {
      * Search for shop's product
      * @param {string|number} shopId
      * @param {string} name
-     * @return {[]}
+     * @return {Promise<[]>}
      */
     async products(shopId, name = null) {
         try {
