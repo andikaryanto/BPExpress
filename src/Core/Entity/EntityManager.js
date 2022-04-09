@@ -15,7 +15,7 @@ class EntityManager {
     constructor() {
     }
 
-    /**
+    /** 
      * Set entity
      * @param {Entity} entity
      * @return {EntityManager}

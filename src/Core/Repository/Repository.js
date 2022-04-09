@@ -1,7 +1,6 @@
-import ORM from '../Database/ORM';
 import Db from '../Database/Connection/DbConnection.js';
-import Collection from '../Libraries/Collection';
 import Entity from '../Entity/Entity';
+import EntityList from '../Entity/EntityList';
 
 /**
  * @class Respository
@@ -203,10 +202,10 @@ class Repository {
     /**
      *
      * @param {{}} filter
-     * @return {Promise<Collection>}
+     * @return {Promise<EntityList>}
      */
     async collect(filter = {}) {
-        return new Collection(await this.findAll(filter));
+        return new EntityList(await this.findAll(filter));
     }
 }
 
