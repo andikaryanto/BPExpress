@@ -1,14 +1,47 @@
 import ORM from '../Database/ORM';
+import magicMethodsProxy from '../Libraries/MagicMethod';
+import appRoot from 'app-root-path';
+import Repository from '../Repository/Repository';
 
 /**
  * @class Entiry
  */
 class Entity {
+
+    constrains = {};
+
     /**
      *
      */
     constructor() {
+        // return new Proxy(this, magicMethodsProxy);
+        const handler = {
+            get(target, prop, receiver) {
+                var caller = prop.substring(0, 3);
+                var property = prop.substring(3, prop.length);
+                if(caller == 'get'){
+                    var field = target.constructor.getProps()[property];
+                    var type = require(appRoot + field.type).default;
+                    var keyValue = target.constrains[field.foreignKey];
+                    var repo = new Repository(type).find(keyValue);
+                    target['set' + property](repo);
+                }
+                return target[prop];
+            }
+          };
+        return new Proxy(this, handler);
+    }
 
+    __call(method, args, proxy) 
+    {
+        if (this.metadata[method] == undefined) {
+            throw 'Method "'+method+'" is undefined';
+        }
+
+        this.metadata[method] = args[0];
+        // again, it is important to return the proxy 
+        // instead of the target
+        return proxy;
     }
 
     /**

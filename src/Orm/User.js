@@ -1,5 +1,3 @@
-import Mgroupuser from '../App/Entity/Mgroupuser';
-
 export default {
     table: 'm_users',
     primaryKey: 'Id',
@@ -9,10 +7,10 @@ export default {
             isPrimitive: true,
         },
         Groupuser: {
-            type: Mgroupuser,
+            type: '/src/App/Entity/Mgroupuser',
             isPrimitive: false,
             foreignKey: 'M_Groupuser_Id',
-            relationType: 'one_to_one',
+            relationType: 'one_to_many',
         },
         Username: {
             type: 'string',

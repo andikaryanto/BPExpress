@@ -1,9 +1,3 @@
-import Mcity from '../App/Entity/Mcity';
-import Mproduct from '../App/Entity/Mproduct';
-import Mproductcategory from '../App/Entity/Mproductcategory';
-import Mprovince from '../App/Entity/Mprovince';
-import Mshop from '../App/Entity/Mshop';
-
 export default {
     table: 'm_shopproducts',
     primaryKey: 'Id',
@@ -13,13 +7,13 @@ export default {
             isPrimitive: true,
         },
         Shop: {
-            type: Mshop,
+            type: 'src/App/Entity/Mshop',
             isPrimitive: false,
             foreignKey: 'M_Shop_Id',
             relationType: 'one_to_one',
         },
         Product: {
-            type: Mproduct,
+            type: 'src/App/Entity/Mproduct',
             isPrimitive: false,
             foreignKey: 'M_Product_Id',
             relationType: 'one_to_one',

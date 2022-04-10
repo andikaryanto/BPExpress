@@ -1,4 +1,3 @@
-import Mprovince from '../App/Entity/Mprovince';
 
 export default {
     table: 'm_cities',
@@ -9,7 +8,7 @@ export default {
             isPrimitive: true,
         },
         Province: {
-            type: Mprovince,
+            type: 'src/App/Entity/Mprovince',
             isPrimitive: false,
             foreignKey: 'M_Province_Id',
             relationType: 'one_to_one',

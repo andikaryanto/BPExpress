@@ -1,6 +1,7 @@
 import Db from '../Database/Connection/DbConnection.js';
 import Entity from '../Entity/Entity';
 import EntityList from '../Entity/EntityList';
+import PlainObject from '../Libraries/PlainObject.js';
 
 /**
  * @class Respository
@@ -153,9 +154,13 @@ class Repository {
                 if (value.isPrimitive) {
                     obj[key] = e[key];
                 } else {
-                    const instanceRelatedClass = new Repository(value.type);
-                    const instance = await instanceRelatedClass.find(e[value.foreignKey]);
-                    obj[key] = instance;
+                    // const instanceRelatedClass = new Repository(value.type);
+                    // const instance = await instanceRelatedClass.find(e[value.foreignKey]);
+                    // obj[key] = instance;
+                    var related = props[key];
+                    var foreignKeyValue = e[value.foreignKey];
+                    if(foreignKeyValue)
+                        obj.constrains[related['foreignKey']] = e[value.foreignKey];
                 }
             }
             objects.push(obj);

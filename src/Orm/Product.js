@@ -1,4 +1,3 @@
-import Mproductcategory from '../App/Entity/Mproductcategory';
 
 export default {
     table: 'm_products',
@@ -9,7 +8,7 @@ export default {
             isPrimitive: true,
         },
         Productcategory: {
-            type: Mproductcategory,
+            type: 'src/App/Entity/Mproductcategory',
             isPrimitive: false,
             foreignKey: 'M_Productcategory_Id',
             relationType: 'one_to_one',

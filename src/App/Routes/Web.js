@@ -13,6 +13,7 @@ const Web = () => {
     routers.get('/test/store', [], 'web.test.controller', 'store');
     routers.get('/test/update', [], 'web.test.controller', 'update');
     routers.get('/test/remove', [], 'web.test.controller', 'destroy');
+    routers.get('/test2', [], 'web.test2.controller', 'index');
     routers.get('/test2/store', [], 'web.test2.controller', 'store');
     routers.get('/test2/update', [], 'web.test2.controller', 'update');
     routers.get('/test2/remove', [], 'web.test2.controller', 'destroy');

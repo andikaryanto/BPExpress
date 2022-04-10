@@ -1,4 +1,4 @@
-import Entity from '../../Core/Entity/Entity';
+import Entity from "../../Core/Entity/Entity";
 
 /**
  * @class BaseEntity
