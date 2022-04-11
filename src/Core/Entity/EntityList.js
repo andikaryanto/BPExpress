@@ -1,24 +1,64 @@
 import Collection from "../Libraries/Collection";
+import EntityLooper from "./EntiityLooper";
 
 /**
  * @class EntityList
  */
 class EntityList extends Collection {
 
+    listOf = '';
+    associatedKey = [];
+
+    /**
+     * 
+     * @param {string} listOf 
+     */
+    setListOf(listOf) {
+        this.listOf = listOf;
+    }
+
+    getListOf() {
+        return this.listOf;
+    }
+
+    /**
+    *
+    * @param {[]} associatedKey
+    * @return {EntityList}
+    */
+    setAssociatedKey(associatedKey) {
+        this.associatedKey = associatedKey;
+        return this;
+    }
+
+    /**
+    *
+    * @return {[]}
+    */
+    getAssociatedKey() {
+        return this.associatedKey;
+    }
+
     [Symbol.iterator]() {
         let index = 0;
         return {
-            // this is the iterator object, returning a single element (the string "bye")
+            instance: this,
             next: function () {
-              var result = {
-                value: this.items[index],
-                done: index == this.items.size() - 1
-              };
+                var looper = EntityLooper.getInstance(this.instance.getListOf());
+                if (!looper.hasEntityList()) {
+                    looper.setEntityList(this.instance);
+                }
 
-              index++;
-              return result;
+                var lastIndex = this.instance.items.length - 1;
+                looper.setIsLastIndex(index == lastIndex);
+                var result = {
+                    value: this.instance.items[index],
+                    done: index == lastIndex
+                };
+                index++;
+                return result;
             }
-          };
+        };
     };
 }
 

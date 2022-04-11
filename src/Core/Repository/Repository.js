@@ -85,7 +85,7 @@ class Repository {
 
         if (filter.group != undefined) {
             if (filter.group.orLike != undefined) {
-                this.db.where(function() {
+                this.db.where(function () {
                     let i = 0;
                     for (const [key, value] of Object.entries(filter.group.orLike)) {
                         if (i == 0) {
@@ -118,7 +118,7 @@ class Repository {
       * @param {{}} filter
       * @param {[]} columns
       */
-    async fetch(filter = {}, columns = []) {
+    async fetch(filter = {}, columns = [], associatedKey = {}) {
         this.columns = this.entity.getSelectColumns();
         if (columns.length > 0) {
             this.columns = columns;
@@ -135,15 +135,15 @@ class Repository {
             .clear('order')
             .clear('having');
 
-        return this.setToEntity(results);
+        return this.setToEntity(results, associatedKey);
     }
 
     /**
       * Set to instance of current class
       * @param {[]} results
-      * @param {any} withRelatedData
+      * @param {{}} associatedKey
       */
-    async setToEntity(results) {
+    async setToEntity(results, associatedKey) {
         const objects = [];
         const newClassName = this.entity;
         const props = this.entity.getProps();
@@ -157,10 +157,18 @@ class Repository {
                     // const instanceRelatedClass = new Repository(value.type);
                     // const instance = await instanceRelatedClass.find(e[value.foreignKey]);
                     // obj[key] = instance;
-                    var related = props[key];
+                    // var related = props[key];
                     var foreignKeyValue = e[value.foreignKey];
-                    if(foreignKeyValue)
-                        obj.constrains[related['foreignKey']] = e[value.foreignKey];
+                    if (foreignKeyValue) {
+                        if (value.foreignKey in associatedKey) {
+                            if (!associatedKey[value.foreignKey].includes(foreignKeyValue)) {
+                                associatedKey[value.foreignKey] = [...associatedKey[value.foreignKey], foreignKeyValue];
+                            }
+                        } else {
+                            associatedKey[value.foreignKey] = [foreignKeyValue];
+                        }
+                        obj.constrains[value.foreignKey] = foreignKeyValue;
+                    }
                 }
             }
             objects.push(obj);
@@ -210,7 +218,12 @@ class Repository {
      * @return {Promise<EntityList>}
      */
     async collect(filter = {}) {
-        return new EntityList(await this.findAll(filter));
+        var associatedKey = {};
+        var result = await this.fetch(filter, [], associatedKey);
+        var entityList = new EntityList(result);
+        entityList.setListOf(this.entity.name);
+        entityList.setAssociatedKey(associatedKey);
+        return entityList;
     }
 }
 

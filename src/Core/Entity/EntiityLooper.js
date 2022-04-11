@@ -3,17 +3,16 @@ import EntityList from "./EntityList";
 /**
  * this class is used to cache N+1 query eager load loop
  */
-class EntityLooper
-{
+class EntityLooper {
     /**
      *
-     * @var array
+     * @var {[]}
      */
-    static instance = [];
+    static instance = {};
 
     /**
      *
-     * @var array
+     * @var {[]}
      */
     items = [];
 
@@ -27,20 +26,18 @@ class EntityLooper
      *
      * @var {boolean}
      */
-    isLastIndex = false;
+    lastIndex = false;
 
-     constructor()
-    {
+    constructor() {
     }
 
     /**
      *
      * @return {EntityLooper}
      */
-    getInstance(key)
-    {
-        if (!isset(EntityLooper.instance[key])) {
-            EntityLooper.instance[key] = new static();
+    static getInstance(key) {
+        if (!(key in EntityLooper.instance)) {
+            EntityLooper.instance[key] = new this;
         }
         return EntityLooper.instance[key];
     }
@@ -50,9 +47,8 @@ class EntityLooper
      *
      * @return void
      */
-    clean()
-    {
-        this.isLastIndex = false;
+    clean() {
+        this.lastIndex = false;
         this.entityList = null;
         this.items = [];
         return this;
@@ -62,17 +58,15 @@ class EntityLooper
      * check if current loop has data
      * @return {boolean}
      */
-    hasEntityList()
-    {
-        return !empty(this.entityList);
+    hasEntityList() {
+        return this.entityList != null;
     }
 
     /**
      * @param {[]} items
      * @return {EntityLooper}
      */
-    setItems(items)
-    {
+    setItems(items) {
         this.items = items;
         return this;
     }
@@ -81,8 +75,7 @@ class EntityLooper
     /**
      * @return {[]}
      */
-    getItems()
-    {
+    getItems() {
         return this.items;
     }
 
@@ -90,18 +83,15 @@ class EntityLooper
      * @param {EntityList} entityList
      * @return {EntityLooper}
      */
-    setEntityList(entityList)
-    {
+    setEntityList(entityList) {
         this.entityList = entityList;
         return this;
     }
 
-
     /**
-     * @return EntityList
+     * @return {EntityList}
      */
-    getEntityList()
-    {
+    getEntityList() {
         return this.entityList;
     }
 
@@ -109,9 +99,8 @@ class EntityLooper
      *
      * @return {boolean}
      */
-    isLastIndex()
-    {
-        return this.isLastIndex;
+    isLastIndex() {
+        return this.lastIndex;
     }
 
     /**
@@ -119,9 +108,8 @@ class EntityLooper
      * @param {boolean} isLastIndex
      * @return {EntityLooper}
      */
-    setIsLastIndex(isLastIndex)
-    {
-        this.isLastIndex = isLastIndex;
+    setIsLastIndex(isLastIndex) {
+        this.lastIndex = isLastIndex;
         return this;
     }
 }
