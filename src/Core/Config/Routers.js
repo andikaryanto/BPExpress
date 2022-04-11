@@ -9,6 +9,7 @@ import appRoot from 'app-root-path';
 import Container from '../Container/Container';
 import CoreRequest from '../Http/Request';
 import BaseResponse from '../../App/Responses/BaseResponse';
+import config from '../../../config';
 /**
  * @class Router
  */
@@ -224,7 +225,7 @@ class Routers {
                 res.render(returnedData.view, {...returnedData.data, ...Template(), ...ConfigView.hook()});
             }
             if (returnedData.type == 'sendFile') {
-                res.sendFile(appRoot + '/src/App/Views/' + returnedData.view);
+                res.sendFile(config.sourcePath + '/App/Views/' + returnedData.view);
             }
         }
 

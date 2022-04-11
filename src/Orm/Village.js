@@ -8,7 +8,7 @@ export default {
             isPrimitive: true,
         },
         District: {
-            type: 'src/App/Entity/Mdistrict',
+            type: '/App/Entity/Mdistrict',
             isPrimitive: false,
             foreignKey: 'M_District_Id',
             relationType: 'one_to_one',

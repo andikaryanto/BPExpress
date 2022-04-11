@@ -43,11 +43,10 @@ class Test2Controller extends Controller {
      * @return {View}
      */
     async index({request, response}) {
-        // const repo = await (new MuserRepository()).find(2);
-        const repo = new Muser();
-        repo.constrains['M_Groupuser_Id'] = 2;
-        repo.setId(1);
-        console.log(await repo.getGroupuser());
+        const repo = await (new MuserRepository()).findAll();
+        for(const r of repo){
+            console.log(r.getId());
+        }
         return repo;
     }
 

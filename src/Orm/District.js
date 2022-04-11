@@ -8,7 +8,7 @@ export default {
             isPrimitive: true,
         },
         City: {
-            type: 'src/App/Entity/Mcity',
+            type: '/App/Entity/Mcity',
             isPrimitive: false,
             foreignKey: 'M_City_Id',
             relationType: 'one_to_one',

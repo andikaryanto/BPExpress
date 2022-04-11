@@ -1,3 +1,5 @@
+import Orm from "./Common/Orm";
+
 export default {
     table: 'm_users',
     primaryKey: 'Id',
@@ -7,10 +9,10 @@ export default {
             isPrimitive: true,
         },
         Groupuser: {
-            type: '/src/App/Entity/Mgroupuser',
+            type: '/App/Entity/Mgroupuser',
             isPrimitive: false,
             foreignKey: 'M_Groupuser_Id',
-            relationType: 'one_to_many',
+            relationType: Orm.ONE_TO_MANY,
         },
         Username: {
             type: 'string',

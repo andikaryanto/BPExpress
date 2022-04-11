@@ -3,7 +3,7 @@ import dotenv from 'dotenv';
 import ExpressOverride from './ExpressOverride';
 import View from './View';
 import {Express} from 'express';
-import appRoot from 'app-root-path';
+import config from '../../../config';
 const path = require('path');
 dotenv.config();
 /**
@@ -43,7 +43,7 @@ class Application {
      * @param {express} express
      */
     static global(app, express) {
-        app.use('/assets', express.static(path.resolve(appRoot.path+'/src/', 'assets')));
+        app.use('/assets', express.static(path.resolve(config.sourcePath + '/', 'assets')));
         app.use(express.json());
         app.use(express.urlencoded({extended: true}));
     }

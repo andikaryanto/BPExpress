@@ -7,13 +7,13 @@ export default {
             isPrimitive: true,
         },
         Shop: {
-            type: 'src/App/Entity/Mshop',
+            type: '/App/Entity/Mshop',
             isPrimitive: false,
             foreignKey: 'M_Shop_Id',
             relationType: 'one_to_one',
         },
         Product: {
-            type: 'src/App/Entity/Mproduct',
+            type: '/App/Entity/Mproduct',
             isPrimitive: false,
             foreignKey: 'M_Product_Id',
             relationType: 'one_to_one',

@@ -1,7 +1,6 @@
 import ORM from '../Database/ORM';
-import magicMethodsProxy from '../Libraries/MagicMethod';
-import appRoot from 'app-root-path';
 import Repository from '../Repository/Repository';
+import config from '../../../config';
 
 /**
  * @class Entiry
@@ -21,10 +20,25 @@ class Entity {
                 var property = prop.substring(3, prop.length);
                 if(caller == 'get'){
                     var field = target.constructor.getProps()[property];
-                    var type = require(appRoot + field.type).default;
+                    var type = require(config.sourcePath + field.type).default;
                     var keyValue = target.constrains[field.foreignKey];
-                    var repo = new Repository(type).find(keyValue);
-                    target['set' + property](repo);
+                    if(field.relationType == Orm.ONE_TO_MANY){
+
+                        var result = target[prop];
+                        if(result)
+                            return result;
+                            
+                        var repo = new Repository(type).find(keyValue);
+                        target['set' + property](repo);
+                    } else {
+                        var param = {
+                            where: {
+                                [field.foreignKey]: keyValue
+                            }
+                        }
+                        var repo = new Repository(type).findAll(param);
+                        target['set' + property](repo);
+                    }
                 }
                 return target[prop];
             }

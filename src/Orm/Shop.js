@@ -7,7 +7,7 @@ export default {
             isPrimitive: true,
         },
         Village: {
-            type: 'src/App/Entity/Mvillage',
+            type: '/App/Entity/Mvillage',
             isPrimitive: false,
             foreignKey: 'M_Village_Id',
             relationType: 'one_to_one',
@@ -69,7 +69,7 @@ export default {
             isPrimitive: true,
         },
         Fund: {
-            type: 'src/App/Entity/Mfund',
+            type: '/App/Entity/Mfund',
             isPrimitive: false,
             foreignKey: 'M_Fund_Id',
             relationType: 'one_to_one',
