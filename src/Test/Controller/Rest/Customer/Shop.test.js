@@ -85,7 +85,7 @@ describe('beforeRun', () => {
             const shopServiceProceedAndGetData = MockModule.mockModule(
                 MshopproductCollection,
                 'proceedAndGetData',
-                shopProductViewModel.toJson()
+                shopProductViewModel.toJson(),
             );
 
             const result = await service.products();

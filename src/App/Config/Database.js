@@ -19,7 +19,7 @@ const database = {
             directory: config.sourcePath + '/App/Databases/Migrations',
         },
         seeds: {
-            directory: config.sourcePath +  '/App/Databases/Seeds',
+            directory: config.sourcePath + '/App/Databases/Seeds',
         },
     },
 

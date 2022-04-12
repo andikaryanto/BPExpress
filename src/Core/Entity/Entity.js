@@ -9,7 +9,6 @@ import PlainObject from '../Libraries/PlainObject';
  * @class Entiry
  */
 class Entity {
-
     constrains = {};
 
     /**
@@ -19,90 +18,80 @@ class Entity {
         // return new Proxy(this, magicMethodsProxy);
         const handler = {
             get: (target, prop, receiver) => {
-                var caller = prop.substring(0, 3);
-                var property = prop.substring(3, prop.length);
+                const caller = prop.substring(0, 3);
+                const property = prop.substring(3, prop.length);
                 if (caller == 'get') {
-                    var field = target.constructor.getProps()[property];
+                    const field = target.constructor.getProps()[property];
                     if (!field.isPrimitive) {
-                        if (field.relationType == Orm.ONE_TO_MANY) {
+                        const type = require(config.sourcePath + field.type).default;
+                        const keyValue = target.constrains[field.foreignKey];
+                        const originalMethod = target[prop];
+                        return async function(...args) {
+                            if (field.relationType == Orm.ONE_TO_MANY) {
+                                const result = target[prop]();
+                                if (result) {
+                                    return result;
+                                }
 
-                            var type = require(config.sourcePath + field.type).default;
-                            var keyValue = target.constrains[field.foreignKey];
-                            var result = target[prop]();
-                            if (result)
-                                return result;
+                                const looper = EntityLooper.getInstance(target.constructor.name);
+                                if (looper.hasEntityList()) {
+                                    const entitylist = looper.getEntityList();
+                                    const primaryKey = ORM.getPrimaryKey(type.name);
+                                    if (PlainObject.isEmpty(looper.getItems())) {
+                                        const param = {
+                                            whereIn: {
+                                                [primaryKey]: entitylist.getAssociatedKey()[field.foreignKey],
+                                            },
+                                        };
 
-                            // listOf = get_class(this);
-                            var looper = EntityLooper.getInstance(target.constructor.name);
-                            if (looper.hasEntityList()) {
-                                var entitylist = looper.getEntityList();
-                                var primaryKey = ORM.getPrimaryKey(type.name);
-                                if (looper.getItems().length == 0) {
-                                    var param = {
-                                        whereIn: {
-                                            [primaryKey]: entitylist.getAssociatedKey()[field.foreignKey]
-                                        }
-                                    };
-
-                                    (new Repository(type)).futureFindAll(param, [], (entities) => {
-                                        var items = [];
+                                        const entities = await (new Repository(type)).findAll(param);
+                                        let items = {};
                                         for (const entity of entities) {
-                                            var getFn = 'get' + primaryKey;
-                                            var pkValue = entity[getFn]();
-                                            items[pkValue] = entity;
+                                            const getFn = 'get' + primaryKey;
+                                            const pkValue = entity[getFn]();
+                                            items = {...items, [pkValue]: entity};
                                         }
                                         looper.setItems(items);
-                                    });
-                                }
-
-                                var result = null;
-                                var itemOfLooper = looper.getItems();
-                                if (itemOfLooper.length > 0) {
-                                    if (!PlainObject.isEmpty(target.constrains)) {
-                                        var keyValue = target.constrains[field.foreignKey];
-                                        if (keyValue in itemOfLooper) {
-                                            result = itemOfLooper[keyValue];
+                                    }
+                                    let result = null;
+                                    const itemOfLooper = looper.getItems();
+                                    if (!PlainObject.isEmpty(itemOfLooper)) {
+                                        if (!PlainObject.isEmpty(target.constrains)) {
+                                            const keyValue = target.constrains[field.foreignKey];
+                                            if (keyValue in itemOfLooper) {
+                                                result = itemOfLooper[keyValue];
+                                            }
                                         }
                                     }
-                                }
 
-                                if (looper.isLastIndex()) {
-                                    looper.clean();
-                                }
+                                    if (looper.isLastIndex()) {
+                                        looper.clean();
+                                    }
 
-                                if (result != null) {
-                                    target['set' + property](result);
+                                    if (result != null) {
+                                        target['set' + property](result);
+                                    }
+                                } else {
+                                    const repo = new Repository(type).find(keyValue);
+                                    target['set' + property](repo);
                                 }
                             } else {
-                                var repo = new Repository(type).find(keyValue);
+                                const param = {
+                                    where: {
+                                        [field.foreignKey]: keyValue,
+                                    },
+                                };
+                                const repo = new Repository(type).findAll(param);
                                 target['set' + property](repo);
                             }
-                        } else {
-                            var param = {
-                                where: {
-                                    [field.foreignKey]: keyValue
-                                }
-                            }
-                            var repo = new Repository(type).findAll(param);
-                            target['set' + property](repo);
-                        }
+                            return await originalMethod.apply(this, args);
+                        };
                     }
                 }
                 return target[prop];
-            }
+            },
         };
         return new Proxy(this, handler);
-    }
-
-    __call(method, args, proxy) {
-        if (this.metadata[method] == undefined) {
-            throw 'Method "' + method + '" is undefined';
-        }
-
-        this.metadata[method] = args[0];
-        // again, it is important to return the proxy 
-        // instead of the target
-        return proxy;
     }
 
     /**
