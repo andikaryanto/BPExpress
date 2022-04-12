@@ -72,17 +72,21 @@ class Entity {
                                         target['set' + property](result);
                                     }
                                 } else {
-                                    const repo = new Repository(type).find(keyValue);
-                                    target['set' + property](repo);
+                                    if(keyValue){
+                                        const repo = new Repository(type).find(keyValue);
+                                        target['set' + property](repo);
+                                    }
                                 }
                             } else {
-                                const param = {
-                                    where: {
-                                        [field.foreignKey]: keyValue,
-                                    },
-                                };
-                                const repo = new Repository(type).findAll(param);
-                                target['set' + property](repo);
+                                if(keyValue){
+                                    const param = {
+                                        where: {
+                                            [field.foreignKey]: keyValue,
+                                        },
+                                    };
+                                    const repo = new Repository(type).findAll(param);
+                                    target['set' + property](repo);
+                                }
                             }
                             return await originalMethod.apply(this, args);
                         };

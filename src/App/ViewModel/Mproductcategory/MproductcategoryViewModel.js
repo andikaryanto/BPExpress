@@ -18,7 +18,7 @@ class MproductcategoryViewModel extends BaseViewModel {
      * @param {{}} object
      * @return {void}
      */
-    addResource(object) {
+    async addResource(object) {
         // object.Product = await this.model.M_Product();
     }
 
@@ -26,7 +26,7 @@ class MproductcategoryViewModel extends BaseViewModel {
      * Get json frmo model
      * @return {{}}
      */
-    toJson() {
+    async toJson(){
         if (this.model == null) {
             return null;
         }
@@ -39,7 +39,7 @@ class MproductcategoryViewModel extends BaseViewModel {
         };
 
         if (this.getAutoAddResource()) {
-            this.addResource(json);
+            await this.addResource(json);
         }
 
         return json;

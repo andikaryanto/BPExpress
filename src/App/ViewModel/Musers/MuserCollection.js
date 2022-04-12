@@ -19,8 +19,8 @@ class MuserCollection extends BaseCollection {
      *
      * @param {M_users} model
      */
-    shape(model) {
-        this.addItem(new MuserViewModel(model));
+    async shape(model) {
+        await this.addItem(new MuserViewModel(model));
     }
 }
 

@@ -21,7 +21,7 @@ class BaseViewModel {
      * Add Resource
      * @param {BaseViewModel} viewModel
      */
-    addResource(viewModel) {
+    async addResource(viewModel) {
 
     }
 
@@ -44,7 +44,7 @@ class BaseViewModel {
     /**
      *
      */
-    toJson() {
+    async toJson(){
 
     }
 }

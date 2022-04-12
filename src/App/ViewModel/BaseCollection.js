@@ -21,7 +21,7 @@ class BaseCollection {
      *
      * @param {Model} model
      */
-    shape(model) {
+    async shape(model) {
 
     }
 
@@ -29,7 +29,7 @@ class BaseCollection {
      * proceed shaping to view model
      * @return {this}
      */
-    proceed() {
+    async proceed() {
         let arrayCollection = [];
         if (this.#_collection instanceof Collection) {
             arrayCollection = this.#_collection.getItems();
@@ -38,7 +38,7 @@ class BaseCollection {
         }
 
         for (const item of arrayCollection) {
-            this.shape(item);
+            await this.shape(item);
         }
 
         return this;
@@ -48,8 +48,8 @@ class BaseCollection {
      * Process all data and return it
      * @return {[]}
      */
-    proceedAndGetData() {
-        return (this.proceed()).getElements();
+   async proceedAndGetData() {
+        return (await this.proceed()).getElements();
     }
 
     /**
@@ -57,8 +57,8 @@ class BaseCollection {
      * @param {BaseViewModel} viewModel
      * @return {void}
      */
-    addItem(viewModel) {
-        const item = viewModel.toJson();
+    async addItem(viewModel) {
+        const item = await viewModel.toJson();
         this.#_element.push(item);
     }
 
