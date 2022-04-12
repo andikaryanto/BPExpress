@@ -43,13 +43,20 @@ class Test2Controller extends Controller {
      * @return {View}
      */
     async index({request, response}) {
-        const repo = await (new MuserRepository()).findAll();
-        for(const r of repo){
-            console.log(r.getId());
+        const repo = await (new MuserRepository()).collect();
+        for (const r of repo) {
+            const groupuser = await r.getGroupuser();
+            if (groupuser != undefined) {
+                console.log(groupuser.getId());
+            }
         }
-        return repo;
+        return (new SuccessResponse('oke'));
     }
 
+    /**
+     *
+     * @return {SuccessResponse}
+     */
     async store() {
         const groupuser = await this.groupuserRepo.find(6);
         const user = this.userRepo.newEntity();
@@ -66,6 +73,10 @@ class Test2Controller extends Controller {
         return new SuccessResponse('Success', ResponseCode.OK, viewmodel);
     }
 
+    /**
+     *
+     * @return {SuccessResponse}
+     */
     async update() {
         const user = await this.userRepo.find(6);
         user.setGroupName('Test 67')
@@ -79,6 +90,10 @@ class Test2Controller extends Controller {
         return new SuccessResponse('Success', ResponseCode.OK, viewmodel);
     }
 
+    /**
+     *
+     * @return {SuccessResponse}
+     */
     async destroy() {
         const groupuser = await this.userRepo.find(17);
 
