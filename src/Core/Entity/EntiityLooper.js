@@ -12,9 +12,9 @@ class EntityLooper {
 
     /**
      *
-     * @var {[]}
+     * @var {{}}
      */
-    items = [];
+    items = {};
 
     /**
      *

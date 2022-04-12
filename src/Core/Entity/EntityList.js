@@ -49,7 +49,7 @@ class EntityList extends Collection {
                     looper.setEntityList(this.instance);
                 }
 
-                var lastIndex = this.instance.items.length - 1;
+                var lastIndex = this.instance.items.length;
                 looper.setIsLastIndex(index == lastIndex);
                 var result = {
                     value: this.instance.items[index],
