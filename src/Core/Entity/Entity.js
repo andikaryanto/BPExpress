@@ -21,15 +21,15 @@ class Entity {
             get: (target, prop, receiver) => {
                 var caller = prop.substring(0, 3);
                 var property = prop.substring(3, prop.length);
-                if(caller == 'get'){
+                if (caller == 'get') {
                     var field = target.constructor.getProps()[property];
-                    if(!field.isPrimitive){
-                        if(field.relationType == Orm.ONE_TO_MANY){
+                    if (!field.isPrimitive) {
+                        if (field.relationType == Orm.ONE_TO_MANY) {
 
                             var type = require(config.sourcePath + field.type).default;
                             var keyValue = target.constrains[field.foreignKey];
                             var result = target[prop]();
-                            if(result)
+                            if (result)
                                 return result;
 
                             // listOf = get_class(this);
@@ -43,32 +43,33 @@ class Entity {
                                             [primaryKey]: entitylist.getAssociatedKey()[field.foreignKey]
                                         }
                                     };
-        
-                                    var entities = (await (new Repository(type)).collect(param)).getItems();
-                                    var items = [];
-                                    for (const entity of entities) {
-                                        var getFn = 'get' . primaryKey;
-                                        var pkValue = entity[getFn]();
-                                        items[pkValue] = entity;
-                                    }
-                                    looper.setItems(items);
+
+                                    (new Repository(type)).futureFindAll(param, [], (entities) => {
+                                        var items = [];
+                                        for (const entity of entities) {
+                                            var getFn = 'get' + primaryKey;
+                                            var pkValue = entity[getFn]();
+                                            items[pkValue] = entity;
+                                        }
+                                        looper.setItems(items);
+                                    });
                                 }
-        
+
                                 var result = null;
                                 var itemOfLooper = looper.getItems();
                                 if (itemOfLooper.length > 0) {
-                                    if (!PlainObject.isEmpty(this.constraints)) {
-                                        var keyValue = this.constraints[foreignKey];
+                                    if (!PlainObject.isEmpty(target.constrains)) {
+                                        var keyValue = target.constrains[field.foreignKey];
                                         if (keyValue in itemOfLooper) {
                                             result = itemOfLooper[keyValue];
                                         }
                                     }
                                 }
-        
+
                                 if (looper.isLastIndex()) {
                                     looper.clean();
                                 }
-        
+
                                 if (result != null) {
                                     target['set' + property](result);
                                 }
@@ -89,14 +90,13 @@ class Entity {
                 }
                 return target[prop];
             }
-          };
+        };
         return new Proxy(this, handler);
     }
 
-    __call(method, args, proxy) 
-    {
+    __call(method, args, proxy) {
         if (this.metadata[method] == undefined) {
-            throw 'Method "'+method+'" is undefined';
+            throw 'Method "' + method + '" is undefined';
         }
 
         this.metadata[method] = args[0];
@@ -134,7 +134,7 @@ class Entity {
      * @return {{}}
      */
     static getSelectColumns() {
-        const selectedColumn =[];
+        const selectedColumn = [];
         const colums = this.getProps();
         for (const [key, value] of Object.entries(colums)) {
             if (value.isPrimitive) {
