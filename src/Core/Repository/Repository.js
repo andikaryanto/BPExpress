@@ -36,7 +36,13 @@ class Repository {
       * @param {Promise<[]>} columns
       */
     async findAll(filter = {}, columns = []) {
-        return this.fetch(filter, columns);
+        return
+    }
+
+    futureFindAll(filter = {}, columns = [], callback = null) {
+        return this.fetch(filter, columns, {}, callback);
+        // callback(results);
+
     }
 
     /**
@@ -118,7 +124,7 @@ class Repository {
       * @param {{}} filter
       * @param {[]} columns
       */
-    async fetch(filter = {}, columns = [], associatedKey = {}) {
+    async fetch(filter = {}, columns = [], associatedKey = {}, callback = null) {
         this.columns = this.entity.getSelectColumns();
         if (columns.length > 0) {
             this.columns = columns;
@@ -135,7 +141,9 @@ class Repository {
             .clear('order')
             .clear('having');
 
-        return this.setToEntity(results, associatedKey);
+        var result = this.setToEntity(results, associatedKey, callback);
+        
+        return result;
     }
 
     /**
@@ -143,7 +151,7 @@ class Repository {
       * @param {[]} results
       * @param {{}} associatedKey
       */
-    async setToEntity(results, associatedKey) {
+    setToEntity(results, associatedKey, callback = null) {
         const objects = [];
         const newClassName = this.entity;
         const props = this.entity.getProps();
@@ -173,6 +181,8 @@ class Repository {
             }
             objects.push(obj);
         }
+        if(callback != null)
+            callback(objects);
         return objects;
     }
 
