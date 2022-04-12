@@ -23,11 +23,11 @@ class Entity {
                 if (caller == 'get') {
                     const field = target.constructor.getProps()[property];
                     if (!field.isPrimitive) {
+                        const type = require(config.sourcePath + field.type).default;
+                        const keyValue = target.constrains[field.foreignKey];
                         const originalMethod = target[prop];
                         return async function(...args) {
                             if (field.relationType == Orm.ONE_TO_MANY) {
-                                const type = require(config.sourcePath + field.type).default;
-                                const keyValue = target.constrains[field.foreignKey];
                                 const result = target[prop]();
                                 if (result) {
                                     return result;
