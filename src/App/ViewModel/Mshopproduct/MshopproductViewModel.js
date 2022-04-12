@@ -22,8 +22,9 @@ class MshopproductViewModel extends BaseViewModel {
      */
     addResource(object) {
         const product = this.model.getProduct();
-        if(product)
+        if (product) {
             object.Product = (new MproductViewModel(product)).toJson();
+        }
     }
 
     /**

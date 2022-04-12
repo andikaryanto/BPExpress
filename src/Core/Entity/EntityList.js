@@ -1,22 +1,25 @@
-import Collection from "../Libraries/Collection";
-import EntityLooper from "./EntiityLooper";
+import Collection from '../Libraries/Collection';
+import EntityLooper from './EntiityLooper';
 
 /**
  * @class EntityList
  */
 class EntityList extends Collection {
-
     listOf = '';
     associatedKey = [];
 
     /**
-     * 
-     * @param {string} listOf 
+     *
+     * @param {string} listOf
      */
     setListOf(listOf) {
         this.listOf = listOf;
     }
 
+    /**
+     *
+     * @return {string}
+     */
     getListOf() {
         return this.listOf;
     }
@@ -39,25 +42,29 @@ class EntityList extends Collection {
         return this.associatedKey;
     }
 
+    /**
+     *
+     * @return {{}}
+     */
     [Symbol.iterator]() {
         let index = 0;
         return {
             instance: this,
-            next: function () {
-                var looper = EntityLooper.getInstance(this.instance.getListOf());
+            next: function() {
+                const looper = EntityLooper.getInstance(this.instance.getListOf());
                 if (!looper.hasEntityList()) {
                     looper.setEntityList(this.instance);
                 }
 
-                var lastIndex = this.instance.items.length;
+                const lastIndex = this.instance.items.length;
                 looper.setIsLastIndex(index == lastIndex);
-                var result = {
+                const result = {
                     value: this.instance.items[index],
-                    done: index == lastIndex
+                    done: index == lastIndex,
                 };
                 index++;
                 return result;
-            }
+            },
         };
     };
 }

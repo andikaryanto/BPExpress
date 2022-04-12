@@ -1,4 +1,4 @@
-import EntityList from "./EntityList";
+import EntityList from './EntityList';
 
 /**
  * this class is used to cache N+1 query eager load loop
@@ -28,11 +28,14 @@ class EntityLooper {
      */
     lastIndex = false;
 
+    /**
+     *
+     */
     constructor() {
     }
 
     /**
-     *
+     * @param {string} key
      * @return {EntityLooper}
      */
     static getInstance(key) {
@@ -45,7 +48,7 @@ class EntityLooper {
     /**
      * Clean the item that had been collected
      *
-     * @return void
+     * @return {EntityLooper}
      */
     clean() {
         this.lastIndex = false;

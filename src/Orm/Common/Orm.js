@@ -1,4 +1,6 @@
-
+/**
+ * @class Orm
+ */
 class Orm {
     static ONE_TO_MANY = 'one_to_many';
     static MANY_TO_ONE = 'many_to_one';

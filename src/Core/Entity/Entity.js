@@ -9,7 +9,6 @@ import PlainObject from '../Libraries/PlainObject';
  * @class Entiry
  */
 class Entity {
-
     constrains = {};
 
     /**
@@ -19,46 +18,46 @@ class Entity {
         // return new Proxy(this, magicMethodsProxy);
         const handler = {
             get: (target, prop, receiver) => {
-                var caller = prop.substring(0, 3);
-                var property = prop.substring(3, prop.length);
+                const caller = prop.substring(0, 3);
+                const property = prop.substring(3, prop.length);
                 if (caller == 'get') {
-                    var field = target.constructor.getProps()[property];
+                    const field = target.constructor.getProps()[property];
                     if (!field.isPrimitive) {
                         const originalMethod = target[prop];
-                        return async function (...args) {
+                        return async function(...args) {
                             if (field.relationType == Orm.ONE_TO_MANY) {
-
-                                var type = require(config.sourcePath + field.type).default;
-                                var keyValue = target.constrains[field.foreignKey];
-                                var result = target[prop]();
-                                if (result)
+                                const type = require(config.sourcePath + field.type).default;
+                                const keyValue = target.constrains[field.foreignKey];
+                                const result = target[prop]();
+                                if (result) {
                                     return result;
+                                }
 
-                                var looper = EntityLooper.getInstance(target.constructor.name);
+                                const looper = EntityLooper.getInstance(target.constructor.name);
                                 if (looper.hasEntityList()) {
-                                    var entitylist = looper.getEntityList();
-                                    var primaryKey = ORM.getPrimaryKey(type.name);
+                                    const entitylist = looper.getEntityList();
+                                    const primaryKey = ORM.getPrimaryKey(type.name);
                                     if (PlainObject.isEmpty(looper.getItems())) {
-                                        var param = {
+                                        const param = {
                                             whereIn: {
-                                                [primaryKey]: entitylist.getAssociatedKey()[field.foreignKey]
-                                            }
+                                                [primaryKey]: entitylist.getAssociatedKey()[field.foreignKey],
+                                            },
                                         };
 
-                                        var entities = await (new Repository(type)).findAll(param);
-                                        var items = {};
+                                        const entities = await (new Repository(type)).findAll(param);
+                                        let items = {};
                                         for (const entity of entities) {
-                                            var getFn = 'get' + primaryKey;
-                                            var pkValue = entity[getFn]();
-                                            items = {...items, [pkValue] : entity };
+                                            const getFn = 'get' + primaryKey;
+                                            const pkValue = entity[getFn]();
+                                            items = {...items, [pkValue]: entity};
                                         }
                                         looper.setItems(items);
                                     }
-                                    var result = null;
-                                    var itemOfLooper = looper.getItems();
+                                    let result = null;
+                                    const itemOfLooper = looper.getItems();
                                     if (!PlainObject.isEmpty(itemOfLooper)) {
                                         if (!PlainObject.isEmpty(target.constrains)) {
-                                            var keyValue = target.constrains[field.foreignKey];
+                                            const keyValue = target.constrains[field.foreignKey];
                                             if (keyValue in itemOfLooper) {
                                                 result = itemOfLooper[keyValue];
                                             }
@@ -73,24 +72,24 @@ class Entity {
                                         target['set' + property](result);
                                     }
                                 } else {
-                                    var repo = new Repository(type).find(keyValue);
+                                    const repo = new Repository(type).find(keyValue);
                                     target['set' + property](repo);
                                 }
                             } else {
-                                var param = {
+                                const param = {
                                     where: {
-                                        [field.foreignKey]: keyValue
-                                    }
-                                }
-                                var repo = new Repository(type).findAll(param);
+                                        [field.foreignKey]: keyValue,
+                                    },
+                                };
+                                const repo = new Repository(type).findAll(param);
                                 target['set' + property](repo);
                             }
                             return await originalMethod.apply(this, args);
-                        }
+                        };
                     }
                 }
                 return target[prop];
-            }
+            },
         };
         return new Proxy(this, handler);
     }

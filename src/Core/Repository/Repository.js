@@ -85,7 +85,7 @@ class Repository {
 
         if (filter.group != undefined) {
             if (filter.group.orLike != undefined) {
-                this.db.where(function () {
+                this.db.where(function() {
                     let i = 0;
                     for (const [key, value] of Object.entries(filter.group.orLike)) {
                         if (i == 0) {
@@ -117,6 +117,8 @@ class Repository {
       * Fetch the data from database
       * @param {{}} filter
       * @param {[]} columns
+      * @param {{}} associatedKey
+      * @return {Promise<[]>}
       */
     async fetch(filter = {}, columns = [], associatedKey = {}) {
         this.columns = this.entity.getSelectColumns();
@@ -135,8 +137,8 @@ class Repository {
             .clear('order')
             .clear('having');
 
-        var result = this.setToEntity(results, associatedKey);
-        
+        const result = this.setToEntity(results, associatedKey);
+
         return result;
     }
 
@@ -144,6 +146,7 @@ class Repository {
       * Set to instance of current class
       * @param {[]} results
       * @param {{}} associatedKey
+      * @return {[]}
       */
     setToEntity(results, associatedKey) {
         const objects = [];
@@ -160,7 +163,7 @@ class Repository {
                     // const instance = await instanceRelatedClass.find(e[value.foreignKey]);
                     // obj[key] = instance;
                     // var related = props[key];
-                    var foreignKeyValue = e[value.foreignKey];
+                    const foreignKeyValue = e[value.foreignKey];
                     if (foreignKeyValue) {
                         if (value.foreignKey in associatedKey) {
                             if (!associatedKey[value.foreignKey].includes(foreignKeyValue)) {
@@ -221,9 +224,9 @@ class Repository {
      * @return {Promise<EntityList>}
      */
     async collect(filter = {}) {
-        var associatedKey = {};
-        var result = await this.fetch(filter, [], associatedKey);
-        var entityList = new EntityList(result);
+        const associatedKey = {};
+        const result = await this.fetch(filter, [], associatedKey);
+        const entityList = new EntityList(result);
         entityList.setListOf(this.entity.name);
         entityList.setAssociatedKey(associatedKey);
         return entityList;

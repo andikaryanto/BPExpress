@@ -1,4 +1,4 @@
-import Orm from "./Common/Orm";
+import Orm from './Common/Orm';
 
 export default {
     table: 'm_users',
