@@ -37,7 +37,7 @@ class BaseResponse {
         const result = {
             Message: this.#_message,
             Data: this.#_data,
-            Response: this.#_responseCode,
+            Code: this.#_responseCode,
         };
 
         return result;

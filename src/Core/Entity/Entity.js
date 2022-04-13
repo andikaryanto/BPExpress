@@ -2,7 +2,7 @@ import ORM from '../Database/ORM';
 import Repository from '../Repository/Repository';
 import config from '../../../config';
 import Orm from '../../Orm/Common/Orm';
-import EntityLooper from './EntiityLooper';
+import EntityLooper from './EntityLooper';
 import PlainObject from '../Libraries/PlainObject';
 
 /**

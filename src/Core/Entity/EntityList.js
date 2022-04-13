@@ -1,5 +1,5 @@
 import Collection from '../Libraries/Collection';
-import EntityLooper from './EntiityLooper';
+import EntityLooper from './EntityLooper';
 
 /**
  * @class EntityList
