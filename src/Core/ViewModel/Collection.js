@@ -1,17 +1,17 @@
-import Collection from '../Libraries/Collection';
+import LibCollection from '../Libraries/Collection';
 import Model from '../Model/Model';
-import BaseViewModel from './BaseViewModel';
+import BaseViewModel from './ViewModel';
 
 /**
- * @class BaseCollection
+ * @class Collection
  */
-class BaseCollection {
+class Collection {
     #_collection = null;
     #_element = [];
 
     /**
      *
-     * @param {Collection|array} collection
+     * @param {LibCollection|array} collection
      */
     constructor(collection) {
         this.#_collection = collection;
@@ -23,6 +23,18 @@ class BaseCollection {
      */
     async shape(model) {
 
+    }
+
+    getPage(){
+        if(this.#_collection instanceof LibCollection)
+            return this.#_collection.getPage();
+        return null;
+    }
+
+    getSize(){
+        if(this.#_collection instanceof LibCollection)
+            return this.#_collection.getSize();
+        return null;
     }
 
     /**
@@ -71,4 +83,4 @@ class BaseCollection {
     }
 }
 
-export default BaseCollection;
+export default Collection;

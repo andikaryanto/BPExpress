@@ -1,3 +1,4 @@
+import { useCallback } from 'react';
 import Db from '../Database/Connection/DbConnection.js';
 import Entity from '../Entity/Entity';
 import EntityList from '../Entity/EntityList';
@@ -33,18 +34,22 @@ class Repository {
     /**
       * Fetch the data from database
       * @param {{}} filter
+      * @param {number} page
+      * @param {number} size
       * @param {Promise<[]>} columns
       */
-    async findAll(filter = {}, columns = []) {
-        return this.fetch(filter, columns);
+    async findAll(filter = {}, columns = [], page = null, size = null) {
+        return this.fetch(filter, columns, page, size);
     }
 
     /**
       * Set filter before fecthing data from database
       * @param {{}} filter
+      * @param {number} page
+      * @param {number} size
       * @return {this}
       */
-    setFilter(filter = {}) {
+    setFilter(filter = {}, page = null, size = null) {
         if (filter.join != undefined) {
             for (const [key, value] of Object.entries(filter.join)) {
                 if (value.type == undefined || value.type.toUpperCase() == 'INNER') {
@@ -105,7 +110,15 @@ class Repository {
             }
         }
 
-        if (filter.page != undefined && filter.size != undefined) {
+        if(!('page' in filter) || !('size' in filter)){
+            filter.page = page;
+            filter.size = size;
+        }
+
+        if (filter.page != undefined && 
+            filter.size != undefined && 
+            filter.page != null && 
+            filter.size != null) {
             const offset = filter.size * (filter.page - 1);
             this.db.limit(filter.size).offset(offset);
         }
@@ -118,16 +131,18 @@ class Repository {
       * @param {{}} filter
       * @param {[]} columns
       * @param {{}} associatedKey
+      * @param {number} page
+      * @param {number} size
       * @return {Promise<[]>}
       */
-    async fetch(filter = {}, columns = [], associatedKey = {}) {
+    async fetch(filter = {}, columns = [], associatedKey = {}, page = null, size = null) {
         this.columns = this.entity.getSelectColumns();
         if (columns.length > 0) {
             this.columns = columns;
         }
 
         this.db.column(this.columns);
-        this.setFilter(filter);
+        this.setFilter(filter, page, size);
         const results = await this.db;
 
         this.db
@@ -221,12 +236,16 @@ class Repository {
     /**
      *
      * @param {{}} filter
+      * @param {number} page
+      * @param {number} size
      * @return {Promise<EntityList>}
      */
-    async collect(filter = {}) {
+    async collect(filter = {}, page = null, size = null) {
         const associatedKey = {};
-        const result = await this.fetch(filter, [], associatedKey);
+        const result = await this.fetch(filter, [], associatedKey, page, size);
         const entityList = new EntityList(result);
+        entityList.setPage(page);
+        entityList.setSize(size);
         entityList.setListOf(this.entity.name);
         entityList.setAssociatedKey(associatedKey);
         return entityList;

@@ -1,5 +1,5 @@
 import Mgroupuser from '../../Entity/Mgroupuser';
-import BaseViewModel from '../../../Core/ViewModel/BaseViewModel';
+import BaseViewModel from '../../../Core/ViewModel/ViewModel';
 /**
  * @class MgroupuserViewModel
  */

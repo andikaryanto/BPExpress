@@ -1,6 +1,6 @@
 import Mshopproduct from '../../Entity/Mshopproduct';
 import M_shopproducts from '../../Models/M_shopproducts';
-import BaseViewModel from '../../../Core/ViewModel/BaseViewModel';
+import BaseViewModel from '../../../Core/ViewModel/ViewModel';
 import MproductViewModel from '../Mproduct/MproductViewModel';
 
 /**

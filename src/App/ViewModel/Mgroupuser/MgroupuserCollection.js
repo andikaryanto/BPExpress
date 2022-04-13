@@ -1,5 +1,5 @@
 import M_groupusers from '../../Models/M_groupusers';
-import BaseCollection from '../../../Core/ViewModel/BaseCollection';
+import BaseCollection from '../../../Core/ViewModel/Collection';
 import MgroupuserViewModel from './MgroupuserViewModel';
 /**
  * @class MgroupuserCollection

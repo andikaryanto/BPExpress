@@ -3,6 +3,8 @@
  */
 class Collection {
     items = [];
+    page = null;
+    size = null;
 
     /**
       *
@@ -21,6 +23,42 @@ class Collection {
     add(item) {
         this.items.push(item);
         return this;
+    }
+
+    /**
+     * 
+     * @returns {number}
+     */
+    getPage(){
+      return this.page;
+    }
+
+    /**
+     * 
+     * @param {number} page 
+     * @returns {Collection}
+     */
+    setPage(page){
+      this.page = page;
+      return this;
+    }
+
+    /**
+     * 
+     * @returns {number}
+     */
+     getSize(){
+      return this.size;
+    }
+
+    /**
+     * 
+     * @param {number} size 
+     * @returns {Collection}
+     */
+     setSize(size){
+      this.size = size;
+      return this;
     }
 
     /**

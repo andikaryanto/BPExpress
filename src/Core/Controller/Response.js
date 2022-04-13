@@ -1,8 +1,10 @@
-import ResponseData from '../../Core/Controller/ResponseData';
+import Collection from '../ViewModel/Collection';
+import ViewModel from '../ViewModel/ViewModel';
+import ResponseData from './ResponseData';
 /**
  * @class BaseResponse
  */
-class BaseResponse {
+class Response {
     #_message = null;
     #_code = null;
     #_responseCode = null;
@@ -25,18 +27,32 @@ class BaseResponse {
      * Send object data
      * @return {ResponseData}
      */
-    send() {
-        return ResponseData.status(this.#_code).json(this.getResult());
+    async send() {
+        return ResponseData.status(this.#_code).json(await this.getResult());
     }
 
     /**
      * get result body
      * @return {{}}
      */
-    getResult() {
+    async getResult() {
+        let data = null;
+        let page = null;
+        let size = null;
+        if(this.#_data instanceof Collection){
+            page = this.#_data.getPage();
+            size = this.#_data.getSize();
+            data = await this.#_data.proceedAndGetData()
+        }
+        
+        if(this.#_data instanceof ViewModel)
+            data = await this.#_data.toJson()
+        
         const result = {
             Message: this.#_message,
-            Data: this.#_data,
+            Page: page,
+            Size: size,
+            Data: data,
             Code: this.#_responseCode,
         };
 
@@ -52,4 +68,4 @@ class BaseResponse {
     }
 }
 
-export default BaseResponse;
+export default Response;

@@ -5,11 +5,9 @@ import Redirect from '../Controller/Redirect';
 import ResponseData from '../Controller/ResponseData';
 import View from '../Controller/View';
 import Template from '../Template/Template';
-import appRoot from 'app-root-path';
 import Container from '../Container/Container';
-import CoreRequest from '../Http/Request';
-import BaseResponse from '../../App/Responses/BaseResponse';
 import config from '../../../config';
+import BaseResponse from '../Controller/Response';
 /**
  * @class Router
  */
@@ -169,7 +167,7 @@ class Routers {
             } else {
                 returnedData = data;
             }
-            Routers.response(req, res, returnedData);
+            await Routers.response(req, res, returnedData);
         };
 
         if (method.toUpperCase() == 'GET') {
@@ -203,14 +201,14 @@ class Routers {
       * @param {Response} res
       * @param {ResponseData|View|Redirect} returnedData
       */
-    static response(req, res, returnedData) {
+    static async response(req, res, returnedData) {
         if (returnedData == undefined) {
             res.status(400).send('Unexpected Error, Method didnt return anything');
         }
 
         let response = null;
         if (returnedData instanceof BaseResponse) {
-            response = returnedData.send();
+            response = await returnedData.send();
         }
 
         if (response instanceof ResponseData) {

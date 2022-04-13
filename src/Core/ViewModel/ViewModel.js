@@ -1,9 +1,9 @@
-import Model from '../../Core/Model/Model';
+import Model from '../Model/Model';
 
 /**
- * @clas BaseviewModel
+ * @clas ViewModel
  */
-class BaseViewModel {
+class ViewModel {
     model = null;
     #_autoAddResource = false;
 
@@ -49,4 +49,4 @@ class BaseViewModel {
     }
 }
 
-export default BaseViewModel;
+export default ViewModel;
