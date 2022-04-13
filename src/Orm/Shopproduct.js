@@ -1,3 +1,5 @@
+import Orm from "./Common/Orm";
+
 export default {
     table: 'm_shopproducts',
     primaryKey: 'Id',
@@ -10,13 +12,13 @@ export default {
             type: '/App/Entity/Mshop',
             isPrimitive: false,
             foreignKey: 'M_Shop_Id',
-            relationType: 'one_to_one',
+            relationType: Orm.ONE_TO_MANY,
         },
         Product: {
             type: '/App/Entity/Mproduct',
             isPrimitive: false,
             foreignKey: 'M_Product_Id',
-            relationType: 'one_to_one',
+            relationType: Orm.ONE_TO_MANY,
         },
         PurchasePrice: {
             type: 'decimal',

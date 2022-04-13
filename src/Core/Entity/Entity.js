@@ -138,6 +138,30 @@ class Entity {
         }
         return selectedColumn;
     }
+    
+    async toJson(){
+        const object = {};
+        const entity = this;
+        const getProps = ORM.getProps(entity.constructor.name);
+        for (const [key, value] of Object.entries(getProps)) {
+            const getProp = 'get' + key;
+            const propValue = entity[getProp]();
+            if (value.isPrimitive) {
+                object[key] = propValue;
+            } else {
+                const related = await propValue;
+                if(related){
+                    const primaryKey = ORM.getPrimaryKey(related.constructor.name);
+                    const getPrimary = 'get' + primaryKey;
+                    const pkValue = related[getPrimary]();
+                    object[value.foreignKey] = pkValue;
+                } else {
+                    object[value.foreignKey] = null;
+                }
+            }
+        }
+        return object;
+    }
 }
 
 export default Entity;

@@ -1,4 +1,3 @@
-import M_users from '../../Models/M_users';
 import {
     GraphQLObjectType,
     GraphQLString,
@@ -9,12 +8,11 @@ import {
     GraphQLNonNull,
     GraphQLList,
 } from 'graphql';
-import UserType from '../Types/UserType';
-import {parserConfiguration} from 'yargs';
-import MuserCollection from '../../ViewModel/Musers/MuserCollection';
+import MuserCollection from '../../../ViewModel/Musers/MuserCollection';
+import OutputUser from '../../Types/Output/OutputUser';
 
 /**
- * @class GetAllUser
+ * @class GetAllUsers
  */
 class GetAllUsers {
     /**
@@ -23,7 +21,7 @@ class GetAllUsers {
      */
     static execute() {
         return {
-            type: new GraphQLList(UserType),
+            type: new GraphQLList(OutputUser),
             args: {
                 Username: {type: GraphQLString},
             },
@@ -33,13 +31,17 @@ class GetAllUsers {
                     throw request.graphqlError;
                 }
 
-                let search = {};
+                let search = {
+                    page: 1,
+                    size: 10
+                };
                 if (args.Username != undefined) {
                     if (args.Username != null && args.Username != '') {
                         search = {
+                            ...search, 
                             like: {
                                 Username: args.Username,
-                            },
+                            }
                         };
                     }
                 }

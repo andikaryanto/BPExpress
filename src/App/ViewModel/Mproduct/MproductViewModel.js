@@ -18,8 +18,10 @@ class MproductViewModel extends BaseViewModel {
      * @param {{}} object
      */
     async addResource(object) {
-        const category = this.model.getProductcategory();
-        object.ProductCategory = (new MproductcategoryViewModel(category)).toJson();
+        const category = await this.model.getProductcategory();
+        if (category) {
+            object.ProductCategory = await (new MproductcategoryViewModel(category)).toJson();
+        }
     }
 
     /**

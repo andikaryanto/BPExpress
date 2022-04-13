@@ -69,22 +69,7 @@ class EntityManager {
      * @return {Promise<{}>}
      */
     async createJson(entity) {
-        const object = {};
-        const getProps = ORM.getProps(entity.constructor.name);
-        for (const [key, value] of Object.entries(getProps)) {
-            const getProp = 'get' + key;
-            const propValue = entity[getProp]();
-            if (value.isPrimitive) {
-                object[key] = propValue;
-            } else {
-                const related = await propValue;
-                const primaryKey = ORM.getPrimaryKey(related.constructor.name);
-                const getPrimary = 'get' + primaryKey;
-                const pkValue = related[getPrimary]();
-                object[value.foreignKey] = pkValue;
-            }
-        }
-        return object;
+        return await entity.toJson()
     }
 
     /**

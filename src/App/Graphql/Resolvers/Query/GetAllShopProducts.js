@@ -9,9 +9,8 @@ import {
     GraphQLList,
     GraphQLInt,
 } from 'graphql';
-import ShopProductType from '../Types/ShopProductType';
-import MshopproductCollection from '../../ViewModel/Mshopproduct/MshopproductCollection';
-import ShopService from '../../Services/ShopService';
+import MshopproductCollection from '../../../ViewModel/Mshopproduct/MshopproductCollection';
+import OutputShopProduct from '../../Types/Output/OutputShopProduct';
 
 /**
  * @class GetAllShopProducts
@@ -23,7 +22,7 @@ class GetAllShopProducts {
      */
     static execute() {
         return {
-            type: new GraphQLList(ShopProductType),
+            type: new GraphQLList(OutputShopProduct),
             args: {
                 ShopId: {
                     type: new GraphQLNonNull(GraphQLInt),
