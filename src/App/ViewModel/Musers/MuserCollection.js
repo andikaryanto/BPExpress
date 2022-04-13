@@ -1,6 +1,6 @@
 import CollectionModel from '../../../Core/Model/CollectionModel';
 import M_users from '../../Models/M_users';
-import BaseCollection from '../BaseCollection';
+import BaseCollection from '../../../Core/ViewModel/BaseCollection';
 import MuserViewModel from './MuserViewModel';
 
 /**

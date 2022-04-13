@@ -1,5 +1,5 @@
+import BaseViewModel from '../../../Core/ViewModel/BaseViewModel';
 import Muser from '../../Entity/Muser';
-import BaseViewModel from '../BaseViewModel';
 import MgroupuserViewModel from '../Mgroupuser/MgroupuserViewModel';
 /**
  * @class MuserViewModel

@@ -1,5 +1,5 @@
-import Collection from '../../Core/Libraries/Collection';
-import Model from '../../Core/Model/Model';
+import Collection from '../Libraries/Collection';
+import Model from '../Model/Model';
 import BaseViewModel from './BaseViewModel';
 
 /**

@@ -1,5 +1,5 @@
 import Mproductcategory from '../../Entity/Mproductcategory';
-import BaseViewModel from '../BaseViewModel';
+import BaseViewModel from '../../../Core/ViewModel/BaseViewModel';
 
 /**
  * @class MproductcategoryViewModel

@@ -1,5 +1,5 @@
 import M_shopproducts from '../../Models/M_shopproducts';
-import BaseCollection from '../BaseCollection';
+import BaseCollection from '../../../Core/ViewModel/BaseCollection';
 import MshopproductViewModel from './MshopproductViewModel';
 
 /**
