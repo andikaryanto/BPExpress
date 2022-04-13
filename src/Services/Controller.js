@@ -21,6 +21,7 @@ export default (container) => {
 
     container.register('web.test2.controller', Test2Controller)
         .addArgument(new Reference('entity-manager'))
+        .addArgument(new Reference('entity-unit'))
         .addArgument(new Reference('user.repository'))
         .addArgument(new Reference('groupuser.repository'));
 };

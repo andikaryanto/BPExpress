@@ -9,7 +9,7 @@ class DbTrans {
      *
      * @return {Promise<Knex<any>>}
      */
-    static beginTransaction() {
+    static async beginTransaction() {
         return DbConnection.transaction();
     }
 }
