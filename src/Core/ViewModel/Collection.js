@@ -64,8 +64,8 @@ class Collection {
      */
     async proceed() {
         let arrayCollection = [];
-        if (this.#_collection instanceof Collection) {
-            arrayCollection = this.#_collection.getItems();
+        if (this.#_collection instanceof LibCollection) {
+            arrayCollection = await this.#_collection.getItems();
         } else {
             arrayCollection = this.#_collection;
         }
