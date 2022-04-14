@@ -1,4 +1,4 @@
-import { Router, Express, Request, Response } from 'express';
+import {Router, Express, Request, Response} from 'express';
 import ConfigView from '../../App/Config/View';
 import Controller from '../Controller/Controller';
 import Redirect from '../Controller/Redirect';
@@ -171,14 +171,13 @@ class Routers {
                 }
                 await Routers.response(req, res, returnedData);
             } catch (e) {
+                Logger.create('error', 'error', e.stack);
 
-                Logger.create('error', 'error', e.stack)
-
-                if(process.env.APP_MODE == 'development'){
+                if (process.env.APP_MODE == 'development') {
                     next(e);
                 }
 
-                if(process.env.APP_MODE == 'production'){
+                if (process.env.APP_MODE == 'production') {
                     res.status(400).send('An error has occured, see error.log for detail');
                 }
             }
@@ -234,7 +233,7 @@ class Routers {
                 res.send(returnedData.view);
             }
             if (returnedData.type == 'view') {
-                res.render(returnedData.view, { ...returnedData.data, ...Template(), ...ConfigView.hook() });
+                res.render(returnedData.view, {...returnedData.data, ...Template(), ...ConfigView.hook()});
             }
             if (returnedData.type == 'sendFile') {
                 res.sendFile(config.sourcePath + '/App/Views/' + returnedData.view);

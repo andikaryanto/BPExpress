@@ -6,7 +6,8 @@
   "scripts": {
     "build": "babel ./src -d dist --copy-files",
     "start": "nodemon index.js",
-    "test": "jest src/Test"
+    "test": "jest src/Test",
+    "lint": "eslint --fix src"
   },
   "keywords": [
     "express"

@@ -40,7 +40,7 @@ describe('beforeRun', () => {
 
             expect(result).toBeInstanceOf(SuccessResponse);
 
-            let getResult = await result.getResult();
+            const getResult = await result.getResult();
             expect(getResult).toEqual({
                 Message: 'Success',
                 Data: [
@@ -53,7 +53,7 @@ describe('beforeRun', () => {
                         Address: undefined,
                     },
                 ],
-                Code: ResponseCode.OK
+                Code: ResponseCode.OK,
             });
             expect(shopServiceSearch).toHaveBeenCalled();
             expect(requestServiceGetQuery).toHaveBeenCalled();

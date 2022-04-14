@@ -1,10 +1,10 @@
 import Request from '../Http/Request.js';
 import Response from '../Http/Response.js';
-import { Express } from 'express';
+import {Express} from 'express';
 import fileUpload from 'express-fileupload';
 import session from 'express-session';
 import Session from '../Http/Session.js';
-import { v4 as uuidv4 } from 'uuid';
+import {v4 as uuidv4} from 'uuid';
 import DbConnection from '../Database/Connection/DbConnection.js';
 import Kernel from '../../App/Config/Kernel.js';
 import Web from '../../App/Routes/Web.js';
@@ -14,7 +14,7 @@ import VerifyCsrf from '../Middleware/VerifyCsrf.js';
 import morgan from 'morgan';
 import config from '../../../config';
 
-const rfs  = require('rotating-file-stream');
+const rfs = require('rotating-file-stream');
 const KnexSessionStore = require('connect-session-knex')(session);
 import {
     GraphQLObjectType,
@@ -27,11 +27,11 @@ import {
     GraphQLList,
     Source,
 } from 'graphql';
-import { graphqlHTTP } from 'express-graphql';
+import {graphqlHTTP} from 'express-graphql';
 import GraphQL from '../../App/Config/GraphQL.js';
 import Container from '../../App/Config/Container.js';
 import CoreContainer from '../Container/Container.js';
-import { ContainerBuilder } from 'node-dependency-injection';
+import {ContainerBuilder} from 'node-dependency-injection';
 import RequestInstance from '../Middleware/RequestInstance.js';
 
 /**
@@ -76,7 +76,7 @@ class AppOverride {
                         mutation: RootMutation,
                     }),
                     graphiql: true,
-                    context: { ...GraphQL.context(), container, request },
+                    context: {...GraphQL.context(), container, request},
                 }),
             ),
         );
@@ -100,7 +100,7 @@ class AppOverride {
 
         app.use(session({
             name: process.env.SESSION_NAME,
-            genid: function (req) {
+            genid: function(req) {
                 return uuidv4(); // use UUIDs for session IDs
             },
             cookie: {
@@ -151,16 +151,21 @@ class AppOverride {
         }
 
         return CoreContainer.getInstance().setContainerBuilder(containerBuilder);
-   }
+    }
 
+    /**
+     *
+     * @param {Express} app
+     * @return {void}
+     */
     static logger(app) {
-        var accessLogStream = rfs.createStream('access.log', {
+        const accessLogStream = rfs.createStream('access.log', {
             interval: '1d',
-            path: config.sourcePath + '/Write/logs'
-          })
+            path: config.sourcePath + '/Write/logs',
+        });
 
-        app.use(morgan('combined', { 
-            stream: accessLogStream
+        app.use(morgan('combined', {
+            stream: accessLogStream,
         }));
     }
 }
