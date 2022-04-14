@@ -1,4 +1,4 @@
-import {Router, Express, Request, Response} from 'express';
+import { Router, Express, Request, Response } from 'express';
 import ConfigView from '../../App/Config/View';
 import Controller from '../Controller/Controller';
 import Redirect from '../Controller/Redirect';
@@ -8,6 +8,7 @@ import Template from '../Template/Template';
 import Container from '../Container/Container';
 import config from '../../../config';
 import BaseResponse from '../Controller/Response';
+import Logger from '../Logger/Logger';
 /**
  * @class Router
  */
@@ -147,7 +148,7 @@ class Routers {
             currentRoute = `/${route}`;
         }
 
-        const resReq = async (req, res) => {
+        const resReq = async (req, res, next) => {
             const container = Container.getInstance().get(controller);
             const controllerInstance = container;
             const data = controllerInstance[fn](
@@ -161,13 +162,26 @@ class Routers {
                 },
             );
 
-            let returnedData = null;
-            if (data instanceof Promise) {
-                returnedData = await data;
-            } else {
-                returnedData = data;
+            try {
+                let returnedData = null;
+                if (data instanceof Promise) {
+                    returnedData = await data;
+                } else {
+                    returnedData = data;
+                }
+                await Routers.response(req, res, returnedData);
+            } catch (e) {
+
+                Logger.create('error', 'error', e.stack)
+
+                if(process.env.APP_MODE == 'development'){
+                    next(e);
+                }
+
+                if(process.env.APP_MODE == 'production'){
+                    res.status(400).send('An error has occured, see error.log for detail');
+                }
             }
-            await Routers.response(req, res, returnedData);
         };
 
         if (method.toUpperCase() == 'GET') {
@@ -220,7 +234,7 @@ class Routers {
                 res.send(returnedData.view);
             }
             if (returnedData.type == 'view') {
-                res.render(returnedData.view, {...returnedData.data, ...Template(), ...ConfigView.hook()});
+                res.render(returnedData.view, { ...returnedData.data, ...Template(), ...ConfigView.hook() });
             }
             if (returnedData.type == 'sendFile') {
                 res.sendFile(config.sourcePath + '/App/Views/' + returnedData.view);
