@@ -24,7 +24,7 @@ class MgroupuserViewModel extends BaseViewModel {
      *
      * @return {{}}
      */
-    async toJson(){
+    async toJson() {
         if (this.model == null) {
             return null;
         }

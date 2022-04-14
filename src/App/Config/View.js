@@ -9,7 +9,6 @@ class View {
       * @param {Express} app
       */
     static set(app) {
-
         app.set('view engine', 'pug');
         app.set('views', config.sourcePath + '/App/Views');
     }

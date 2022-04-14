@@ -7,7 +7,7 @@ const InputUserLogin = new GraphQLInputObjectType({
     name: 'InputUserLogin',
     fields: () => ({
         username: {type: GraphQLString},
-        password: {type: GraphQLString}
+        password: {type: GraphQLString},
     }),
 });
 

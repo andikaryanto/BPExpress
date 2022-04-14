@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import {useCallback} from 'react';
 import Db from '../Database/Connection/DbConnection.js';
 import Entity from '../Entity/Entity';
 import EntityList from '../Entity/EntityList';
@@ -110,14 +110,14 @@ class Repository {
             }
         }
 
-        if(!('page' in filter) || !('size' in filter)){
+        if (!('page' in filter) || !('size' in filter)) {
             filter.page = page;
             filter.size = size;
         }
 
-        if (filter.page != undefined && 
-            filter.size != undefined && 
-            filter.page != null && 
+        if (filter.page != undefined &&
+            filter.size != undefined &&
+            filter.page != null &&
             filter.size != null) {
             const offset = filter.size * (filter.page - 1);
             this.db.limit(filter.size).offset(offset);
@@ -244,11 +244,17 @@ class Repository {
         const associatedKey = {};
         const result = await this.fetch(filter, [], associatedKey, page, size);
         const entityList = new EntityList(result);
+        entityList.setTotal(await this.count(filter));
         entityList.setPage(page);
         entityList.setSize(size);
         entityList.setListOf(this.entity.name);
         entityList.setAssociatedKey(associatedKey);
         return entityList;
+    }
+
+    async count(filter = {}) {
+        this.setFilter(filter);
+        return (await this.db.count({count: '*'}))[0].count;
     }
 }
 

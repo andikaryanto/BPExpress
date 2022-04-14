@@ -1,12 +1,12 @@
 import {
     GraphQLObjectType,
-    GraphQLString
+    GraphQLString,
 } from 'graphql';
 
 const OutputUserLogin = new GraphQLObjectType({
     name: 'UserLogin',
     fields: () => ({
-        token: {type: GraphQLString}
+        token: {type: GraphQLString},
     }),
 });
 

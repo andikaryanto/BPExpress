@@ -1,8 +1,7 @@
 /**
  * @class EntityScope
  */
-class EntityScope
-{
+class EntityScope {
     static PERFORM_ADD_UPDATE = '1addUpdate';
     static PERFORM_DELETE = '2delete';
 
@@ -18,15 +17,14 @@ class EntityScope
      */
     entities = [];
 
-    constructor()
-    {
+    constructor() {
     }
 
     /**
      *
      * @return {EntityScope}
      */
-     static getInstance() {
+    static getInstance() {
         if (EntityScope.instance == null) {
             EntityScope.instance = new this;
         }
@@ -40,22 +38,21 @@ class EntityScope
      * @param {Entiry} entity
      * @return void
      */
-    addEntity(perform, entity)
-    {
+    addEntity(perform, entity) {
         let isEntityExist = false;
         // if (this.entities) {
-            for (const existedEntity of this.entities) {
-                if (entity === existedEntity['entity'] && perform === entity['perform']) {
-                    isEntityExist = true;
-                    break;
-                }
+        for (const existedEntity of this.entities) {
+            if (entity === existedEntity['entity'] && perform === entity['perform']) {
+                isEntityExist = true;
+                break;
             }
+        }
         // }
 
         if (!isEntityExist) {
             this.entities.push({
                 perform,
-                entity
+                entity,
             });
         }
     }
@@ -65,8 +62,7 @@ class EntityScope
      *
      * @return array
      */
-    getEntities()
-    {
+    getEntities() {
         return this.entities;
     }
 
@@ -75,8 +71,7 @@ class EntityScope
      *
      * @return void
      */
-    clean()
-    {
+    clean() {
         this.entities = [];
     }
 }

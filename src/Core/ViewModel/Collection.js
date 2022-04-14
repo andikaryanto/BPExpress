@@ -1,5 +1,5 @@
+import Entity from '../Entity/Entity';
 import LibCollection from '../Libraries/Collection';
-import Model from '../Model/Model';
 import BaseViewModel from './ViewModel';
 
 /**
@@ -19,21 +19,42 @@ class Collection {
 
     /**
      *
-     * @param {Model} model
+     * @param {Entity} model
      */
     async shape(model) {
 
     }
 
-    getPage(){
-        if(this.#_collection instanceof LibCollection)
+    /**
+     *
+     * @return {number|null}
+     */
+    getPage() {
+        if (this.#_collection instanceof LibCollection) {
             return this.#_collection.getPage();
+        }
         return null;
     }
 
-    getSize(){
-        if(this.#_collection instanceof LibCollection)
+    /**
+     *
+     * @return {number|null}
+     */
+    getSize() {
+        if (this.#_collection instanceof LibCollection) {
             return this.#_collection.getSize();
+        }
+        return null;
+    }
+
+    /**
+     *
+     * @return {number|null}
+     */
+    getTotal() {
+        if (this.#_collection instanceof LibCollection) {
+            return this.#_collection.getTotal();
+        }
         return null;
     }
 
@@ -60,7 +81,7 @@ class Collection {
      * Process all data and return it
      * @return {[]}
      */
-   async proceedAndGetData() {
+    async proceedAndGetData() {
         return (await this.proceed()).getElements();
     }
 

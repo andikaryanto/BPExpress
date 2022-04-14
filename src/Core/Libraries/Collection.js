@@ -5,6 +5,7 @@ class Collection {
     items = [];
     page = null;
     size = null;
+    total = null;
 
     /**
       *
@@ -26,39 +27,57 @@ class Collection {
     }
 
     /**
-     * 
-     * @returns {number}
+     *
+     * @return {number}
      */
-    getPage(){
-      return this.page;
+    getTotal() {
+        return this.total;
     }
 
     /**
-     * 
-     * @param {number} page 
-     * @returns {Collection}
+     *
+     * @param {number} total
+     * @return {Collection}
      */
-    setPage(page){
-      this.page = page;
-      return this;
+    setTotal(total) {
+        this.total = total;
+        return this;
     }
 
     /**
-     * 
-     * @returns {number}
+     *
+     * @return {number}
      */
-     getSize(){
-      return this.size;
+    getPage() {
+        return this.page;
     }
 
     /**
-     * 
-     * @param {number} size 
-     * @returns {Collection}
+     *
+     * @param {number} page
+     * @return {Collection}
      */
-     setSize(size){
-      this.size = size;
-      return this;
+    setPage(page) {
+        this.page = page;
+        return this;
+    }
+
+    /**
+     *
+     * @return {number}
+     */
+    getSize() {
+        return this.size;
+    }
+
+    /**
+     *
+     * @param {number} size
+     * @return {Collection}
+     */
+    setSize(size) {
+        this.size = size;
+        return this;
     }
 
     /**

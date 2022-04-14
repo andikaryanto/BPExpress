@@ -72,13 +72,13 @@ class Entity {
                                         target['set' + property](result);
                                     }
                                 } else {
-                                    if(keyValue){
+                                    if (keyValue) {
                                         const repo = new Repository(type).find(keyValue);
                                         target['set' + property](repo);
                                     }
                                 }
                             } else {
-                                if(keyValue){
+                                if (keyValue) {
                                     const param = {
                                         where: {
                                             [field.foreignKey]: keyValue,
@@ -138,8 +138,8 @@ class Entity {
         }
         return selectedColumn;
     }
-    
-    async toJson(){
+
+    async toJson() {
         const object = {};
         const entity = this;
         const getProps = ORM.getProps(entity.constructor.name);
@@ -150,7 +150,7 @@ class Entity {
                 object[key] = propValue;
             } else {
                 const related = await propValue;
-                if(related){
+                if (related) {
                     const primaryKey = ORM.getPrimaryKey(related.constructor.name);
                     const getPrimary = 'get' + primaryKey;
                     const pkValue = related[getPrimary]();

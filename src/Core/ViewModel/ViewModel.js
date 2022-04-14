@@ -44,7 +44,7 @@ class ViewModel {
     /**
      *
      */
-    async toJson(){
+    async toJson() {
 
     }
 }

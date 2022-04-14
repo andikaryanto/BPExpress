@@ -28,7 +28,7 @@ class MproductViewModel extends BaseViewModel {
      * Get json data
      * @return {{}}
      */
-    async toJson(){
+    async toJson() {
         if (this.model == null) {
             return null;
         }

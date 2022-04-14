@@ -1,7 +1,7 @@
-import UserAdd from "../Graphql/Resolvers/Mutation/UserAdd";
-import UserLogin from "../Graphql/Resolvers/Mutation/UserLogin";
-import GetAllShopProducts from "../Graphql/Resolvers/Query/GetAllShopProducts";
-import GetAllUsers from "../Graphql/Resolvers/Query/GetAllUsers";
+import UserAdd from '../Graphql/Resolvers/Mutation/UserAdd';
+import UserLogin from '../Graphql/Resolvers/Mutation/UserLogin';
+import GetAllShopProducts from '../Graphql/Resolvers/Query/GetAllShopProducts';
+import GetAllUsers from '../Graphql/Resolvers/Query/GetAllUsers';
 
 /**
  * @class GraphQL
@@ -25,7 +25,7 @@ class GraphQL {
         return {
             // register all your graphql mutation here
             userAdd: UserAdd.execute(),
-            userLogin: UserLogin.execute()
+            userLogin: UserLogin.execute(),
         };
     }
 
@@ -34,7 +34,7 @@ class GraphQL {
      */
     static context() {
         return {
-            
+
         };
     }
 }

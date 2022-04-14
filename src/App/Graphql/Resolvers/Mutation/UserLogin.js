@@ -24,14 +24,14 @@ class UserLogin {
         return {
             type: OutputUserLogin,
             args: {
-                InputUserLogin: {type: InputUserLogin}
+                InputUserLogin: {type: InputUserLogin},
             },
             resolve: async function(parent, args, context) {
-                let userService = context.container.get('user.service');
-                let username = args.InputUserLogin.username;
-                let password = args.InputUserLogin.password;
-                let token = await userService.getToken(username, password);
-                return { token };
+                const userService = context.container.get('user.service');
+                const username = args.InputUserLogin.username;
+                const password = args.InputUserLogin.password;
+                const token = await userService.getToken(username, password);
+                return {token};
             },
         };
     }

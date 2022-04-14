@@ -27,7 +27,7 @@ class MshopViewModel extends BaseViewModel {
      * Model to json data
      * @return {{}}
      */
-    async toJson(){
+    async toJson() {
         if (this.model == null) {
             return null;
         }

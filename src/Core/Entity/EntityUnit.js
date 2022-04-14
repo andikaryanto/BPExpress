@@ -1,22 +1,20 @@
-import DbTrans from "../Database/DbTrans";
-import Entity from "./Entity";
-import EntityManager from "./EntityManager";
-import EntityScope from "./EntityScope";
+import DbTrans from '../Database/DbTrans';
+import Entity from './Entity';
+import EntityManager from './EntityManager';
+import EntityScope from './EntityScope';
 
 /**
  * @class EntityUnit
  */
-class EntityUnit
-{
+class EntityUnit {
     /**
      * Prepare entity that will be persisted. Will persisted after entity unit flush
      *
      * @param {Entity} entity
      * @return EntityUnit
      */
-    preparePersistence(entity)
-    {
-        let entityUnit = EntityScope.getInstance();
+    preparePersistence(entity) {
+        const entityUnit = EntityScope.getInstance();
         entityUnit.addEntity(EntityScope.PERFORM_ADD_UPDATE, entity);
         return this;
     }
@@ -27,9 +25,8 @@ class EntityUnit
      * @param {Entity} entity
      * @return EntityUnit
      */
-    prepareRemove(entity)
-    {
-        let entityUnit = EntityScope.getInstance();
+    prepareRemove(entity) {
+        const entityUnit = EntityScope.getInstance();
         entityUnit.addEntity(EntityScope.PERFORM_DELETE, entity);
         return this;
     }
@@ -39,17 +36,16 @@ class EntityUnit
      *
      * @return {Promise<void>}
      */
-    async flush()
-    {
-        let entityScope = EntityScope.getInstance();
+    async flush() {
+        const entityScope = EntityScope.getInstance();
 
-        let entityManager = new EntityManager();
-       
-        let transaction = await DbTrans.beginTransaction()
+        const entityManager = new EntityManager();
 
-        let entities = entityScope.getEntities();
+        const transaction = await DbTrans.beginTransaction();
 
-        if(entities.length > 0){
+        const entities = entityScope.getEntities();
+
+        if (entities.length > 0) {
             try {
                 for (const value of entities) {
                     if (value.perform == EntityScope.PERFORM_ADD_UPDATE) {

@@ -39,22 +39,32 @@ class Response {
         let data = null;
         let page = null;
         let size = null;
-        if(this.#_data instanceof Collection){
-            page = this.#_data.getPage();
-            size = this.#_data.getSize();
-            data = await this.#_data.proceedAndGetData()
+        let total = null;
+        if (this.#_data instanceof Collection) {
+            page = parseInt(this.#_data.getPage());
+            size = parseInt(this.#_data.getSize());
+            total = parseInt(this.#_data.getTotal());
+            data = await this.#_data.proceedAndGetData();
         }
-        
-        if(this.#_data instanceof ViewModel)
-            data = await this.#_data.toJson()
-        
-        const result = {
-            Message: this.#_message,
-            Page: page,
-            Size: size,
+
+        if (this.#_data instanceof ViewModel) {
+            data = await this.#_data.toJson();
+        }
+
+        let result = {
             Data: data,
             Code: this.#_responseCode,
+            Message: this.#_message,
         };
+
+        if (this.#_data instanceof Collection) {
+            result = {
+                Page: page,
+                Size: size,
+                Total: total,
+                ...result,
+            };
+        }
 
         return result;
     }

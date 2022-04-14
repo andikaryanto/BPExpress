@@ -19,7 +19,7 @@ export default (container) => {
     container.register('web.test.controller', TestController)
         .addArgument(new Reference('entity-manager'))
         .addArgument(new Reference('groupuser.repository'));
-    
+
     container.register('web.office-login.controller', LoginController);
 
     container.register('web.test2.controller', Test2Controller)

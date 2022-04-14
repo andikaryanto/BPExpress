@@ -69,7 +69,7 @@ class EntityManager {
      * @return {Promise<{}>}
      */
     async createJson(entity) {
-        return await entity.toJson()
+        return await entity.toJson();
     }
 
     /**

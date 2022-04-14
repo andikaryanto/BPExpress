@@ -26,7 +26,7 @@ class MproductcategoryViewModel extends BaseViewModel {
      * Get json frmo model
      * @return {{}}
      */
-    async toJson(){
+    async toJson() {
         if (this.model == null) {
             return null;
         }

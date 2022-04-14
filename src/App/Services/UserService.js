@@ -52,8 +52,8 @@ class UserService {
         return muser;
     }
 
-    async getToken(username, password){
-        let user = await this.login(username, password);
+    async getToken(username, password) {
+        const user = await this.login(username, password);
         return this.#_jwt.sign(await user.toJson());
     }
 }

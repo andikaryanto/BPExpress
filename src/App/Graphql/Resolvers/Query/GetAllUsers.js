@@ -33,15 +33,15 @@ class GetAllUsers {
 
                 let search = {
                     page: 1,
-                    size: 10
+                    size: 10,
                 };
                 if (args.Username != undefined) {
                     if (args.Username != null && args.Username != '') {
                         search = {
-                            ...search, 
+                            ...search,
                             like: {
                                 Username: args.Username,
-                            }
+                            },
                         };
                     }
                 }
