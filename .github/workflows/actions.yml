@@ -36,3 +36,6 @@ jobs:
     
     - name: Run unit test
       run: yarn jest src/Test
+
+    - name: Build application with babel
+      run: yarn run build
