@@ -11,7 +11,7 @@ class EntityUnit {
      * Prepare entity that will be persisted. Will persisted after entity unit flush
      *
      * @param {Entity} entity
-     * @return EntityUnit
+     * @return {EntityUnit}
      */
     preparePersistence(entity) {
         const entityUnit = EntityScope.getInstance();
@@ -23,7 +23,7 @@ class EntityUnit {
      * Prepare entity that will be removed. Will removed after entity unit flush
      *
      * @param {Entity} entity
-     * @return EntityUnit
+     * @return {EntityUnit}
      */
     prepareRemove(entity) {
         const entityUnit = EntityScope.getInstance();

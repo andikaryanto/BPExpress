@@ -72,11 +72,11 @@ class ShopService {
                 };
             }
 
-            const shopProducts = await this.#_shopProductRepository.findAll(param);
+            const shopProducts = await this.#_shopProductRepository.collect(param);
 
             return shopProducts;
         } catch (e) {
-            // console.log(e);
+            console.log(e);
         }
     }
 }

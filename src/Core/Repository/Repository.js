@@ -34,19 +34,19 @@ class Repository {
     /**
       * Fetch the data from database
       * @param {{}} filter
-      * @param {number} page
-      * @param {number} size
-      * @param {Promise<[]>} columns
+      * @param {[]} columns
+      * @param {number|null} page
+      * @param {number|null} size
       */
     async findAll(filter = {}, columns = [], page = null, size = null) {
-        return this.fetch(filter, columns, page, size);
+        return await this.fetch(filter, columns, {}, page, size);
     }
 
     /**
       * Set filter before fecthing data from database
       * @param {{}} filter
-      * @param {number} page
-      * @param {number} size
+      * @param {number|null} page
+      * @param {number|null} size
       * @return {this}
       */
     setFilter(filter = {}, page = null, size = null) {
@@ -131,8 +131,8 @@ class Repository {
       * @param {{}} filter
       * @param {[]} columns
       * @param {{}} associatedKey
-      * @param {number} page
-      * @param {number} size
+      * @param {number|null} page
+      * @param {number|null} size
       * @return {Promise<[]>}
       */
     async fetch(filter = {}, columns = [], associatedKey = {}, page = null, size = null) {
@@ -234,12 +234,12 @@ class Repository {
     }
 
     /**
-     *
-     * @param {{}} filter
-      * @param {number} page
-      * @param {number} size
-     * @return {Promise<EntityList>}
-     */
+    *
+    * @param {{}} filter
+    * @param {number|null} page
+    * @param {number|null} size
+    * @return {Promise<EntityList>}
+    */
     async collect(filter = {}, page = null, size = null) {
         const associatedKey = {};
         const result = await this.fetch(filter, [], associatedKey, page, size);
@@ -252,9 +252,18 @@ class Repository {
         return entityList;
     }
 
+    /**
+     * Count of data from database
+     * @param {{}} filter
+     * @return {number}
+     */
     async count(filter = {}) {
         this.setFilter(filter);
-        return (await this.db.count({count: '*'}))[0].count;
+        const counter = (await this.db.count({count: '*'}))[0].count;
+        this.db.clear('select')
+            .clear('where')
+            .clear('join');
+        return counter;
     }
 }
 

@@ -26,7 +26,7 @@ class MuserViewModel extends BaseViewModel {
 
     /**
      * Model to json data
-     * @return {Promise<{}> || Promise<null>}
+     * @return {Promise<{}>|Promise<null>}
      */
     async toJson() {
         if (this.model == null) {

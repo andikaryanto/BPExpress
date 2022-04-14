@@ -9,6 +9,7 @@ class Response {
     #_code = null;
     #_responseCode = null;
     #_data = null;
+
     /**
      *
      * @param {string} message
@@ -40,15 +41,16 @@ class Response {
         let page = null;
         let size = null;
         let total = null;
+
         if (this.#_data instanceof Collection) {
             page = parseInt(this.#_data.getPage());
             size = parseInt(this.#_data.getSize());
             total = parseInt(this.#_data.getTotal());
             data = await this.#_data.proceedAndGetData();
-        }
-
-        if (this.#_data instanceof ViewModel) {
+        } else if (this.#_data instanceof ViewModel) {
             data = await this.#_data.toJson();
+        } else {
+            data = this.#_data;
         }
 
         let result = {

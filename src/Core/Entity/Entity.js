@@ -73,18 +73,23 @@ class Entity {
                                     }
                                 } else {
                                     if (keyValue) {
-                                        const repo = new Repository(type).find(keyValue);
+                                        const repo = await (new Repository(type)).find(keyValue);
                                         target['set' + property](repo);
                                     }
                                 }
-                            } else {
+                            } else if (field.relationType == Orm.MANY_TO_ONE) {
                                 if (keyValue) {
                                     const param = {
                                         where: {
                                             [field.foreignKey]: keyValue,
                                         },
                                     };
-                                    const repo = new Repository(type).findAll(param);
+                                    const repo = await (new Repository(type)).findAll(param);
+                                    target['set' + property](repo);
+                                }
+                            } else {
+                                if (keyValue) {
+                                    const repo = await (new Repository(type)).find(keyValue);
                                     target['set' + property](repo);
                                 }
                             }
@@ -139,6 +144,10 @@ class Entity {
         return selectedColumn;
     }
 
+    /**
+     *
+     * @return {Promise<{}>}
+     */
     async toJson() {
         const object = {};
         const entity = this;

@@ -27,8 +27,10 @@ class EntityManager {
 
     /**
      * Store data to storage / database
+     *
+     * @param {Entity} entity
      * @param {any} transaction
-     * @return {Promise<boolean}>
+     * @return {Promise<boolean>}
      */
     async persist(entity, transaction = null) {
         this.setEntity(entity);
@@ -74,6 +76,7 @@ class EntityManager {
 
     /**
      * Remove data from database
+     * @param {Entity} entity
      * @param {any} transaction
      * @return {boolean}
      */

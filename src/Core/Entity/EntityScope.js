@@ -1,3 +1,5 @@
+import Entity from './Entity';
+
 /**
  * @class EntityScope
  */
@@ -17,6 +19,9 @@ class EntityScope {
      */
     entities = [];
 
+    /**
+     *
+     */
     constructor() {
     }
 
@@ -35,8 +40,8 @@ class EntityScope {
      * Add entity that will be persisted
      *
      * @param {string} perform
-     * @param {Entiry} entity
-     * @return void
+     * @param {Entity} entity
+     * @return {void}
      */
     addEntity(perform, entity) {
         let isEntityExist = false;
@@ -60,7 +65,7 @@ class EntityScope {
     /**
      * Get entities scope
      *
-     * @return array
+     * @return {[]}
      */
     getEntities() {
         return this.entities;
@@ -69,7 +74,7 @@ class EntityScope {
     /**
      * Clean entity scope
      *
-     * @return void
+     * @return {void}
      */
     clean() {
         this.entities = [];
