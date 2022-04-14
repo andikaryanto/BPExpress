@@ -33,9 +33,9 @@ jobs:
     
     - name: Run linting for js using eslint
       run: npx eslint --fix src
-    
-    - name: Run unit test
-      run: yarn jest src/Test
 
     - name: Build application with babel
       run: yarn run build
+    
+    - name: Run unit test
+      run: yarn jest src/Test
