@@ -1,3 +1,6 @@
+/**
+ * @class Middleware
+ */
 class Middleware {
 
 }

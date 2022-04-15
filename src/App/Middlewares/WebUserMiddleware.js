@@ -6,30 +6,29 @@ import Middleware from '../../Core/Middleware/Middleware.js';
  * @class OfficeMiddleware
  */
 class WebUserMiddleware extends Middleware {
-
     /**
      * @var {Jwt}
      */
     #_jwt;
 
     /**
-     * 
-     * @param {Jwt} jwt 
+     *
+     * @param {Jwt} jwt
      */
     constructor(
-        jwt
-    ){
+        jwt,
+    ) {
         super();
         this.#_jwt = jwt;
     }
 
     /**
-     * 
+     *
      * @param {Request} req
      * @param {Response} res
      * @param {NextFunction} next
      */
-    async execute(req, res, next){
+    async execute(req, res, next) {
         try {
             if (req.session.token == undefined || req.session.token == null) {
                 res.redirect('/office/login');
@@ -44,7 +43,6 @@ class WebUserMiddleware extends Middleware {
             res.redirect('/office/login');
         }
     }
-
 }
 
 export default WebUserMiddleware;

@@ -24,10 +24,9 @@ class MgroupuserController extends BaseController {
      */
     async index({request}) {
         try {
-
-            let calculate = (number) => {
+            const calculate = (number) => {
                 return number + 2;
-            }
+            };
             return View.make('office/m_groupuser/index', {title: 'Grup Pengguna', calculate});
             // res.render('office/m_groupuser/index', { title : 'Grup Pengguna' } );
         } catch (e) {

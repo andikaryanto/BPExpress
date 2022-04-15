@@ -61,8 +61,9 @@ class UserService {
      */
     async getToken(username, password) {
         const user = await this.login(username, password);
-        if(user)
+        if (user) {
             return this.#_jwt.sign(await user.toJson());
+        }
         return null;
     }
 }

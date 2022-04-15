@@ -1,37 +1,36 @@
-import Error from "../Logger/Error";
+import Error from '../Logger/Error';
 
-const { default: Container } = require("../Container/Container");
+const {default: Container} = require('../Container/Container');
 
+/**
+ * @class MiddlewareCallback
+ */
 class MiddlewareCallback {
-
     /**
      * Will instanciate middleware class class wether from DI or class
-     * 
-     * @param {string} middleware 
+     *
+     * @param {string} middleware
      * @return {Function}
      */
     static call(middleware) {
-
         return async (req, res, next) => {
             try {
-
                 let middlewareInstance = null;
-                if(typeof middleware == 'string'){
+                if (typeof middleware == 'string') {
                     const container = Container.getInstance().get(middleware);
                     middlewareInstance = container;
                 } else {
                     middlewareInstance = new middleware();
                 }
 
-                let data = middlewareInstance.execute(req, res, next);
-        
+                const data = middlewareInstance.execute(req, res, next);
+
                 let returnedData = null;
                 if (data instanceof Promise) {
                     returnedData = await data;
                 } else {
                     returnedData = data;
                 }
-
             } catch (e) {
                 Error.create('error', e.stack);
 

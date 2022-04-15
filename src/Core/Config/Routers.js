@@ -48,9 +48,9 @@ class Routers {
         }
         this.#_router.use(intance.#_router);
 
-        let midlewares = middleware.map((e, i) => {
+        const midlewares = middleware.map((e, i) => {
             return MiddlewareCallback.call(e);
-        })
+        });
 
         intance.#_middleware = [...this.#_middleware, ...midlewares];
         callback(intance);
@@ -134,9 +134,9 @@ class Routers {
     doRoute(route, middleware, controller, fn, additionalData = {}, method = 'GET', isNamed = false) {
         let currentRoute = route;
 
-        let midlewares = middleware.map((e, i) => {
+        const midlewares = middleware.map((e, i) => {
             return MiddlewareCallback.call(e);
-        })
+        });
 
         if (!isNamed) {
             if (this.#_route != null) {

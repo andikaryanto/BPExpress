@@ -1,26 +1,25 @@
-import Routers from "../Config/Routers";
-import Container from "../Container/Container";
-import Error from "../Logger/Error";
+import Routers from '../Config/Routers';
+import Container from '../Container/Container';
+import Error from '../Logger/Error';
 
-
+/**
+ * @class ControllerCallback
+ */
 class ControllerCallback {
-
     /**
      * Will instanciate controller class wether from DI or class
-     * 
-     * @param {string} controller 
-     * @param {string} fn 
-     * @param {{}} additionalData 
-     * @param {Routers.response} routersResponse 
+     *
+     * @param {string} controller
+     * @param {string} fn
+     * @param {{}} additionalData
+     * @param {Routers.response} routersResponse
      * @return {Function}
      */
     static call(controller, fn, additionalData, routersResponse) {
-
         return async (req, res, next) => {
-
             try {
-                let controllerInstance = null
-                if(typeof controller == 'string'){
+                let controllerInstance = null;
+                if (typeof controller == 'string') {
                     const container = Container.getInstance().get(controller);
                     controllerInstance = container;
                 } else {

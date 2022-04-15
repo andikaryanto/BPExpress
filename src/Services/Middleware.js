@@ -14,5 +14,4 @@ export default (container) => {
 
     container.register('web-user.middleware', WebUserMiddleware)
         .addArgument(new Reference('library.jwt.service'));
-
 };

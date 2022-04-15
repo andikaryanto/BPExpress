@@ -15,19 +15,18 @@ import UserService from '../../Services/UserService.js';
  * @clsas LoginController
  */
 class LoginController extends Controller {
-
     /**
      * @var {UserService}
      */
     #_userService;
 
     /**
-     * 
-     * @param {UserService} userService 
+     *
+     * @param {UserService} userService
      */
     constructor(
-        userService
-    ){
+        userService,
+    ) {
         super();
         this.#_userService = userService;
     }

@@ -1,14 +1,13 @@
 
-import { ErrorRequestHandler, Request, Response, NextFunction } from 'express';
+import {ErrorRequestHandler, Request, Response, NextFunction} from 'express';
 import Middleware from '../../Core/Middleware/Middleware';
 
 /**
  *
  */
 class GraphqlMiddleware extends Middleware {
-
     /**
-     * 
+     *
     * @param {Request} req
     * @param {Response} res
     * @param {NextFunction} next

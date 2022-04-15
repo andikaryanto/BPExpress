@@ -20,7 +20,6 @@ class Kernel {
       * @return {[]}
       */
     static get middlewareGroups() {
-       
         return {
             web: [
                 // You middle ware goes here

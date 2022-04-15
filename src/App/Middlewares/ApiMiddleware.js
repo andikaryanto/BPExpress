@@ -1,18 +1,17 @@
 import ResponseCode from '../Constants/ResponseCode.js';
 import jwt from 'jsonwebtoken';
-import { ErrorRequestHandler, Request, Response, NextFunction } from 'express';
+import {ErrorRequestHandler, Request, Response, NextFunction} from 'express';
 import Middleware from '../../Core/Middleware/Middleware.js';
 
 /**
  *
  */
 class ApiMiddleware extends Middleware {
-
     /**
-     * @param {ErrorRequestHandler} err
     * @param {Request} req
     * @param {Response} res
     * @param {NextFunction} next
+    * @return {void}
      */
     async execute(req, res, next) {
         try {
@@ -21,7 +20,7 @@ class ApiMiddleware extends Middleware {
                 throw new Error('Cannot verify empty token');
             }
 
-            const decoded = jwt.decode(token, { complete: true });
+            const decoded = jwt.decode(token, {complete: true});
             if (decoded == null) {
                 throw new Error('Invalid Token');
             }

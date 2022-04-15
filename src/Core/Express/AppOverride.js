@@ -68,11 +68,11 @@ class AppOverride {
             fields: GraphQL.mutation(),
         });
 
-        let eachMiddleware = function(e, i) {
+        const eachMiddleware = function(e, i) {
             return MiddlewareCallback.call(e);
-        }
+        };
 
-        let graphqlMiddlewares = Kernel.middlewareGroups.graphql.map(eachMiddleware);
+        const graphqlMiddlewares = Kernel.middlewareGroups.graphql.map(eachMiddleware);
 
         app.use('/graphql',
             [...graphqlMiddlewares],
@@ -134,16 +134,15 @@ class AppOverride {
       * @param {Express} app
       */
     static middleware(app) {
-
-        let eachMiddleware = function(e, i) {
+        const eachMiddleware = function(e, i) {
             return MiddlewareCallback.call(e);
-        }
+        };
 
-        let globalMiddlewares = Kernel.middlewares.map(eachMiddleware);
+        const globalMiddlewares = Kernel.middlewares.map(eachMiddleware);
 
-        let apiMiddlewares = Kernel.middlewareGroups.api.map(eachMiddleware);
+        const apiMiddlewares = Kernel.middlewareGroups.api.map(eachMiddleware);
 
-        let webMiddlewares = Kernel.middlewareGroups.web.map(eachMiddleware)
+        const webMiddlewares = Kernel.middlewareGroups.web.map(eachMiddleware);
 
         app.use('/api', [...globalMiddlewares, ...apiMiddlewares], Api());
         app.use('/', [...globalMiddlewares, ...webMiddlewares], Web());

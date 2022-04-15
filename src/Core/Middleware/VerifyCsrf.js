@@ -1,5 +1,5 @@
 import dotenv from 'dotenv';
-import { ErrorRequestHandler, Request, Response, NextFunction } from 'express';
+import {ErrorRequestHandler, Request, Response, NextFunction} from 'express';
 import Middleware from './Middleware';
 dotenv.config();
 
@@ -8,7 +8,6 @@ dotenv.config();
  *
  */
 class VerifyCsrf extends Middleware {
-
     /**
     * @param {Request} req
     * @param {Response} res
