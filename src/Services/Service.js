@@ -17,10 +17,10 @@ export default (container) => {
 
     container.register('library.request.service', RequestService);
 
-    container.register('jwt.service', Jwt);
+    container.register('library.jwt.service', Jwt);
 
     container.register('user.service', UserService)
         .addArgument(new Reference('library.common.service'))
         .addArgument(new Reference('user.repository'))
-        .addArgument(new Reference('jwt.service'));
+        .addArgument(new Reference('library.jwt.service'));
 };

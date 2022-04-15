@@ -22,7 +22,7 @@ class MgroupuserController extends BaseController {
      * Go to groupuser list /office/mgroupuser
      * @return {View}
      */
-    async index() {
+    async index({request}) {
         try {
 
             let calculate = (number) => {

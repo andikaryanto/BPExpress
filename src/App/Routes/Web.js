@@ -25,7 +25,7 @@ const Web = () => {
     routers.post('/office/dologin', [], 'web.office-login.controller', 'doLogin');
     routers.get('/office/dologout', [], 'web.office-login.controller', 'doLogout');
 
-    routers.group('/office', [OfficeMiddleware], (routers) => {
+    routers.group('/office', ['web-user.middleware', 'office.middleware'], (routers) => {
         routers.group('/mgroupuser', [], (routers) => {
             routers.get('', [], 'web.office-groupuser.controller', 'index');
             routers.get(

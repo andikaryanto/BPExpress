@@ -46,8 +46,8 @@ class AppOverride {
         AppOverride.use(app);
         // AppOverride.csrf(app);
         AppOverride.logger(app);
-        AppOverride.middleware(app);
         const container = AppOverride.container();
+        AppOverride.middleware(app);
         AppOverride.graphQL(app, container);
     }
 
@@ -127,8 +127,8 @@ class AppOverride {
       * @param {Express} app
       */
     static middleware(app) {
-        app.use('/api', [RequestInstance, VerifyCsrf, ...Kernel.middlewares, ...Kernel.middlewareGroups.api], Api());
-        app.use('/', [RequestInstance, ...Kernel.middlewares, ...Kernel.middlewareGroups.web], Web());
+        app.use('/api', [VerifyCsrf, ...Kernel.middlewares, ...Kernel.middlewareGroups.api], Api());
+        app.use('/', [...Kernel.middlewares, ...Kernel.middlewareGroups.web], Web());
     }
 
     /**

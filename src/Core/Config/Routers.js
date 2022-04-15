@@ -47,7 +47,13 @@ class Routers {
             intance.#_route = `${route}`;
         }
         this.#_router.use(intance.#_router);
-        intance.#_middleware = [...this.#_middleware, ...middleware];
+
+        let midlewares = middleware.map((e, i) => {
+            return Routers.middleware(e);
+        })
+
+
+        intance.#_middleware = [...this.#_middleware, ...midlewares];
         callback(intance);
     }
 
@@ -128,17 +134,22 @@ class Routers {
       */
     doRoute(route, middleware, controller, fn, additionalData = {}, method = 'GET', isNamed = false) {
         let currentRoute = route;
+
+        let midlewares = middleware.map((e, i) => {
+            return Routers.middleware(e);
+        })
+
         if (!isNamed) {
             if (this.#_route != null) {
                 currentRoute = `${this.#_route}${route}`;
                 // this.#_namedRoute = currentRoute;
-                this.#_namedMiddleware = middleware;
+                this.#_namedMiddleware = midlewares;
                 this.#_namedController = controller;
                 this.#_namedFunction = fn;
                 this.#_namedMethod = method;
                 this.#_namedData = additionalData;
             } else {
-                this.#_namedMiddleware = middleware;
+                this.#_namedMiddleware = midlewares;
                 this.#_namedController = controller;
                 this.#_namedFunction = fn;
                 this.#_namedMethod = method;
@@ -245,6 +256,37 @@ class Routers {
         if (returnedData instanceof Redirect) {
             res.redirect(returnedData.route);
         }
+    }
+
+    static middleware(middleware){
+
+        return async (req, res, next) => {
+
+            // try {
+                const container = Container.getInstance().get(middleware);
+                const middlewareInstance = container;
+        
+                middlewareInstance.execute(req, res, next);
+
+            //     let returnedData = null;
+            //     if (data instanceof Promise) {
+            //         returnedData = await data;
+            //     } else {
+            //         returnedData = data;
+            //     }
+            //     await Routers.response(req, res, returnedData);
+            // } catch (e) {
+            //     Error.create('error', e.stack);
+
+            //     if (process.env.APP_MODE == 'development') {
+            //         next(e);
+            //     }
+
+            //     if (process.env.APP_MODE == 'production') {
+            //         res.status(400).send('An error has occured, see error.log for detail');
+            //     }
+            // }
+        };
     }
 }
 
