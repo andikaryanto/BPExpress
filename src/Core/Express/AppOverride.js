@@ -57,7 +57,7 @@ class AppOverride {
       * @param {Express} app
       * @param {CoreContainer} container
       */
-    static graphQL(app) {
+    static graphQL(app, container) {
         const RootQuery = new GraphQLObjectType({
             name: 'Query',
             fields: GraphQL.query(),
