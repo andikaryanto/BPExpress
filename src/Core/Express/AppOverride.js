@@ -33,6 +33,7 @@ import Container from '../../App/Config/Container.js';
 import CoreContainer from '../Container/Container.js';
 import {ContainerBuilder} from 'node-dependency-injection';
 import RequestInstance from '../Middleware/RequestInstance.js';
+import MiddlewareCallback from '../Middleware/MiddlewareCallback.js';
 
 /**
  * @class AppOverride
@@ -47,7 +48,7 @@ class AppOverride {
         // AppOverride.csrf(app);
         AppOverride.logger(app);
         const container = AppOverride.container();
-        AppOverride.middleware(app);
+        AppOverride.middleware(app, container);
         AppOverride.graphQL(app, container);
     }
 
@@ -56,7 +57,7 @@ class AppOverride {
       * @param {Express} app
       * @param {CoreContainer} container
       */
-    static graphQL(app, container) {
+    static graphQL(app) {
         const RootQuery = new GraphQLObjectType({
             name: 'Query',
             fields: GraphQL.query(),
@@ -67,8 +68,14 @@ class AppOverride {
             fields: GraphQL.mutation(),
         });
 
+        let eachMiddleware = function(e, i) {
+            return MiddlewareCallback.call(e);
+        }
+
+        let graphqlMiddlewares = Kernel.middlewareGroups.graphql.map(eachMiddleware);
+
         app.use('/graphql',
-            [...Kernel.middlewareGroups.graphql],
+            [...graphqlMiddlewares],
             graphqlHTTP(
                 (request) => ({
                     schema: new GraphQLSchema({
@@ -127,8 +134,19 @@ class AppOverride {
       * @param {Express} app
       */
     static middleware(app) {
-        app.use('/api', [VerifyCsrf, ...Kernel.middlewares, ...Kernel.middlewareGroups.api], Api());
-        app.use('/', [...Kernel.middlewares, ...Kernel.middlewareGroups.web], Web());
+
+        let eachMiddleware = function(e, i) {
+            return MiddlewareCallback.call(e);
+        }
+
+        let globalMiddlewares = Kernel.middlewares.map(eachMiddleware);
+
+        let apiMiddlewares = Kernel.middlewareGroups.api.map(eachMiddleware);
+
+        let webMiddlewares = Kernel.middlewareGroups.web.map(eachMiddleware)
+
+        app.use('/api', [...globalMiddlewares, ...apiMiddlewares], Api());
+        app.use('/', [...globalMiddlewares, ...webMiddlewares], Web());
     }
 
     /**

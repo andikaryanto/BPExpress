@@ -5,10 +5,10 @@ import Redirect from '../Controller/Redirect';
 import ResponseData from '../Controller/ResponseData';
 import View from '../Controller/View';
 import Template from '../Template/Template';
-import Container from '../Container/Container';
 import config from '../../../config';
 import BaseResponse from '../Controller/Response';
-import Error from '../Logger/Error';
+import MiddlewareCallback from '../Middleware/MiddlewareCallback';
+import ControllerCallback from '../Controller/ControllerCallback';
 /**
  * @class Router
  */
@@ -49,9 +49,8 @@ class Routers {
         this.#_router.use(intance.#_router);
 
         let midlewares = middleware.map((e, i) => {
-            return Routers.middleware(e);
+            return MiddlewareCallback.call(e);
         })
-
 
         intance.#_middleware = [...this.#_middleware, ...midlewares];
         callback(intance);
@@ -136,7 +135,7 @@ class Routers {
         let currentRoute = route;
 
         let midlewares = middleware.map((e, i) => {
-            return Routers.middleware(e);
+            return MiddlewareCallback.call(e);
         })
 
         if (!isNamed) {
@@ -159,42 +158,7 @@ class Routers {
             currentRoute = `/${route}`;
         }
 
-        const resReq = async (req, res, next) => {
-
-            try {
-                const container = Container.getInstance().get(controller);
-                const controllerInstance = container;
-        
-                const data = controllerInstance[fn](
-                    {
-                        request: req,
-                        session: req.session,
-                        params: req.params,
-                        query: req.query,
-                        body: req.body,
-                        ...additionalData,
-                    },
-                );
-
-                let returnedData = null;
-                if (data instanceof Promise) {
-                    returnedData = await data;
-                } else {
-                    returnedData = data;
-                }
-                await Routers.response(req, res, returnedData);
-            } catch (e) {
-                Error.create('error', e.stack);
-
-                if (process.env.APP_MODE == 'development') {
-                    next(e);
-                }
-
-                if (process.env.APP_MODE == 'production') {
-                    res.status(400).send('An error has occured, see error.log for detail');
-                }
-            }
-        };
+        const resReq = ControllerCallback.call(controller, fn, additionalData, Routers.response);
 
         if (method.toUpperCase() == 'GET') {
             this.#_router.get(`${currentRoute}`, [...this.#_middleware, ...middleware], resReq);
@@ -256,37 +220,6 @@ class Routers {
         if (returnedData instanceof Redirect) {
             res.redirect(returnedData.route);
         }
-    }
-
-    static middleware(middleware){
-
-        return async (req, res, next) => {
-
-            // try {
-                const container = Container.getInstance().get(middleware);
-                const middlewareInstance = container;
-        
-                middlewareInstance.execute(req, res, next);
-
-            //     let returnedData = null;
-            //     if (data instanceof Promise) {
-            //         returnedData = await data;
-            //     } else {
-            //         returnedData = data;
-            //     }
-            //     await Routers.response(req, res, returnedData);
-            // } catch (e) {
-            //     Error.create('error', e.stack);
-
-            //     if (process.env.APP_MODE == 'development') {
-            //         next(e);
-            //     }
-
-            //     if (process.env.APP_MODE == 'production') {
-            //         res.status(400).send('An error has occured, see error.log for detail');
-            //     }
-            // }
-        };
     }
 }
 

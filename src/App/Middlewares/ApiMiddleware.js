@@ -1,6 +1,6 @@
 import ResponseCode from '../Constants/ResponseCode.js';
 import jwt from 'jsonwebtoken';
-import { Request, Response, NextFunction } from 'express';
+import { ErrorRequestHandler, Request, Response, NextFunction } from 'express';
 import Middleware from '../../Core/Middleware/Middleware.js';
 
 /**
@@ -9,7 +9,7 @@ import Middleware from '../../Core/Middleware/Middleware.js';
 class ApiMiddleware extends Middleware {
 
     /**
-     * 
+     * @param {ErrorRequestHandler} err
     * @param {Request} req
     * @param {Response} res
     * @param {NextFunction} next

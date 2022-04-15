@@ -1,4 +1,4 @@
-import {Request, Response, NextFunction} from 'express';
+import {ErrorRequestHandler, Request, Response, NextFunction} from 'express';
 import Jwt from '../../Core/Libraries/Jwt.js';
 import Middleware from '../../Core/Middleware/Middleware.js';
 

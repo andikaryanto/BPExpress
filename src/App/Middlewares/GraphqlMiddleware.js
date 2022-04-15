@@ -1,11 +1,11 @@
 
-import { Request, Response, NextFunction } from 'express';
+import { ErrorRequestHandler, Request, Response, NextFunction } from 'express';
 import Middleware from '../../Core/Middleware/Middleware';
 
 /**
  *
  */
-class ApiMiddleware extends Middleware {
+class GraphqlMiddleware extends Middleware {
 
     /**
      * 
@@ -32,4 +32,4 @@ class ApiMiddleware extends Middleware {
     };
 }
 
-export default ApiMiddleware;
+export default GraphqlMiddleware;
