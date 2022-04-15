@@ -8,7 +8,7 @@ import Template from '../Template/Template';
 import Container from '../Container/Container';
 import config from '../../../config';
 import BaseResponse from '../Controller/Response';
-import Logger from '../Logger/Logger';
+import Error from '../Logger/Error';
 /**
  * @class Router
  */
@@ -171,7 +171,7 @@ class Routers {
                 }
                 await Routers.response(req, res, returnedData);
             } catch (e) {
-                Logger.create('error', 'error', e.stack);
+                Error.create('error', e.stack);
 
                 if (process.env.APP_MODE == 'development') {
                     next(e);
