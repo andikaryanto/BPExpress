@@ -1,4 +1,4 @@
-import UserService from '../../Services/UserService.js';
+
 import CommonLib from '../../Libraries/CommonLib.js';
 import BaseController from '../BaseController.js';
 import jwt from 'jsonwebtoken';
@@ -9,11 +9,29 @@ import Redirect from '../../../Core/Controller/Redirect.js';
 import View from '../../../Core/Controller/View.js';
 import ResponseData from '../../../Core/Controller/ResponseData.js';
 import ModelError from '../../Errors/ModelError.js';
+import UserService from '../../Services/UserService.js';
 
 /**
  * @clsas LoginController
  */
 class LoginController extends Controller {
+
+    /**
+     * @var {UserService}
+     */
+    #_userService;
+
+    /**
+     * 
+     * @param {UserService} userService 
+     */
+    constructor(
+        userService
+    ){
+        super();
+        this.#_userService = userService;
+    }
+
     /**
      * Go to user login /office/login
      * @method GET
@@ -45,12 +63,11 @@ class LoginController extends Controller {
     async doLogin({request, session}) {
         try {
             const body = request.body;
-            const muser = await UserService.login(body.Username, body.Password, true);
-            if (CommonLib.isNull(muser)) {
+            const token = await this.#_userService.getToken(body.Username, body.Password, true);
+            if (CommonLib.isNull(token)) {
                 throw new ModelError('Data pengguna tidak valid');
             }
 
-            const token = jwt.sign(muser.toJson(), CommonLib.getKey());
             session.token = token;
             session.userlanguage = 'id';
             session.save();

@@ -57,11 +57,13 @@ class UserService {
      *
      * @param {string} username
      * @param {string} password
-     * @return {string}
+     * @return {string|null}
      */
     async getToken(username, password) {
         const user = await this.login(username, password);
-        return this.#_jwt.sign(await user.toJson());
+        if(user)
+            return this.#_jwt.sign(await user.toJson());
+        return null;
     }
 }
 export default UserService;

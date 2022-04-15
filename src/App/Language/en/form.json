@@ -1,3 +1,8 @@
 {
-     "name" : "Name"
+     "name" : "Name",
+     "no": "No",
+     "groupName": "Group Name",
+     "description": "Description",
+     "created": "Created",
+     "action": "Action"
 }

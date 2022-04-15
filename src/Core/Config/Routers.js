@@ -149,20 +149,22 @@ class Routers {
         }
 
         const resReq = async (req, res, next) => {
-            const container = Container.getInstance().get(controller);
-            const controllerInstance = container;
-            const data = controllerInstance[fn](
-                {
-                    request: req,
-                    session: req.session,
-                    params: req.params,
-                    query: req.query,
-                    body: req.body,
-                    ...additionalData,
-                },
-            );
 
             try {
+                const container = Container.getInstance().get(controller);
+                const controllerInstance = container;
+        
+                const data = controllerInstance[fn](
+                    {
+                        request: req,
+                        session: req.session,
+                        params: req.params,
+                        query: req.query,
+                        body: req.body,
+                        ...additionalData,
+                    },
+                );
+
                 let returnedData = null;
                 if (data instanceof Promise) {
                     returnedData = await data;

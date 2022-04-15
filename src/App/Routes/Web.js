@@ -25,21 +25,22 @@ const Web = () => {
     routers.post('/office/dologin', [], 'web.office-login.controller', 'doLogin');
     routers.get('/office/dologout', [], 'web.office-login.controller', 'doLogout');
 
-    // routers.group('/office', [OfficeMiddleware], (routers) => {
-    //     routers.group('/mgroupuser', [], (routers) => {
-    //         routers.get('', [], MgroupuserController, 'index');
-    //         routers.get(
-    //             '/:Id/edit',
-    //             [],
-    //             MgroupuserController,
-    //             'getById',
-    //             {routedata: 'This data is sent from routing'},
-    //         );
-    //         routers.post('/getalldata', [], MgroupuserController, 'getAllData');
-    //         routers.group('/data', [], function(routers) {
-    //             routers.get('/list', [], MgroupuserController, 'list');
-    //         });
-    //     });
+    routers.group('/office', [OfficeMiddleware], (routers) => {
+        routers.group('/mgroupuser', [], (routers) => {
+            routers.get('', [], 'web.office-groupuser.controller', 'index');
+            routers.get(
+                '/:Id/edit',
+                [],
+                'web.office-groupuser.controller',
+                'getById',
+                {routedata: 'This data is sent from routing'},
+            );
+            routers.post('/getalldata', [], 'web.office-groupuser.controller', 'getAllData');
+            routers.group('/data', [], function(routers) {
+                routers.get('/list', [], 'web.office-groupuser.controller', 'list');
+            });
+        });
+    });
 
     //     routers.group('/muser', [], (routers) => {
     //         routers.get('', [], MuserController, 'index');
