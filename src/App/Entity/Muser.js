@@ -1,10 +1,11 @@
 import BaseEntity from './BaseEntity';
+import Mgroupuser from './Mgroupuser';
 /**
  * @class Muser
  */
 class Muser extends BaseEntity {
     Id;
-    Groupuser;
+    Mgroupuser;
     Username;
     Password;
     Photo;
@@ -38,19 +39,19 @@ class Muser extends BaseEntity {
 
     /**
      * Get Id
-     * @return {M_groupusers}
+     * @return {Mgroupuser}
      */
-    getGroupuser() {
-        return this.Groupuser;
+    getMgroupuser() {
+        return this.Mgroupuser;
     }
 
     /**
      * set Id
-     * @param {M_groupusers} groupuser
+     * @param {Mgroupuser} groupuser
      * @return {this}
      */
-    setGroupuser(groupuser) {
-        this.Groupuser = groupuser;
+    setMgroupuser(groupuser) {
+        this.Mgroupuser = groupuser;
         return this;
     }
 

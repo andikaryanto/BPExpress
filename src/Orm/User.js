@@ -8,7 +8,7 @@ export default {
             type: 'number',
             isPrimitive: true,
         },
-        Groupuser: {
+        Mgroupuser: {
             type: '/App/Entity/Mgroupuser',
             isPrimitive: false,
             foreignKey: 'M_Groupuser_Id',

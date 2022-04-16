@@ -1,3 +1,5 @@
+import Orm from "./Common/Orm";
+
 export default {
     table: 'm_groupusers',
     primaryKey: 'Id',
@@ -5,6 +7,12 @@ export default {
         Id: {
             type: 'number',
             isPrimitive: true,
+        },
+        Musers: {
+            type: '/App/Entity/Muser',
+            isPrimitive: false,
+            relationType: Orm.MANY_TO_ONE,
+            mappedBy: 'Mgroupuser'
         },
         GroupName: {
             type: 'string',

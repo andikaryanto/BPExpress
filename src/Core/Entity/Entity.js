@@ -21,22 +21,23 @@ class Entity {
                 const caller = prop.substring(0, 3);
                 const property = prop.substring(3, prop.length);
                 if (caller == 'get') {
+                    
                     const field = target.constructor.getProps()[property];
                     if (!field.isPrimitive) {
                         const type = require(config.sourcePath + field.type).default;
                         const keyValue = target.constrains[field.foreignKey];
                         const originalMethod = target[prop];
+                        const primaryKey = ORM.getPrimaryKey(type.name);
                         return async function(...args) {
+                            const result = target[prop]();
+                            if (result) {
+                                return result;
+                            }
                             if (field.relationType == Orm.ONE_TO_MANY) {
-                                const result = target[prop]();
-                                if (result) {
-                                    return result;
-                                }
 
                                 const looper = EntityLooper.getInstance(target.constructor.name);
                                 if (looper.hasEntityList()) {
                                     const entitylist = looper.getEntityList();
-                                    const primaryKey = ORM.getPrimaryKey(type.name);
                                     if (PlainObject.isEmpty(looper.getItems())) {
                                         const param = {
                                             whereIn: {
@@ -78,22 +79,30 @@ class Entity {
                                     }
                                 }
                             } else if (field.relationType == Orm.MANY_TO_ONE) {
-                                if (keyValue) {
+
+                                const targetProps = ORM.getProps(type.name);
+                                const primaryKeyValue = target['get' + primaryKey]();
+                                const foreignKey = targetProps[field.mappedBy].foreignKey;
+                                if (primaryKeyValue) {
                                     const param = {
                                         where: {
-                                            [field.foreignKey]: keyValue,
+                                            [foreignKey]: primaryKeyValue,
                                         },
                                     };
                                     const repo = await (new Repository(type)).findAll(param);
                                     target['set' + property](repo);
                                 }
                             } else {
+                                
                                 if (keyValue) {
                                     const repo = await (new Repository(type)).find(keyValue);
                                     target['set' + property](repo);
                                 }
                             }
-                            return await originalMethod.apply(this, args);
+                            let returnedData = await originalMethod.apply(this, args);
+                            if(returnedData == undefined)
+                                return null;
+                            return returnedData;
                         };
                     }
                 }
@@ -138,7 +147,9 @@ class Entity {
             if (value.isPrimitive) {
                 selectedColumn.push(this.getTable() + '.' + key);
             } else {
-                selectedColumn.push(this.getTable() + '.' + value.foreignKey);
+                if(value.relationType ==  Orm.ONE_TO_MANY){
+                    selectedColumn.push(this.getTable() + '.' + value.foreignKey);
+                }
             }
         }
         return selectedColumn;

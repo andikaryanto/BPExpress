@@ -19,7 +19,7 @@ class MuserViewModel extends BaseViewModel {
      * @return {void}
      */
     async addResource(object) {
-        const groupuser = await this.model.getGroupuser();
+        const groupuser = await this.model.getMgroupuser();
         const groupUserViewModel = await (new MgroupuserViewModel(groupuser)).toJson();
         object.Groupuser = groupUserViewModel;
     }
