@@ -15,7 +15,6 @@ class Entity {
      *
      */
     constructor() {
-        // return new Proxy(this, magicMethodsProxy);
         const handler = {
             get: (target, prop, receiver) => {
                 const caller = prop.substring(0, 3);
