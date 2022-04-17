@@ -1,12 +1,5 @@
 import {Router, Express, Request, Response} from 'express';
-import ConfigView from '../../App/Config/View';
 import Controller from '../Controller/Controller';
-import Redirect from '../Controller/Redirect';
-import ResponseData from '../Controller/ResponseData';
-import View from '../Controller/View';
-import Template from '../Template/Template';
-import config from '../../../config';
-import BaseResponse from '../Controller/Response';
 import MiddlewareCallback from '../Middleware/MiddlewareCallback';
 import ControllerCallback from '../Controller/ControllerCallback';
 /**
@@ -158,7 +151,7 @@ class Routers {
             currentRoute = `/${route}`;
         }
 
-        const resReq = ControllerCallback.call(controller, fn, additionalData, Routers.response);
+        const resReq = ControllerCallback.call(controller, fn, additionalData);
 
         if (method.toUpperCase() == 'GET') {
             this.#_router.get(`${currentRoute}`, [...this.#_middleware, ...middleware], resReq);
@@ -185,42 +178,7 @@ class Routers {
         return this.#_router;
     }
 
-    /**
-      *
-      * @param {Request} req
-      * @param {Response} res
-      * @param {ResponseData|View|Redirect} returnedData
-      */
-    static async response(req, res, returnedData) {
-        if (returnedData == undefined) {
-            res.status(400).send('Unexpected Error, Method didnt return anything');
-        }
-
-        let response = null;
-        if (returnedData instanceof BaseResponse) {
-            response = await returnedData.send();
-        }
-
-        if (response instanceof ResponseData) {
-            res.status(response.code).json(response.data);
-        }
-
-        if (returnedData instanceof View) {
-            if (returnedData.type == 'html') {
-                res.send(returnedData.view);
-            }
-            if (returnedData.type == 'view') {
-                res.render(returnedData.view, {...returnedData.data, ...Template(), ...ConfigView.hook()});
-            }
-            if (returnedData.type == 'sendFile') {
-                res.sendFile(config.sourcePath + '/App/Views/' + returnedData.view);
-            }
-        }
-
-        if (returnedData instanceof Redirect) {
-            res.redirect(returnedData.route);
-        }
-    }
+    
 }
 
 export default Routers;

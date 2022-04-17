@@ -31,7 +31,7 @@ export default {
             isPrimitive: true,
         },
         Created: {
-            type: 'string',
+            type: 'datetime',
             isPrimitive: true,
         },
         CreatedBy: {
@@ -39,7 +39,7 @@ export default {
             isPrimitive: true,
         },
         Modified: {
-            type: 'string',
+            type: 'datetime',
             isPrimitive: true,
         },
         ModifiedBy: {

@@ -4,6 +4,7 @@ import config from '../../../config';
 import Orm from '../../Orm/Common/Orm';
 import EntityLooper from './EntityLooper';
 import PlainObject from '../Libraries/PlainObject';
+import DateFormat from '../Libraries/DateFormat';
 
 /**
  * @class Entiry
@@ -166,7 +167,15 @@ class Entity {
             const getProp = 'get' + key;
             const propValue = entity[getProp]();
             if (value.isPrimitive) {
-                object[key] = propValue;
+                if(value.type == 'datetime'){
+                    if(propValue){
+                        object[key] = DateFormat.databaseDate(propValue);
+                    } else {
+                        object[key] = propValue;
+                    }
+                } else {
+                    object[key] = propValue;
+                }
             } else {
                 const related = await propValue;
                 if (related) {

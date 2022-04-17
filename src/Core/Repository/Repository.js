@@ -172,12 +172,16 @@ class Repository {
             const obj = new newClassName();
             for (const [key, value] of Object.entries(props)) {
                 if (value.isPrimitive) {
-                    obj[key] = e[key];
+                    if(value.type == 'datetime'){
+                        let datetimeValue = null;
+                        if(e[key]){
+                            datetimeValue = new Date(e[key]);
+                        }
+                        obj[key] = datetimeValue;
+                    } else {
+                        obj[key] = e[key];
+                    }
                 } else {
-                    // const instanceRelatedClass = new Repository(value.type);
-                    // const instance = await instanceRelatedClass.find(e[value.foreignKey]);
-                    // obj[key] = instance;
-                    // var related = props[key];
                     const foreignKeyValue = e[value.foreignKey];
                     if (foreignKeyValue) {
                         if (value.foreignKey in associatedKey) {

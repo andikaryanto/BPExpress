@@ -11,7 +11,7 @@ class BaseEntity extends Entity {
 
     /**
      * Get Id
-     * @return {string}
+     * @return {Date}
      */
     getCreated() {
         return this.Created;
@@ -19,7 +19,7 @@ class BaseEntity extends Entity {
 
     /**
      * set Id
-     * @param {boolean} created
+     * @param {Date} created
      * @return {this}
      */
     setCreated(created) {
@@ -47,7 +47,7 @@ class BaseEntity extends Entity {
 
     /**
      * Get Id
-     * @return {string}
+     * @return {Date}
      */
     getModified() {
         return this.Modified;
@@ -55,7 +55,7 @@ class BaseEntity extends Entity {
 
     /**
      * set Id
-     * @param {boolean} modified
+     * @param {Date} modified
      * @return {this}
      */
     setModified(modified) {
