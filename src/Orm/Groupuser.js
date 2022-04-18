@@ -17,6 +17,7 @@ export default {
         GroupName: {
             type: 'string',
             isPrimitive: true,
+            rule: 'required|min:10'
         },
         Description: {
             type: 'string',

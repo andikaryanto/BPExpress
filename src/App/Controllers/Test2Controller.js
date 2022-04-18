@@ -4,6 +4,7 @@ import ResponseData from '../../Core/Controller/ResponseData.js';
 import View from '../../Core/Controller/View.js';
 import MshopProductRepository from '../Repositories/MshopProductRepository.js';
 import EntityManager from '../../Core/Entity/EntityManager.js';
+import EntityUnit from '../../Core/Entity/EntityUnit';
 import MgroupuserViewModel from '../ViewModel/Mgroupuser/MgroupuserViewModel.js';
 import SuccessResponse from '../Responses/SuccessResponse.js';
 import ResponseCode from '../Constants/ResponseCode.js';
@@ -12,12 +13,16 @@ import MuserRepository from '../Repositories/MuserRepository.js';
 import MgroupuserRepository from '../Repositories/MgroupuserRepository.js';
 import MuserViewModel from '../ViewModel/Musers/MuserViewModel.js';
 import Muser from '../Entity/Muser.js';
+import MuserCollection from '../ViewModel/Musers/MuserCollection.js';
+import Logger from '../../Core/Logger/Logger.js';
+import Info from '../../Core/Logger/Info.js';
+import DateFormat from '../../Core/Libraries/DateFormat.js';
 /**
  * @class TestController
  */
 class Test2Controller extends Controller {
     /**
-     * @var {EntityManager}
+     * @var {entityManager}
      */
     em;
 
@@ -27,13 +32,20 @@ class Test2Controller extends Controller {
     userRepo;
 
     /**
+     * @var {EntityUnit}
+     */
+    eu;
+
+    /**
      * @param {EntityManager} em
+     * @param {EntityUnit} eu
      * @param {MuserRepository} userRepo;
      * @param {MgroupuserRepository} groupuserRepo;
      */
-    constructor(em, userRepo, groupuserRepo) {
+    constructor(em, eu, userRepo, groupuserRepo) {
         super();
         this.em = em;
+        this.eu = eu;
         this.userRepo = userRepo;
         this.groupuserRepo = groupuserRepo;
     }
@@ -42,15 +54,30 @@ class Test2Controller extends Controller {
      * @param {{}} object {request, response, body, params, query}
      * @return {View}
      */
-    async index({request, response}) {
-        const repo = await (new MuserRepository()).collect();
-        for (const r of repo) {
-            const groupuser = await r.getGroupuser();
-            if (groupuser != undefined) {
-                console.log(groupuser.getId());
-            }
-        }
-        return (new SuccessResponse('oke'));
+    async index({request, response, query}) {
+        // console.log(DateFormat.makeDbDate(new Date()))
+        // const param = {
+        //     where: {
+        //         Username: 'test',
+        //     },
+        // };
+
+        // const data = [];
+        // const repo = await (new MuserRepository()).collect({}, query.page, query.size);
+        // for (const r of repo) {
+        //     console.log(r.getCreated()?.getFullYear());
+        // }
+        // const userViewModel = (new MuserCollection(repo));
+        // Info.create(
+        //     'userViewModel_',
+        //     'userViewModel ' + JSON.stringify(await userViewModel.proceedAndGetData()),
+        // );
+        // return (new SuccessResponse('oke', ResponseCode.OK, userViewModel));
+        let eny = await (new MgroupuserRepository()).find(8);
+        let groupuser = await (eny).toJson();
+        console.log(eny.getRules());
+        console.log(groupuser);
+        response.send({ok:"ok"});
     }
 
     /**
@@ -60,16 +87,17 @@ class Test2Controller extends Controller {
     async store() {
         const groupuser = await this.groupuserRepo.find(6);
         const user = this.userRepo.newEntity();
-        user.setUsername('Tes UserName')
-            .setPassword('Desc Password')
-            .setGroupuser(groupuser);
+        user.setUsername('Tes UserName 1')
+            .setPassword('Desc Password 1')
+            .setMgroupuser(groupuser)
+            .setCreated(new Date());
 
 
         const transacting = await DbTrans.beginTransaction();
 
-        await this.em.setEntity(user).persist(transacting);
+        await this.em.persist(user, transacting);
         await transacting.commit();
-        const viewmodel = new MuserViewModel(user).toJson();
+        const viewmodel = await new MuserViewModel(user).toJson();
         return new SuccessResponse('Success', ResponseCode.OK, viewmodel);
     }
 
