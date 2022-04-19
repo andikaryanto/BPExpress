@@ -172,9 +172,9 @@ class Repository {
             const obj = new newClassName();
             for (const [key, value] of Object.entries(props)) {
                 if (value.isPrimitive) {
-                    if(value.type == 'datetime'){
+                    if (value.type == 'datetime') {
                         let datetimeValue = null;
-                        if(e[key]){
+                        if (e[key]) {
                             datetimeValue = new Date(e[key]);
                         }
                         obj[key] = datetimeValue;

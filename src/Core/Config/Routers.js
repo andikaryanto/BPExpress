@@ -177,8 +177,6 @@ class Routers {
     getRouter() {
         return this.#_router;
     }
-
-    
 }
 
 export default Routers;

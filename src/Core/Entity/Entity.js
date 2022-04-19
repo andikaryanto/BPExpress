@@ -21,7 +21,6 @@ class Entity {
                 const caller = prop.substring(0, 3);
                 const property = prop.substring(3, prop.length);
                 if (caller == 'get') {
-                    
                     const field = target.constructor.getProps()[property];
                     if (!field.isPrimitive) {
                         const type = require(config.sourcePath + field.type).default;
@@ -34,7 +33,6 @@ class Entity {
                                 return result;
                             }
                             if (field.relationType == Orm.ONE_TO_MANY) {
-
                                 const looper = EntityLooper.getInstance(target.constructor.name);
                                 if (looper.hasEntityList()) {
                                     const entitylist = looper.getEntityList();
@@ -79,7 +77,6 @@ class Entity {
                                     }
                                 }
                             } else if (field.relationType == Orm.MANY_TO_ONE) {
-
                                 const targetProps = ORM.getProps(type.name);
                                 const primaryKeyValue = target['get' + primaryKey]();
                                 const foreignKey = targetProps[field.mappedBy].foreignKey;
@@ -93,15 +90,15 @@ class Entity {
                                     target['set' + property](repo);
                                 }
                             } else {
-                                
                                 if (keyValue) {
                                     const repo = await (new Repository(type)).find(keyValue);
                                     target['set' + property](repo);
                                 }
                             }
-                            let returnedData = await originalMethod.apply(this, args);
-                            if(returnedData == undefined)
+                            const returnedData = await originalMethod.apply(this, args);
+                            if (returnedData == undefined) {
                                 return null;
+                            }
                             return returnedData;
                         };
                     }
@@ -147,7 +144,7 @@ class Entity {
             if (value.isPrimitive) {
                 selectedColumn.push(this.getTable() + '.' + key);
             } else {
-                if(value.relationType ==  Orm.ONE_TO_MANY){
+                if (value.relationType == Orm.ONE_TO_MANY) {
                     selectedColumn.push(this.getTable() + '.' + value.foreignKey);
                 }
             }
@@ -167,8 +164,8 @@ class Entity {
             const getProp = 'get' + key;
             const propValue = entity[getProp]();
             if (value.isPrimitive) {
-                if(value.type == 'datetime'){
-                    if(propValue){
+                if (value.type == 'datetime') {
+                    if (propValue) {
                         object[key] = DateFormat.databaseDate(propValue);
                     } else {
                         object[key] = propValue;

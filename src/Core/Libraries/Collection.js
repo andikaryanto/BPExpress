@@ -82,33 +82,48 @@ class Collection {
 
     /**
       * Filter data with Function parameter
-      * @param {Function} callback
+      * @param {Function} closure
       * @return {Collection}
       */
-    filter(callback) {
+    async filter(closure) {
         const newdata = [];
-        this.items.forEach((item, i) => {
-            if (callback(item)) {
-                newdata.push(item);
+        for (const item of this.items) {
+            const resultData = closure(item);
+            if (resultData instanceof Promise) {
+                if (await resultData) {
+                    newdata.push(item);
+                }
+            } else {
+                if (resultData) {
+                    newdata.push(item);
+                }
             }
-        });
-        this.items = newdata;
-        return this;
+        };
+        const construct = this.constructor;
+        return new construct(newdata);
     }
 
     /**
       *
-      * @param {Function} callback
+      * @param {Function} closure
       * @return {[]}
       */
-    where(callback) {
+    async where(closure) {
         const newdata = [];
         for (const item of this.items) {
-            if (callback(item)) {
-                newdata.push(item);
+            const resultData = closure(item);
+            if (resultData instanceof Promise) {
+                if (await resultData) {
+                    newdata.push(item);
+                }
+            } else {
+                if (resultData) {
+                    newdata.push(item);
+                }
             }
         }
-        return newdata;
+        const construct = this.constructor;
+        return new construct(newdata);
     }
 
     /**
@@ -117,6 +132,37 @@ class Collection {
       */
     isEmpty() {
         return this.items.length == 0;
+    }
+
+    /**
+     * Get first item of collection
+     * @return {any}
+     */
+    first() {
+        if (this.items.length > 0) {
+            return this.items[0];
+        }
+        return null;
+    }
+
+    /**
+     * Map items of collection
+     * @param {Function} closure
+     */
+    async map(closure) {
+        const newdata = [];
+        for (const item of this.items) {
+            const resultData = closure(item);
+            if (resultData instanceof Promise) {
+                newdata.push(await resultData);
+            } else {
+                if (resultData) {
+                    newdata.push(resultData);
+                }
+            }
+        }
+        const construct = this.constructor;
+        return new construct(newdata);
     }
 
     /**
@@ -129,10 +175,12 @@ class Collection {
             throw new Error('Number must be greater than 0 (zero)');
         }
 
+        const construct = this.constructor;
         if (this.items.length < number) {
-            return this.items;
+            return new construct(this.items);
         } else {
-            return this.items.slice(0, number);
+            const newItems = this.items.slice(0, number);
+            return new construct(newItems);
         }
     }
 
