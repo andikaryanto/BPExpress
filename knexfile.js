@@ -10,5 +10,8 @@ require('@babel/register')({
          ]
      ]
 });
-const { default: database } = require("./src/App/Config/Database");
+
+
+const { default: config } = require('./config');
+const { default: database } = require(config.sourcePath + "/App/Config/Database");
 module.exports = database;

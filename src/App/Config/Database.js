@@ -1,5 +1,6 @@
 import dotenv from 'dotenv';
 import approot from 'app-root-path';
+import config from '../../../config';
 dotenv.config({path: approot + '/.env'});
 
 const database = {
@@ -15,10 +16,10 @@ const database = {
         acquireConnectionTimeout: 0,
         migrations: {
             tableName: 'migrations',
-            directory: approot + '/src/App/Databases/Migrations',
+            directory: config.sourcePath + '/App/Databases/Migrations',
         },
         seeds: {
-            directory: approot + '/src/App/Databases/Seeds',
+            directory: config.sourcePath + '/App/Databases/Seeds',
         },
     },
 
@@ -34,10 +35,10 @@ const database = {
         acquireConnectionTimeout: 0,
         migrations: {
             tableName: 'migrations',
-            directory: approot + '/src/App/Databases/Migrations',
+            directory: config.sourcePath+ '/App/Databases/Migrations',
         },
         seeds: {
-            directory: approot + '/src/App/Databases/Seeds',
+            directory: config.sourcePath+ '/App/Databases/Seeds',
         },
     },
 
@@ -53,10 +54,10 @@ const database = {
         acquireConnectionTimeout: 0,
         migrations: {
             tableName: 'migrations',
-            directory: approot + '/src/App/Databases/Migrations',
+            directory: config.sourcePath+ '/App/Databases/Migrations',
         },
         seeds: {
-            directory: approot + '/src/App/Databases/Seeds',
+            directory: config.sourcePath+ '/App/Databases/Seeds',
         },
     },
 };

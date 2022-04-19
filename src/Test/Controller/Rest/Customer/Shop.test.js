@@ -39,7 +39,9 @@ describe('beforeRun', () => {
             const result = await service.getList();
 
             expect(result).toBeInstanceOf(SuccessResponse);
-            expect(result.getResult()).toEqual({
+
+            const getResult = await result.getResult();
+            expect(getResult).toEqual({
                 Message: 'Success',
                 Data: [
                     {
@@ -51,7 +53,7 @@ describe('beforeRun', () => {
                         Address: undefined,
                     },
                 ],
-                Response: ResponseCode.OK,
+                Code: ResponseCode.OK,
             });
             expect(shopServiceSearch).toHaveBeenCalled();
             expect(requestServiceGetQuery).toHaveBeenCalled();
@@ -85,7 +87,7 @@ describe('beforeRun', () => {
             const shopServiceProceedAndGetData = MockModule.mockModule(
                 MshopproductCollection,
                 'proceedAndGetData',
-                shopProductViewModel.toJson()
+                await shopProductViewModel.toJson(),
             );
 
             const result = await service.products();

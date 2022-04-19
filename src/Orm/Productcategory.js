@@ -1,7 +1,3 @@
-import Mcity from '../App/Entity/Mcity';
-import Mproductcategory from '../App/Entity/Mproductcategory';
-import Mprovince from '../App/Entity/Mprovince';
-
 export default {
     table: 'm_productcategories',
     primaryKey: 'Id',

@@ -11,6 +11,10 @@ import Web from '../../App/Routes/Web.js';
 import Api from '../../App/Routes/Api.js';
 import csrf from 'csurf';
 import VerifyCsrf from '../Middleware/VerifyCsrf.js';
+import morgan from 'morgan';
+import config from '../../../config';
+
+const rfs = require('rotating-file-stream');
 const KnexSessionStore = require('connect-session-knex')(session);
 import {
     GraphQLObjectType,
@@ -29,6 +33,7 @@ import Container from '../../App/Config/Container.js';
 import CoreContainer from '../Container/Container.js';
 import {ContainerBuilder} from 'node-dependency-injection';
 import RequestInstance from '../Middleware/RequestInstance.js';
+import MiddlewareCallback from '../Middleware/MiddlewareCallback.js';
 
 /**
  * @class AppOverride
@@ -41,8 +46,9 @@ class AppOverride {
     static override(app) {
         AppOverride.use(app);
         // AppOverride.csrf(app);
-        AppOverride.middleware(app);
+        AppOverride.logger(app);
         const container = AppOverride.container();
+        AppOverride.middleware(app, container);
         AppOverride.graphQL(app, container);
     }
 
@@ -62,8 +68,14 @@ class AppOverride {
             fields: GraphQL.mutation(),
         });
 
+        const eachMiddleware = function(e, i) {
+            return MiddlewareCallback.call(e);
+        };
+
+        const graphqlMiddlewares = Kernel.middlewareGroups.graphql.map(eachMiddleware);
+
         app.use('/graphql',
-            [...Kernel.middlewareGroups.graphql],
+            [...graphqlMiddlewares],
             graphqlHTTP(
                 (request) => ({
                     schema: new GraphQLSchema({
@@ -122,8 +134,18 @@ class AppOverride {
       * @param {Express} app
       */
     static middleware(app) {
-        app.use('/api', [RequestInstance, VerifyCsrf, ...Kernel.middlewares, ...Kernel.middlewareGroups.api], Api());
-        app.use('/', [RequestInstance, ...Kernel.middlewares, ...Kernel.middlewareGroups.web], Web());
+        const eachMiddleware = function(e, i) {
+            return MiddlewareCallback.call(e);
+        };
+
+        const globalMiddlewares = Kernel.middlewares.map(eachMiddleware);
+
+        const apiMiddlewares = Kernel.middlewareGroups.api.map(eachMiddleware);
+
+        const webMiddlewares = Kernel.middlewareGroups.web.map(eachMiddleware);
+
+        app.use('/api', [...globalMiddlewares, ...apiMiddlewares], Api());
+        app.use('/', [...globalMiddlewares, ...webMiddlewares], Web());
     }
 
     /**
@@ -146,7 +168,22 @@ class AppOverride {
         }
 
         return CoreContainer.getInstance().setContainerBuilder(containerBuilder);
-        // console.log(containerBuilder.getAllService());
+    }
+
+    /**
+     *
+     * @param {Express} app
+     * @return {void}
+     */
+    static logger(app) {
+        const accessLogStream = rfs.createStream('access.log', {
+            interval: '1d',
+            path: config.sourcePath + '/Write/logs',
+        });
+
+        app.use(morgan('combined', {
+            stream: accessLogStream,
+        }));
     }
 }
 

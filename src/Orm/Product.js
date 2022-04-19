@@ -1,4 +1,4 @@
-import Mproductcategory from '../App/Entity/Mproductcategory';
+import Orm from './Common/Orm';
 
 export default {
     table: 'm_products',
@@ -9,10 +9,10 @@ export default {
             isPrimitive: true,
         },
         Productcategory: {
-            type: Mproductcategory,
+            type: '/App/Entity/Mproductcategory',
             isPrimitive: false,
             foreignKey: 'M_Productcategory_Id',
-            relationType: 'one_to_one',
+            relationType: Orm.ONE_TO_MANY,
         },
         Name: {
             type: 'string',

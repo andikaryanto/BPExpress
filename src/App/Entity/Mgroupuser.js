@@ -1,9 +1,11 @@
+import EntityList from '../../Core/Entity/EntityList.js';
 import BaseEntity from './BaseEntity.js';
 /**
  * @class Mgroupuser
  */
 class Mgroupuser extends BaseEntity {
     Id;
+    Musers;
     GroupName;
     Description;
 
@@ -29,6 +31,24 @@ class Mgroupuser extends BaseEntity {
      */
     setId(id) {
         this.Id = id;
+        return this;
+    }
+
+    /**
+     * Get List of Muser
+     * @return {EntityList}
+     */
+    getMusers() {
+        return this.Musers;
+    }
+
+    /**
+     * set list of Musers
+     * @param {EntityList} Musers
+     * @return {this}
+     */
+    setMusers(Musers) {
+        this.Musers = Musers;
         return this;
     }
 

@@ -25,12 +25,12 @@ html
                         table(id="tableGroupuser" class="table table-striped table-bordered" style="width:100%")
                             thead
                                 tr
-                                    th #
-                                    th(class="disabled-sorting") No
-                                    th Grup Pengguna
-                                    th Deskripsi
-                                    th Dibuat
-                                    th(class="disabled-sorting") Action
+                                    th #{calculate(1)}
+                                    th(class="disabled-sorting") #{lang('form.no')}
+                                    th #{lang('form.groupName')}
+                                    th #{lang('form.description')}
+                                    th #{lang('form.created')}
+                                    th(class="disabled-sorting") #{lang('form.action')}
             include ../shared/footer
         script.
             $(document).ready(function() {
@@ -115,7 +115,7 @@ html
                             }
                         }
                     });
-                });
+                });.
 
                 table.on('click', '.delete', function() {
                     $tr = $(this).closest('tr');

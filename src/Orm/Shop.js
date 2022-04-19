@@ -1,9 +1,3 @@
-import Mcity from '../App/Entity/Mcity';
-import Mfund from '../App/Entity/Mfund';
-import Mproductcategory from '../App/Entity/Mproductcategory';
-import Mprovince from '../App/Entity/Mprovince';
-import Mvillage from '../App/Entity/Mvillage';
-
 export default {
     table: 'm_shops',
     primaryKey: 'Id',
@@ -13,7 +7,7 @@ export default {
             isPrimitive: true,
         },
         Village: {
-            type: Mvillage,
+            type: '/App/Entity/Mvillage',
             isPrimitive: false,
             foreignKey: 'M_Village_Id',
             relationType: 'one_to_one',
@@ -75,7 +69,7 @@ export default {
             isPrimitive: true,
         },
         Fund: {
-            type: Mfund,
+            type: '/App/Entity/Mfund',
             isPrimitive: false,
             foreignKey: 'M_Fund_Id',
             relationType: 'one_to_one',

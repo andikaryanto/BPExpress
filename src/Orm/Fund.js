@@ -1,6 +1,3 @@
-import Mcity from '../App/Entity/Mcity';
-import Mprovince from '../App/Entity/Mprovince';
-
 export default {
     table: 'm_funds',
     primaryKey: 'Id',

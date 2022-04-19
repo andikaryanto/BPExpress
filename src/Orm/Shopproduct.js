@@ -1,8 +1,4 @@
-import Mcity from '../App/Entity/Mcity';
-import Mproduct from '../App/Entity/Mproduct';
-import Mproductcategory from '../App/Entity/Mproductcategory';
-import Mprovince from '../App/Entity/Mprovince';
-import Mshop from '../App/Entity/Mshop';
+import Orm from './Common/Orm';
 
 export default {
     table: 'm_shopproducts',
@@ -13,16 +9,16 @@ export default {
             isPrimitive: true,
         },
         Shop: {
-            type: Mshop,
+            type: '/App/Entity/Mshop',
             isPrimitive: false,
             foreignKey: 'M_Shop_Id',
-            relationType: 'one_to_one',
+            relationType: Orm.ONE_TO_MANY,
         },
         Product: {
-            type: Mproduct,
+            type: '/App/Entity/Mproduct',
             isPrimitive: false,
             foreignKey: 'M_Product_Id',
-            relationType: 'one_to_one',
+            relationType: Orm.ONE_TO_MANY,
         },
         PurchasePrice: {
             type: 'decimal',

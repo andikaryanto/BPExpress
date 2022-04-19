@@ -15,7 +15,7 @@ class EntityManager {
     constructor() {
     }
 
-    /** 
+    /**
      * Set entity
      * @param {Entity} entity
      * @return {EntityManager}
@@ -27,12 +27,15 @@ class EntityManager {
 
     /**
      * Store data to storage / database
+     *
+     * @param {Entity} entity
      * @param {any} transaction
-     * @return {boolean}
+     * @return {Promise<boolean>}
      */
-    async persist(transaction = null) {
+    async persist(entity, transaction = null) {
+        this.setEntity(entity);
         const obj = this.entity;
-        const json = this.createJson(obj);
+        const json = await this.createJson(obj);
         const primaryKey = obj.constructor.getPrimaryKey();
         const table = obj.constructor.getTable();
         let result = null;
@@ -65,33 +68,20 @@ class EntityManager {
     /**
      * Json data before persisted
      * @param {Entity} entity
-     * @return {{}}
+     * @return {Promise<{}>}
      */
-    createJson(entity) {
-        const object = {};
-        const getProps = ORM.getProps(entity.constructor.name);
-        for (const [key, value] of Object.entries(getProps)) {
-            const getProp = 'get' + key;
-            const propValue = entity[getProp]();
-            if (value.isPrimitive) {
-                object[key] = propValue;
-            } else {
-                const related = propValue;
-                const primaryKey = ORM.getPrimaryKey(related.constructor.name);
-                const getPrimary = 'get' + primaryKey;
-                const pkValue = related[getPrimary]();
-                object[value.foreignKey] = pkValue;
-            }
-        }
-        return object;
+    async createJson(entity) {
+        return await entity.toJson();
     }
 
     /**
      * Remove data from database
+     * @param {Entity} entity
      * @param {any} transaction
      * @return {boolean}
      */
-    async remove(transaction = null) {
+    async remove(entity, transaction = null) {
+        this.setEntity(entity);
         const obj = this.entity;
         const primaryKey = obj.constructor.getPrimaryKey();
         const table = obj.constructor.getTable();

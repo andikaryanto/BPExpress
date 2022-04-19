@@ -1,5 +1,4 @@
 import VerifyCsrf from '../../Core/Middleware/VerifyCsrf.js';
-import ApiMiddleware from '../Middlewares/ApiMiddleware.js';
 import GraphqlMiddleware from '../Middlewares/GraphqlMiddleware.js';
 /**
  * @class Kernel
@@ -31,7 +30,7 @@ class Kernel {
 
             ],
             graphql: [
-                GraphqlMiddleware,
+                'graphql.middleware',
             ],
         };
     }

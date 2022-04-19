@@ -1,5 +1,5 @@
 import Mgroupuser from '../../Entity/Mgroupuser';
-import BaseViewModel from '../BaseViewModel';
+import BaseViewModel from '../../../Core/ViewModel/ViewModel';
 /**
  * @class MgroupuserViewModel
  */
@@ -16,7 +16,7 @@ class MgroupuserViewModel extends BaseViewModel {
      *
      * @param {{}} object
      */
-    addResource(object) {
+    async addResource(object) {
 
     }
 
@@ -24,7 +24,7 @@ class MgroupuserViewModel extends BaseViewModel {
      *
      * @return {{}}
      */
-    toJson() {
+    async toJson() {
         if (this.model == null) {
             return null;
         }
@@ -35,7 +35,7 @@ class MgroupuserViewModel extends BaseViewModel {
         };
 
         if (this.getAutoAddResource()) {
-            this.addResource(json);
+            await this.addResource(json);
         }
         return json;
     }

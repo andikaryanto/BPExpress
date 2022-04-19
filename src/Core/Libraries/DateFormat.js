@@ -39,6 +39,15 @@ class DateFormat {
     static getCurrentDate(format) {
         return moment().format(format);
     }
+
+    /**
+     *
+     * @param {Date} date
+     * @return {string}
+     */
+    static databaseDate(date) {
+        return moment(date).format('YYYY-MM-DD hh:mm:ss');
+    }
 }
 
 export default DateFormat;

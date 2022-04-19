@@ -1,4 +1,4 @@
-import Mgroupuser from '../App/Entity/Mgroupuser';
+import Orm from './Common/Orm';
 
 export default {
     table: 'm_users',
@@ -8,11 +8,11 @@ export default {
             type: 'number',
             isPrimitive: true,
         },
-        Groupuser: {
-            type: Mgroupuser,
+        Mgroupuser: {
+            type: '/App/Entity/Mgroupuser',
             isPrimitive: false,
             foreignKey: 'M_Groupuser_Id',
-            relationType: 'one_to_one',
+            relationType: Orm.ONE_TO_MANY,
         },
         Username: {
             type: 'string',
@@ -31,7 +31,7 @@ export default {
             isPrimitive: true,
         },
         Created: {
-            type: 'string',
+            type: 'datetime',
             isPrimitive: true,
         },
         CreatedBy: {
@@ -39,7 +39,7 @@ export default {
             isPrimitive: true,
         },
         Modified: {
-            type: 'string',
+            type: 'datetime',
             isPrimitive: true,
         },
         ModifiedBy: {

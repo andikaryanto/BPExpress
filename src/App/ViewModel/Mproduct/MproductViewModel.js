@@ -1,5 +1,5 @@
 import Mproduct from '../../Entity/Mproduct';
-import BaseViewModel from '../BaseViewModel';
+import BaseViewModel from '../../../Core/ViewModel/ViewModel';
 import MproductcategoryViewModel from '../Mproductcategory/MproductcategoryViewModel';
 /**
  * @class MproductViewModel
@@ -17,16 +17,18 @@ class MproductViewModel extends BaseViewModel {
      * Add resource
      * @param {{}} object
      */
-    addResource(object) {
-        const category = this.model.getProductcategory();
-        object.ProductCategory = (new MproductcategoryViewModel(category)).toJson();
+    async addResource(object) {
+        const category = await this.model.getProductcategory();
+        if (category) {
+            object.ProductCategory = await (new MproductcategoryViewModel(category)).toJson();
+        }
     }
 
     /**
      * Get json data
      * @return {{}}
      */
-    toJson() {
+    async toJson() {
         if (this.model == null) {
             return null;
         }
@@ -42,7 +44,7 @@ class MproductViewModel extends BaseViewModel {
         };
 
         if (this.getAutoAddResource()) {
-            this.addResource(json);
+            await this.addResource(json);
         }
         return json;
     }

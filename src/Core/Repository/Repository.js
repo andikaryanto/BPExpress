@@ -1,6 +1,8 @@
+import {useCallback} from 'react';
 import Db from '../Database/Connection/DbConnection.js';
 import Entity from '../Entity/Entity';
 import EntityList from '../Entity/EntityList';
+import PlainObject from '../Libraries/PlainObject.js';
 
 /**
  * @class Respository
@@ -32,18 +34,22 @@ class Repository {
     /**
       * Fetch the data from database
       * @param {{}} filter
-      * @param {Promise<[]>} columns
+      * @param {[]} columns
+      * @param {number|null} page
+      * @param {number|null} size
       */
-    async findAll(filter = {}, columns = []) {
-        return this.fetch(filter, columns);
+    async findAll(filter = {}, columns = [], page = null, size = null) {
+        return await this.fetch(filter, columns, {}, page, size);
     }
 
     /**
       * Set filter before fecthing data from database
       * @param {{}} filter
+      * @param {number|null} page
+      * @param {number|null} size
       * @return {this}
       */
-    setFilter(filter = {}) {
+    setFilter(filter = {}, page = null, size = null) {
         if (filter.join != undefined) {
             for (const [key, value] of Object.entries(filter.join)) {
                 if (value.type == undefined || value.type.toUpperCase() == 'INNER') {
@@ -104,7 +110,15 @@ class Repository {
             }
         }
 
-        if (filter.page != undefined && filter.size != undefined) {
+        if (!('page' in filter) || !('size' in filter)) {
+            filter.page = page;
+            filter.size = size;
+        }
+
+        if (filter.page != undefined &&
+            filter.size != undefined &&
+            filter.page != null &&
+            filter.size != null) {
             const offset = filter.size * (filter.page - 1);
             this.db.limit(filter.size).offset(offset);
         }
@@ -116,15 +130,19 @@ class Repository {
       * Fetch the data from database
       * @param {{}} filter
       * @param {[]} columns
+      * @param {{}} associatedKey
+      * @param {number|null} page
+      * @param {number|null} size
+      * @return {Promise<[]>}
       */
-    async fetch(filter = {}, columns = []) {
+    async fetch(filter = {}, columns = [], associatedKey = {}, page = null, size = null) {
         this.columns = this.entity.getSelectColumns();
         if (columns.length > 0) {
             this.columns = columns;
         }
 
         this.db.column(this.columns);
-        this.setFilter(filter);
+        this.setFilter(filter, page, size);
         const results = await this.db;
 
         this.db
@@ -134,15 +152,18 @@ class Repository {
             .clear('order')
             .clear('having');
 
-        return this.setToEntity(results);
+        const result = this.setToEntity(results, associatedKey);
+
+        return result;
     }
 
     /**
       * Set to instance of current class
       * @param {[]} results
-      * @param {any} withRelatedData
+      * @param {{}} associatedKey
+      * @return {[]}
       */
-    async setToEntity(results) {
+    setToEntity(results, associatedKey) {
         const objects = [];
         const newClassName = this.entity;
         const props = this.entity.getProps();
@@ -151,15 +172,32 @@ class Repository {
             const obj = new newClassName();
             for (const [key, value] of Object.entries(props)) {
                 if (value.isPrimitive) {
-                    obj[key] = e[key];
+                    if (value.type == 'datetime') {
+                        let datetimeValue = null;
+                        if (e[key]) {
+                            datetimeValue = new Date(e[key]);
+                        }
+                        obj[key] = datetimeValue;
+                    } else {
+                        obj[key] = e[key];
+                    }
                 } else {
-                    const instanceRelatedClass = new Repository(value.type);
-                    const instance = await instanceRelatedClass.find(e[value.foreignKey]);
-                    obj[key] = instance;
+                    const foreignKeyValue = e[value.foreignKey];
+                    if (foreignKeyValue) {
+                        if (value.foreignKey in associatedKey) {
+                            if (!associatedKey[value.foreignKey].includes(foreignKeyValue)) {
+                                associatedKey[value.foreignKey] = [...associatedKey[value.foreignKey], foreignKeyValue];
+                            }
+                        } else {
+                            associatedKey[value.foreignKey] = [foreignKeyValue];
+                        }
+                        obj.constrains[value.foreignKey] = foreignKeyValue;
+                    }
                 }
             }
             objects.push(obj);
         }
+
         return objects;
     }
 
@@ -200,12 +238,36 @@ class Repository {
     }
 
     /**
-     *
+    *
+    * @param {{}} filter
+    * @param {number|null} page
+    * @param {number|null} size
+    * @return {Promise<EntityList>}
+    */
+    async collect(filter = {}, page = null, size = null) {
+        const associatedKey = {};
+        const result = await this.fetch(filter, [], associatedKey, page, size);
+        const entityList = new EntityList(result);
+        entityList.setTotal(await this.count(filter));
+        entityList.setPage(page);
+        entityList.setSize(size);
+        entityList.setListOf(this.entity.name);
+        entityList.setAssociatedKey(associatedKey);
+        return entityList;
+    }
+
+    /**
+     * Count of data from database
      * @param {{}} filter
-     * @return {Promise<EntityList>}
+     * @return {number}
      */
-    async collect(filter = {}) {
-        return new EntityList(await this.findAll(filter));
+    async count(filter = {}) {
+        this.setFilter(filter);
+        const counter = (await this.db.count({count: '*'}))[0].count;
+        this.db.clear('select')
+            .clear('where')
+            .clear('join');
+        return counter;
     }
 }
 

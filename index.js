@@ -1,5 +1,4 @@
-// var isCLI = require.main === module;
-// console.log(isCLI);
+let config = require('./config');
 require('@babel/register')({
     presets: [
         [
@@ -12,4 +11,4 @@ require('@babel/register')({
         ],
     ],
 });
-require('./app');
+require(config.sourcePath + '/app');

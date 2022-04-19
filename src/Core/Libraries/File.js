@@ -1,6 +1,6 @@
 import DateFormat from './DateFormat';
 import UploadedFile from './UploadedFile';
-import appRoot from 'app-root-path';
+import config from '../../../config';
 import UploadedFileError from '../Errors/UploadedFileError.js';
 import md5 from 'md5';
 import {v4 as uuidv4} from 'uuid';
@@ -63,7 +63,7 @@ class File {
                 newName = nameex + md5(uuidv4()) + '.' + uploadedFiles.getExtension();
             }
 
-            uploadedFiles.move(appRoot + '/src/' + this.#_destination + '/' + newName, (err) => {
+            uploadedFiles.move(config.sourcePath + '/' + this.#_destination + '/' + newName, (err) => {
                 if (err) {
                     this.#_errorMessage = 'Failed To upload file';
                     reject(new UploadedFileError(this.#_errorMessage));

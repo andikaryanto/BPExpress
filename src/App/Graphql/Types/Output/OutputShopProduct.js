@@ -9,9 +9,9 @@ import {
     GraphQLList,
     GraphQLInt,
 } from 'graphql';
-import ProductType from './ProductType';
+import OutputProduct from './OutputProduct';
 
-const ShopProductType = new GraphQLObjectType({
+const OutputShopProduct = new GraphQLObjectType({
     name: 'ShopProduct',
     fields: () => ({
         Id: {type: GraphQLInt},
@@ -24,8 +24,8 @@ const ShopProductType = new GraphQLObjectType({
         IsFeatured: {type: GraphQLBoolean},
         IsActive: {type: GraphQLBoolean},
         Ordering: {type: GraphQLInt},
-        Product: {type: ProductType},
+        Product: {type: OutputProduct},
     }),
 });
 
-export default ShopProductType;
+export default OutputShopProduct;

@@ -42,7 +42,7 @@ class Shop {
         const name = this.#_requestService.getQuery('Name');
 
         const shoplist = await this.#_shopService.search(name);
-        const shopCollection = (new MshopCollection(shoplist)).proceedAndGetData();
+        const shopCollection = await (new MshopCollection(shoplist)).proceedAndGetData();
 
         return new SuccessResponse('Success', ResponseCode.OK, shopCollection);
     }
@@ -58,7 +58,7 @@ class Shop {
         const name = this.#_requestService.getQuery('Name');
 
         const shopProducts = await this.#_shopService.products(shopId, name);
-        const shopProductCollection = (new MshopproductCollection(shopProducts)).proceedAndGetData();
+        const shopProductCollection = await (new MshopproductCollection(shopProducts)).proceedAndGetData();
 
         return new SuccessResponse('Success', ResponseCode.OK, shopProductCollection);
     }

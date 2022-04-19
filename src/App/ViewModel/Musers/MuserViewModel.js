@@ -1,5 +1,5 @@
+import BaseViewModel from '../../../Core/ViewModel/ViewModel';
 import Muser from '../../Entity/Muser';
-import BaseViewModel from '../BaseViewModel';
 import MgroupuserViewModel from '../Mgroupuser/MgroupuserViewModel';
 /**
  * @class MuserViewModel
@@ -18,20 +18,17 @@ class MuserViewModel extends BaseViewModel {
      * @param {{}} object
      * @return {void}
      */
-    addResource(object) {
-        let groupUserViewModel = null;
-        if (this.model.getGroupuser() != null) {
-            const groupuser = this.model.getGroupuser();
-            groupUserViewModel = (new MgroupuserViewModel(groupuser)).toJson();
-            object.Groupuser = groupUserViewModel;
-        }
+    async addResource(object) {
+        const groupuser = await this.model.getMgroupuser();
+        const groupUserViewModel = await (new MgroupuserViewModel(groupuser)).toJson();
+        object.Groupuser = groupUserViewModel;
     }
 
     /**
      * Model to json data
-     * @return {{}}
+     * @return {Promise<{}>|Promise<null>}
      */
-    toJson() {
+    async toJson() {
         if (this.model == null) {
             return null;
         }
@@ -42,7 +39,7 @@ class MuserViewModel extends BaseViewModel {
         };
 
         if (this.getAutoAddResource()) {
-            this.addResource(json);
+            await this.addResource(json);
         }
 
         return json;

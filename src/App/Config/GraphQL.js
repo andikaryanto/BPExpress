@@ -1,6 +1,8 @@
-import GetAllShopProducts from '../Graphql/Resolvers/GetAllShopProducts';
-import GetAllUsers from '../Graphql/Resolvers/GetAllUsers';
-import UserAdd from '../Graphql/Resolvers/UserAdd';
+import UserAdd from '../Graphql/Resolvers/Mutation/UserAdd';
+import UserLogin from '../Graphql/Resolvers/Mutation/UserLogin';
+import GetAllShopProducts from '../Graphql/Resolvers/Query/GetAllShopProducts';
+import GetAllUsers from '../Graphql/Resolvers/Query/GetAllUsers';
+
 /**
  * @class GraphQL
  */
@@ -23,6 +25,7 @@ class GraphQL {
         return {
             // register all your graphql mutation here
             userAdd: UserAdd.execute(),
+            userLogin: UserLogin.execute(),
         };
     }
 

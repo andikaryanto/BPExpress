@@ -1,5 +1,5 @@
 import M_shopproducts from '../../Models/M_shopproducts';
-import BaseCollection from '../BaseCollection';
+import BaseCollection from '../../../Core/ViewModel/Collection';
 import MshopproductViewModel from './MshopproductViewModel';
 
 /**
@@ -18,8 +18,8 @@ class MshopproductCollection extends BaseCollection {
      *
      * @param {M_shopproducts} model
      */
-    shape(model) {
-        this.addItem(new MshopproductViewModel(model));
+    async shape(model) {
+        await this.addItem(new MshopproductViewModel(model));
     }
 }
 

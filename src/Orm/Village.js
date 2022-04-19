@@ -1,4 +1,3 @@
-import Mdistrict from '../App/Entity/Mdistrict';
 
 export default {
     table: 'm_villages',
@@ -9,7 +8,7 @@ export default {
             isPrimitive: true,
         },
         District: {
-            type: Mdistrict,
+            type: '/App/Entity/Mdistrict',
             isPrimitive: false,
             foreignKey: 'M_District_Id',
             relationType: 'one_to_one',

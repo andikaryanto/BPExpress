@@ -3,6 +3,9 @@
  */
 class Collection {
     items = [];
+    page = null;
+    size = null;
+    total = null;
 
     /**
       *
@@ -24,34 +27,103 @@ class Collection {
     }
 
     /**
-      * Filter data with Function parameter
-      * @param {Function} callback
-      * @return {Collection}
-      */
-    filter(callback) {
-        const newdata = [];
-        this.items.forEach((item, i) => {
-            if (callback(item)) {
-                newdata.push(item);
-            }
-        });
-        this.items = newdata;
+     *
+     * @return {number}
+     */
+    getTotal() {
+        return this.total;
+    }
+
+    /**
+     *
+     * @param {number} total
+     * @return {Collection}
+     */
+    setTotal(total) {
+        this.total = total;
         return this;
     }
 
     /**
-      *
-      * @param {Function} callback
-      * @return {[]}
+     *
+     * @return {number}
+     */
+    getPage() {
+        return this.page;
+    }
+
+    /**
+     *
+     * @param {number} page
+     * @return {Collection}
+     */
+    setPage(page) {
+        this.page = page;
+        return this;
+    }
+
+    /**
+     *
+     * @return {number}
+     */
+    getSize() {
+        return this.size;
+    }
+
+    /**
+     *
+     * @param {number} size
+     * @return {Collection}
+     */
+    setSize(size) {
+        this.size = size;
+        return this;
+    }
+
+    /**
+      * Filter data with Function parameter
+      * @param {Function} closure
+      * @return {Collection}
       */
-    where(callback) {
+    async filter(closure) {
         const newdata = [];
         for (const item of this.items) {
-            if (callback(item)) {
-                newdata.push(item);
+            const resultData = closure(item);
+            if (resultData instanceof Promise) {
+                if (await resultData) {
+                    newdata.push(item);
+                }
+            } else {
+                if (resultData) {
+                    newdata.push(item);
+                }
+            }
+        };
+        const construct = this.constructor;
+        return new construct(newdata);
+    }
+
+    /**
+      *
+      * @param {Function} closure
+      * @return {[]}
+      */
+    async where(closure) {
+        const newdata = [];
+        for (const item of this.items) {
+            const resultData = closure(item);
+            if (resultData instanceof Promise) {
+                if (await resultData) {
+                    newdata.push(item);
+                }
+            } else {
+                if (resultData) {
+                    newdata.push(item);
+                }
             }
         }
-        return newdata;
+        const construct = this.constructor;
+        return new construct(newdata);
     }
 
     /**
@@ -60,6 +132,37 @@ class Collection {
       */
     isEmpty() {
         return this.items.length == 0;
+    }
+
+    /**
+     * Get first item of collection
+     * @return {any}
+     */
+    first() {
+        if (this.items.length > 0) {
+            return this.items[0];
+        }
+        return null;
+    }
+
+    /**
+     * Map items of collection
+     * @param {Function} closure
+     */
+    async map(closure) {
+        const newdata = [];
+        for (const item of this.items) {
+            const resultData = closure(item);
+            if (resultData instanceof Promise) {
+                newdata.push(await resultData);
+            } else {
+                if (resultData) {
+                    newdata.push(resultData);
+                }
+            }
+        }
+        const construct = this.constructor;
+        return new construct(newdata);
     }
 
     /**
@@ -72,10 +175,12 @@ class Collection {
             throw new Error('Number must be greater than 0 (zero)');
         }
 
+        const construct = this.constructor;
         if (this.items.length < number) {
-            return this.items;
+            return new construct(this.items);
         } else {
-            return this.items.slice(0, number);
+            const newItems = this.items.slice(0, number);
+            return new construct(newItems);
         }
     }
 

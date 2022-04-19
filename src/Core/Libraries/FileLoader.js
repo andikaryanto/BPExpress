@@ -1,5 +1,5 @@
 import fs from 'fs';
-import appRoot from 'app-root-path';
+import config from '../../../config';
 
 /**
  * @class FileLoader
@@ -12,7 +12,7 @@ class FileLoader {
      * @param {string} path
      */
     constructor(path) {
-        this.#_path = appRoot + '/' + path;
+        this.#_path = config.sourcePath + '/' + path;
     }
 
     /**

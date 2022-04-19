@@ -9,17 +9,18 @@ import {
     GraphQLFloat,
     GraphQLNonNull,
     GraphQLList,
+    GraphQLInt,
 } from 'graphql';
-import GroupuserType from './GroupuserType';
+import OutputGroupuser from './OutputGroupuser';
 
-const UserType = new GraphQLObjectType({
+const OutputUser = new GraphQLObjectType({
     name: 'User',
     fields: () => ({
-        Id: {type: GraphQLID},
+        Id: {type: GraphQLInt},
         Username: {type: GraphQLString},
         Photo: {type: GraphQLString},
-        Groupuser: {type: GroupuserType},
+        Groupuser: {type: OutputGroupuser},
     }),
 });
 
-export default UserType;
+export default OutputUser;

@@ -1,4 +1,4 @@
-import M_users from '../../Models/M_users';
+import M_users from '../../../Models/M_users';
 import {
     GraphQLObjectType,
     GraphQLString,
@@ -9,7 +9,7 @@ import {
     GraphQLNonNull,
     GraphQLList,
 } from 'graphql';
-import UserType from '../Types/UserType';
+import OutputUser from '../../Types/Output/OutputUser';
 
 /**
  * @clas UserAdd
@@ -21,7 +21,7 @@ class UserAdd {
      */
     static execute() {
         return {
-            type: UserType,
+            type: OutputUser,
             args: {
                 Username: {type: GraphQLString},
                 Password: {type: GraphQLString},
