@@ -175,13 +175,15 @@ class Entity {
                 }
             } else {
                 const related = await propValue;
-                if (related) {
-                    const primaryKey = ORM.getPrimaryKey(related.constructor.name);
-                    const getPrimary = 'get' + primaryKey;
-                    const pkValue = related[getPrimary]();
-                    object[value.foreignKey] = pkValue;
-                } else {
-                    object[value.foreignKey] = null;
+                if (value.relationType == Orm.ONE_TO_MANY) {
+                    if (related) {
+                        const primaryKey = ORM.getPrimaryKey(related.constructor.name);
+                        const getPrimary = 'get' + primaryKey;
+                        const pkValue = related[getPrimary]();
+                        object[value.foreignKey] = pkValue;
+                    } else {
+                        object[value.foreignKey] = null;
+                    }
                 }
             }
         }

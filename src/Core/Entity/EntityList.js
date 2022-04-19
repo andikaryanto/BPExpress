@@ -43,6 +43,20 @@ class EntityList extends Collection {
     }
 
     /**
+     * Convert each entity in collection to json
+     * @return {array}
+     */
+    async eachJson() {
+        const newItems = [];
+
+        for (const item of this.items) {
+            newItems.push(await item.toJson());
+        };
+
+        return newItems;
+    }
+
+    /**
      *
      * @return {{}}
      */
