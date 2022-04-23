@@ -1,6 +1,6 @@
-import M_groupusers from '../../Models/M_groupusers';
 import BaseCollection from '../../../Core/ViewModel/Collection';
 import MgroupuserViewModel from './MgroupuserViewModel';
+import Mgroupuser from '../../Entity/Mgroupuser';
 /**
  * @class MgroupuserCollection
  */
@@ -15,10 +15,10 @@ class MgroupuserCollection extends BaseCollection {
 
     /**
      *
-     * @param {M_groupusers} model
+     * @param {Mgroupuser} entity
      */
-    async shape(model) {
-        await this.addItem(new MgroupuserViewModel(model));
+    async shape(entity) {
+        await this.addItem(new MgroupuserViewModel(entity));
     }
 }
 

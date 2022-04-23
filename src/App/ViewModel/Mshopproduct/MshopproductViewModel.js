@@ -9,10 +9,10 @@ import MproductViewModel from '../Mproduct/MproductViewModel';
 class MshopproductViewModel extends BaseViewModel {
     /**
      *
-     * @param {Mshopproduct} model
+     * @param {Mshopproduct} entity
      */
-    constructor(model) {
-        super(true, model);
+    constructor(entity) {
+        super(true, entity);
     }
 
     /**
@@ -21,7 +21,7 @@ class MshopproductViewModel extends BaseViewModel {
      * @return {void}
      */
     async addResource(object) {
-        const product = await this.model.getProduct();
+        const product = await this.entity.getProduct();
         if (product) {
             object.Product = await (new MproductViewModel(product)).toJson();
         }
@@ -32,20 +32,20 @@ class MshopproductViewModel extends BaseViewModel {
      * @return {{}}
      */
     async toJson() {
-        if (this.model == null) {
+        if (this.entity == null) {
             return null;
         }
 
         const json = {
-            Id: this.model.getId(),
-            PurchasePrice: this.model.getPurchasePrice(),
-            SellPrice: this.model.getSellPrice(),
-            Stock: this.model.getStock(),
-            DiscountType: this.model.getDiscountType(),
-            DiscountValue: this.model.getDiscountValue(),
-            IsFeatured: this.model.getIsFeatured(),
-            IsActive: this.model.getIsActive(),
-            Ordering: this.model.getOrdering(),
+            Id: this.entity.getId(),
+            PurchasePrice: this.entity.getPurchasePrice(),
+            SellPrice: this.entity.getSellPrice(),
+            Stock: this.entity.getStock(),
+            DiscountType: this.entity.getDiscountType(),
+            DiscountValue: this.entity.getDiscountValue(),
+            IsFeatured: this.entity.getIsFeatured(),
+            IsActive: this.entity.getIsActive(),
+            Ordering: this.entity.getOrdering(),
         };
 
         if (this.getAutoAddResource()) {

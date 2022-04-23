@@ -7,10 +7,10 @@ import MproductcategoryViewModel from '../Mproductcategory/MproductcategoryViewM
 class MproductViewModel extends BaseViewModel {
     /**
      *
-     * @param {Mproduct} model
+     * @param {Mproduct} entity
      */
-    constructor(model) {
-        super(true, model);
+    constructor(entity) {
+        super(true, entity);
     }
 
     /**
@@ -18,7 +18,7 @@ class MproductViewModel extends BaseViewModel {
      * @param {{}} object
      */
     async addResource(object) {
-        const category = await this.model.getProductcategory();
+        const category = await this.entity.getProductcategory();
         if (category) {
             object.ProductCategory = await (new MproductcategoryViewModel(category)).toJson();
         }
@@ -29,18 +29,18 @@ class MproductViewModel extends BaseViewModel {
      * @return {{}}
      */
     async toJson() {
-        if (this.model == null) {
+        if (this.entity == null) {
             return null;
         }
 
         const json = {
-            Id: this.model.getId(),
-            Name: this.model.getName(),
-            Description: this.model.getDescription(),
-            Producer: this.model.getProducer(),
-            PackSize: this.model.getPackSize(),
-            Quality: this.model.getQuality(),
-            Picture: this.model.getPicture(),
+            Id: this.entity.getId(),
+            Name: this.entity.getName(),
+            Description: this.entity.getDescription(),
+            Producer: this.entity.getProducer(),
+            PackSize: this.entity.getPackSize(),
+            Quality: this.entity.getQuality(),
+            Picture: this.entity.getPicture(),
         };
 
         if (this.getAutoAddResource()) {
