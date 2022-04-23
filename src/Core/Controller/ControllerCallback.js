@@ -8,6 +8,7 @@ import {Request, Response} from 'express';
 import config from '../../../config';
 import Template from '../Template/Template';
 import ConfigView from '../../App/Config/View';
+import InstanceLoader from '../Express/InstanceLoader';
 
 /**
  * @class ControllerCallback
@@ -24,13 +25,8 @@ class ControllerCallback {
     static call(controller, fn, additionalData) {
         return async (req, res, next) => {
             try {
-                let controllerInstance = null;
-                if (typeof controller == 'string') {
-                    const container = Container.getInstance().get(controller);
-                    controllerInstance = container;
-                } else {
-                    controllerInstance = new controller();
-                }
+
+                let controllerInstance = InstanceLoader.load(controller);
                 const data = controllerInstance[fn](
                     {
                         request: req,

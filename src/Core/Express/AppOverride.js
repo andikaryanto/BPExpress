@@ -13,7 +13,6 @@ import csrf from 'csurf';
 import VerifyCsrf from '../Middleware/VerifyCsrf.js';
 import morgan from 'morgan';
 import config from '../../../config';
-import nodeCron from 'node-cron';
 
 const rfs = require('rotating-file-stream');
 const KnexSessionStore = require('connect-session-knex')(session);
@@ -36,6 +35,7 @@ import {ContainerBuilder} from 'node-dependency-injection';
 import RequestInstance from '../Middleware/RequestInstance.js';
 import MiddlewareCallback from '../Middleware/MiddlewareCallback.js';
 import Cron from '../../App/Config/Cron.js';
+import CronService from '../Services/CronService.js';
 
 /**
  * @class AppOverride
@@ -52,7 +52,13 @@ class AppOverride {
         const container = AppOverride.container();
         AppOverride.middleware(app, container);
         AppOverride.graphQL(app, container);
-        AppOverride.cron(container);
+        AppOverride.cron();
+        // .then(() => {
+        //     console.log('all cron running')
+        // })
+        // .catch(err => {
+        //     console.error(err);
+        // });
     }
 
     /**
@@ -192,23 +198,10 @@ class AppOverride {
 
     /**
      *
-     * @param {CoreContainer} container
-     * @return {void}
+     * @return {Promise<void>}
      */
-    static cron(container) {
-        if (Cron.enabled()) {
-            const crons = Cron.register();
-            for (const crontab of crons) {
-                let cronInstance = null;
-                if (typeof crontab == 'string') {
-                    cronInstance = container.get(crontab);
-                } else {
-                    cronInstance = new crontab();
-                }
-
-                nodeCron.schedule(cronInstance.time(), cronInstance.execute);
-            }
-        }
+    static cron() {
+        CronService.resetCron();
     }
 }
 

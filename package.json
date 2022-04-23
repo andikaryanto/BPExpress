@@ -1,5 +1,5 @@
 {
-  "name": "nayo",
+  "name": "lighter",
   "version": "1.0.0",
   "description": "express scratch",
   "main": "src/index.js",
@@ -62,6 +62,7 @@
     "validatorjs": "^3.22.1",
     "webpack": "^5.33.2",
     "winston": "^3.7.2",
+    "yargonaut": "^1.1.4",
     "yargs": "^13.2.4"
   },
   "devDependencies": {
@@ -78,6 +79,6 @@
     "webpack-cli": "^4.6.0"
   },
   "bin": {
-    "nayo": "./src/cli.js"
+    "lighter": "./src/cli.js"
   }
 }
