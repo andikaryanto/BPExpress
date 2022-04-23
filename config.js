@@ -8,8 +8,8 @@ sourcePath = appRoot.path + '/' + sourcePath;
 
 module.exports = { 
     sourcePath,
-    transportUsername: '5c3ee8f5eafaad',
-    transportPassword: '05e9b56731288e'
+    transportUsername: process.env.MAILER_USERNAME,
+    transportPassword: process.env.MAILER_PASSWORD
 
 }
 
