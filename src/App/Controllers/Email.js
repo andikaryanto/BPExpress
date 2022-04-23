@@ -1,5 +1,5 @@
 
-import { transportPassword } from '../../../config.js';
+import {transportPassword} from '../../../config.js';
 import Controller from '../../Core/Controller/Controller.js';
 import Transporter from '../../Core/Email/Transporter.js';
 
@@ -7,24 +7,26 @@ import Transporter from '../../Core/Email/Transporter.js';
  * @class Email
  */
 class Email extends Controller {
-
     /**
      * @var {Transporter}
      */
     #_transporter;
 
     /**
-     * 
-     * @param {Transporter} transporter 
+     *
+     * @param {Transporter} transporter
      */
     constructor(
-        transporter
-    ){
+        transporter,
+    ) {
         super();
         this.#_transporter = transporter;
     }
 
-    async sendMail(){
+    /**
+     * Send
+     */
+    async sendMail() {
         this.#_transporter.createTransport()
             .setFrom('andik.aryanto@gmail.com')
             .setTo('inklolly11@gmail.com')
