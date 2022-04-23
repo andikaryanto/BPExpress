@@ -3,6 +3,7 @@ import CommonService from '../App/Services/Library/CommonService';
 import RequestService from '../App/Services/Library/RequestService';
 import ShopService from '../App/Services/ShopService';
 import UserService from '../App/Services/UserService';
+import Transporter from '../Core/Email/Transporter';
 import Jwt from '../Core/Libraries/Jwt';
 
 /**
@@ -18,6 +19,7 @@ export default (container) => {
     container.register('library.request.service', RequestService);
 
     container.register('library.jwt.service', Jwt);
+    container.register('transporter.service', Transporter);
 
     container.register('user.service', UserService)
         .addArgument(new Reference('library.common.service'))
