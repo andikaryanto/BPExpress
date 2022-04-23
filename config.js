@@ -1,10 +1,13 @@
 
 const appRoot = require('app-root-path');
 const dotenv =  require('dotenv');
+const yaml = require('js-yaml');
+const fs   = require('fs');
 dotenv.config();
 
-var sourcePath = process.env.APP_MODE == 'production' ? 'dist' : 'src';
-sourcePath = appRoot.path + '/' + sourcePath;
+const parameters = yaml.load(fs.readFileSync(appRoot.path +  '/parameters/' + process.env.APP_MODE + '/parameters.yml', 'utf8'));
+
+var sourcePath = appRoot.path + '/' + parameters.source_path;
 
 module.exports = { 
     sourcePath,
