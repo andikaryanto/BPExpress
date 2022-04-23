@@ -16,7 +16,7 @@ const OutputGroupuser = new GraphQLObjectType({
     fields: () => ({
         Id: {type: GraphQLInt},
         GroupName: {type: GraphQLString},
-        Users: {type: new GraphQLList(OutputUser)}
+        Users: {type: new GraphQLList(OutputUser)},
     }),
 });
 

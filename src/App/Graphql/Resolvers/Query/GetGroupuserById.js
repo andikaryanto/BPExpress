@@ -28,7 +28,7 @@ class GetGroupuserById {
             args: {
                 Id: {
                     type: GraphQLInt,
-                }
+                },
             },
             resolve: async function(parent, args, context) {
                 const request = context.request;

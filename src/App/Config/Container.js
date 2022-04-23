@@ -1,4 +1,5 @@
 import Controller from '../../Services/Controller';
+import Cron from '../../Services/Cron';
 import Entity from '../../Services/Entity';
 import Middleware from '../../Services/Middleware';
 import Repository from '../../Services/Repository';
@@ -14,6 +15,7 @@ class Container {
      */
     static get service() {
         return [
+            Cron,
             Repository,
             Service,
             Controller,
