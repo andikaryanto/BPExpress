@@ -1,24 +1,26 @@
-import TestCron from "../Crons/TestCron";
+import TestCron from '../Crons/TestCron';
 
+/**
+ * @class Cron
+ */
 class Cron {
-
     /**
      * State of enable or disable crons
-     * @returns 
+     * @return {boolean}
      */
-    static enabled(){
+    static enabled() {
         return true;
     }
 
     /**
      * Register crons class here, using class or container key
-     * @returns 
+     * @return {[]}
      */
     static register() {
         return [
             // TestCron,
             // 'cron.testdi'
-        ]
+        ];
     }
 }
 
