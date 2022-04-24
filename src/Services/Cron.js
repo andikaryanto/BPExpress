@@ -6,5 +6,5 @@ import TestCronDi from '../App/Crons/TestCronDi';
  */
 export default (container) => {
     container.register('cron.testdi', TestCronDi)
-        .addArgument(new Reference('groupuser.respository'));
+        .addArgument(new Reference('groupuser.repository'));
 };

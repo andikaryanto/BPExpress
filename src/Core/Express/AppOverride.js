@@ -53,12 +53,6 @@ class AppOverride {
         AppOverride.middleware(app, container);
         AppOverride.graphQL(app, container);
         AppOverride.cron();
-        // .then(() => {
-        //     console.log('all cron running')
-        // })
-        // .catch(err => {
-        //     console.error(err);
-        // });
     }
 
     /**
@@ -198,7 +192,7 @@ class AppOverride {
 
     /**
      *
-     * @return {Promise<void>}
+     * @return {void}
      */
     static cron() {
         CronService.resetCron();

@@ -14,7 +14,7 @@ class CronService {
             const crons = Cron.register();
             for (const crontab of crons) {
                 const cronInstance = InstanceLoader.load(crontab);
-                nodeCron.schedule(cronInstance.time(), cronInstance.execute);
+                nodeCron.schedule(cronInstance.time(), async () => await cronInstance.execute());
             }
         }
     }

@@ -205,7 +205,7 @@ class Repository {
       * Get one data from database by id primary key, If Data not found will reeturn null
       * @param {number|string} id
       * @throws {Error}
-      * @return {{}|null}
+      * @return {Promise<Entity>|Promise<null>}
       */
     async find(id) {
         const primaryKey = this.entity.getPrimaryKey();

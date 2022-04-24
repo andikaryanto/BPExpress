@@ -1,27 +1,34 @@
 import Cron from '../../Core/Utilities/Cron';
+import MgroupuserRepository from '../Repositories/MgroupuserRepository';
 
 class TestCronDi extends Cron {
 
     /**
      * @var {MgroupuserRepository}
      */
-    #_groupuserRepo;
+    groupuserRepo;
 
     /**
      * @param {MgroupuserRepository} groupuserRepo
      */
-    constructor(){
+    constructor(groupuserRepo){
         super();
-        this.#_groupuserRepo = groupuserRepo;
+        this.groupuserRepo = groupuserRepo;
     }
 
     time() {
-        return '1 * * * *';
+        return '* * * * *';
     }
 
-    execute() {
-        // const guser = await this.#_groupuserRepo.find(8);
-        // console.log(guser);
+    async execute() {
+        console.log('TestCronDi');
+        console.log(await (await this.groupuserRepo.find(8)).toJson());
+        // .then(groupuser => {
+        //     console.log(groupuser);
+        // })
+        // .catch(err => {
+        //     console.log(err);
+        // });
     }
 }
 
