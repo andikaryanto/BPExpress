@@ -1,5 +1,3 @@
-import TestCron from '../Crons/TestCron';
-
 /**
  * @class Cron
  */
@@ -18,7 +16,6 @@ class Cron {
      */
     static register() {
         return [
-            // TestCron,
             'cron.testdi',
         ];
     }

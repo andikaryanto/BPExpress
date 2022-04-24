@@ -1,3 +1,4 @@
+import EntityUnit from '../../Core/Entity/EntityUnit.js';
 import Jwt from '../../Core/Libraries/Jwt.js';
 import Muser from '../Entity/Muser.js';
 import CommonLib from '../Libraries/CommonLib.js';
@@ -24,15 +25,22 @@ class UserService {
     #_jwt;
 
     /**
+     * @private {EntityUnit} #_eu;
+     */
+    #_eu;
+
+    /**
      *
      * @param {CommonService} commonService
      * @param {MuserRepository} userRepository
      * @param {Jwt} jwt
+     * @param {EntityUnit} eu
      */
-    constructor(commonService, userRepository, jwt) {
+    constructor(commonService, userRepository, jwt, eu) {
         this.#_commonService = commonService;
         this.#_userRepository = userRepository;
         this.#_jwt = jwt;
+        this.#_eu = eu;
     }
     /**
       *
@@ -41,9 +49,10 @@ class UserService {
       * @return {Muser}
       */
     async login(username, password) {
-        const userpassword = this.#_commonService.encryptMd5(CommonLib.getKey() + username + password);
+        const userpassword = this.#_commonService.encryptMd5(CommonLib.getKey() + password);
         const filter = {
             where: {
+                Username: username,
                 Password: userpassword,
             },
         };
@@ -52,6 +61,28 @@ class UserService {
         return muser;
     }
 
+    /**
+     *
+     * @param {string} username
+     * @param {string} password
+     * @return {Muser}
+     */
+    async createUser(username, password) {
+        const user = new Muser();
+        user.setUsername(username);
+        user.setPassword(this.hashPassword(password));
+        await this.#_eu.preparePersistence(user).flush();
+        return user;
+    }
+
+    /**
+     *
+     * @param {string} password
+     * @return {string}
+     */
+    hashPassword(password) {
+        return this.#_commonService.encryptMd5(CommonLib.getKey() + password);
+    }
     /**
      * Create token of user login
      *

@@ -1,3 +1,4 @@
+import CreateUser from '../Commands/CreateUser';
 import TestCommand from '../Commands/TestCommand';
 
 /**
@@ -11,6 +12,7 @@ class Command {
     static register() {
         return [
             TestCommand,
+            'create-user.command',
         ];
     }
 }

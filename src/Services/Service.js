@@ -24,5 +24,6 @@ export default (container) => {
     container.register('user.service', UserService)
         .addArgument(new Reference('library.common.service'))
         .addArgument(new Reference('user.repository'))
-        .addArgument(new Reference('library.jwt.service'));
+        .addArgument(new Reference('library.jwt.service'))
+        .addArgument(new Reference('entity-unit'));
 };
