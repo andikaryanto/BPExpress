@@ -2,7 +2,6 @@ import Cron from '../../Core/Utilities/Cron';
 import MgroupuserRepository from '../Repositories/MgroupuserRepository';
 
 class TestCronDi extends Cron {
-
     /**
      * @var {MgroupuserRepository}
      */
@@ -11,7 +10,7 @@ class TestCronDi extends Cron {
     /**
      * @param {MgroupuserRepository} groupuserRepo
      */
-    constructor(groupuserRepo){
+    constructor(groupuserRepo) {
         super();
         this.groupuserRepo = groupuserRepo;
     }

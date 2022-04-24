@@ -1,15 +1,17 @@
-import Cron from "../../App/Config/Cron";
-import Container from "../Container/Container";
+import Cron from '../../App/Config/Cron';
+import Container from '../Container/Container';
 import nodeCron from 'node-cron';
-import InstanceLoader from "../Express/InstanceLoader";
+import InstanceLoader from '../Express/InstanceLoader';
 
+/**
+ * @class CronService
+ */
 class CronService {
-
     /**
      * Reset Cron
      * @return {void}
      */
-    static resetCron(){
+    static resetCron() {
         if (Cron.enabled()) {
             const crons = Cron.register();
             for (const crontab of crons) {

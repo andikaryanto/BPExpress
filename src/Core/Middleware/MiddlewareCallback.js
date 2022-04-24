@@ -16,8 +16,7 @@ class MiddlewareCallback {
     static call(middleware) {
         return async (req, res, next) => {
             try {
-               
-                let middlewareInstance = InstanceLoader.load(middleware);
+                const middlewareInstance = InstanceLoader.load(middleware);
 
                 const data = middlewareInstance.execute(req, res, next);
 

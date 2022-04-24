@@ -1,20 +1,34 @@
 /**
  * @class Command
  */
-
 class Command {
+    static REQUIRE_TYPE = 'require';
+    static OPTION_TYPE = 'option';
 
     #_arguments = [];
 
-    constructor(){
-       
+    /**
+     *
+     */
+    constructor() {
+
     }
 
-    addArgument(type, name, description){
+    /**
+     *
+     * @param {string} type
+     * @param {string} name
+     * @param {string} description
+     */
+    addArgument(type, name, description) {
         this.#_arguments.push({type, name, description});
     }
 
-    getArguments(){
+    /**
+     * get all current command
+     * @return {[]}
+     */
+    getArguments() {
         return this.#_arguments;
     }
 
@@ -22,20 +36,25 @@ class Command {
      * Name of command
      * @return {string}
      */
-    name(){
+    name() {
         return '';
     }
 
     /**
-     * Desscription of command
-     * 
+     * Description of command
+     *
      * @return {string}
      */
-    description(){
+    description() {
         return '';
     }
 
-    execute(){
+    /**
+     *
+     * @param {[]} args
+     * @return {any}
+     */
+    async execute(args) {
 
     }
 }

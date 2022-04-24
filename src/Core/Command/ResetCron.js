@@ -1,27 +1,40 @@
-import CronService from "../Services/CronService";
-import Command from "../Utilities/Command";
+import CronService from '../Services/CronService';
+import Command from '../Utilities/Command';
 
 /**
  * @class ResetCron
  */
 class ResetCron extends Command {
-
-    constructor(){
+    /**
+     *
+     */
+    constructor() {
         super();
     }
 
-    name(){
+    /**
+     *
+     * @inheritdoc
+     */
+    name() {
         return 'core:reset-cron';
     }
 
-    description(){
+    /**
+     *
+     * @inheritdoc
+     */
+    description() {
         return 'Reset cron if any changing cron ';
     }
 
-    execute(args){
-        CronService.resetCron();  
+    /**
+     *
+     * @inheritdoc
+     */
+    async execute(args) {
+        CronService.resetCron();
     }
-
 }
 
 export default ResetCron;

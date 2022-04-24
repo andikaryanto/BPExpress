@@ -1,4 +1,4 @@
-import { Reference } from 'node-dependency-injection';
+import {Reference} from 'node-dependency-injection';
 import TestCronDi from '../App/Crons/TestCronDi';
 
 /**

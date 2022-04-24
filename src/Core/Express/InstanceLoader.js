@@ -1,22 +1,19 @@
-import Container from "../Container/Container";
+import Container from '../Container/Container';
 
 /**
  * @class InstanceLoader
  */
-
 class InstanceLoader {
-
     /**
-     * 
-     * @param {any} className 
-     * @return {any} 
+     *
+     * @param {any} className
+     * @return {any}
      */
-    static load(className){
-        if(typeof className == 'string'){
+    static load(className) {
+        if (typeof className == 'string') {
             return Container.getInstance().get(className);
         }
         return new className();
     }
-
 }
 export default InstanceLoader;

@@ -25,8 +25,7 @@ class ControllerCallback {
     static call(controller, fn, additionalData) {
         return async (req, res, next) => {
             try {
-
-                let controllerInstance = InstanceLoader.load(controller);
+                const controllerInstance = InstanceLoader.load(controller);
                 const data = controllerInstance[fn](
                     {
                         request: req,
