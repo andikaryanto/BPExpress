@@ -1,5 +1,5 @@
 import CollectionError from '../Errors/CollectionError.js';
-import Collection from '../Libraries/Collection.js';
+import Collection from '../Utilities/Collection.js';
 
 /**
  * @class CollectionModel

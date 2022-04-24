@@ -1,5 +1,5 @@
 import Entity from '../Entity/Entity';
-import LibCollection from '../Libraries/Collection';
+import LibCollection from '../Utilities/Collection';
 import BaseViewModel from './ViewModel';
 
 /**

@@ -1,3 +1,4 @@
+import InstanceLoader from '../Express/InstanceLoader';
 import Error from '../Logger/Error';
 
 const {default: Container} = require('../Container/Container');
@@ -15,13 +16,7 @@ class MiddlewareCallback {
     static call(middleware) {
         return async (req, res, next) => {
             try {
-                let middlewareInstance = null;
-                if (typeof middleware == 'string') {
-                    const container = Container.getInstance().get(middleware);
-                    middlewareInstance = container;
-                } else {
-                    middlewareInstance = new middleware();
-                }
+                const middlewareInstance = InstanceLoader.load(middleware);
 
                 const data = middlewareInstance.execute(req, res, next);
 

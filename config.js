@@ -13,6 +13,5 @@ module.exports = {
     sourcePath,
     transportUsername: process.env.MAILER_USERNAME,
     transportPassword: process.env.MAILER_PASSWORD
-
 }
 

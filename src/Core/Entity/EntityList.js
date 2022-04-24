@@ -1,4 +1,4 @@
-import Collection from '../Libraries/Collection';
+import Collection from '../Utilities/Collection';
 import EntityLooper from './EntityLooper';
 
 /**

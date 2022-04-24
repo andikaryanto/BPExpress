@@ -19,7 +19,7 @@ class Cron {
     static register() {
         return [
             // TestCron,
-            // 'cron.testdi'
+            'cron.testdi',
         ];
     }
 }

@@ -30,7 +30,7 @@ class Controller {
                \nexport default ${controllerName};`;
         };
 
-        const fileName = config.sourcePath + '/App/Controllers/${path}/${controllerName}.js';
+        const fileName = config.sourcePath + `/App/Controllers/${path}/${controllerName}.js`;
         fs.open(fileName, 'r', function(err, fd) {
             if (err) {
                 fs.writeFile(fileName, content(), function(err) {
