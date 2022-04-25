@@ -22,10 +22,12 @@ export default {
         Description: {
             type: 'string',
             isPrimitive: true,
+            rule: 'required|min:10'
         },
         Created: {
             type: 'datetime',
             isPrimitive: true,
+            rule: 'required'
         },
         CreatedBy: {
             type: 'string',
