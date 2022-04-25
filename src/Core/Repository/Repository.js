@@ -172,9 +172,9 @@ class Repository {
             const obj = new newClassName();
             for (const [key, value] of Object.entries(props)) {
                 if (value.isPrimitive) {
-                    if(value.type == 'datetime'){
+                    if (value.type == 'datetime') {
                         let datetimeValue = null;
-                        if(e[key]){
+                        if (e[key]) {
                             datetimeValue = new Date(e[key]);
                         }
                         obj[key] = datetimeValue;
@@ -205,7 +205,7 @@ class Repository {
       * Get one data from database by id primary key, If Data not found will reeturn null
       * @param {number|string} id
       * @throws {Error}
-      * @return {{}|null}
+      * @return {Promise<Entity>|Promise<null>}
       */
     async find(id) {
         const primaryKey = this.entity.getPrimaryKey();

@@ -7,10 +7,10 @@ import BaseViewModel from '../../../Core/ViewModel/ViewModel';
 class MproductcategoryViewModel extends BaseViewModel {
     /**
      *
-     * @param {Mproductcategory} model
+     * @param {Mproductcategory} entity
      */
-    constructor(model) {
-        super(true, model);
+    constructor(entity) {
+        super(true, entity);
     }
 
     /**
@@ -19,23 +19,23 @@ class MproductcategoryViewModel extends BaseViewModel {
      * @return {void}
      */
     async addResource(object) {
-        // object.Product = await this.model.M_Product();
+        // object.Product = await this.entity.M_Product();
     }
 
     /**
-     * Get json frmo model
+     * Get json frmo entity
      * @return {{}}
      */
     async toJson() {
-        if (this.model == null) {
+        if (this.entity == null) {
             return null;
         }
 
         const json = {
-            Id: this.model.getId(),
-            Name: this.model.getName(),
-            Picture: this.model.getPicture(),
-            Description: this.model.getDescription(),
+            Id: this.entity.getId(),
+            Name: this.entity.getName(),
+            Picture: this.entity.getPicture(),
+            Description: this.entity.getDescription(),
         };
 
         if (this.getAutoAddResource()) {

@@ -4,10 +4,11 @@ import Redirect from './Redirect';
 import ResponseData from './ResponseData';
 import View from './View';
 import BaseResponse from '../Controller/Response';
-import { Request, Response } from 'express';
+import {Request, Response} from 'express';
 import config from '../../../config';
 import Template from '../Template/Template';
 import ConfigView from '../../App/Config/View';
+import InstanceLoader from '../Express/InstanceLoader';
 
 /**
  * @class ControllerCallback
@@ -24,13 +25,7 @@ class ControllerCallback {
     static call(controller, fn, additionalData) {
         return async (req, res, next) => {
             try {
-                let controllerInstance = null;
-                if (typeof controller == 'string') {
-                    const container = Container.getInstance().get(controller);
-                    controllerInstance = container;
-                } else {
-                    controllerInstance = new controller();
-                }
+                const controllerInstance = InstanceLoader.load(controller);
                 const data = controllerInstance[fn](
                     {
                         request: req,
@@ -69,7 +64,7 @@ class ControllerCallback {
       * @param {Response} res
       * @param {ResponseData|View|Redirect} returnedData
       */
-     static async response(req, res, returnedData) {
+    static async response(req, res, returnedData) {
         if (returnedData == undefined) {
             res.status(400).send('Unexpected Error, Method didnt return anything');
         }

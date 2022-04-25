@@ -5,7 +5,7 @@ import M_shops from '../../App/Models/M_shops';
 import M_shopproducts from '../../App/Models/M_shopproducts';
 import MshopProductRepository from '../../App/Repositories/MshopProductRepository';
 import MockModule from '../../Core/Test/MockModule';
-import Collection from '../../Core/Libraries/Collection';
+import Collection from '../../Core/Utilities/Collection';
 import Mshop from '../../App/Entity/Mshop';
 import Mshopproduct from '../../App/Entity/Mshopproduct';
 

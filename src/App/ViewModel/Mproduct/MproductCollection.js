@@ -15,10 +15,10 @@ class MproductCollection extends BaseCollection {
 
     /**
      *
-     * @param {M_products} model
+     * @param {M_products} entity
      */
-    async shape(model) {
-        await this.addItem(new MproductViewModel(model));
+    async shape(entity) {
+        await this.addItem(new MproductViewModel(entity));
     }
 }
 

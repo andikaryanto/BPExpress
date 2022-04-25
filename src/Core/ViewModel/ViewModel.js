@@ -4,16 +4,16 @@ import Model from '../Model/Model';
  * @clas ViewModel
  */
 class ViewModel {
-    model = null;
+    entity = null;
     #_autoAddResource = false;
 
     /**
      *
      * @param {bool} autoAddResource
-     * @param {Model} model
+     * @param {Model} entity
      */
-    constructor(autoAddResource, model) {
-        this.model = model;
+    constructor(autoAddResource, entity) {
+        this.entity = entity;
         this.#_autoAddResource = autoAddResource;
     }
 

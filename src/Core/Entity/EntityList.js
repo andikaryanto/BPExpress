@@ -1,4 +1,4 @@
-import Collection from '../Libraries/Collection';
+import Collection from '../Utilities/Collection';
 import EntityLooper from './EntityLooper';
 
 /**
@@ -40,6 +40,20 @@ class EntityList extends Collection {
     */
     getAssociatedKey() {
         return this.associatedKey;
+    }
+
+    /**
+     * Convert each entity in collection to json
+     * @return {array}
+     */
+    async eachJson() {
+        const newItems = [];
+
+        for (const item of this.items) {
+            newItems.push(await item.toJson());
+        };
+
+        return newItems;
     }
 
     /**

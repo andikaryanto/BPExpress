@@ -41,10 +41,11 @@ class DateFormat {
     }
 
     /**
-     * 
-     * @param {Date} date 
+     *
+     * @param {Date} date
+     * @return {string}
      */
-    static databaseDate(date){
+    static databaseDate(date) {
         return moment(date).format('YYYY-MM-DD hh:mm:ss');
     }
 }

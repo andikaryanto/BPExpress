@@ -1,4 +1,4 @@
-import Orm from "./Common/Orm";
+import Orm from './Common/Orm';
 
 export default {
     table: 'm_groupusers',
@@ -12,7 +12,7 @@ export default {
             type: '/App/Entity/Muser',
             isPrimitive: false,
             relationType: Orm.MANY_TO_ONE,
-            mappedBy: 'Mgroupuser'
+            mappedBy: 'Mgroupuser',
         },
         GroupName: {
             type: 'string',

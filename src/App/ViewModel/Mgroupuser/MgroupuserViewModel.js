@@ -6,10 +6,10 @@ import BaseViewModel from '../../../Core/ViewModel/ViewModel';
 class MgroupuserViewModel extends BaseViewModel {
     /**
      *
-     * @param {Mgroupuser} model
+     * @param {Mgroupuser} entity
      */
-    constructor(model) {
-        super(true, model);
+    constructor(entity) {
+        super(true, entity);
     }
 
     /**
@@ -17,7 +17,7 @@ class MgroupuserViewModel extends BaseViewModel {
      * @param {{}} object
      */
     async addResource(object) {
-
+        object.Users = await this.entity.getMusers();
     }
 
     /**
@@ -25,13 +25,13 @@ class MgroupuserViewModel extends BaseViewModel {
      * @return {{}}
      */
     async toJson() {
-        if (this.model == null) {
+        if (this.entity == null) {
             return null;
         }
 
         const json = {
-            Id: this.model.getId(),
-            GroupName: this.model.getGroupName(),
+            Id: this.entity.getId(),
+            GroupName: this.entity.getGroupName(),
         };
 
         if (this.getAutoAddResource()) {
