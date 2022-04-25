@@ -215,6 +215,8 @@ class Entity {
                     } else {
                         object[value.foreignKey] = null;
                     }
+                } else if(value.relationType == Orm.ONE_TO_ONE){
+                    
                 }
             }
         }
