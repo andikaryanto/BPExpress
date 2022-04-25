@@ -1,3 +1,4 @@
+import Validator from 'validatorjs';
 import Db from '../Database/Connection/DbConnection.js';
 import ORM from '../Database/ORM.js';
 import Entity from './Entity';
@@ -30,12 +31,16 @@ class EntityManager {
      *
      * @param {Entity} entity
      * @param {any} transaction
+     * @throws {Error}
      * @return {Promise<boolean>}
      */
     async persist(entity, transaction = null) {
         this.setEntity(entity);
         const obj = this.entity;
         const json = await this.createJson(obj);
+
+        this.validate(json);
+
         const primaryKey = obj.constructor.getPrimaryKey();
         const table = obj.constructor.getTable();
         let result = null;
@@ -96,6 +101,22 @@ class EntityManager {
             return true;
         }
         return false;
+    }
+
+    /**
+     * Validate Entity
+     * @param {{}} object
+     * @return {EntityManager}
+     */
+    validate(object) {
+        const rules = this.entity.getRules();
+        const validation = new Validator(object, rules);
+        if (validation.fails()) {
+            for (const [key, value] of Object.entries(validation.errors.errors)) {
+                throw new Error(value[0]);
+            }
+        }
+        return this;
     }
 }
 
