@@ -1,10 +1,12 @@
 import {Reference} from 'node-dependency-injection';
+import Email from '../App/Controllers/Email';
 import LoginController from '../App/Controllers/Office/LoginController';
 import MgroupuserController from '../App/Controllers/Office/MgroupuserController';
 import Shop from '../App/Controllers/Rest/Customer/Shop';
 import UserApi from '../App/Controllers/Rest/UserApi';
 import Test2Controller from '../App/Controllers/Test2Controller';
 import TestController from '../App/Controllers/TestController';
+import config from '../../config';
 
 /**
  * @param {ContainerBuilder} container
@@ -32,4 +34,7 @@ export default (container) => {
         .addArgument(new Reference('entity-unit'))
         .addArgument(new Reference('user.repository'))
         .addArgument(new Reference('groupuser.repository'));
+
+    container.register('web.email.controller', Email)
+        .addArgument(new Reference('transporter.service'));
 };

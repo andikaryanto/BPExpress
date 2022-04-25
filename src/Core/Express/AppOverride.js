@@ -34,6 +34,8 @@ import CoreContainer from '../Container/Container.js';
 import {ContainerBuilder} from 'node-dependency-injection';
 import RequestInstance from '../Middleware/RequestInstance.js';
 import MiddlewareCallback from '../Middleware/MiddlewareCallback.js';
+import Cron from '../../App/Config/Cron.js';
+import CronService from '../Services/CronService.js';
 
 /**
  * @class AppOverride
@@ -50,6 +52,7 @@ class AppOverride {
         const container = AppOverride.container();
         AppOverride.middleware(app, container);
         AppOverride.graphQL(app, container);
+        AppOverride.cron();
     }
 
     /**
@@ -184,6 +187,15 @@ class AppOverride {
         app.use(morgan('combined', {
             stream: accessLogStream,
         }));
+    }
+
+
+    /**
+     *
+     * @return {void}
+     */
+    static cron() {
+        CronService.resetCron();
     }
 }
 

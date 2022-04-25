@@ -17,6 +17,7 @@ const Web = () => {
     routers.get('/test2/store', [], 'web.test2.controller', 'store');
     routers.get('/test2/update', [], 'web.test2.controller', 'update');
     routers.get('/test2/remove', [], 'web.test2.controller', 'destroy');
+    routers.get('/send_email', [], 'web.email.controller', 'sendMail');
     // routers.post('/test/formpost', [], TestController, 'formPost');
     // routers.get('/test/params/:Id/:No', [], TestController, 'param');
 

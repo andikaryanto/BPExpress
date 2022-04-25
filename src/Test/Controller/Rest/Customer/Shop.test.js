@@ -7,7 +7,7 @@ import ResponseCode from '../../../../App/Constants/ResponseCode';
 import MockModule from '../../../../Core/Test/MockModule';
 import MshopproductCollection from '../../../../App/ViewModel/Mshopproduct/MshopproductCollection';
 import Mshop from '../../../../App/Entity/Mshop';
-import Collection from '../../../../Core/Libraries/Collection';
+import Collection from '../../../../Core/Utilities/Collection';
 import Mshopproduct from '../../../../App/Entity/Mshopproduct';
 import Mproduct from '../../../../App/Entity/Mproduct';
 import MshopproductViewModel from '../../../../App/ViewModel/Mshopproduct/MshopproductViewModel';

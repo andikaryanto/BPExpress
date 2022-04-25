@@ -9,12 +9,14 @@ import {
     GraphQLList,
     GraphQLInt,
 } from 'graphql';
+import OutputUser from './OutputUser';
 
 const OutputGroupuser = new GraphQLObjectType({
     name: 'Groupuser',
     fields: () => ({
         Id: {type: GraphQLInt},
         GroupName: {type: GraphQLString},
+        Users: {type: new GraphQLList(OutputUser)},
     }),
 });
 

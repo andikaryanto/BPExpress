@@ -8,10 +8,10 @@ import BaseViewModel from '../../../Core/ViewModel/ViewModel';
 class MshopViewModel extends BaseViewModel {
     /**
      *
-     * @param {Mshop} model
+     * @param {Mshop} entity
      */
-    constructor(model) {
-        super(true, model);
+    constructor(entity) {
+        super(true, entity);
     }
 
     /**
@@ -28,17 +28,17 @@ class MshopViewModel extends BaseViewModel {
      * @return {{}}
      */
     async toJson() {
-        if (this.model == null) {
+        if (this.entity == null) {
             return null;
         }
 
         const json = {
-            Id: this.model.getId(),
-            Name: this.model.getName(),
-            Owner: this.model.getOwner(),
-            Phone: this.model.getPhone(),
-            MapAddress: this.model.getMapAddress(),
-            Address: this.model.getAddress(),
+            Id: this.entity.getId(),
+            Name: this.entity.getName(),
+            Owner: this.entity.getOwner(),
+            Phone: this.entity.getPhone(),
+            MapAddress: this.entity.getMapAddress(),
+            Address: this.entity.getAddress(),
         };
 
         if (this.getAutoAddResource()) {
