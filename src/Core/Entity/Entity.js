@@ -28,7 +28,7 @@ class Entity {
                         const keyValue = target.constrains[field.foreignKey];
                         const originalMethod = target[prop];
                         const primaryKey = ORM.getPrimaryKey(type.name);
-                        return async function (...args) {
+                        return async function(...args) {
                             const result = target[prop]();
                             if (result) {
                                 return result;
@@ -59,7 +59,7 @@ class Entity {
                                                 for (const entity of entities) {
                                                     const getFn = 'get' + primaryKey;
                                                     const pkValue = entity[getFn]();
-                                                    items = { ...items, [pkValue]: entity };
+                                                    items = {...items, [pkValue]: entity};
                                                 }
                                                 looper.setItems(items);
                                             }
@@ -88,7 +88,6 @@ class Entity {
                                             }
                                         }
                                     } else if (field.relationType == Orm.MANY_TO_ONE) {
-
                                         const targetProps = ORM.getProps(type.name);
                                         const primaryKeyValue = target['get' + primaryKey]();
                                         const foreignKey = targetProps[field.mappedBy].foreignKey;
@@ -102,7 +101,6 @@ class Entity {
                                             target['set' + property](repo);
                                         }
                                     } else {
-
                                         if (keyValue) {
                                             const repo = await (new Repository(type)).find(keyValue);
                                             target['set' + property](repo);
@@ -223,11 +221,21 @@ class Entity {
         return object;
     }
 
+    /**
+     * Set rule to validate objec of e entity
+     * @param {string} key
+     * @param {string} rule
+     * @return {Entity}
+     */
     setRule(key, rule) {
-        this.rules = { ...this.rules, [key]: rule }
+        this.rules = {...this.rules, [key]: rule};
         return this;
     }
 
+    /**
+     * Get rules
+     * @return {[]}
+     */
     getRules() {
         return this.rules;
     }

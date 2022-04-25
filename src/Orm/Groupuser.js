@@ -17,17 +17,17 @@ export default {
         GroupName: {
             type: 'string',
             isPrimitive: true,
-            rule: 'required|min:10'
+            rule: 'required|min:10',
         },
         Description: {
             type: 'string',
             isPrimitive: true,
-            rule: 'required|min:10'
+            rule: 'required|min:10',
         },
         Created: {
             type: 'datetime',
             isPrimitive: true,
-            rule: 'required'
+            rule: 'required',
         },
         CreatedBy: {
             type: 'string',

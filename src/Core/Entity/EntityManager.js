@@ -105,11 +105,12 @@ class EntityManager {
 
     /**
      * Validate Entity
+     * @param {{}} object
      * @return {EntityManager}
      */
     validate(object) {
         const rules = this.entity.getRules();
-        const validation = new Validator(object, rules)
+        const validation = new Validator(object, rules);
         if (validation.fails()) {
             for (const [key, value] of Object.entries(validation.errors.errors)) {
                 throw new Error(value[0]);
