@@ -1,4 +1,4 @@
-import Orm from "./Common/Orm";
+import Orm from './Common/Orm';
 
 export default {
     table: 'm_villages',
@@ -12,20 +12,20 @@ export default {
             type: '/App/Entity/Mcanvasser',
             isPrimitive: false,
             relationType: Orm.MANY_TO_ONE,
-            mappedBy: 'Mvillage'
+            mappedBy: 'Mvillage',
         },
         Mshops: {
             type: '/App/Entity/Shop',
             isPrimitive: false,
             relationType: Orm.MANY_TO_ONE,
-            mappedBy: 'Mvillage'
+            mappedBy: 'Mvillage',
         },
         District: {
             type: '/App/Entity/Mdistrict',
             isPrimitive: false,
             foreignKey: 'M_District_Id',
             relationType: Orm.ONE_TO_MANY,
-            inversedBy: 'Mvillages'
+            inversedBy: 'Mvillages',
         },
         Name: {
             type: 'string',

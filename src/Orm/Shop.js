@@ -1,4 +1,4 @@
-import Orm from "./Common/Orm";
+import Orm from './Common/Orm';
 
 export default {
     table: 'm_shops',
@@ -13,13 +13,13 @@ export default {
             isPrimitive: false,
             foreignKey: 'M_Village_Id',
             relationType: Orm.ONE_TO_MANY,
-            inversedBy: "Mshop"
+            inversedBy: 'Mshop',
         },
-        Mshoproducts: {
+        Mshopproducts: {
             type: '/App/Entity/Mshopproduct',
             isPrimitive: false,
             relationType: Orm.MANY_TO_ONE,
-            mappedBy: 'Mshop'
+            mappedBy: 'Mshop',
         },
         Name: {
             type: 'string',

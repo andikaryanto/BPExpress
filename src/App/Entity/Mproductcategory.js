@@ -6,7 +6,7 @@ import BaseEntity from './BaseEntity';
  */
 class Mproductcategory extends BaseEntity {
     Id;
-    Mproducts
+    Mproducts;
     Name;
     Picture;
     Description;

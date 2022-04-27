@@ -22,7 +22,6 @@ class Entity {
                 const caller = prop.substring(0, 3);
                 const property = prop.substring(3, prop.length);
                 if (caller == 'get') {
-                    console.log(property);
                     const field = target.constructor.getProps()[property];
                     if (!field.isPrimitive) {
                         const type = require(config.sourcePath + field.type).default;
@@ -45,67 +44,37 @@ class Entity {
                                             },
                                         };
 
-                                        const looper = EntityLooper.getInstance(target.constructor.name);
-                                        if (looper.hasEntityList()) {
-                                            const entitylist = looper.getEntityList();
-                                            if (PlainObject.isEmpty(looper.getItems())) {
-                                                const param = {
-                                                    whereIn: {
-                                                        [primaryKey]: entitylist.getAssociatedKey()[field.foreignKey],
-                                                    },
-                                                };
-
-                                                const entities = await (new Repository(type)).findAll(param);
-                                                let items = {};
-                                                for (const entity of entities) {
-                                                    const getFn = 'get' + primaryKey;
-                                                    const pkValue = entity[getFn]();
-                                                    items = {...items, [pkValue]: entity};
-                                                }
-                                                looper.setItems(items);
-                                            }
-                                            let result = null;
-                                            const itemOfLooper = looper.getItems();
-                                            if (!PlainObject.isEmpty(itemOfLooper)) {
-                                                if (!PlainObject.isEmpty(target.constrains)) {
-                                                    const keyValue = target.constrains[field.foreignKey];
-                                                    if (keyValue in itemOfLooper) {
-                                                        result = itemOfLooper[keyValue];
-                                                    }
-                                                }
-                                            }
-
-                                            if (looper.isLastIndex()) {
-                                                looper.clean();
-                                            }
-
-                                            if (result != null) {
-                                                target['set' + property](result);
-                                            }
-                                        } else {
-                                            if (keyValue) {
-                                                const repo = await (new Repository(type)).find(keyValue);
-                                                target['set' + property](repo);
+                                        const entities = await (new Repository(type)).findAll(param);
+                                        let items = {};
+                                        for (const entity of entities) {
+                                            const getFn = 'get' + primaryKey;
+                                            const pkValue = entity[getFn]();
+                                            items = {...items, [pkValue]: entity};
+                                        }
+                                        looper.setItems(items);
+                                    }
+                                    let result = null;
+                                    const itemOfLooper = looper.getItems();
+                                    if (!PlainObject.isEmpty(itemOfLooper)) {
+                                        if (!PlainObject.isEmpty(target.constrains)) {
+                                            const keyValue = target.constrains[field.foreignKey];
+                                            if (keyValue in itemOfLooper) {
+                                                result = itemOfLooper[keyValue];
                                             }
                                         }
-                                    } else if (field.relationType == Orm.MANY_TO_ONE) {
-                                        const targetProps = ORM.getProps(type.name);
-                                        const primaryKeyValue = target['get' + primaryKey]();
-                                        const foreignKey = targetProps[field.mappedBy].foreignKey;
-                                        if (primaryKeyValue) {
-                                            const param = {
-                                                where: {
-                                                    [foreignKey]: primaryKeyValue,
-                                                },
-                                            };
-                                            const repo = await (new Repository(type)).findAll(param);
-                                            target['set' + property](repo);
-                                        }
-                                    } else {
-                                        if (keyValue) {
-                                            const repo = await (new Repository(type)).find(keyValue);
-                                            target['set' + property](repo);
-                                        }
+                                    }
+
+                                    if (looper.isLastIndex()) {
+                                        looper.clean();
+                                    }
+
+                                    if (result != null) {
+                                        target['set' + property](result);
+                                    }
+                                } else {
+                                    if (keyValue) {
+                                        const repo = await (new Repository(type)).find(keyValue);
+                                        target['set' + property](repo);
                                     }
                                 }
                             } else if (field.relationType == Orm.MANY_TO_ONE) {
@@ -118,7 +87,7 @@ class Entity {
                                             [foreignKey]: primaryKeyValue,
                                         },
                                     };
-                                    const repo = await (new Repository(type)).findAll(param);
+                                    const repo = await (new Repository(type)).collect(param);
                                     target['set' + property](repo);
                                 }
                             } else {
@@ -216,8 +185,8 @@ class Entity {
                     } else {
                         object[value.foreignKey] = null;
                     }
-                } else if(value.relationType == Orm.ONE_TO_ONE){
-                    
+                } else if (value.relationType == Orm.ONE_TO_ONE) {
+
                 }
             }
         }

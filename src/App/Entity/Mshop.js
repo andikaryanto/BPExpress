@@ -98,7 +98,7 @@ class Mshop extends BaseEntity {
      *
      * @return {EntityList}
      */
-     getMshopproducts() {
+    getMshopproducts() {
         return this.Mshopproducts;
     }
 
@@ -106,7 +106,7 @@ class Mshop extends BaseEntity {
      *
      * @return {Mcanvasser}
      */
-     getMcanvasser() {
+    getMcanvasser() {
         return this.Mcanvasser;
     }
 

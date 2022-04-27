@@ -13,14 +13,14 @@ export default {
             isPrimitive: false,
             foreignKey: 'M_Shop_Id',
             relationType: Orm.ONE_TO_MANY,
-            inversedBy: 'Mshopproducts'
+            inversedBy: 'Mshopproducts',
         },
         Mproduct: {
             type: '/App/Entity/Mproduct',
             isPrimitive: false,
             foreignKey: 'M_Product_Id',
             relationType: Orm.ONE_TO_MANY,
-            inversedBy: 'Mshopproducts'
+            inversedBy: 'Mshopproducts',
         },
         PurchasePrice: {
             type: 'decimal',
