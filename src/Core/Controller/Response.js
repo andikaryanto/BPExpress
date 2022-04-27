@@ -9,6 +9,7 @@ class Response {
     #_code = null;
     #_responseCode = null;
     #_data = null;
+    #_additionalData = null;
 
     /**
      *
@@ -22,6 +23,16 @@ class Response {
         this.#_code = code;
         this.#_responseCode = responseCode;
         this.#_data = data;
+    }
+
+
+    /**
+     * Set additional data
+     * @param {{}} additionalData 
+     */
+    setAdditionalData(additionalData){
+        this.#_additionalData = additionalData;
+        return this;
     }
 
     /**
@@ -57,6 +68,7 @@ class Response {
             Data: data,
             Code: this.#_responseCode,
             Message: this.#_message,
+            AdditionalData: this.#_additionalData
         };
 
         if (this.#_data instanceof Collection) {
