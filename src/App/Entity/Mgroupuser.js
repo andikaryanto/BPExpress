@@ -27,7 +27,7 @@ class Mgroupuser extends BaseEntity {
     /**
      * set Id
      * @param {number} id
-     * @return {this}
+     * @return {Mgroupuser}
      */
     setId(id) {
         this.Id = id;
@@ -45,7 +45,7 @@ class Mgroupuser extends BaseEntity {
     /**
      * set list of Musers
      * @param {EntityList} Musers
-     * @return {this}
+     * @return {Mgroupuser}
      */
     setMusers(Musers) {
         this.Musers = Musers;
@@ -63,7 +63,7 @@ class Mgroupuser extends BaseEntity {
     /**
      * set Id
      * @param {number} groupname
-     * @return {this}
+     * @return {Mgroupuser}
      */
     setGroupName(groupname) {
         this.GroupName = groupname;
@@ -81,7 +81,7 @@ class Mgroupuser extends BaseEntity {
     /**
      * set Id
      * @param {number} description
-     * @return {this}
+     * @return {Mgroupuser}
      */
     setDescription(description) {
         this.Description = description;

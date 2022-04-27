@@ -1,3 +1,5 @@
+import Orm from "./Common/Orm";
+
 export default {
     table: 'm_provinces',
     primaryKey: 'Id',
@@ -5,6 +7,12 @@ export default {
         Id: {
             type: 'number',
             isPrimitive: true,
+        },
+        Mcities: {
+            type: '/App/Entity/Mprovince',
+            isPrimitive: false,
+            relationType: Orm.MANY_TO_ONE,
+            mappedBy: 'Mprovince'
         },
         Name: {
             type: 'string',

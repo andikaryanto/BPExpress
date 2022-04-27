@@ -30,7 +30,7 @@ class Muser extends BaseEntity {
     /**
      * set Id
      * @param {number} id
-     * @return {this}
+     * @return {Muser}
      */
     setId(id) {
         this.Id = id;
@@ -48,7 +48,7 @@ class Muser extends BaseEntity {
     /**
      * set Id
      * @param {Mgroupuser} groupuser
-     * @return {this}
+     * @return {Muser}
      */
     setMgroupuser(groupuser) {
         this.Mgroupuser = groupuser;
@@ -66,7 +66,7 @@ class Muser extends BaseEntity {
     /**
      * set Id
      * @param {number} username
-     * @return {this}
+     * @return {Muser}
      */
     setUsername(username) {
         this.Username = username;
@@ -84,7 +84,7 @@ class Muser extends BaseEntity {
     /**
      * set Id
      * @param {string} password
-     * @return {this}
+     * @return {Muser}
      */
     setPassword(password) {
         this.Password = password;
@@ -102,7 +102,7 @@ class Muser extends BaseEntity {
     /**
      * set Id
      * @param {boolean} isLoggedIn
-     * @return {this}
+     * @return {Muser}
      */
     setIsLoggedIn(isLoggedIn) {
         this.IsLoggedIn = isLoggedIn;
@@ -120,7 +120,7 @@ class Muser extends BaseEntity {
     /**
      * set Id
      * @param {boolean} isActive
-     * @return {this}
+     * @return {Muser}
      */
     setIsActive(isActive) {
         this.IsActive = isActive;

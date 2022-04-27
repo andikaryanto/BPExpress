@@ -1,9 +1,11 @@
+import EntityList from '../../Core/Entity/EntityList.js';
 import BaseEntity from './BaseEntity.js';
 /**
  * @class Mprovince
  */
 class Mprovince extends BaseEntity {
     Id;
+    Mcities;
     Name;
     Description;
 
@@ -18,10 +20,28 @@ class Mprovince extends BaseEntity {
     /**
      *
      * @param {number | string} Id
-     * @return {this}
+     * @return {Mprovince}
      */
     setId(Id) {
         this.Id = Id;
+        return this;
+    }
+
+    /**
+     *
+     * @return {EntityList}
+     */
+    getMcities() {
+        return this.Mcities;
+    }
+
+    /**
+     *
+     * @param {EntityList} Mcities
+     * @return {Mprovince}
+     */
+    setMcities(Mcities) {
+        this.Mcities = Mcities;
         return this;
     }
 
@@ -36,7 +56,7 @@ class Mprovince extends BaseEntity {
     /**
      *
      * @param {string} Name
-     * @return {this}
+     * @return {Mprovince}
      */
     setName(Name) {
         this.Name = Name;
@@ -54,7 +74,7 @@ class Mprovince extends BaseEntity {
     /**
      *
      * @param {string} Description
-     * @return {this}
+     * @return {Mprovince}
      */
     setDescription(Description) {
         this.Description = Description;

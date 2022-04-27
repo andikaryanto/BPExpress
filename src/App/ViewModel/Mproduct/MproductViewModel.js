@@ -18,7 +18,7 @@ class MproductViewModel extends BaseViewModel {
      * @param {{}} object
      */
     async addResource(object) {
-        const category = await this.entity.getProductcategory();
+        const category = await this.entity.getMproductcategory();
         if (category) {
             object.ProductCategory = await (new MproductcategoryViewModel(category)).toJson();
         }

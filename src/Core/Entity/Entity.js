@@ -22,6 +22,7 @@ class Entity {
                 const caller = prop.substring(0, 3);
                 const property = prop.substring(3, prop.length);
                 if (caller == 'get') {
+                    console.log(property);
                     const field = target.constructor.getProps()[property];
                     if (!field.isPrimitive) {
                         const type = require(config.sourcePath + field.type).default;
@@ -215,6 +216,8 @@ class Entity {
                     } else {
                         object[value.foreignKey] = null;
                     }
+                } else if(value.relationType == Orm.ONE_TO_ONE){
+                    
                 }
             }
         }

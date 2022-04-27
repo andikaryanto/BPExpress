@@ -7,7 +7,7 @@ import Mshop from './Mshop';
  */
 class Mshopproduct extends BaseEntity {
     Id;
-    Shop;
+    Mshop;
     Product;
     PurchasePrice;
     SellPrice;
@@ -29,7 +29,7 @@ class Mshopproduct extends BaseEntity {
     /**
      *
      * @param {number|string} Id
-     * @return {this}
+     * @return {Mshopproduct}
      */
     setId(Id) {
         this.Id = Id;
@@ -40,17 +40,17 @@ class Mshopproduct extends BaseEntity {
      *
      * @return {Mshop}
      */
-    getShop() {
-        return this.Shop;
+    getMshop() {
+        return this.Mshop;
     }
 
     /**
      *
-     * @param {Mshop} Shop
-     * @return {this}
+     * @param {Mshop} Mshop
+     * @return {Mshopproduct}
      */
-    setShop(Shop) {
-        this.Shop = Shop;
+    setMshop(Mshop) {
+        this.Mshop = Mshop;
         return this;
     }
 
@@ -58,16 +58,16 @@ class Mshopproduct extends BaseEntity {
      *
      * @return {Mproduct}
      */
-    getProduct() {
+    getMproduct() {
         return this.Product;
     }
 
     /**
      *
      * @param {Mproduct} Product
-     * @return {this}
+     * @return {Mshopproduct}
      */
-    setProduct(Product) {
+    setMproduct(Product) {
         this.Product = Product;
         return this;
     }
@@ -83,7 +83,7 @@ class Mshopproduct extends BaseEntity {
     /**
      *
      * @param {float} PurchasePrice
-     * @return {this}
+     * @return {Mshopproduct}
      */
     setPurchasePrice(PurchasePrice) {
         this.PurchasePrice = PurchasePrice;
@@ -101,7 +101,7 @@ class Mshopproduct extends BaseEntity {
     /**
      *
      * @param {float} SellPrice
-     * @return {this}
+     * @return {Mshopproduct}
      */
     setSellPrice(SellPrice) {
         this.SellPrice = SellPrice;
@@ -119,7 +119,7 @@ class Mshopproduct extends BaseEntity {
     /**
      *
      * @param {number} Stock
-     * @return {this}
+     * @return {Mshopproduct}
      */
     setStock(Stock) {
         this.Stock = Stock;
@@ -137,7 +137,7 @@ class Mshopproduct extends BaseEntity {
     /**
      *
      * @param {number} DiscountType
-     * @return {this}
+     * @return {Mshopproduct}
      */
     setDiscountType(DiscountType) {
         this.DiscountType = DiscountType;
@@ -155,7 +155,7 @@ class Mshopproduct extends BaseEntity {
     /**
      *
      * @param {float | number} DiscountValue
-     * @return {this}
+     * @return {Mshopproduct}
      */
     setDiscountValue(DiscountValue) {
         this.DiscountValue = DiscountValue;
@@ -173,7 +173,7 @@ class Mshopproduct extends BaseEntity {
     /**
      *
      * @param {boolean} IsFeatured
-     * @return {this}
+     * @return {Mshopproduct}
      */
     setIsFeatured(IsFeatured) {
         this.IsFeatured = IsFeatured;
@@ -191,7 +191,7 @@ class Mshopproduct extends BaseEntity {
     /**
      *
      * @param {boolean} IsActive
-     * @return {this}
+     * @return {Mshopproduct}
      */
     setIsActive(IsActive) {
         this.IsActive = IsActive;
@@ -209,7 +209,7 @@ class Mshopproduct extends BaseEntity {
     /**
      *
      * @param {number} Ordering
-     * @return {this}
+     * @return {Mshopproduct}
      */
     setOrdering(Ordering) {
         this.Ordering = Ordering;
