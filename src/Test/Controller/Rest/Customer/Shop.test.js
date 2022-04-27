@@ -73,12 +73,12 @@ describe('beforeRun', () => {
             const product = (new Mproduct())
                 .setId(100)
                 .setName('Jest')
-                .setProductcategory(productCategory);
+                .setMproductcategory(productCategory);
 
             const shopProduct = (new Mshopproduct())
                 .setId(100)
-                .setShop(shop)
-                .setProduct(product);
+                .setMshop(shop)
+                .setMproduct(product);
 
             const modelCollection = [shopProduct];
             const shopServiceProducts = MockModule.mockModule(ShopService, 'products', modelCollection);

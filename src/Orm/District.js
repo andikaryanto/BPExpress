@@ -1,3 +1,4 @@
+import Orm from "./Common/Orm";
 
 export default {
     table: 'm_districts',
@@ -7,11 +8,18 @@ export default {
             type: 'number',
             isPrimitive: true,
         },
-        City: {
+        Mcity: {
             type: '/App/Entity/Mcity',
             isPrimitive: false,
             foreignKey: 'M_City_Id',
-            relationType: 'one_to_one',
+            relationType: Orm.ONE_TO_MANY,
+            inversedBy: 'Mdistricts'
+        },
+        Mvillages: {
+            type: '/App/Entity/Mvillage',
+            isPrimitive: false,
+            relationType: Orm.MANY_TO_ONE,
+            mappedBy: 'Mdistrict'
         },
         Name: {
             type: 'string',

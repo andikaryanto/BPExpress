@@ -8,7 +8,7 @@ export default {
             type: 'number',
             isPrimitive: true,
         },
-        Productcategory: {
+        Mproductcategory: {
             type: '/App/Entity/Mproductcategory',
             isPrimitive: false,
             foreignKey: 'M_Productcategory_Id',

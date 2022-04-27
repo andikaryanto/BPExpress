@@ -21,7 +21,7 @@ class MshopproductViewModel extends BaseViewModel {
      * @return {void}
      */
     async addResource(object) {
-        const product = await this.entity.getProduct();
+        const product = await this.entity.getMproduct();
         if (product) {
             object.Product = await (new MproductViewModel(product)).toJson();
         }

@@ -1,3 +1,5 @@
+import Orm from "./Common/Orm";
+
 export default {
     table: 'm_shops',
     primaryKey: 'Id',
@@ -6,11 +8,18 @@ export default {
             type: 'number',
             isPrimitive: true,
         },
-        Village: {
+        Mvillage: {
             type: '/App/Entity/Mvillage',
             isPrimitive: false,
             foreignKey: 'M_Village_Id',
-            relationType: 'one_to_one',
+            relationType: Orm.ONE_TO_MANY,
+            inversedBy: "Mshop"
+        },
+        Mshoproducts: {
+            type: '/App/Entity/Mshopproduct',
+            isPrimitive: false,
+            relationType: Orm.MANY_TO_ONE,
+            mappedBy: 'Mshop'
         },
         Name: {
             type: 'string',

@@ -1,3 +1,4 @@
+import EntityList from '../../Core/Entity/EntityList.js';
 import BaseEntity from './BaseEntity.js';
 import Mprovince from './Mprovince.js';
 /**
@@ -5,7 +6,8 @@ import Mprovince from './Mprovince.js';
  */
 class Mcity extends BaseEntity {
     Id;
-    Province;
+    Mprovince;
+    Mditricts;
     Name;
     Description;
 
@@ -20,7 +22,7 @@ class Mcity extends BaseEntity {
     /**
      *
      * @param {number | string} Id
-     * @return {this}
+     * @return {Mcity}
      */
     setId(Id) {
         this.Id = Id;
@@ -31,17 +33,35 @@ class Mcity extends BaseEntity {
      *
      * @return {Mprovince}
      */
-    getProvince() {
-        return this.Province;
+    getMprovince() {
+        return this.Mprovince;
     }
 
     /**
      *
-     * @param {Mprovince} Province
-     * @return {this}
+     * @param {Mprovince} Mprovince
+     * @return {Mcity}
      */
-    setProvince(Province) {
-        this.Province = Province;
+    setMprovince(Mprovince) {
+        this.Mprovince = Mprovince;
+        return this;
+    }
+
+    /**
+     *
+     * @return {EntityList}
+     */
+    getMdistricts() {
+        return this.Mdistricts;
+    }
+
+    /**
+     *
+     * @param {Mdistricts} Mdistricts
+     * @return {Mcity}
+     */
+    setMdistricts(Mdistricts) {
+        this.Mdistricts = Mdistricts;
         return this;
     }
 
@@ -56,7 +76,7 @@ class Mcity extends BaseEntity {
     /**
      *
      * @param {string} Name
-     * @return {this}
+     * @return {Mcity}
      */
     setName(Name) {
         this.Name = Name;
@@ -74,7 +94,7 @@ class Mcity extends BaseEntity {
     /**
      *
      * @param {string} Description
-     * @return {this}
+     * @return {Mcity}
      */
     setDescription(Description) {
         this.Description = Description;
