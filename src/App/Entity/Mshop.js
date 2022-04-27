@@ -2,13 +2,15 @@ import BaseEntity from './BaseEntity.js';
 import Mfund from './Mfund.js';
 import Mvillage from './Mvillage.js';
 import Mcanvasser from './Mcanvasser';
+import EntityList from '../../Core/Entity/EntityList.js';
 /**
  * @class Mgroupuser
  */
 class Mshop extends BaseEntity {
     Id;
-    Canvasser;
-    Village;
+    Mcanvasser;
+    Mvillage;
+    Mshopproducts;
     Name;
     Owner;
     Phone;
@@ -39,7 +41,7 @@ class Mshop extends BaseEntity {
     /**
      *
      * @param {number | string} Id
-     * @return {this}
+     * @return {Mshop}
      */
     setId(Id) {
         this.Id = Id;
@@ -50,17 +52,27 @@ class Mshop extends BaseEntity {
      *
      * @return {Mcanvasser}
      */
-    getCanvasser() {
-        return this.Canvasser;
+    getMcanvasser() {
+        return this.Mcanvasser;
     }
 
     /**
      *
-     * @param {Mcanvasser} Canvasser
-     * @return {this}
+     * @param {Mcanvasser} Mcanvasser
+     * @return {Mshop}
      */
-    setCanvasser(Canvasser) {
-        this.Canvasser = Canvasser;
+    setMcanvasser(Mcanvasser) {
+        this.Mcanvasser = Mcanvasser;
+        return this;
+    }
+
+    /**
+     *
+     * @param {Mvillage} Mvillage
+     * @return {Mshop}
+     */
+    setMvillage(Mvillage) {
+        this.Mvillage = Mvillage;
         return this;
     }
 
@@ -68,17 +80,43 @@ class Mshop extends BaseEntity {
      *
      * @return {Mvillage}
      */
-    getVillage() {
-        return this.Village;
+    getMvillage() {
+        return this.Mvillage;
     }
 
     /**
      *
-     * @param {Mvillage} Village
-     * @return {this}
+     * @param {EntityList} Mshopproducts
+     * @return {Mshop}
      */
-    setVillage(Village) {
-        this.Village = Village;
+    setMshopproducts(Mshopproducts) {
+        this.Mshopproducts = Mshopproducts;
+        return this;
+    }
+
+    /**
+     *
+     * @return {EntityList}
+     */
+     getMshopproducts() {
+        return this.Mshopproducts;
+    }
+
+    /**
+     *
+     * @return {Mcanvasser}
+     */
+     getMcanvasser() {
+        return this.Mcanvasser;
+    }
+
+    /**
+     *
+     * @param {Mcanvasser} Mcanvasser
+     * @return {Mshop}
+     */
+    setMcanvasser(Mcanvasser) {
+        this.Mcanvasser = Mcanvasser;
         return this;
     }
 
@@ -93,7 +131,7 @@ class Mshop extends BaseEntity {
     /**
      *
      * @param {string} Name
-     * @return {this}
+     * @return {Mshop}
      */
     setName(Name) {
         this.Name = Name;
@@ -111,7 +149,7 @@ class Mshop extends BaseEntity {
     /**
      *
      * @param {string} Owner
-     * @return {this}
+     * @return {Mshop}
      */
     setOwner(Owner) {
         this.Owner = Owner;
@@ -129,7 +167,7 @@ class Mshop extends BaseEntity {
     /**
      *
      * @param {string} Phone
-     * @return {this}
+     * @return {Mshop}
      */
     setPhone(Phone) {
         this.Phone = Phone;
@@ -147,7 +185,7 @@ class Mshop extends BaseEntity {
     /**
      *
      * @param {string} PIN
-     * @return {this}
+     * @return {Mshop}
      */
     setPIN(PIN) {
         this.PIN = PIN;
@@ -165,7 +203,7 @@ class Mshop extends BaseEntity {
     /**
      *
      * @param {string} MapAddress
-     * @return {this}
+     * @return {Mshop}
      */
     setMapAddress(MapAddress) {
         this.MapAddress = MapAddress;
@@ -183,7 +221,7 @@ class Mshop extends BaseEntity {
     /**
      *
      * @param {string} Address
-     * @return {this}
+     * @return {Mshop}
      */
     setAddress(Address) {
         this.Address = Address;
@@ -201,7 +239,7 @@ class Mshop extends BaseEntity {
     /**
      *
      * @param {string} FrontShopPicture
-     * @return {this}
+     * @return {Mshop}
      */
     setFrontShopPicture(FrontShopPicture) {
         this.FrontShopPicture = FrontShopPicture;
@@ -219,7 +257,7 @@ class Mshop extends BaseEntity {
     /**
      *
      * @param {string} IdentityCardPicture
-     * @return {this}
+     * @return {Mshop}
      */
     setIdentityCardPicture(IdentityCardPicture) {
         this.IdentityCardPicture = IdentityCardPicture;
@@ -237,7 +275,7 @@ class Mshop extends BaseEntity {
     /**
      *
      * @param {string} OwnerPicture
-     * @return {this}
+     * @return {Mshop}
      */
     setOwnerPicture(OwnerPicture) {
         this.OwnerPicture = OwnerPicture;
@@ -255,7 +293,7 @@ class Mshop extends BaseEntity {
     /**
      *
      * @param {string} CanvasserPicture
-     * @return {this}
+     * @return {Mshop}
      */
     setCanvasserPicture(CanvasserPicture) {
         this.CanvasserPicture = CanvasserPicture;
@@ -273,7 +311,7 @@ class Mshop extends BaseEntity {
     /**
      *
      * @param {string} AccountNumber
-     * @return {this}
+     * @return {Mshop}
      */
     setAccountNumber(AccountNumber) {
         this.AccountNumber = AccountNumber;
@@ -291,7 +329,7 @@ class Mshop extends BaseEntity {
     /**
      *
      * @param {string} AccountNumberPicture
-     * @return {this}
+     * @return {Mshop}
      */
     setAccountNumberPicture(AccountNumberPicture) {
         this.AccountNumberPicture = AccountNumberPicture;
@@ -309,7 +347,7 @@ class Mshop extends BaseEntity {
     /**
      *
      * @param {string} Latitude
-     * @return {this}
+     * @return {Mshop}
      */
     setLatitude(Latitude) {
         this.Latitude = Latitude;
@@ -327,7 +365,7 @@ class Mshop extends BaseEntity {
     /**
      *
      * @param {string} Longitude
-     * @return {this}
+     * @return {Mshop}
      */
     setLongitude(Longitude) {
         this.Longitude = Longitude;
@@ -345,7 +383,7 @@ class Mshop extends BaseEntity {
     /**
      *
      * @param {Mfund} Fund
-     * @return {this}
+     * @return {Mshop}
      */
     setFund(Fund) {
         this.Fund = Fund;
@@ -363,7 +401,7 @@ class Mshop extends BaseEntity {
     /**
      *
      * @param {string} Status
-     * @return {this}
+     * @return {Mshop}
      */
     setStatus(Status) {
         this.Status = Status;
@@ -381,7 +419,7 @@ class Mshop extends BaseEntity {
     /**
      *
      * @param {boolean} HasDelivery
-     * @return {this}
+     * @return {Mshop}
      */
     setHasDelivery(HasDelivery) {
         this.HasDelivery = HasDelivery;
@@ -399,7 +437,7 @@ class Mshop extends BaseEntity {
     /**
      *
      * @param {boolean} IsOpen
-     * @return {this}
+     * @return {Mshop}
      */
     setIsOpen(IsOpen) {
         this.IsOpen = IsOpen;

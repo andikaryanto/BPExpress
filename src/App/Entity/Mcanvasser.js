@@ -7,7 +7,7 @@ import Mvillage from './Mvillage.js';
 class Mcanvasser extends BaseEntity {
     Id;
     User;
-    Village;
+    Mvillage;
     Name;
     Email;
     Phone;
@@ -25,7 +25,7 @@ class Mcanvasser extends BaseEntity {
     /**
      *
      * @param {number | string} Id
-     * @return {this}
+     * @return {Mcanvasser}
      */
     setId(Id) {
         this.Id = Id;
@@ -43,7 +43,7 @@ class Mcanvasser extends BaseEntity {
     /**
      *
      * @param {Muser} User
-     * @return {this}
+     * @return {Mcanvasser}
      */
     setUser(User) {
         this.User = User;
@@ -54,17 +54,17 @@ class Mcanvasser extends BaseEntity {
      *
      * @return {Mvillage}
      */
-    getVillage() {
-        return this.Village;
+    getMvillage() {
+        return this.Mvillage;
     }
 
     /**
      *
-     * @param {Mvillage} Village
-     * @return {this}
+     * @param {MMvillage} Mvillage
+     * @return {Mcanvasser}
      */
-    setVillage(Village) {
-        this.Village = Village;
+    setMvillage(Mvillage) {
+        this.Mvillage = Mvillage;
         return this;
     }
 
@@ -79,7 +79,7 @@ class Mcanvasser extends BaseEntity {
     /**
      *
      * @param {string} Name
-     * @return {this}
+     * @return {Mcanvasser}
      */
     setName(Name) {
         this.Name = Name;
@@ -97,7 +97,7 @@ class Mcanvasser extends BaseEntity {
     /**
      *
      * @param {string} Email
-     * @return {this}
+     * @return {Mcanvasser}
      */
     setEmail(Email) {
         this.Email = Email;
@@ -115,7 +115,7 @@ class Mcanvasser extends BaseEntity {
     /**
      *
      * @param {string} Phone
-     * @return {this}
+     * @return {Mcanvasser}
      */
     setPhone(Phone) {
         this.Phone = Phone;
@@ -133,7 +133,7 @@ class Mcanvasser extends BaseEntity {
     /**
      *
      * @param {string} Supervisor
-     * @return {this}
+     * @return {Mcanvasser}
      */
     setSupervisor(Supervisor) {
         this.Supervisor = Supervisor;
@@ -151,7 +151,7 @@ class Mcanvasser extends BaseEntity {
     /**
      *
      * @param {string} Address
-     * @return {this}
+     * @return {Mcanvasser}
      */
     setAddress(Address) {
         this.Address = Address;

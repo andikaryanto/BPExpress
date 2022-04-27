@@ -8,6 +8,12 @@ export default {
             type: 'number',
             isPrimitive: true,
         },
+        Mcanvassers: {
+            type: '/App/Entity/Mcanvasser',
+            isPrimitive: false,
+            relationType: Orm.MANY_TO_ONE,
+            mappedBy: 'Mvillage'
+        },
         Mshops: {
             type: '/App/Entity/Shop',
             isPrimitive: false,

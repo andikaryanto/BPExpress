@@ -5,7 +5,7 @@ import Mproductcategory from './Mproductcategory';
  */
 class Mproduct extends Entity {
     Id;
-    Productcategory;
+    Mproductcategory;
     Name;
     Description;
     Price;
@@ -25,7 +25,7 @@ class Mproduct extends Entity {
     /**
      *
      * @param {number | string} Id
-     * @return {this}
+     * @return {Mproduct}
      */
     setId(Id) {
         this.Id = Id;
@@ -36,17 +36,17 @@ class Mproduct extends Entity {
      *
      * @return {Mproductcategory}
      */
-    getProductcategory() {
-        return this.Productcategory;
+    getMproductcategory() {
+        return this.Mproductcategory;
     }
 
     /**
      *
-     * @param {Mproductcategory} Productcategory
-     * @return {this}
+     * @param {Mproductcategory} Mproductcategory
+     * @return {Mproduct}
      */
-    setProductcategory(Productcategory) {
-        this.Productcategory = Productcategory;
+    setMproductcategory(Mproductcategory) {
+        this.Mproductcategory = Mproductcategory;
         return this;
     }
 
@@ -61,7 +61,7 @@ class Mproduct extends Entity {
     /**
      *
      * @param {string} Name
-     * @return {this}
+     * @return {Mproduct}
      */
     setName(Name) {
         this.Name = Name;
@@ -79,7 +79,7 @@ class Mproduct extends Entity {
     /**
      *
      * @param {string} Description
-     * @return {this}
+     * @return {Mproduct}
      */
     setDescription(Description) {
         this.Description = Description;
@@ -97,7 +97,7 @@ class Mproduct extends Entity {
     /**
      *
      * @param {float} Price
-     * @return {this}
+     * @return {Mproduct}
      */
     setPrice(Price) {
         this.Price = Price;
@@ -115,7 +115,7 @@ class Mproduct extends Entity {
     /**
      *
      * @param {string} Producer
-     * @return {this}
+     * @return {Mproduct}
      */
     setProducer(Producer) {
         this.Producer = Producer;
@@ -133,7 +133,7 @@ class Mproduct extends Entity {
     /**
      *
      * @param {string} PackSize
-     * @return {this}
+     * @return {Mproduct}
      */
     setPackSize(PackSize) {
         this.PackSize = PackSize;
@@ -151,7 +151,7 @@ class Mproduct extends Entity {
     /**
      *
      * @param {string} Quality
-     * @return {this}
+     * @return {Mproduct}
      */
     setQuality(Quality) {
         this.Quality = Quality;
@@ -169,7 +169,7 @@ class Mproduct extends Entity {
     /**
      *
      * @param {string} Picture
-     * @return {this}
+     * @return {Mproduct}
      */
     setPicture(Picture) {
         this.Picture = Picture;

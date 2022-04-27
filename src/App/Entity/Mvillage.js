@@ -1,10 +1,14 @@
+import EntityList from '../../Core/Entity/EntityList.js';
 import BaseEntity from './BaseEntity.js';
+import Mdistrict from './Mdistrict.js';
 /**
  * @class Mvillage
  */
 class Mvillage extends BaseEntity {
     Id;
-    District;
+    Mcanvassers;
+    Mdistrict;
+    Mshops;
     Name;
     Description;
 
@@ -19,7 +23,7 @@ class Mvillage extends BaseEntity {
     /**
      *
      * @param {number} Id
-     * @return {this}
+     * @return {Mvillage}
      */
     setId(Id) {
         this.Id = Id;
@@ -29,19 +33,56 @@ class Mvillage extends BaseEntity {
 
     /**
      *
-     * @return {string}
+     * @return {EntityList}
      */
-    getDistrict() {
-        return this.District;
+    getMcanvassers() {
+        return this.Mcanvassers;
     }
 
     /**
      *
-     * @param {string} District
-     * @return {this}
+     * @param {EntityList} Mcanvassers
+     * @return {Mvillage}
      */
-    setDistrict(District) {
-        this.District = District;
+    setMcanvassers(Mcanvassers) {
+        this.Mcanvassers = Mcanvassers;
+        return this;
+    }
+
+    /**
+     *
+     * @return {Mdistrict}
+     */
+    getMdistrict() {
+        return this.Mdistrict;
+    }
+
+    /**
+     *
+     * @param {Mdistrict} Mdistrict
+     * @return {Mvillage}
+     */
+    setMdistrict(Mdistrict) {
+        this.Mdistrict = Mdistrict;
+        return this;
+    }
+
+
+    /**
+     *
+     * @return {EntityList}
+     */
+     getMshops() {
+        return this.Mshops;
+    }
+
+    /**
+     *
+     * @param {EntityList} Mshops
+     * @return {Mvillage}
+     */
+    setMshops(Mshops) {
+        this.Mshops = Mshops;
         return this;
     }
 
@@ -56,7 +97,7 @@ class Mvillage extends BaseEntity {
     /**
      *
      * @param {string} Name
-     * @return {this}
+     * @return {Mvillage}
      */
     setName(Name) {
         this.Name = Name;
@@ -74,7 +115,7 @@ class Mvillage extends BaseEntity {
     /**
      *
      * @param {string} Description
-     * @return {this}
+     * @return {Mvillage}
      */
     setDescription(Description) {
         this.Description = Description;

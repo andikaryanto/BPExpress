@@ -1,3 +1,4 @@
+import EntityList from '../../Core/Entity/EntityList';
 import BaseEntity from './BaseEntity';
 
 /**
@@ -5,6 +6,7 @@ import BaseEntity from './BaseEntity';
  */
 class Mproductcategory extends BaseEntity {
     Id;
+    Mproducts
     Name;
     Picture;
     Description;
@@ -20,10 +22,28 @@ class Mproductcategory extends BaseEntity {
     /**
      *
      * @param {number | string} Id
-     * @return {this}
+     * @return {Mproductcategory}
      */
     setId(Id) {
         this.Id = Id;
+        return this;
+    }
+
+    /**
+     *
+     * @return {EntityList}
+     */
+    getMproducts() {
+        return this.Mproducts;
+    }
+
+    /**
+     *
+     * @param {EntityList} Mproducts
+     * @return {Mproductcategory}
+     */
+    setMproducts(Mproducts) {
+        this.Mproducts = Mproducts;
         return this;
     }
 
@@ -38,7 +58,7 @@ class Mproductcategory extends BaseEntity {
     /**
      *
      * @param {string} Name
-     * @return {this}
+     * @return {Mproductcategory}
      */
     setName(Name) {
         this.Name = Name;
@@ -56,7 +76,7 @@ class Mproductcategory extends BaseEntity {
     /**
      *
      * @param {string} Picture
-     * @return {this}
+     * @return {Mproductcategory}
      */
     setPicture(Picture) {
         this.Picture = Picture;
@@ -74,7 +94,7 @@ class Mproductcategory extends BaseEntity {
     /**
      *
      * @param {string} Description
-     * @return {this}
+     * @return {Mproductcategory}
      */
     setDescription(Description) {
         this.Description = Description;

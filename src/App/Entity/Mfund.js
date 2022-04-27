@@ -20,7 +20,7 @@ class Mfund extends BaseEntity {
     /**
      *
      * @param {number | string} Id
-     * @return {this}
+     * @return {Mfund}
      */
     setId(Id) {
         this.Id = Id;
@@ -38,7 +38,7 @@ class Mfund extends BaseEntity {
     /**
      *
      * @param {string} Name
-     * @return {this}
+     * @return {Mfund}
      */
     setName(Name) {
         this.Name = Name;
@@ -56,7 +56,7 @@ class Mfund extends BaseEntity {
     /**
      *
      * @param {string} Description
-     * @return {this}
+     * @return {Mfund}
      */
     setDescription(Description) {
         this.Description = Description;
@@ -74,7 +74,7 @@ class Mfund extends BaseEntity {
     /**
      *
      * @param {float} Value
-     * @return {this}
+     * @return {Mfund}
      */
     setValue(Value) {
         this.Value = Value;
