@@ -12,5 +12,6 @@ require('@babel/register')({
     ],
 });
 
-const {default: CommandLoader} = require('./Core/Express/CommandLoader');
+const config = require('./config');
+const {default: CommandLoader} = require(config.sourcePath + '/Core/Express/CommandLoader');
 CommandLoader.load();
