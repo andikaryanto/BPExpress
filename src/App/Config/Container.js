@@ -1,3 +1,4 @@
+import Command from '../../Services/Command';
 import Controller from '../../Services/Controller';
 import Cron from '../../Services/Cron';
 import Entity from '../../Services/Entity';
@@ -15,6 +16,7 @@ class Container {
      */
     static get service() {
         return [
+            Command,
             Cron,
             Repository,
             Service,
