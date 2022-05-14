@@ -39,7 +39,7 @@ describe('beforeRun', () => {
                     .setMshopproducts(new Collection());
 
                 const modelCollection = new EntityList([shop]);
-                modelCollection.setPage(null).setSize(null).setTotal(1);
+                modelCollection.setTotal(1);
                 return modelCollection;
             });
 
