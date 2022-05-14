@@ -1,6 +1,7 @@
 import Mshop from '../../Entity/Mshop';
 import M_shops from '../../Models/M_shops';
 import BaseViewModel from '../../../Core/ViewModel/ViewModel';
+import MshopproductCollection from '../Mshopproduct/MshopproductCollection';
 
 /**
  * @class MshopViewModel
@@ -20,7 +21,9 @@ class MshopViewModel extends BaseViewModel {
      * @return {void}
      */
     async addResource(object) {
-
+        object.Shopproducts = 
+            await (new MshopproductCollection(await this.entity?.getMshopproducts()))
+                .proceedAndGetData();
     }
 
     /**

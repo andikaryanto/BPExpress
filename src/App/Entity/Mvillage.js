@@ -72,7 +72,7 @@ class Mvillage extends BaseEntity {
      *
      * @return {EntityList}
      */
-     getMshops() {
+    getMshops() {
         return this.Mshops;
     }
 

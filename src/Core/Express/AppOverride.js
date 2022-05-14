@@ -36,6 +36,7 @@ import RequestInstance from '../Middleware/RequestInstance.js';
 import MiddlewareCallback from '../Middleware/MiddlewareCallback.js';
 import Cron from '../../App/Config/Cron.js';
 import CronService from '../Services/CronService.js';
+import ContainerLoader from '../Container/ContainerLoader.js';
 
 /**
  * @class AppOverride
@@ -164,13 +165,7 @@ class AppOverride {
      * @return {CoreContainer}
      */
     static container() {
-        const containerBuilder = new ContainerBuilder();
-
-        for (const service of Container.service) {
-            service(containerBuilder);
-        }
-
-        return CoreContainer.getInstance().setContainerBuilder(containerBuilder);
+        return ContainerLoader.load();
     }
 
     /**

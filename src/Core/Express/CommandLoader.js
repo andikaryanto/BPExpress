@@ -1,9 +1,10 @@
 import Command from '../../App/Config/Command';
+import UtilCommand from '../Utilities/Command';
 import InstanceLoader from './InstanceLoader';
 import CoreCommand from '../Config/Command';
 import yargonaut from 'yargonaut';
 import yargs from 'yargs';
-import chalk from 'chalk';
+import ContainerLoader from '../Container/ContainerLoader';
 
 /**
  * @class CommandLoader
@@ -13,6 +14,7 @@ class CommandLoader {
      * load the exist command
      */
     static load() {
+        ContainerLoader.load();
         let commands = Command.register();
         yargonaut.style('green');
         commands = [...commands, ...CoreCommand.register()];
@@ -22,13 +24,16 @@ class CommandLoader {
                 commandInstance.name(),
                 commandInstance.description(),
                 (yargs) => {
+                    const requireArgs = [];
                     for (const argument of commandInstance.getArguments()) {
-                        if (argument.type == 'required') {
-                            yargs.require(argument.name);
-                        } else {
-                            yargs.option(argument.name);
+                        if (argument.type == UtilCommand.REQUIRE_TYPE) {
+                            requireArgs.push(argument.name);
                         }
+                        yargs.option(argument.name, {
+                            describe: argument.description,
+                        });
                     }
+                    yargs.demandOption(requireArgs);
                 },
                 (args) => {
                     commandInstance.execute(args);
@@ -37,7 +42,8 @@ class CommandLoader {
                 .help()
                 .strict();
         }
-        yargs.parse(process.argv.slice(2))
+        yargs
+            .parse(process.argv.slice(2))
             .argv;
     }
 }

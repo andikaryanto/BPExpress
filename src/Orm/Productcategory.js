@@ -1,4 +1,4 @@
-import Orm from "./Common/Orm";
+import Orm from './Common/Orm';
 
 export default {
     table: 'm_productcategories',
@@ -12,7 +12,7 @@ export default {
             type: '/App/Entity/Mproduct',
             isPrimitive: false,
             relationType: Orm.MANY_TO_ONE,
-            mappedBy: 'Mproductcategory'
+            mappedBy: 'Mproductcategory',
         },
         Name: {
             type: 'string',

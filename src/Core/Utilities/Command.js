@@ -2,7 +2,7 @@
  * @class Command
  */
 class Command {
-    static REQUIRE_TYPE = 'require';
+    static REQUIRE_TYPE = 'required';
     static OPTION_TYPE = 'option';
 
     #_arguments = [];
@@ -51,7 +51,7 @@ class Command {
 
     /**
      *
-     * @param {[]} args
+     * @param {{}} args
      * @return {any}
      */
     async execute(args) {

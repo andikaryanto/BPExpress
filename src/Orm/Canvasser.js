@@ -1,4 +1,4 @@
-import Orm from "./Common/Orm";
+import Orm from './Common/Orm';
 
 export default {
     table: 'm_canvassers',
@@ -13,7 +13,7 @@ export default {
             isPrimitive: false,
             foreignKey: 'M_Village_Id',
             relationType: Orm.ONE_TO_MANY,
-            inversedBy: 'Mcanvasser'
+            inversedBy: 'Mcanvasser',
         },
         Name: {
             type: 'string',

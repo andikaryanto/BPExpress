@@ -1,5 +1,5 @@
 import Entity from '../Entity/Entity';
-import LibCollection from '../Utilities/Collection';
+import UtilCollection from '../Utilities/Collection';
 import BaseViewModel from './ViewModel';
 
 /**
@@ -11,7 +11,7 @@ class Collection {
 
     /**
      *
-     * @param {LibCollection|array} collection
+     * @param {UtilCollection|array} collection
      */
     constructor(collection) {
         this.#_collection = collection;
@@ -30,7 +30,7 @@ class Collection {
      * @return {number|null}
      */
     getPage() {
-        if (this.#_collection instanceof LibCollection) {
+        if (this.#_collection instanceof UtilCollection) {
             return this.#_collection.getPage();
         }
         return null;
@@ -41,7 +41,7 @@ class Collection {
      * @return {number|null}
      */
     getSize() {
-        if (this.#_collection instanceof LibCollection) {
+        if (this.#_collection instanceof UtilCollection) {
             return this.#_collection.getSize();
         }
         return null;
@@ -52,7 +52,7 @@ class Collection {
      * @return {number|null}
      */
     getTotal() {
-        if (this.#_collection instanceof LibCollection) {
+        if (this.#_collection instanceof UtilCollection) {
             return this.#_collection.getTotal();
         }
         return null;
@@ -64,8 +64,8 @@ class Collection {
      */
     async proceed() {
         let arrayCollection = [];
-        if (this.#_collection instanceof LibCollection) {
-            arrayCollection = await this.#_collection.getItems();
+        if (this.#_collection instanceof UtilCollection) {
+            arrayCollection = this.#_collection.getItems();
         } else {
             arrayCollection = this.#_collection;
         }
