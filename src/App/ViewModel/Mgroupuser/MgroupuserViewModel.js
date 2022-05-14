@@ -1,5 +1,7 @@
 import Mgroupuser from '../../Entity/Mgroupuser';
 import BaseViewModel from '../../../Core/ViewModel/ViewModel';
+import MuserViewModel from '../Musers/MuserViewModel';
+import MuserCollection from '../Musers/MuserCollection';
 /**
  * @class MgroupuserViewModel
  */
@@ -17,7 +19,7 @@ class MgroupuserViewModel extends BaseViewModel {
      * @param {{}} object
      */
     async addResource(object) {
-        // object.Users = await this.entity.getMusers();
+        
     }
 
     /**

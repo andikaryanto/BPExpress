@@ -23,7 +23,7 @@ class Entity {
                 const property = prop.substring(3, prop.length);
                 if (caller == 'get') {
                     const field = target.constructor.getProps()[property];
-                    
+
                     if (field && !field.isPrimitive) {
                         const type = require(config.sourcePath + field.type).default;
                         const keyValue = target.constrains[field.foreignKey];
