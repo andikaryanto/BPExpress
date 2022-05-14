@@ -28,9 +28,10 @@ class Response {
 
     /**
      * Set additional data
-     * @param {{}} additionalData 
+     * @param {{}} additionalData
+     * @return {Response}
      */
-    setAdditionalData(additionalData){
+    setAdditionalData(additionalData) {
         this.#_additionalData = additionalData;
         return this;
     }
@@ -68,7 +69,7 @@ class Response {
             Data: data,
             Code: this.#_responseCode,
             Message: this.#_message,
-            AdditionalData: this.#_additionalData
+            AdditionalData: this.#_additionalData,
         };
 
         if (this.#_data instanceof Collection) {

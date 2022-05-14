@@ -13,6 +13,7 @@ export default {
             isPrimitive: false,
             foreignKey: 'M_Groupuser_Id',
             relationType: Orm.ONE_TO_MANY,
+            rule: 'required|number',
         },
         Username: {
             type: 'string',
