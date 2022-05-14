@@ -21,7 +21,7 @@ class MshopViewModel extends BaseViewModel {
      * @return {void}
      */
     async addResource(object) {
-        object.Shopproducts = 
+        object.Shopproducts =
             await (new MshopproductCollection(await this.entity?.getMshopproducts()))
                 .proceedAndGetData();
     }

@@ -12,6 +12,7 @@ import Mshopproduct from '../../../../App/Entity/Mshopproduct';
 import Mproduct from '../../../../App/Entity/Mproduct';
 import MshopproductViewModel from '../../../../App/ViewModel/Mshopproduct/MshopproductViewModel';
 import Mproductcategory from '../../../../App/Entity/Mproductcategory';
+import EntityList from '../../../../Core/Entity/EntityList';
 
 describe('beforeRun', () => {
     const requestService = new RequestService();
@@ -30,9 +31,15 @@ describe('beforeRun', () => {
     describe('getList', () => {
         it('should return return array of', async () => {
             const shopServiceSearch = MockModule.mockModule(ShopService, 'search', () => {
+                const shopProduct = new Mshopproduct();
+                shopProduct.setId(1);
+
                 const shop = new Mshop();
-                shop.setId(1);
-                const modelCollection = new Collection([shop]);
+                shop.setId(1)
+                    .setMshopproducts(new Collection());
+
+                const modelCollection = new EntityList([shop]);
+                modelCollection.setPage(null).setSize(null).setTotal(1);
                 return modelCollection;
             });
 
@@ -42,7 +49,9 @@ describe('beforeRun', () => {
 
             const getResult = await result.getResult();
             expect(getResult).toEqual({
-                Message: 'Success',
+                Page: null,
+                Size: null,
+                Total: 1,
                 Data: [
                     {
                         Id: 1,
@@ -51,9 +60,13 @@ describe('beforeRun', () => {
                         Phone: undefined,
                         MapAddress: undefined,
                         Address: undefined,
+                        Shopproducts: [],
                     },
                 ],
+                Message: 'Success',
                 Code: ResponseCode.OK,
+                AdditionalData: null,
+
             });
             expect(shopServiceSearch).toHaveBeenCalled();
             expect(requestServiceGetQuery).toHaveBeenCalled();

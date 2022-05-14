@@ -11,7 +11,7 @@ class Collection {
       *
       * @param {[]} items
       */
-    constructor(items) {
+    constructor(items = []) {
         this.items = items;
     }
 
@@ -72,10 +72,10 @@ class Collection {
 
     /**
      *
-     * @param {number} size
+     * @param {?number} size
      * @return {Collection}
      */
-    setSize(size) {
+    setSize(size = null) {
         this.size = size;
         return this;
     }

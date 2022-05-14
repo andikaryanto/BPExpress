@@ -28,9 +28,9 @@ class Response {
 
     /**
      * Set additional data
-     * @param {{}} additionalData 
+     * @param {{}} additionalData
      */
-    setAdditionalData(additionalData){
+    setAdditionalData(additionalData) {
         this.#_additionalData = additionalData;
         return this;
     }
@@ -54,9 +54,9 @@ class Response {
         let total = null;
 
         if (this.#_data instanceof Collection) {
-            page = parseInt(this.#_data.getPage());
-            size = parseInt(this.#_data.getSize());
-            total = parseInt(this.#_data.getTotal());
+            page = this.#_data.getPage() != null ? parseInt(this.#_data.getPage()) : null;
+            size = this.#_data.getSize() != null ? parseInt(this.#_data.getSize()) : null;
+            total = this.#_data.getTotal() != null ? parseInt(this.#_data.getTotal()) : null;
             data = await this.#_data.proceedAndGetData();
         } else if (this.#_data instanceof ViewModel) {
             data = await this.#_data.toJson();
@@ -68,7 +68,7 @@ class Response {
             Data: data,
             Code: this.#_responseCode,
             Message: this.#_message,
-            AdditionalData: this.#_additionalData
+            AdditionalData: this.#_additionalData,
         };
 
         if (this.#_data instanceof Collection) {

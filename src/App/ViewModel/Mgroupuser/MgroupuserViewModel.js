@@ -17,7 +17,7 @@ class MgroupuserViewModel extends BaseViewModel {
      * @param {{}} object
      */
     async addResource(object) {
-        object.Users = await this.entity.getMusers();
+        // object.Users = await this.entity.getMusers();
     }
 
     /**

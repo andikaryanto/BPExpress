@@ -30,9 +30,10 @@ class Entity {
                         const primaryKey = ORM.getPrimaryKey(type.name);
                         return async function(...args) {
                             const result = target[prop]();
-                            if (result) {
+                            if (result != undefined) {
                                 return result;
                             }
+
                             if (field.relationType == Orm.ONE_TO_MANY) {
                                 const looper = EntityLooper.getInstance(target.constructor.name);
                                 if (looper.hasEntityList()) {

@@ -42,7 +42,7 @@ class Shop {
         const name = this.#_requestService.getQuery('Name');
 
         const shoplist = await this.#_shopService.search(name);
-        const shopCollection = await (new MshopCollection(shoplist)).proceedAndGetData();
+        const shopCollection = new MshopCollection(shoplist);
 
         return new SuccessResponse('Success', ResponseCode.OK, shopCollection);
     }
