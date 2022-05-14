@@ -23,7 +23,8 @@ class Entity {
                 const property = prop.substring(3, prop.length);
                 if (caller == 'get') {
                     const field = target.constructor.getProps()[property];
-                    if (!field.isPrimitive) {
+                    
+                    if (field && !field.isPrimitive) {
                         const type = require(config.sourcePath + field.type).default;
                         const keyValue = target.constrains[field.foreignKey];
                         const originalMethod = target[prop];
@@ -166,6 +167,7 @@ class Entity {
             const getProp = 'get' + key;
             const propValue = entity[getProp]();
             if (value.isPrimitive) {
+                this.setRule(key, value.rule);
                 if (value.type == 'datetime') {
                     if (propValue) {
                         object[key] = DateFormat.databaseDate(propValue);
@@ -178,6 +180,7 @@ class Entity {
             } else {
                 const related = await propValue;
                 if (value.relationType == Orm.ONE_TO_MANY) {
+                    this.setRule(value.foreignKey, value.rule);
                     if (related) {
                         const primaryKey = ORM.getPrimaryKey(related.constructor.name);
                         const getPrimary = 'get' + primaryKey;

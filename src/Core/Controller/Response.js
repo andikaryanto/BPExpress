@@ -29,6 +29,7 @@ class Response {
     /**
      * Set additional data
      * @param {{}} additionalData
+     * @return {Response}
      */
     setAdditionalData(additionalData) {
         this.#_additionalData = additionalData;
