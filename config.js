@@ -10,8 +10,14 @@ const parameters = yaml.load(fs.readFileSync(appRoot.path +  '/parameters/' + pr
 var sourcePath = appRoot.path + '/' + parameters.source_path;
 
 module.exports = { 
+    environment: parameters.mode,
     sourcePath,
-    transportUsername: process.env.MAILER_USERNAME,
-    transportPassword: process.env.MAILER_PASSWORD
+    rollbarAccessToken: parameters.rollbar_access_token,
+    transportUsername: parameters.transporter_username,
+    transportPassword: parameters.transporter_passsword,
+    transportPort: parameters.transporter_port,
+    transportHost: parameters.transporter_host,
+    useRollbarLogger: parameters.use_rollbar_logger,
+
 }
 

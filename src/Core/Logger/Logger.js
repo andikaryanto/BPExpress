@@ -1,5 +1,6 @@
 
 import config from '../../../config';
+import Rollbar from 'rollbar';
 /**
  * @class Logger
  */
@@ -12,36 +13,51 @@ class Logger {
      * @param {string} message
      */
     static create(fileName, level, message) {
-        const {createLogger, format, transports} = require('winston');
-        const {combine, timestamp, label, printf} = format;
+        if(config.useRollbarLogger){
+            var rollbar = new Rollbar({
+                accessToken: config.rollbarAccessToken,
+                captureUncaught: true,
+                captureUnhandledRejections: true,
+                logLevel: level,
+                fileName: fileName,
+                environment: config.environment
+            })
 
-        const myFormat = printf(({level, message, label, timestamp}) => {
-            return `${timestamp} [${label}] ${level}: ${message}`;
-        });
+            rollbar.log(message);
+        }
 
-        const logger = createLogger(
-            {
-                format: combine(
-                    label({label: level}),
-                    timestamp(),
-                    myFormat,
-                ),
-                transports: [
-                    new transports.File(
-                        {
-                            filename: config.sourcePath + '/Write/logs/'+fileName+'.log',
-                            level,
-                        },
+        if(config.environment == 'development'){
+            const {createLogger, format, transports} = require('winston');
+            const {combine, timestamp, label, printf} = format;
+            level = level.toLowerCase();
+            const myFormat = printf(({level, message, label, timestamp}) => {
+                return `${timestamp} [${label}] ${level}: ${message}`;
+            });
+
+            const logger = createLogger(
+                {
+                    format: combine(
+                        label({label: level}),
+                        timestamp(),
+                        myFormat,
                     ),
-                ],
-                myFormat,
-            },
-        );
-        logger.log({
-            level,
-            message,
+                    transports: [
+                        new transports.File(
+                            {
+                                filename: config.sourcePath + '/Write/logs/'+fileName+'.log',
+                                level,
+                            },
+                        ),
+                    ],
+                    myFormat,
+                },
+            );
+            logger.log({
+                level,
+                message,
 
-        });
+            });
+        }
     }
 }
 

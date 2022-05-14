@@ -1,6 +1,8 @@
 mode: production
+rollbar_access_token: 1bb2dac7504d4f2eaff1ba574998a5ee
 source_path: dist
 transporter_port: 465
 transporter_host: smtp.mailtrap.io
 transporter_username: 5c3ee8f5eafaad
 transporter_password: 05e9b56731288e
+use_rollbar_logger: true

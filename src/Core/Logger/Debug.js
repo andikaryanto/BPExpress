@@ -3,7 +3,7 @@ import Logger from './Logger';
 /**
  * @class Logger
  */
-class Error extends Logger {
+class Debug extends Logger {
     /**
      * Create logs under Write/logs
      *
@@ -11,8 +11,8 @@ class Error extends Logger {
      * @param {string} message
      */
     static create(fileName, message) {
-        super.create(fileName, 'Error', message);
+        super.create(fileName, 'Debug', message);
     }
 }
 
-export default Error;
+export default Debug;

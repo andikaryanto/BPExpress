@@ -11,7 +11,7 @@ class Info extends Logger {
      * @param {string} message
      */
     static create(fileName, message) {
-        super.create(fileName, 'info', message);
+        super.create(fileName, 'Info', message);
     }
 }
 

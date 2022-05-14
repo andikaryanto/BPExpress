@@ -18,8 +18,8 @@ class Transporter {
      */
     createTransport() {
         this.transporter = createTransport({
-            port: process.env.MAILER_PORT,
-            host: process.env.MAILER_HOST,
+            port: config.transportPort,
+            host: config.transportHost,
             auth: {
                 user: config.transportUsername,
                 pass: config.transportPassword,

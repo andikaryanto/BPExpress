@@ -23,7 +23,7 @@ const database = {
         },
     },
 
-    staging: {
+    test: {
         client: process.env.DB_CLIENT,
         connection: {
             host: process.env.DB_HOST,
