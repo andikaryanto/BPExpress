@@ -39,7 +39,6 @@ describe('beforeRun', () => {
                     .setMshopproducts(new Collection());
 
                 const modelCollection = new EntityList([shop]);
-                modelCollection.setTotal(1);
                 return modelCollection;
             });
 
@@ -51,7 +50,7 @@ describe('beforeRun', () => {
             expect(getResult).toEqual({
                 Page: null,
                 Size: null,
-                Total: 1,
+                Total: null,
                 Data: [
                     {
                         Id: 1,
