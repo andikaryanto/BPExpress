@@ -1,4 +1,5 @@
 import {useCallback} from 'react';
+import Collection from '../../App/Config/Collection.js';
 import Db from '../Database/Connection/DbConnection.js';
 import Entity from '../Entity/Entity';
 import EntityList from '../Entity/EntityList';
@@ -244,11 +245,20 @@ class Repository {
     * @param {number|null} size
     * @return {Promise<EntityList>}
     */
-    async collect(filter = {}, page = null, size = null) {
+    async collect(filter = {}, page = 1, size = null) {
+        if(size == null) {
+            size = Collection.numberOfDataReturned()  
+        }
         const associatedKey = {};
         const result = await this.fetch(filter, [], associatedKey, page, size);
         const entityList = new EntityList(result);
-        entityList.setTotal(await this.count(filter));
+        const totalData = await this.count(filter);
+
+        if(size > totalData){
+            size = totalData;
+        }
+
+        entityList.setTotal(totalData);
         entityList.setPage(page);
         entityList.setSize(size);
         entityList.setListOf(this.entity.name);
