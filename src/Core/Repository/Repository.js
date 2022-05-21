@@ -151,6 +151,8 @@ class Repository {
             .clear('where')
             .clear('join')
             .clear('order')
+            .clear('limit')
+            .clear('offset')
             .clear('having');
 
         const result = this.setToEntity(results, associatedKey);
@@ -246,13 +248,16 @@ class Repository {
     * @return {Promise<EntityList>}
     */
     async collect(filter = {}, page = 1, size = null) {
+        const filterForCounting = {...filter};
+
         if (size == null) {
             size = Collection.numberOfDataReturned();
         }
         const associatedKey = {};
+        let totalData = 0; ;
         const result = await this.fetch(filter, [], associatedKey, page, size);
         const entityList = new EntityList(result);
-        const totalData = await this.count(filter);
+        totalData = await this.count(filterForCounting);
 
         if (size > totalData) {
             size = totalData;
@@ -273,7 +278,9 @@ class Repository {
      */
     async count(filter = {}) {
         this.setFilter(filter);
-        const counter = (await this.db.count({count: '*'}))[0].count;
+        const result = await this.db.count({count: '*'});
+        console.log(result);
+        const counter = (result)[0].count;
         this.db.clear('select')
             .clear('where')
             .clear('join');
