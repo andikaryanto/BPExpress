@@ -246,15 +246,15 @@ class Repository {
     * @return {Promise<EntityList>}
     */
     async collect(filter = {}, page = 1, size = null) {
-        if(size == null) {
-            size = Collection.numberOfDataReturned()  
+        if (size == null) {
+            size = Collection.numberOfDataReturned();
         }
         const associatedKey = {};
         const result = await this.fetch(filter, [], associatedKey, page, size);
         const entityList = new EntityList(result);
         const totalData = await this.count(filter);
 
-        if(size > totalData){
+        if (size > totalData) {
             size = totalData;
         }
 

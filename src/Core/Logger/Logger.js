@@ -13,20 +13,20 @@ class Logger {
      * @param {string} message
      */
     static create(fileName, level, message) {
-        if(config.useRollbarLogger){
-            var rollbar = new Rollbar({
+        if (config.useRollbarLogger) {
+            const rollbar = new Rollbar({
                 accessToken: config.rollbarAccessToken,
                 captureUncaught: true,
                 captureUnhandledRejections: true,
                 logLevel: level,
                 fileName: fileName,
-                environment: config.environment
-            })
+                environment: config.environment,
+            });
 
             rollbar.log(message);
         }
 
-        if(config.environment == 'development'){
+        if (config.environment == 'development') {
             const {createLogger, format, transports} = require('winston');
             const {combine, timestamp, label, printf} = format;
             level = level.toLowerCase();
