@@ -64,12 +64,8 @@ class Collection {
      */
     async proceed() {
         let arrayCollection = [];
-        if (this.#_collection instanceof UtilCollection) {
-            arrayCollection = this.#_collection.getItems();
-        } else {
-            arrayCollection = this.#_collection;
-        }
-
+        arrayCollection = this.#_collection;
+    
         for (const item of arrayCollection) {
             await this.shape(item);
         }

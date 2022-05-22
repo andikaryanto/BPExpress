@@ -52,7 +52,6 @@ class Repository {
       * @return {this}
       */
     setFilter(filter = {}, page = null, size = null) {
-        // console.log(filter);
         if (filter.join != undefined) {
             for (const [key, value] of Object.entries(filter.join)) {
                 if (value.type == undefined || value.type.toUpperCase() == 'INNER') {
