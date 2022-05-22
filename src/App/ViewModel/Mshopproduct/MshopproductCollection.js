@@ -2,6 +2,7 @@ import M_shopproducts from '../../Models/M_shopproducts';
 import BaseCollection from '../../../Core/ViewModel/Collection';
 import MshopproductViewModel from './MshopproductViewModel';
 import Mshopproduct from '../../Entity/Mshopproduct';
+import Collection from '../../../Core/Utilities/Collection';
 
 /**
  * @class MshopproductCollection
@@ -9,7 +10,7 @@ import Mshopproduct from '../../Entity/Mshopproduct';
 class MshopproductCollection extends BaseCollection {
     /**
     *
-    * @param {CollectionModel|array} collection
+    * @param {Collection|array} collection
     */
     constructor(collection) {
         super(collection);

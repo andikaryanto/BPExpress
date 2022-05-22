@@ -81,7 +81,6 @@ class GetAllUsers extends GraphQLField {
      */
     async resolve(parent, args, request, context) {
 
-        console.log(request.user);
         let search = {
             page: 1,
             size: 10,

@@ -1,13 +1,11 @@
 import RequestService from '../../../../App/Services/Library/RequestService';
 import ShopService from '../../../../App/Services/ShopService';
-import CollectionModel from '../../../../Core/Model/CollectionModel';
 import Shop from '../../../../App/Controllers/Rest/Customer/Shop';
 import SuccessResponse from '../../../../App/Responses/SuccessResponse';
 import ResponseCode from '../../../../App/Constants/ResponseCode';
 import MockModule from '../../../../Core/Test/MockModule';
 import MshopproductCollection from '../../../../App/ViewModel/Mshopproduct/MshopproductCollection';
 import Mshop from '../../../../App/Entity/Mshop';
-import Collection from '../../../../Core/Utilities/Collection';
 import Mshopproduct from '../../../../App/Entity/Mshopproduct';
 import Mproduct from '../../../../App/Entity/Mproduct';
 import MshopproductViewModel from '../../../../App/ViewModel/Mshopproduct/MshopproductViewModel';
@@ -36,7 +34,7 @@ describe('beforeRun', () => {
 
                 const shop = new Mshop();
                 shop.setId(1)
-                    .setMshopproducts(new Collection());
+                    .setMshopproducts(new EntityList());
 
                 const modelCollection = new EntityList([shop]);
                 return modelCollection;

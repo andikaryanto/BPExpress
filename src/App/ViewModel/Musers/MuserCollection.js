@@ -1,4 +1,4 @@
-import CollectionModel from '../../../Core/Model/CollectionModel';
+import Collection from '../../../Core/Utilities/Collection';
 import BaseCollection from '../../../Core/ViewModel/Collection';
 import Muser from '../../Entity/Muser';
 import MuserViewModel from './MuserViewModel';
@@ -9,7 +9,7 @@ import MuserViewModel from './MuserViewModel';
 class MuserCollection extends BaseCollection {
     /**
      *
-     * @param {CollectionModel|array} collection
+     * @param {Collection|array} collection
      */
     constructor(collection) {
         super(collection);
