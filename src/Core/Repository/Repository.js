@@ -4,6 +4,7 @@ import Db from '../Database/Connection/DbConnection.js';
 import Entity from '../Entity/Entity';
 import EntityList from '../Entity/EntityList';
 import PlainObject from '../Libraries/PlainObject.js';
+import Criteria from './Criteria.js';
 
 /**
  * @class Respository
@@ -34,7 +35,7 @@ class Repository {
 
     /**
       * Fetch the data from database
-      * @param {{}} filter
+      * @param {{}|Criteria} filter
       * @param {[]} columns
       * @param {number|null} page
       * @param {number|null} size
@@ -51,6 +52,7 @@ class Repository {
       * @return {this}
       */
     setFilter(filter = {}, page = null, size = null) {
+        // console.log(filter);
         if (filter.join != undefined) {
             for (const [key, value] of Object.entries(filter.join)) {
                 if (value.type == undefined || value.type.toUpperCase() == 'INNER') {
@@ -119,7 +121,9 @@ class Repository {
         if (filter.page != undefined &&
             filter.size != undefined &&
             filter.page != null &&
-            filter.size != null) {
+            filter.size != null&&
+            filter.page != 0 &&
+            filter.size != 0) {
             const offset = filter.size * (filter.page - 1);
             this.db.limit(filter.size).offset(offset);
         }
@@ -129,7 +133,7 @@ class Repository {
 
     /**
       * Fetch the data from database
-      * @param {{}} filter
+      * @param {{}|Criteria} filter
       * @param {[]} columns
       * @param {{}} associatedKey
       * @param {number|null} page
@@ -143,6 +147,11 @@ class Repository {
         }
 
         this.db.column(this.columns);
+
+        if (filter instanceof Criteria) {
+            filter = filter.getFilter();
+        }
+
         this.setFilter(filter, page, size);
         const results = await this.db;
 
@@ -227,7 +236,7 @@ class Repository {
 
     /**
       * Get one data from database by id primary key, If Data not found will reeturn null
-      * @param {number|string} filter
+      * @param {{}|Criteria} filter
       * @throws {Error}
       * @return {{}|null}
       */
@@ -242,13 +251,13 @@ class Repository {
 
     /**
     *
-    * @param {{}} filter
+    * @param {{}|Criteria} filter
     * @param {number|null} page
     * @param {number|null} size
     * @return {Promise<EntityList>}
     */
     async collect(filter = {}, page = 1, size = null) {
-        const filterForCounting = {...filter};
+        const filterForCounting = filter instanceof Criteria ? filter : {...filter};
 
         if (size == null) {
             size = Collection.numberOfDataReturned();
@@ -273,13 +282,16 @@ class Repository {
 
     /**
      * Count of data from database
-     * @param {{}} filter
+    * @param {{}|Criteria} filter
      * @return {number}
      */
     async count(filter = {}) {
+        if (filter instanceof Criteria) {
+            filter = filter.getFilter();
+        }
+
         this.setFilter(filter);
         const result = await this.db.count({count: '*'});
-        console.log(result);
         const counter = (result)[0].count;
         this.db.clear('select')
             .clear('where')
