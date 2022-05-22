@@ -37,6 +37,8 @@ import MiddlewareCallback from '../Middleware/MiddlewareCallback.js';
 import Cron from '../../App/Config/Cron.js';
 import CronService from '../Services/CronService.js';
 import ContainerLoader from '../Container/ContainerLoader.js';
+import InstanceLoader from './InstanceLoader.js';
+import GraphQLLoader from '../GraphQL/GraphQLLoader.js';
 
 /**
  * @class AppOverride
@@ -52,7 +54,7 @@ class AppOverride {
         AppOverride.logger(app);
         const container = AppOverride.container();
         AppOverride.middleware(app, container);
-        AppOverride.graphQL(app, container);
+        AppOverride.graphQL(app);
         AppOverride.cron();
     }
 
@@ -61,15 +63,18 @@ class AppOverride {
       * @param {Express} app
       * @param {CoreContainer} container
       */
-    static graphQL(app, container) {
-        const RootQuery = new GraphQLObjectType({
+    static graphQL(app) {
+        const queryFields = GraphQLLoader.loadQuery(GraphQL.query());
+        const mutationFields = GraphQLLoader.loadMutation(GraphQL.mutation());
+
+        const rootQuery = new GraphQLObjectType({
             name: 'Query',
-            fields: GraphQL.query(),
+            fields: queryFields,
         });
 
-        const RootMutation = new GraphQLObjectType({
+        const rootMutation = new GraphQLObjectType({
             name: 'Mutation',
-            fields: GraphQL.mutation(),
+            fields: mutationFields,
         });
 
         const eachMiddleware = function(e, i) {
@@ -82,12 +87,13 @@ class AppOverride {
             [...graphqlMiddlewares],
             graphqlHTTP(
                 (request) => ({
+
                     schema: new GraphQLSchema({
-                        query: RootQuery,
-                        mutation: RootMutation,
+                        query: rootQuery,
+                        mutation: rootMutation,
                     }),
                     graphiql: true,
-                    context: {...GraphQL.context(), container, request},
+                    context: {...GraphQL.context(), request},
                 }),
             ),
         );

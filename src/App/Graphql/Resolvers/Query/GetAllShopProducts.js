@@ -9,42 +9,85 @@ import {
     GraphQLList,
     GraphQLInt,
 } from 'graphql';
+import GraphQLField from '../../../../Core/GraphQL/GraphQLField';
+import ShopService from '../../../Services/ShopService';
 import MshopproductCollection from '../../../ViewModel/Mshopproduct/MshopproductCollection';
 import OutputShopProduct from '../../Types/Output/OutputShopProduct';
 
 /**
  * @class GetAllShopProducts
  */
-class GetAllShopProducts {
+class GetAllShopProducts extends GraphQLField {
     /**
-     * Execute graphql to return object of
-     * @return {{}}
+     * @var {ShopService}
      */
-    static execute() {
+    #_shopService;
+
+    /**
+      *
+      * @param {ShopService} shopService
+      */
+    constructor(
+        shopService,
+    ) {
+        super();
+        this.#_shopService = shopService;
+    }
+
+    /**
+      * Return type of the result
+      * @return {GraphQLList}
+      */
+    type() {
+        return new GraphQLList(OutputShopProduct);
+    }
+
+    /**
+      * @inheritdoc
+      */
+    args() {
         return {
-            type: new GraphQLList(OutputShopProduct),
-            args: {
-                ShopId: {
-                    type: new GraphQLNonNull(GraphQLInt),
-                },
-                ProductName: {
-                    type: GraphQLString,
-                },
+            ShopId: {
+                type: new GraphQLNonNull(GraphQLInt),
             },
-            resolve: async function(parent, args, context) {
-                const request = context.request;
-                if (request.graphqlError != undefined) {
-                    throw request.graphqlError;
-                }
-
-                const shopId = args.ShopId;
-                const productName = args.ProductName;
-
-                const shopService = context.container.get('shop.service');
-                const shopProducts = await shopService.products(shopId, productName);
-                return await (new MshopproductCollection(shopProducts)).proceedAndGetData();
+            ProductName: {
+                type: GraphQLString,
             },
         };
+    }
+
+    /**
+      * @inheritdoc
+      */
+    description() {
+        return 'Get list of products of a shop';
+    }
+
+    /**
+      * @inheritdoc
+      */
+    extensions({document, variables, operationName, result, context}) {
+        return '';
+    }
+
+    /**
+      * Resolve data
+      * @param {any} parent
+      * @param {any} args
+      * @param {any} context
+      * @return {[]}
+      */
+    async resolve(parent, args, context) {
+        const request = context.request;
+        if (request.graphqlError != undefined) {
+            throw request.graphqlError;
+        }
+
+        const shopId = args.ShopId;
+        const productName = args.ProductName;
+
+        const shopProducts = await this.#_shopService.products(shopId, productName);
+        return await (new MshopproductCollection(shopProducts)).proceedAndGetData();
     }
 }
 

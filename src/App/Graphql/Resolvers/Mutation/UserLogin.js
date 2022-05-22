@@ -9,31 +9,74 @@ import {
     GraphQLNonNull,
     GraphQLList,
 } from 'graphql';
+import GraphQLField from '../../../../Core/GraphQL/GraphQLField';
+import UserService from '../../../Services/UserService';
 import InputUserLogin from '../../Types/Input/InputUserLogin';
 import OutputUserLogin from '../../Types/Output/OutputUserLogin';
 
 /**
  * @clas UserLogin
  */
-class UserLogin {
+class UserLogin extends GraphQLField {
     /**
-     * Execute graphql to return object of
-     * @return {{}}
+     * @var {UserService}
      */
-    static execute() {
+    #_userService;
+
+    /**
+       *
+       * @param {UserService} userService
+       */
+    constructor(
+        userService,
+    ) {
+        super();
+        this.#_userService = userService;
+    }
+
+    /**
+       * Return type of the result
+       * @return {OutputUserLogin}
+       */
+    type() {
+        return OutputUserLogin;
+    }
+
+    /**
+       * @inheritdoc
+       */
+    args() {
         return {
-            type: OutputUserLogin,
-            args: {
-                InputUserLogin: {type: InputUserLogin},
-            },
-            resolve: async function(parent, args, context) {
-                const userService = context.container.get('user.service');
-                const username = args.InputUserLogin.username;
-                const password = args.InputUserLogin.password;
-                const token = await userService.getToken(username, password);
-                return {token};
-            },
+            InputUserLogin: {type: InputUserLogin},
         };
+    }
+
+    /**
+       * @inheritdoc
+       */
+    description() {
+        return 'Get user token';
+    }
+
+    /**
+       * @inheritdoc
+       */
+    extensions({document, variables, operationName, result, context}) {
+        return '';
+    }
+
+    /**
+       * Resolve data
+       * @param {any} parent
+       * @param {any} args
+       * @param {any} context
+       * @return {[]}
+       */
+    async resolve(parent, args, context) {
+        const username = args.InputUserLogin.username;
+        const password = args.InputUserLogin.password;
+        const token = await this.#_userService.getToken(username, password);
+        return {token};
     }
 }
 
