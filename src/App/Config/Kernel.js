@@ -28,10 +28,7 @@ class Kernel {
             api: [
                 // You middle ware goes here
 
-            ],
-            graphql: [
-                'graphql.middleware',
-            ],
+            ]
         };
     }
 }

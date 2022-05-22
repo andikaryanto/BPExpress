@@ -10,32 +10,83 @@ import {
     GraphQLList,
 } from 'graphql';
 import OutputUser from '../../Types/Output/OutputUser';
+import GraphQLField from '../../../../Core/GraphQL/GraphQLField';
 
 /**
  * @clas UserAdd
  */
-class UserAdd {
+class UserAdd extends GraphQLField {
     /**
-     * Execute graphql to return object of
-     * @return {{}}
+     * @var {ShopService}
      */
-    static execute() {
+    #_shopService;
+
+    /**
+       *
+       * @param {ShopService} shopService
+       */
+    constructor(
+        shopService,
+    ) {
+        super();
+        this.#_shopService = shopService;
+    }
+
+    /**
+       * Return type of the result
+       * @return {OutputUser}
+       */
+    type() {
+        return OutputUser;
+    }
+
+    /**
+       * @inheritdoc
+       */
+    args() {
         return {
-            type: OutputUser,
-            args: {
-                Username: {type: GraphQLString},
-                Password: {type: GraphQLString},
-                GroupuserId: {type: GraphQLID},
-            },
-            resolve: async function(parent, args) {
-                const user = new M_users();
-                user.Username = args.Username;
-                user.M_Groupuser_Id = args.GroupuserId;
-                user.setPassword(args.Password);
-                await user.save();
-                return user.toJson();
-            },
+            Username: {type: GraphQLString},
+            Password: {type: GraphQLString},
+            GroupuserId: {type: GraphQLID},
         };
+    }
+
+    /**
+       * @inheritdoc
+       */
+    description() {
+        return 'Add new user';
+    }
+
+    /**
+    * @inheritdoc
+    */
+    middlewares() {
+        return ['auth-graphql.middleware'];
+    }
+
+    /**
+       * @inheritdoc
+       */
+    extensions({document, variables, operationName, result, context}) {
+        return '';
+    }
+
+    /**
+       * Resolve data
+       * @param {any} parent
+       * @param {any} args
+       * @param {any} request
+       * @param {any} context
+       * @return {[]}
+       */
+    async resolve(parent, args, request, context) {
+        const user = new M_users();
+        user.Username = args.Username;
+        user.M_Groupuser_Id = args.GroupuserId;
+        user.setPassword(args.Password);
+        await user.save();
+        return user.toJson();
     }
 }
 

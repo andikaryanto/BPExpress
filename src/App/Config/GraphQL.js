@@ -12,23 +12,23 @@ class GraphQL {
      * @return {{}}
      */
     static query() {
-        return {
+        return [
             // register all your graphql query here
-            getAllUsers: GetAllUsers.execute(),
-            getAllShopProducts: GetAllShopProducts.execute(),
-            getGroupuserById: GetGroupuserById.execute(),
-        };
+            'getAllUser.graphql',
+            'getAllShopProducts.graphql',
+            'getGroupuserById.graphql',
+        ];
     }
 
     /**
      * @return {{}}
      */
     static mutation() {
-        return {
+        return [
             // register all your graphql mutation here
-            userAdd: UserAdd.execute(),
-            userLogin: UserLogin.execute(),
-        };
+            'userAdd.graphql',
+            'userLogin.graphql',
+        ];
     }
 
     /**
