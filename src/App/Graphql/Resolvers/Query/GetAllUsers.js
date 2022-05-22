@@ -46,7 +46,7 @@ class GetAllUsers extends GraphQLField {
      */
     args() {
         return {
-            Username: {type: GraphQLString},
+            Username: { type: GraphQLString },
         };
     }
 
@@ -58,9 +58,16 @@ class GetAllUsers extends GraphQLField {
     }
 
     /**
+    * @inheritdoc
+    */
+    middlewares() {
+        return ['auth-graphql.middleware'];
+    }
+
+    /**
      * @inheritdoc
      */
-    extensions({document, variables, operationName, result, context}) {
+    extensions({ document, variables, operationName, result, context }) {
         return '';
     }
 
@@ -68,15 +75,13 @@ class GetAllUsers extends GraphQLField {
      * Resolve data
      * @param {any} parent
      * @param {any} args
+       * @param {any} request
      * @param {any} context
      * @return {[]}
      */
-    async resolve(parent, args, context) {
-        const request = context.request;
-        if (request.graphqlError != undefined) {
-            throw request.graphqlError;
-        }
+    async resolve(parent, args, request, context) {
 
+        console.log(request.user);
         let search = {
             page: 1,
             size: 10,

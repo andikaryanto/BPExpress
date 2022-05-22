@@ -69,10 +69,11 @@ class UserLogin extends GraphQLField {
        * Resolve data
        * @param {any} parent
        * @param {any} args
+       * @param {any} request
        * @param {any} context
        * @return {[]}
        */
-    async resolve(parent, args, context) {
+    async resolve(parent, args, request, context) {
         const username = args.InputUserLogin.username;
         const password = args.InputUserLogin.password;
         const token = await this.#_userService.getToken(username, password);

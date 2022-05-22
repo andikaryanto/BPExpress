@@ -59,6 +59,13 @@ class UserAdd extends GraphQLField {
     }
 
     /**
+    * @inheritdoc
+    */
+    middlewares() {
+        return ['auth-graphql.middleware'];
+    }
+
+    /**
        * @inheritdoc
        */
     extensions({document, variables, operationName, result, context}) {
@@ -69,10 +76,11 @@ class UserAdd extends GraphQLField {
        * Resolve data
        * @param {any} parent
        * @param {any} args
+       * @param {any} request
        * @param {any} context
        * @return {[]}
        */
-    async resolve(parent, args, context) {
+    async resolve(parent, args, request, context) {
         const user = new M_users();
         user.Username = args.Username;
         user.M_Groupuser_Id = args.GroupuserId;

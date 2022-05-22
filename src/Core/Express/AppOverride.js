@@ -77,27 +77,19 @@ class AppOverride {
             fields: mutationFields,
         });
 
-        const eachMiddleware = function(e, i) {
-            return MiddlewareCallback.call(e);
-        };
-
-        const graphqlMiddlewares = Kernel.middlewareGroups.graphql.map(eachMiddleware);
-
         app.use('/graphql',
-            [...graphqlMiddlewares],
             graphqlHTTP(
-                (request) => ({
-
+                (request, response) => ({
                     schema: new GraphQLSchema({
                         query: rootQuery,
                         mutation: rootMutation,
                     }),
                     graphiql: true,
-                    context: {...GraphQL.context(), request},
+                    context: {...GraphQL.context(), request, response},
                 }),
             ),
         );
-    }
+}
 
     /**
       *

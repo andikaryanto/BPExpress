@@ -29,6 +29,14 @@ class GraphQLField {
     }
 
     /**
+     * List of middleware, executed before resolve
+     * @return {[]}
+     */
+    middlewares(){
+      return [];
+    }
+
+    /**
       * Extension
       * @param {{}} param
       * @return {any}

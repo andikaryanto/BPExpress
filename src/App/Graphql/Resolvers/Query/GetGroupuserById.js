@@ -63,6 +63,13 @@ class GetGroupuserById extends GraphQLField {
     }
 
     /**
+    * @inheritdoc
+    */
+    middlewares() {
+        return ['auth-graphql.middleware'];
+    }
+
+    /**
      * @inheritdoc
      */
     extensions({document, variables, operationName, result, context}) {
@@ -73,11 +80,12 @@ class GetGroupuserById extends GraphQLField {
      * Resolve data
      * @param {any} parent
      * @param {any} args
+       * @param {any} request
      * @param {any} context
      * @return {[]}
      */
-    async resolve(parent, args, context) {
-        const request = context.request;
+    async resolve(parent, args, request, context) {
+        
         if (request.graphqlError != undefined) {
             throw request.graphqlError;
         }
