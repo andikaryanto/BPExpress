@@ -1,6 +1,6 @@
 
 import config from '../../../config';
-import Rollbar from 'rollbar';
+import Rollbar, { Configuration, Level } from 'rollbar';
 /**
  * @class Logger
  */
@@ -12,14 +12,14 @@ class Logger {
      * @param {string} level
      * @param {string} message
      */
-    static create(fileName, level, message) {
+    static create(fileName: string, level: Level, message: string) {
         if (config.useRollbarLogger) {
             const rollbar = new Rollbar({
                 accessToken: config.rollbarAccessToken,
                 captureUncaught: true,
                 captureUnhandledRejections: true,
                 logLevel: level,
-                fileName: fileName,
+                // fileName: fileName
                 environment: config.environment,
             });
 
@@ -29,9 +29,9 @@ class Logger {
         if (config.environment == 'development') {
             const {createLogger, format, transports} = require('winston');
             const {combine, timestamp, label, printf} = format;
-            level = level.toLowerCase();
-            const myFormat = printf(({level, message, label, timestamp}) => {
-                return `${timestamp} [${label}] ${level}: ${message}`;
+            const strlevel = level.toLowerCase();
+            const myFormat = printf(({strlevel, message, label, timestamp}) => {
+                return `${timestamp} [${label}] ${strlevel}: ${message}`;
             });
 
             const logger = createLogger(
