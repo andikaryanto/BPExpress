@@ -17,7 +17,7 @@ import OutputUserLogin from '../../Types/Output/OutputUserLogin';
 /**
  * @clas UserLogin
  */
-class UserLogin extends GraphQLField {
+class GenerateUserToken extends GraphQLField {
     /**
      * @var {UserService}
      */
@@ -77,8 +77,11 @@ class UserLogin extends GraphQLField {
         const username = args.InputUserLogin.username;
         const password = args.InputUserLogin.password;
         const token = await this.#_userService.getToken(username, password);
+        if(token == null){
+            throw Error('Could not get user token');
+        }
         return {token};
     }
 }
 
-export default UserLogin;
+export default GenerateUserToken;

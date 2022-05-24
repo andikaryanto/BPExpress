@@ -1,6 +1,6 @@
 import {Reference} from 'node-dependency-injection';
+import GenerateUserToken from '../App/Graphql/Resolvers/Mutation/GenerateUserToken';
 import UserAdd from '../App/Graphql/Resolvers/Mutation/UserAdd';
-import UserLogin from '../App/Graphql/Resolvers/Mutation/UserLogin';
 import GetAllShopProducts from '../App/Graphql/Resolvers/Query/GetAllShopProducts';
 import GetAllUsers from '../App/Graphql/Resolvers/Query/GetAllUsers';
 import GetGroupuserById from '../App/Graphql/Resolvers/Query/GetGroupuserById';
@@ -20,6 +20,6 @@ export default (container) => {
 
     container.register('userAdd.graphql', UserAdd);
 
-    container.register('userLogin.graphql', UserLogin)
+    container.register('generateUserToken.graphql', GenerateUserToken)
         .addArgument(new Reference('user.service'));
 };
