@@ -9,7 +9,7 @@ const parameters = yaml.load(fs.readFileSync(appRoot.path +  '/parameters/' + pr
 
 var sourcePath = appRoot.path + '/' + parameters.source_path;
 
-module.exports = { 
+export default { 
     environment: parameters.mode,
     sourcePath,
     rollbarAccessToken: parameters.rollbar_access_token,
