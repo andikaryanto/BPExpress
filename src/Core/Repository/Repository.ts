@@ -1,11 +1,11 @@
 import {useCallback} from 'react';
-import Collection from '../../App/Config/Collection.js';
-import Db from '../Database/Connection/DbConnection.js';
+import Collection from '../../App/Config/Collection';
+import Db from '../Database/Connection/DbConnection';
 import Entity from '../Entity/Entity';
 import EntityList from '../Entity/EntityList';
-import PlainObject from '../Libraries/PlainObject.js';
-import Criteria from './Criteria.js';
-import FilterInterface from './FilterInterface.js';
+import PlainObject from '../Libraries/PlainObject';
+import Criteria from './Criteria';
+import FilterInterface from './FilterInterface';
 
 /**
  * @class Respository

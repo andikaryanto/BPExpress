@@ -27,7 +27,7 @@ class MiddlewareCallback {
                     returnedData = data;
                 }
             } catch (_e) {
-                let e: Error = _e;
+                let e: any = _e;
                 Error.create('error', e.stack);
 
                 if (process.env.APP_MODE == 'development') {

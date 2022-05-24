@@ -9,29 +9,29 @@ class ShopService {
      *
      * @var {MshopRepository} shopRepository
      */
-    #_shopRepository;
+    protected shopRepository: MshopRepository;
 
     /**
      *
      * @var {MshopProductRepository} shopProductRepository
      */
-    #_shopProductRepository;
+    protected shopProductRepository: MshopProductRepository;
 
     /**
      *
      * @param {MshopRepository} shopRepository
      * @param {MshopProductRepository} shopProductRepository
      */
-    constructor(shopRepository, shopProductRepository) {
-        this.#_shopRepository = shopRepository;
-        this.#_shopProductRepository = shopProductRepository;
+    constructor(shopRepository: MshopRepository, shopProductRepository: MshopProductRepository) {
+        this.shopRepository = shopRepository;
+        this.shopProductRepository = shopProductRepository;
     }
     /**
      * Search for shop
      * @param {string} name
      * @return {CollectionModel}
      */
-    async search(name = null) {
+    async search(name:string|null = null) {
         let param = {};
 
         if (name != null) {
@@ -42,7 +42,7 @@ class ShopService {
             };
         }
 
-        const shop = await this.#_shopRepository.collect(param);
+        const shop = await this.shopRepository.collect(param);
         return shop;
     }
     /**
@@ -51,7 +51,7 @@ class ShopService {
      * @param {string} name
      * @return {Promise<[]>}
      */
-    async products(shopId, name = null) {
+    async products(shopId: string|number, name: string|null = null) {
         try {
             const param = {
                 join: {
@@ -72,7 +72,7 @@ class ShopService {
                 };
             }
 
-            const shopProducts = await this.#_shopProductRepository.collect(param);
+            const shopProducts = await this.shopProductRepository.collect(param);
 
             return shopProducts;
         } catch (e) {

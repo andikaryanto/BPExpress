@@ -7,7 +7,7 @@ import BaseViewModel from './ViewModel';
  */
 class Collection {
     protected collection: UtilCollection|Array<any>;
-    protected element = [];
+    protected element: any[] = [];
 
     /**
      *

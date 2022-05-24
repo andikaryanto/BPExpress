@@ -1,4 +1,4 @@
-import StringLib from '../Libraries/StringLib.js';
+import StringLib from '../Libraries/StringLib';
 import config from '../../../config';
 import fs from 'fs';
 
@@ -19,7 +19,7 @@ class Controller {
       * @param {string} controllerName
       * @throws {Error}
       */
-    static makeController(path, controllerName) {
+    static makeController(path: string, controllerName: string) {
         controllerName = StringLib.ucFirst(controllerName);
         const content = function() {
             return `import Controller from "../../Core/Controller/Controller";

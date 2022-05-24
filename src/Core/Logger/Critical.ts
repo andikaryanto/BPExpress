@@ -10,8 +10,8 @@ class Critical extends Logger {
      * @param {string} fileName - will be saved under Write/logs
      * @param {string} message
      */
-    static create(fileName, message) {
-        super.create(fileName, 'Critical', message);
+    static create(fileName: string, message: string) {
+        super.create(fileName, 'critical', message);
     }
 }
 

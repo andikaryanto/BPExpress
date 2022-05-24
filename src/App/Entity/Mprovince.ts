@@ -1,5 +1,5 @@
-import EntityList from '../../Core/Entity/EntityList.js';
-import BaseEntity from './BaseEntity.js';
+import EntityList from '../../Core/Entity/EntityList';
+import BaseEntity from './BaseEntity';
 /**
  * @class Mprovince
  */

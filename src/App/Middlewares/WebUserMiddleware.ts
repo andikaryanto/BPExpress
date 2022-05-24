@@ -1,6 +1,6 @@
 import {ErrorRequestHandler, Request, Response, NextFunction} from 'express';
-import Jwt from '../../Core/Libraries/Jwt.js';
-import Middleware from '../../Core/Middleware/Middleware.js';
+import Jwt from '../../Core/Libraries/Jwt';
+import Middleware from '../../Core/Middleware/Middleware';
 
 /**
  * @class OfficeMiddleware

@@ -4,17 +4,10 @@
   "description": "express scratch",
   "main": "src/index.js",
   "scripts": {
-<<<<<<< HEAD
-    "build": "babel ./src -d build --copy-files",
-    "dev": "nodemon src/index.ts",
-    "prod": "nodemon build/index.ts",
-    "test": "jest src/Test"
-=======
     "build": "babel ./src -d dist --copy-files",
-    "start": "nodemon index.js",
+    "start": "nodemon index.ts",
     "test": "jest src/Test",
     "lint": "eslint --fix src"
->>>>>>> 3a982b96fe68db01ba04776fec3735a42b762df8
   },
   "keywords": [
     "express"
@@ -32,6 +25,9 @@
     "@types/express-session": "^1.17.4",
     "@types/jsonwebtoken": "^8.5.8",
     "@types/md5": "^2.3.2",
+    "@types/morgan": "^1.9.3",
+    "@types/node-cron": "^3.0.1",
+    "@types/react-dom": "^18.0.5",
     "@types/uuid": "^8.3.4",
     "@types/validatorjs": "^3.15.0",
     "app-root-path": "^3.0.0",

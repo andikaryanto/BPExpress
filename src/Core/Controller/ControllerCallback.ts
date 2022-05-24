@@ -44,7 +44,8 @@ class ControllerCallback {
                     returnedData = data;
                 }
                 await ControllerCallback.response(req, res, returnedData);
-            } catch (e) {
+            } catch (_e) {
+                const e: any = _e
                 Error.create('error', e.stack);
 
                 if (process.env.APP_MODE == 'development') {
@@ -64,7 +65,11 @@ class ControllerCallback {
       * @param {Response} res
       * @param {ResponseData|View|Redirect} returnedData
       */
-    static async response(req, res, returnedData) {
+    static async response(
+        req: Request, 
+        res: Response, 
+        returnedData: ResponseData|View|Redirect
+    ) {
         if (returnedData == undefined) {
             res.status(400).send('Unexpected Error, Method didnt return anything');
         }

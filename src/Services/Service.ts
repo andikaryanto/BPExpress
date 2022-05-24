@@ -9,7 +9,7 @@ import Jwt from '../Core/Libraries/Jwt';
 /**
  * @param {ContainerBuilder} container
  */
-export default (container) => {
+export default (container: ContainerBuilder) => {
     container.register('shop.service', ShopService)
         .addArgument(new Reference('shop.repository'))
         .addArgument(new Reference('shopproduct.repository'));

@@ -1,6 +1,6 @@
 
-const express = require('express');
-const {default: App} = require('./Core/App');
+import express from 'express';
+import App from './Core/App';
 
 const app = express();
-App.run(app, express);
+App.run(app, app);

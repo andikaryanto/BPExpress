@@ -1,6 +1,6 @@
-import EntityList from '../../Core/Entity/EntityList.js';
-import BaseEntity from './BaseEntity.js';
-import Mcity from './Mcity.js';
+import EntityList from '../../Core/Entity/EntityList';
+import BaseEntity from './BaseEntity';
+import Mcity from './Mcity';
 /**
  * @class Mdistrict
  */

@@ -1,7 +1,7 @@
-import ResponseData from '../../../Core/Controller/ResponseData.js';
-import ResponseCode from '../../Constants/ResponseCode.js';
-import ModelError from '../../Errors/ModelError.js';
-import M_groupusers from '../../Models/M_groupusers.js';
+import ResponseData from '../../../Core/Controller/ResponseData';
+import ResponseCode from '../../Constants/ResponseCode';
+import ModelError from '../../Errors/ModelError';
+import M_groupusers from '../../Models/M_groupusers';
 
 /**
  * @class GroupuserApi

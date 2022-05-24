@@ -1,12 +1,12 @@
-import UserService from '../../Services/UserService.js';
-import ResponseCode from '../../Constants/ResponseCode.js';
-import ModelError from '../../Errors/ModelError.js';
+import UserService from '../../Services/UserService';
+import ResponseCode from '../../Constants/ResponseCode';
+import ModelError from '../../Errors/ModelError';
 import jwt from 'jsonwebtoken';
-import CommonLib from '../../Libraries/CommonLib.js';
-import M_users from '../../Models/M_users.js';
-import DbTrans from '../../../Core/Database/DbTrans.js';
-import Controller from '../../../Core/Controller/Controller.js';
-import ResponseData from '../../../Core/Controller/ResponseData.js';
+import CommonLib from '../../Libraries/CommonLib';
+import M_users from '../../Models/M_users';
+import DbTrans from '../../../Core/Database/DbTrans';
+import Controller from '../../../Core/Controller/Controller';
+import ResponseData from '../../../Core/Controller/ResponseData';
 /**
  * @class UserApi
  */

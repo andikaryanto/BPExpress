@@ -1,7 +1,7 @@
 import ResponseCode from '../Constants/ResponseCode';
 import jwt from 'jsonwebtoken';
 import {ErrorRequestHandler, Request, Response, NextFunction} from 'express';
-import Middleware from '../../Core/Middleware/Middleware.js';
+import Middleware from '../../Core/Middleware/Middleware';
 
 /**
  *

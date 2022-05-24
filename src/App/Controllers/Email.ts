@@ -1,7 +1,6 @@
 
-import {transportPassword} from '../../../config.js';
-import Controller from '../../Core/Controller/Controller.js';
-import Transporter from '../../Core/Email/Transporter.js';
+import Controller from '../../Core/Controller/Controller';
+import Transporter from '../../Core/Email/Transporter';
 
 /**
  * @class Email

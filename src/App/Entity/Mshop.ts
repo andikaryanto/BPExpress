@@ -1,8 +1,8 @@
-import BaseEntity from './BaseEntity.js';
-import Mfund from './Mfund.js';
-import Mvillage from './Mvillage.js';
+import BaseEntity from './BaseEntity';
+import Mfund from './Mfund';
+import Mvillage from './Mvillage';
 import Mcanvasser from './Mcanvasser';
-import EntityList from '../../Core/Entity/EntityList.js';
+import EntityList from '../../Core/Entity/EntityList';
 /**
  * @class Mgroupuser
  */

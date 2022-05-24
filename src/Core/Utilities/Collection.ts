@@ -99,7 +99,7 @@ class Collection {
                 }
             }
         };
-        const construct = this.constructor;
+        const construct: any = this.constructor;
         return new construct(newdata);
     }
 
@@ -122,7 +122,7 @@ class Collection {
                 }
             }
         }
-        const construct = this.constructor;
+        const construct: any = this.constructor;
         return new construct(newdata);
     }
 
@@ -161,7 +161,7 @@ class Collection {
                 }
             }
         }
-        const construct = this.constructor;
+        const construct: any = this.constructor;
         return new construct(newdata);
     }
 
@@ -175,7 +175,7 @@ class Collection {
             throw new Error('Number must be greater than 0 (zero)');
         }
 
-        const construct = this.constructor;
+        const construct: any = this.constructor;
         if (this.items.length < number) {
             return new construct(this.items);
         } else {

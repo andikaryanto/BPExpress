@@ -1,22 +1,22 @@
 
-import Controller from '../../Core/Controller/Controller.js';
-import ResponseData from '../../Core/Controller/ResponseData.js';
-import View from '../../Core/Controller/View.js';
-import MshopProductRepository from '../Repositories/MshopProductRepository.js';
-import EntityManager from '../../Core/Entity/EntityManager.js';
+import Controller from '../../Core/Controller/Controller';
+import ResponseData from '../../Core/Controller/ResponseData';
+import View from '../../Core/Controller/View';
+import MshopProductRepository from '../Repositories/MshopProductRepository';
+import EntityManager from '../../Core/Entity/EntityManager';
 import EntityUnit from '../../Core/Entity/EntityUnit';
-import MgroupuserViewModel from '../ViewModel/Mgroupuser/MgroupuserViewModel.js';
-import SuccessResponse from '../Responses/SuccessResponse.js';
-import ResponseCode from '../Constants/ResponseCode.js';
-import DbTrans from '../../Core/Database/DbTrans.js';
-import MuserRepository from '../Repositories/MuserRepository.js';
-import MgroupuserRepository from '../Repositories/MgroupuserRepository.js';
-import MuserViewModel from '../ViewModel/Musers/MuserViewModel.js';
-import Muser from '../Entity/Muser.js';
-import MuserCollection from '../ViewModel/Musers/MuserCollection.js';
-import Logger from '../../Core/Logger/Logger.js';
-import Info from '../../Core/Logger/Info.js';
-import DateFormat from '../../Core/Libraries/DateFormat.js';
+import MgroupuserViewModel from '../ViewModel/Mgroupuser/MgroupuserViewModel';
+import SuccessResponse from '../Responses/SuccessResponse';
+import ResponseCode from '../Constants/ResponseCode';
+import DbTrans from '../../Core/Database/DbTrans';
+import MuserRepository from '../Repositories/MuserRepository';
+import MgroupuserRepository from '../Repositories/MgroupuserRepository';
+import MuserViewModel from '../ViewModel/Musers/MuserViewModel';
+import Muser from '../Entity/Muser';
+import MuserCollection from '../ViewModel/Musers/MuserCollection';
+import Logger from '../../Core/Logger/Logger';
+import Info from '../../Core/Logger/Info';
+import DateFormat from '../../Core/Libraries/DateFormat';
 /**
  * @class TestController
  */

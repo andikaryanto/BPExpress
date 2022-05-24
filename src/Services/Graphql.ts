@@ -1,4 +1,4 @@
-import {Reference} from 'node-dependency-injection';
+import {ContainerBuilder, Reference} from 'node-dependency-injection';
 import GenerateUserToken from '../App/Graphql/Resolvers/Mutation/GenerateUserToken';
 import UserAdd from '../App/Graphql/Resolvers/Mutation/UserAdd';
 import GetAllShopProducts from '../App/Graphql/Resolvers/Query/GetAllShopProducts';
@@ -8,7 +8,7 @@ import GetGroupuserById from '../App/Graphql/Resolvers/Query/GetGroupuserById';
 /**
  * @param {ContainerBuilder} container
  */
-export default (container) => {
+export default (container: ContainerBuilder) => {
     container.register('getAllUser.graphql', GetAllUsers)
         .addArgument(new Reference('user.repository'));
 

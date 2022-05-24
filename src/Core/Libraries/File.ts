@@ -1,7 +1,7 @@
 import DateFormat from './DateFormat';
 import UploadedFile from './UploadedFile';
 import config from '../../../config';
-import UploadedFileError from '../Errors/UploadedFileError.js';
+import UploadedFileError from '../Errors/UploadedFileError';
 import md5 from 'md5';
 import {v4 as uuidv4} from 'uuid';
 

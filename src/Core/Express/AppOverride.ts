@@ -10,7 +10,7 @@ import Kernel from '../../App/Config/Kernel';
 import Web from '../../App/Routes/Web';
 import Api from '../../App/Routes/Api';
 import csrf from 'csurf';
-import VerifyCsrf from '../Middleware/VerifyCsrf.js';
+import VerifyCsrf from '../Middleware/VerifyCsrf';
 import morgan from 'morgan';
 import config from '../../../config';
 
@@ -32,13 +32,14 @@ import GraphQL from '../../App/Config/GraphQL';
 import Container from '../../App/Config/Container';
 import CoreContainer from '../Container/Container';
 import {ContainerBuilder} from 'node-dependency-injection';
-import RequestInstance from '../Middleware/RequestInstance.js';
-import MiddlewareCallback from '../Middleware/MiddlewareCallback.js';
-import Cron from '../../App/Config/Cron.js';
-import CronService from '../Services/CronService.js';
-import ContainerLoader from '../Container/ContainerLoader.js';
-import InstanceLoader from './InstanceLoader.js';
-import GraphQLLoader from '../GraphQL/GraphQLLoader.js';
+import RequestInstance from '../Middleware/RequestInstance';
+import MiddlewareCallback from '../Middleware/MiddlewareCallback';
+import Cron from '../../App/Config/Cron';
+import CronService from '../Services/CronService';
+import ContainerLoader from '../Container/ContainerLoader';
+import InstanceLoader from './InstanceLoader';
+import GraphQLLoader from '../GraphQL/GraphQLLoader';
+import TypeHelper from '../Libraries/TypeHelper';
 
 /**
  * @class AppOverride
@@ -53,7 +54,7 @@ class AppOverride {
         // AppOverride.csrf(app);
         AppOverride.logger(app);
         const container = AppOverride.container();
-        AppOverride.middleware(app, container);
+        AppOverride.middleware(app);
         AppOverride.graphQL(app);
         AppOverride.cron();
     }
@@ -61,7 +62,6 @@ class AppOverride {
     /**
       *
       * @param {Express} app
-      * @param {CoreContainer} container
       */
     static graphQL(app: Express) {
         const queryFields = GraphQLLoader.loadQuery(GraphQL.query());
@@ -136,7 +136,7 @@ class AppOverride {
       * @param {Express} app
       */
     static middleware(app: Express) {
-        const eachMiddleware = function(e, i) {
+        const eachMiddleware = function(e: any, i: number) {
             return MiddlewareCallback.call(e);
         };
 
@@ -171,7 +171,7 @@ class AppOverride {
      * @param {Express} app
      * @return {void}
      */
-    static logger(app) {
+    static logger(app: Express) {
         const accessLogStream = rfs.createStream('access.log', {
             interval: '1d',
             path: config.sourcePath + '/Write/logs',

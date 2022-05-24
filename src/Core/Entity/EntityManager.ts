@@ -1,6 +1,6 @@
 import Validator from 'validatorjs';
-import Db from '../Database/Connection/DbConnection.js';
-import ORM from '../Database/ORM.js';
+import Db from '../Database/Connection/DbConnection';
+import ORM from '../Database/ORM';
 import Entity from './Entity';
 
 /**

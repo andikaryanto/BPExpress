@@ -1,6 +1,6 @@
-import BaseEntity from './BaseEntity.js';
-import Muser from './Muser.js';
-import Mvillage from './Mvillage.js';
+import BaseEntity from './BaseEntity';
+import Muser from './Muser';
+import Mvillage from './Mvillage';
 /**
  * @class Mcanvasser
  */

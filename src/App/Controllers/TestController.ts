@@ -1,12 +1,12 @@
 
-import Container from '../../Core/Container/Container.js';
-import Controller from '../../Core/Controller/Controller.js';
-import ResponseData from '../../Core/Controller/ResponseData.js';
-import View from '../../Core/Controller/View.js';
+import Container from '../../Core/Container/Container';
+import Controller from '../../Core/Controller/Controller';
+import ResponseData from '../../Core/Controller/ResponseData';
+import View from '../../Core/Controller/View';
 import yaml from 'js-yaml';
-import Yaml from '../../Core/Libraries/Yaml.js';
-import MuserRepository from '../Repositories/MuserRepository.js';
-import MshopProductRepository from '../Repositories/MshopProductRepository.js';
+import Yaml from '../../Core/Libraries/Yaml';
+import MuserRepository from '../Repositories/MuserRepository';
+import MshopProductRepository from '../Repositories/MshopProductRepository';
 /**
  * @class TestController
  */

@@ -11,7 +11,7 @@ var sourcePath = appRoot.path + '/' + parameters.source_path;
 
 export default { 
     environment: parameters.mode,
-    sourcePath,
+    sourcePath: sourcePath,
     rollbarAccessToken: parameters.rollbar_access_token,
     transportUsername: parameters.transporter_username,
     transportPassword: parameters.transporter_passsword,

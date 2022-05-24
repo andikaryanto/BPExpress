@@ -1,9 +1,4 @@
 import Routers from '../../Core/Config/Routers';
-import LoginController from '../Controllers/Office/LoginController';
-import MgroupuserController from '../Controllers/Office/MgroupuserController';
-import MuserController from '../Controllers/Office/MuserController';
-import TestController from '../Controllers/TestController';
-import OfficeMiddleware from '../Middlewares/OfficeMiddleware';
 
 const Web = () => {
     const routers = new Routers();
@@ -26,8 +21,8 @@ const Web = () => {
     routers.post('/office/dologin', [], 'web.office-login.controller', 'doLogin');
     routers.get('/office/dologout', [], 'web.office-login.controller', 'doLogout');
 
-    routers.group('/office', ['web-user.middleware', 'office.middleware'], (routers) => {
-        routers.group('/mgroupuser', [], (routers) => {
+    routers.group('/office', ['web-user.middleware', 'office.middleware'], (routers: Routers) => {
+        routers.group('/mgroupuser', [], (routers: Routers) => {
             routers.get('', [], 'web.office-groupuser.controller', 'index');
             routers.get(
                 '/:Id/edit',
@@ -37,7 +32,7 @@ const Web = () => {
                 {routedata: 'This data is sent from routing'},
             );
             routers.post('/getalldata', [], 'web.office-groupuser.controller', 'getAllData');
-            routers.group('/data', [], function(routers) {
+            routers.group('/data', [], function(routers: Routers) {
                 routers.get('/list', [], 'web.office-groupuser.controller', 'list');
             });
         });

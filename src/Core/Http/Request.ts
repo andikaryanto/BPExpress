@@ -1,4 +1,4 @@
-import UploadedFile from '../Libraries/UploadedFile.js';
+import UploadedFile from '../Libraries/UploadedFile';
 import {Response as ExpressResponse, Request as ExpressRequest, NextFunction} from 'express';
 
 /**

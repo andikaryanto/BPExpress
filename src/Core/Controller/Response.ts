@@ -9,7 +9,7 @@ class Response {
     protected message: string;
     protected code: number;
     protected responseCode: ResponseCode;
-    protected data: any;
+    protected data: Collection|ViewModel|Array<any>|{};
     protected additionalData = {};
 
     /**
@@ -17,9 +17,9 @@ class Response {
      * @param {string} message
      * @param {number} code
      * @param {[]} responseCode
-     * @param {{}} data
+     * @param {Collection|ViewModel|Array<any>|{}} data
      */
-    constructor(message: string, code: number, responseCode: ResponseCode, data: {}) {
+    constructor(message: string, code: number, responseCode: ResponseCode, data:Collection|ViewModel|Array<any>|{}) {
        this.message = message;
        this.code = code;
        this.responseCode = responseCode;
@@ -56,9 +56,12 @@ class Response {
         let total = null;
 
         if (this.data instanceof Collection) {
-            page =this.data.getPage() != null ? parseInt(this.data.getPage()) : null;
-            size =this.data.getSize() != null ? parseInt(this.data.getSize()) : null;
-            total =this.data.getTotal() != null ? parseInt(this.data.getTotal()) : null;
+            const strPage: any = this.data.getPage()?.toString();
+            const strSize: any = this.data.getSize()?.toString();
+            const strTotal: any = this.data.getTotal()?.toString();
+            page = this.data.getPage() != null ? parseInt(strPage) : null;
+            size =this.data.getSize() != null ? parseInt(strSize) : null;
+            total =this.data.getTotal() != null ? parseInt(strTotal) : null;
             data = await this.data.proceedAndGetData();
         } else if (this.data instanceof ViewModel) {
             data = await this.data.toJson();
@@ -71,16 +74,17 @@ class Response {
             Code:this.responseCode,
             Message:this.message,
             AdditionalData:this.additionalData,
+            Page: 0,
+            Size: 0,
+            Total: 0
         };
 
-        if (this.data instanceof Collection) {
-            result = {
-                Page: page,
-                Size: size,
-                Total: total,
-                ...result,
-            };
-        }
+        // if (this.data instanceof Collection) {
+        //     result.Page = page,
+        //         Size: size,
+        //         Total: total
+        //     };
+        // }
 
         return result;
     }

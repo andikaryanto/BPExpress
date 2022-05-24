@@ -9,7 +9,7 @@ class Logger {
      * Create logs under Write/logs
      *
      * @param {string} fileName - will be saved under Write/logs
-     * @param {string} level
+     * @param {Level} level
      * @param {string} message
      */
     static create(fileName: string, level: Level, message: string) {
@@ -30,7 +30,7 @@ class Logger {
             const {createLogger, format, transports} = require('winston');
             const {combine, timestamp, label, printf} = format;
             const strlevel = level.toLowerCase();
-            const myFormat = printf(({strlevel, message, label, timestamp}) => {
+            const myFormat = printf(({strlevel, message, label, timestamp}: any) => {
                 return `${timestamp} [${label}] ${strlevel}: ${message}`;
             });
 

@@ -1,9 +1,9 @@
-import EntityUnit from '../../Core/Entity/EntityUnit.js';
-import Jwt from '../../Core/Libraries/Jwt.js';
-import Muser from '../Entity/Muser.js';
-import CommonLib from '../Libraries/CommonLib.js';
-import MuserRepository from '../Repositories/MuserRepository.js';
-import CommonService from './Library/CommonService.js';
+import EntityUnit from '../../Core/Entity/EntityUnit';
+import Jwt from '../../Core/Libraries/Jwt';
+import Muser from '../Entity/Muser';
+import CommonLib from '../Libraries/CommonLib';
+import MuserRepository from '../Repositories/MuserRepository';
+import CommonService from './Library/CommonService';
 
 /**
  * @class UserService

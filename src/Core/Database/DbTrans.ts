@@ -1,5 +1,5 @@
 
-import DbConnection from './Connection/DbConnection.js';
+import DbConnection from './Connection/DbConnection';
 
 /**
  * @clas DbTrans

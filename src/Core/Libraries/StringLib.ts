@@ -7,7 +7,7 @@ class StringLib {
       * @param {string} value
       * @return {string}
       */
-    static ucFirst(value) {
+    static ucFirst(value: string) {
         if (typeof value !== 'string') {
             return '';
         }

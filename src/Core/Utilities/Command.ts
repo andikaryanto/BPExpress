@@ -5,7 +5,7 @@ class Command {
     static REQUIRE_TYPE = 'required';
     static OPTION_TYPE = 'option';
 
-    #_arguments = [];
+    protected arguments: any[] = [];
 
     /**
      *
@@ -21,7 +21,8 @@ class Command {
      * @param {string} description
      */
     addArgument(type: string, name: string, description: string) {
-        this.#_arguments.push({type, name, description});
+        const arg: any = {type, name, description};
+        this.arguments.push(arg);
     }
 
     /**
@@ -29,7 +30,7 @@ class Command {
      * @return {[]}
      */
     getArguments() {
-        return this.#_arguments;
+        return this.arguments;
     }
 
     /**

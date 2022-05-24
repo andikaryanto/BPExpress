@@ -1,5 +1,4 @@
-import VerifyCsrf from '../../Core/Middleware/VerifyCsrf.js';
-import GraphqlMiddleware from '../Middlewares/GraphqlMiddleware.js';
+import VerifyCsrf from '../../Core/Middleware/VerifyCsrf';
 /**
  * @class Kernel
  */

@@ -36,7 +36,7 @@ class Table {
                \nexport default ${modelName};`;
         };
 
-        const fileName = config.sourcePath + '/App/Models/${modelName}.js';
+        const fileName = config.sourcePath + '/App/Models/${modelName}';
         fs.open(fileName, 'r', function(err, fd) {
             if (err) {
                 fs.writeFile(fileName, content(), function(err) {

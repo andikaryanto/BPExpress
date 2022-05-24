@@ -1,4 +1,4 @@
-import Routers from '../../Core/Config/Routers.js';
+import Routers from '../../Core/Config/Routers';
 
 const Api = () => {
     const routers = new Routers();

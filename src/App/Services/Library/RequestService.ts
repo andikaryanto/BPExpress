@@ -1,3 +1,4 @@
+import QueryString from 'qs';
 import Request from '../../../Core/Http/Request';
 
 
@@ -14,13 +15,13 @@ class RequestService {
 
     /**
      *
-     * @param {string} key
-     * @return {*}
+     * @param {string|null} key
+     * @return {QueryString.ParsedQs|string|any}
      */
-    getQuery(key = null) {
+    getQuery(key: string|null = null) {
         const request = Request.getInstance().getRequest();
         if (key == null) {
-            returnrequest.query;
+            return request.query;
         }
 
         return request.query[key];
@@ -29,9 +30,9 @@ class RequestService {
     /**
      *
      * @param {string} key
-     * @return {#}
+     * @return {QueryString.ParsedQs|string|any}
      */
-    getParams(key) {
+    getParams(key: string|null) {
         const request = Request.getInstance().getRequest();
         if (key == null) {
             return request.params;
@@ -43,9 +44,9 @@ class RequestService {
     /**
      *
      * @param {string} key
-     * @return {*}
+     * @return {QueryString.ParsedQs|string}
      */
-    getBody(key) {
+    getBody(key: string|null) {
         const request = Request.getInstance().getRequest();
         if (key == null) {
             return request.body;

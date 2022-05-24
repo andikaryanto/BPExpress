@@ -1,9 +1,3 @@
-import UserAdd from '../Graphql/Resolvers/Mutation/UserAdd';
-import UserLogin from '../Graphql/Resolvers/Mutation/UserLogin';
-import GetAllShopProducts from '../Graphql/Resolvers/Query/GetAllShopProducts';
-import GetAllUsers from '../Graphql/Resolvers/Query/GetAllUsers';
-import GetGroupuserById from '../Graphql/Resolvers/Query/GetGroupuserById';
-
 /**
  * @class GraphQL
  */
