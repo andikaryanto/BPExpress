@@ -11,9 +11,9 @@ import Collection from '../../../Core/Utilities/Collection';
 class MshopproductCollection extends BaseCollection {
     /**
     *
-    * @param {Collection|array} collection
+    * @param {Collection} collection
     */
-    constructor(collection: CollectionModel | Array<any>) {
+    constructor(collection: Collection) {
         super(collection);
     }
 

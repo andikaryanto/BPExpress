@@ -9,9 +9,9 @@ import MuserViewModel from './MuserViewModel';
 class MuserCollection extends BaseCollection {
     /**
      *
-     * @param {Collection|array} collection
+     * @param {Collection} collection
      */
-    constructor(collection: Collection | Array<any>) {
+    constructor(collection: Collection) {
         super(collection);
     }
 

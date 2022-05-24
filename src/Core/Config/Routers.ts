@@ -41,7 +41,7 @@ class Routers {
         }
         this.router.use(intance.router);
 
-        const midlewares = middleware.map((e, i) => {
+        const midlewares = middleware.map((e: any, i: number) => {
             return MiddlewareCallback.call(e);
         });
 

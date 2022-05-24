@@ -9,9 +9,9 @@ import Collection from '../../../Core/Utilities/Collection';
 class MproductcategoryCollection extends BaseCollection {
     /**
     *
-    * @param {Collection|array} collection
+    * @param {Collection} collection
     */
-    constructor(collection) {
+    constructor(collection: Collection) {
         super(collection);
     }
 
