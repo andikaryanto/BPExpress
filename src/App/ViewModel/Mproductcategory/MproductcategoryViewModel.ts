@@ -1,16 +1,18 @@
-import M_productcategories from '../../Models/M_productcategories';
-import BaseViewModel from '../BaseViewModel';
+import Mproductcategory from '../../Entity/Mproductcategory';
+import BaseViewModel from '../../../Core/ViewModel/ViewModel';
 
 /**
  * @class MproductcategoryViewModel
  */
 class MproductcategoryViewModel extends BaseViewModel {
+
+    private entity: Mproductcategory;
     /**
      *
-     * @param {M_productcategories} model
+     * @param {Mproductcategory} entity
      */
-    constructor(model: M_productcategories) {
-        super(true, model);
+    constructor(entity: Mproductcategory) {
+        super(true, entity);
     }
 
     /**
@@ -18,25 +20,24 @@ class MproductcategoryViewModel extends BaseViewModel {
      * @param {any} object
      * @return {Promise<void>}
      */
-    async addResource(object: any): Promise<void> {
-        // object.Product = await this.model.M_Product();
-        return;
+    async addResource(object: any) {
+        // object.Product = await this.entity.M_Product();
     }
 
     /**
-     * Get json frmo model
-     * @return {Promise<{}>}
+     * Get json frmo entity
+     * @return {{}}
      */
-    async toJson(): Promise<{}> {
-        if (this.model == null) {
-            return {};
+    async toJson() {
+        if (this.entity == null) {
+            return null;
         }
 
         const json = {
-            Id: this.model.Id,
-            Name: this.model.Name,
-            Picture: this.model.Picture,
-            Description: this.model.Description,
+            Id: this.entity.getId(),
+            Name: this.entity.getName(),
+            Picture: this.entity.getPicture(),
+            Description: this.entity.getDescription(),
         };
 
         if (this.getAutoAddResource()) {

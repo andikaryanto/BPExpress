@@ -1,16 +1,18 @@
-import M_users from '../../Models/M_users';
-import BaseViewModel from '../BaseViewModel';
+import BaseViewModel from '../../../Core/ViewModel/ViewModel';
+import Muser from '../../Entity/Muser';
 import MgroupuserViewModel from '../Mgroupuser/MgroupuserViewModel';
 /**
  * @class MuserViewModel
  */
 class MuserViewModel extends BaseViewModel {
+
+    private entity: Muser;
     /**
      *
-     * @param {M_users} model
+     * @param {Muser} entity
      */
-    constructor(model: M_users) {
-        super(true, model);
+    constructor(entity: Muser) {
+        super(true, entity);
     }
 
     /**
@@ -18,27 +20,24 @@ class MuserViewModel extends BaseViewModel {
      * @param {any} object
      * @return {Promise<void>}
      */
-    async addResource(object: any): Promise<void> {
-        let groupUserViewModel = null;
-        if (this.model.M_Groupuser_Id != null) {
-            const groupuser = await this.model.M_Groupuser();
-            groupUserViewModel = await (new MgroupuserViewModel(groupuser)).toJson();
-            object.Groupuser = groupUserViewModel;
-        }
+    async addResource(object: any) {
+        const groupuser = await this.entity.getMgroupuser();
+        const groupUserViewModel = await (new MgroupuserViewModel(groupuser)).toJson();
+        object.Groupuser = groupUserViewModel;
     }
 
     /**
      * Model to json data
-     * @return {Promise<{}>}
+     * @return {Promise<{}>|Promise<null>}
      */
-    async toJson(): Promise<{}> {
-        if (this.model == null) {
-            return {};
+    async toJson() {
+        if (this.entity == null) {
+            return null;
         }
 
         const json = {
-            Id: this.model.Id,
-            Username: this.model.Username,
+            Id: this.entity.Id,
+            Username: this.entity.Username,
         };
 
         if (this.getAutoAddResource()) {

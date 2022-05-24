@@ -1,4 +1,5 @@
 node_modules
-build
+dist
 package.json.old
 Requests
+src/Write/*

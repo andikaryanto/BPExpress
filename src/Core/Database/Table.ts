@@ -1,7 +1,7 @@
 import DbConnection from './Connection/DbConnection';
 import fs from 'fs';
 import StringLib from '../Libraries/StringLib';
-import approot from 'app-root-path';
+import config from '../../../config';
 /**
  * Class Table
  */
@@ -36,12 +36,12 @@ class Table {
                \nexport default ${modelName};`;
         };
 
-        const fileName = `${approot}/src/App/Models/${modelName}.js`;
+        const fileName = config.sourcePath + '/App/Models/${modelName}.js';
         fs.open(fileName, 'r', function(err, fd) {
             if (err) {
                 fs.writeFile(fileName, content(), function(err) {
                     if (err) throw err;
-                    console.log('Saved!');
+                    // console.log('Saved!');
                 });
             } else {
                 throw new Error('File is already exist !');

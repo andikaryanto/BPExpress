@@ -1,13 +1,14 @@
 import M_products from '../../Models/M_products';
-import BaseCollection from '../BaseCollection';
+import BaseCollection from '../../../Core/ViewModel/Collection';
 import MproductViewModel from './MproductViewModel';
+import Collection from '../../../Core/Utilities/Collection';
 /**
  * @class MproductCollection
  */
 class MproductCollection extends BaseCollection {
     /**
     *
-    * @param {CollectionModel|array} collection
+    * @param {Collection|array} collection
     */
     constructor(collection) {
         super(collection);
@@ -15,10 +16,10 @@ class MproductCollection extends BaseCollection {
 
     /**
      *
-     * @param {M_products} model
+     * @param {M_products} entity
      */
-    async shape(model) {
-        await this.addItem(new MproductViewModel(model));
+    async shape(entity) {
+        await this.addItem(new MproductViewModel(entity));
     }
 }
 

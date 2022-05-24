@@ -36,31 +36,31 @@ class Shop {
      * Get all shop list /api/customer/shop/list
      * @method GET
      * @param {*} object
-     * @return {ResponseData}
+     * @return {SuccessResponse}
      */
     async getList() {
         const name = this.#_requestService.getQuery('Name');
 
         const shoplist = await this.#_shopService.search(name);
-        const shopCollection = await (new MshopCollection(shoplist)).proceedAndGetData();
+        const shopCollection = new MshopCollection(shoplist);
 
-        return (new SuccessResponse('Success', ResponseCode.OK, shopCollection)).send();
+        return new SuccessResponse('Success', ResponseCode.OK, shopCollection);
     }
 
     /**
      * Get all shop product /api/customer/shop/:shopId/products
      * @method GET
      * @param {*} object
-     * @return {ResponseData}
+     * @return {SuccessResponse}
      */
-    async products({request, params, query}) {
-        const shopId = params.shopId;
-        const name = query.Name;
+    async products() {
+        const shopId = this.#_requestService.getParams('shopId');
+        const name = this.#_requestService.getQuery('Name');
 
         const shopProducts = await this.#_shopService.products(shopId, name);
         const shopProductCollection = await (new MshopproductCollection(shopProducts)).proceedAndGetData();
 
-        return (new SuccessResponse('Success', ResponseCode.OK, shopProductCollection)).send();
+        return new SuccessResponse('Success', ResponseCode.OK, shopProductCollection);
     }
 }
 

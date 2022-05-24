@@ -1,7 +1,9 @@
 import CollectionModel from '../../../Core/Model/CollectionModel';
 import M_shopproducts from '../../Models/M_shopproducts';
-import BaseCollection from '../BaseCollection';
+import BaseCollection from '../../../Core/ViewModel/Collection';
 import MshopproductViewModel from './MshopproductViewModel';
+import Mshopproduct from '../../Entity/Mshopproduct';
+import Collection from '../../../Core/Utilities/Collection';
 
 /**
  * @class MshopproductCollection
@@ -9,7 +11,7 @@ import MshopproductViewModel from './MshopproductViewModel';
 class MshopproductCollection extends BaseCollection {
     /**
     *
-    * @param {CollectionModel|array} collection
+    * @param {Collection|array} collection
     */
     constructor(collection: CollectionModel | Array<any>) {
         super(collection);
@@ -17,11 +19,10 @@ class MshopproductCollection extends BaseCollection {
 
     /**
      *
-     * @param {M_shopproducts} model
+     * @param {Mshopproduct} entity
      */
-    async shape(model: M_shopproducts) {
-        ;
-        await this.addItem(new MshopproductViewModel(model));
+    async shape(entity: Mshopproduct) {
+        await this.addItem(new MshopproductViewModel(entity));
     }
 }
 

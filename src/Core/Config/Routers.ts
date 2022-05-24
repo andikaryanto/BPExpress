@@ -1,13 +1,7 @@
 import {Router, Express, Request, Response} from 'express';
-import ConfigView from '../../App/Config/View';
 import Controller from '../Controller/Controller';
-import Redirect from '../Controller/Redirect';
-import ResponseData from '../Controller/ResponseData';
-import View from '../Controller/View';
-import Template from '../Template/Template';
-import appRoot from 'app-root-path';
-import Container from '../Container/Container';
-import CoreRequest from '../Http/Request';
+import MiddlewareCallback from '../Middleware/MiddlewareCallback';
+import ControllerCallback from '../Controller/ControllerCallback';
 /**
  * @class Router
  */
@@ -16,7 +10,7 @@ class Routers {
     private middleware: any = [];
     private route: string = '';
     private namedRoute: string = '';
-    private namedMiddleware: [] = [];
+    private namedMiddleware: any = [];
     private namedController: string = '';
     private namedFunction: string = '';
     private namedData: {} = {};
@@ -46,7 +40,12 @@ class Routers {
             intance.route = `${route}`;
         }
         this.router.use(intance.router);
-        intance.middleware = [...this.middleware, ...middleware];
+
+        const midlewares = middleware.map((e, i) => {
+            return MiddlewareCallback.call(e);
+        });
+
+        intance.middleware = [...this.middleware, ...midlewares];
         callback(intance);
     }
 
@@ -127,17 +126,22 @@ class Routers {
       */
     doRoute(route: string, middleware: [], controller: string, fn: string, additionalData: {} = {}, method: string = 'GET', isNamed: boolean = false) {
         let currentRoute = route;
+
+        const midlewares = middleware.map((e, i) => {
+            return MiddlewareCallback.call(e);
+        });
+
         if (!isNamed) {
             if (this.route != null) {
                 currentRoute = `${this.route}${route}`;
                 // this.namedRoute = currentRoute;
-                this.namedMiddleware = middleware;
+                this.namedMiddleware = midlewares;
                 this.namedController = controller;
                 this.namedFunction = fn;
                 this.namedMethod = method;
                 this.namedData = additionalData;
             } else {
-                this.namedMiddleware = middleware;
+                this.namedMiddleware = midlewares;
                 this.namedController = controller;
                 this.namedFunction = fn;
                 this.namedMethod = method;
@@ -147,28 +151,7 @@ class Routers {
             currentRoute = `/${route}`;
         }
 
-        const resReq = async (req: { session: any; params: any; query: any; body: any; }, res: any) => {
-            const container = Container.getInstance().get(controller);
-            const controllerInstance = container;
-            const data = controllerInstance[fn](
-                {
-                    request: req,
-                    session: req.session,
-                    params: req.params,
-                    query: req.query,
-                    body: req.body,
-                    ...additionalData,
-                },
-            );
-
-            let returnedData = null;
-            if (data instanceof Promise) {
-                returnedData = await data;
-            } else {
-                returnedData = data;
-            }
-            Routers.return(req, res, returnedData);
-        };
+        const resReq = ControllerCallback.call(controller, fn, additionalData);
 
         if (method.toUpperCase() == 'GET') {
             this.router.get(`${currentRoute}`, [...this.middleware, ...middleware], resReq);
@@ -193,37 +176,6 @@ class Routers {
       */
     getRouter(): Router {
         return this.router;
-    }
-
-    /**
-      *
-      * @param {Request} req
-      * @param {Response} res
-      * @param {ResponseData|View|Redirect} returnedData
-      */
-    static return(req: any, res: { status: (arg0: number) => { (): any; new(): any; send: { (arg0: string): void; new(): any; }; json: { (arg0: {}): void; new(): any; }; }; send: (arg0: string) => void; render: (arg0: string, arg1: { csrfToken: string | null; lang: (string: any) => any; }) => void; sendFile: (arg0: string) => void; redirect: (arg0: string) => void; }, returnedData: { code: any; data: any; type: string; view: string; route: any; } | undefined) {
-        if (returnedData == undefined) {
-            res.status(400).send('Unexpexted Error, Method didnt return anything');
-        }
-        if (returnedData instanceof ResponseData) {
-            res.status(returnedData.code).json(returnedData.data);
-        }
-
-        if (returnedData instanceof View) {
-            if (returnedData.type == 'html') {
-                res.send(returnedData.view);
-            }
-            if (returnedData.type == 'view') {
-                res.render(returnedData.view, {...returnedData.data, ...Template(), ...ConfigView.hook()});
-            }
-            if (returnedData.type == 'sendFile') {
-                res.sendFile(appRoot + '/src/App/Views/' + returnedData.view);
-            }
-        }
-
-        if (returnedData instanceof Redirect) {
-            res.redirect(returnedData.route);
-        }
     }
 }
 

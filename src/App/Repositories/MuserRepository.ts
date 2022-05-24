@@ -1,15 +1,15 @@
 
-import M_users from '../Models/M_users';
-import BaseRepository from './BaseRespositoy';
+import Repository from '../../Core/Repository/Repository';
+import Muser from '../Entity/Muser';
 /**
  * @class MuserRepository
  */
-class MuserRepository extends BaseRepository {
+class MuserRepository extends Repository {
     /**
-     * @inheritdoc
+     *
      */
-    getClass() {
-        return M_users;
+    constructor() {
+        super(Muser);
     }
 }
 

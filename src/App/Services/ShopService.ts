@@ -1,7 +1,5 @@
 import CollectionModel from '../../Core/Model/CollectionModel';
-import M_shopproducts from '../Models/M_shopproducts';
-import M_shops from '../Models/M_shops';
-import MproductRepository from '../Repositories/MproductRepository';
+import MshopProductRepository from '../Repositories/MshopProductRepository';
 import MshopRepository from '../Repositories/MshopRepository';
 /**
  * @class ShopService
@@ -15,10 +13,18 @@ class ShopService {
 
     /**
      *
-     * @param {MshopRepository} shopRepository
+     * @var {MshopProductRepository} shopProductRepository
      */
-    constructor(shopRepository) {
+    #_shopProductRepository;
+
+    /**
+     *
+     * @param {MshopRepository} shopRepository
+     * @param {MshopProductRepository} shopProductRepository
+     */
+    constructor(shopRepository, shopProductRepository) {
         this.#_shopRepository = shopRepository;
+        this.#_shopProductRepository = shopProductRepository;
     }
     /**
      * Search for shop
@@ -43,31 +49,35 @@ class ShopService {
      * Search for shop's product
      * @param {string|number} shopId
      * @param {string} name
-     * @return {[]}
+     * @return {Promise<[]>}
      */
     async products(shopId, name = null) {
-        const param = {
-            join: {
-                'm_products': {
-                    key: [
-                        'm_products.Id', 'm_shopproducts.M_Product_Id',
-                    ],
+        try {
+            const param = {
+                join: {
+                    'm_products': {
+                        key: [
+                            'm_products.Id', 'm_shopproducts.M_Product_Id',
+                        ],
+                    },
                 },
-            },
-            where: {
-                'm_shopproducts.M_Shop_Id': shopId,
-            },
-        };
-
-        if (name != null) {
-            param['like'] = {
-                'm_products.Name': name,
+                where: {
+                    'm_shopproducts.M_Shop_Id': shopId,
+                },
             };
+
+            if (name != null) {
+                param['like'] = {
+                    'm_products.Name': name,
+                };
+            }
+
+            const shopProducts = await this.#_shopProductRepository.collect(param);
+
+            return shopProducts;
+        } catch (e) {
+            console.log(e);
         }
-
-        const shopProducts = (await M_shopproducts.collect(param)).getItems();
-
-        return shopProducts;
     }
 }
 

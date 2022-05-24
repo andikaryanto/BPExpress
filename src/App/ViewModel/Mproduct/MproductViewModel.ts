@@ -1,17 +1,19 @@
-import M_products from '../../Models/M_products';
-import M_users from '../../Models/M_users';
-import BaseViewModel from '../BaseViewModel';
+import Mproduct from '../../Entity/Mproduct';
+import BaseViewModel from '../../../Core/ViewModel/ViewModel';
 import MproductcategoryViewModel from '../Mproductcategory/MproductcategoryViewModel';
 /**
  * @class MproductViewModel
  */
 class MproductViewModel extends BaseViewModel {
+
+    private entity: Mproduct;
+
     /**
      *
-     * @param {M_products} model
+     * @param {Mproduct} entity
      */
-    constructor(model: M_products) {
-        super(true, model);
+    constructor(entity: Mproduct) {
+        super(true, entity);
     }
 
     /**
@@ -19,28 +21,29 @@ class MproductViewModel extends BaseViewModel {
      * @param {any} object
      */
     async addResource(object: any) {
-        const category = await this.model.M_Productcategory();
-        object.ProductCategory = await (new MproductcategoryViewModel(category)).toJson();
+        const category = await this.entity.getMproductcategory();
+        if (category) {
+            object.ProductCategory = await (new MproductcategoryViewModel(category)).toJson();
+        }
     }
 
     /**
      * Get json data
      * @return {Promise<{}>}
      */
-    async toJson(): Promise<{}> {
-        if (this.model == null) {
-            return {};
+    async toJson() {
+        if (this.entity == null) {
+            return null;
         }
 
         const json = {
-            Id: this.model.Id,
-            M_Productcategory_Id: this.model.M_Productcategory_Id,
-            Name: this.model.Name,
-            Description: this.model.Description,
-            Producer: this.model.Producer,
-            PackSize: this.model.PackSize,
-            Quality: this.model.Quality,
-            Picture: this.model.Picture,
+            Id: this.entity.getId(),
+            Name: this.entity.getName(),
+            Description: this.entity.getDescription(),
+            Producer: this.entity.getProducer(),
+            PackSize: this.entity.getPackSize(),
+            Quality: this.entity.getQuality(),
+            Picture: this.entity.getPicture(),
         };
 
         if (this.getAutoAddResource()) {

@@ -1,6 +1,6 @@
-import CollectionModel from '../../../Core/Model/CollectionModel';
-import M_users from '../../Models/M_users';
-import BaseCollection from '../BaseCollection';
+import Collection from '../../../Core/Utilities/Collection';
+import BaseCollection from '../../../Core/ViewModel/Collection';
+import Muser from '../../Entity/Muser';
 import MuserViewModel from './MuserViewModel';
 
 /**
@@ -9,18 +9,18 @@ import MuserViewModel from './MuserViewModel';
 class MuserCollection extends BaseCollection {
     /**
      *
-     * @param {CollectionModel|array} collection
+     * @param {Collection|array} collection
      */
-    constructor(collection: CollectionModel | Array<any>) {
+    constructor(collection: Collection | Array<any>) {
         super(collection);
     }
 
     /**
      *
-     * @param {M_users} model
+     * @param {Muser} entity
      */
-    async shape(model: M_users) {
-        await this.addItem(new MuserViewModel(model));
+    async shape(entity: Muser) {
+        await this.addItem(new MuserViewModel(entity));
     }
 }
 

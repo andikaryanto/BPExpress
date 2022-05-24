@@ -8,7 +8,7 @@ const Language = (string: string) => {
     const appLanguage = session.userlanguage == null ? session.language : session.userlanguage;
 
     const file = string.split('.');
-    const json = new FileLoader(`src/App/Language/${appLanguage}/${file[0]}.json`).getData();
+    const json = new FileLoader(`/App/Language/${appLanguage}/${file[0]}.json`).getData();
 
     return json.file[1];
 };

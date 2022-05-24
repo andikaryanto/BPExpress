@@ -1,16 +1,19 @@
-import M_groupusers from '../../Models/M_groupusers';
-import M_users from '../../Models/M_users';
-import BaseViewModel from '../BaseViewModel';
+import Mgroupuser from '../../Entity/Mgroupuser';
+import BaseViewModel from '../../../Core/ViewModel/ViewModel';
+import MuserViewModel from '../Musers/MuserViewModel';
+import MuserCollection from '../Musers/MuserCollection';
 /**
  * @class MgroupuserViewModel
  */
 class MgroupuserViewModel extends BaseViewModel {
+
+    private entity: Mgroupuser;
     /**
      *
-     * @param {M_groupusers} model
+     * @param {Mgroupuser} entity
      */
-    constructor(model: M_groupusers) {
-        super(true, model);
+    constructor(entity: Mgroupuser) {
+        super(true, entity);
     }
 
     /**
@@ -25,14 +28,14 @@ class MgroupuserViewModel extends BaseViewModel {
      *
      * @return {Promise<{}>}
      */
-    async toJson(): Promise<{}> {
-        if (this.model == null) {
-            return {};
+    async toJson() {
+        if (this.entity == null) {
+            return null;
         }
 
         const json = {
-            Id: this.model.Id,
-            GroupName: this.model.GroupName,
+            Id: this.entity.getId(),
+            GroupName: this.entity.getGroupName(),
         };
 
         if (this.getAutoAddResource()) {

@@ -1,5 +1,6 @@
+import Mshopproduct from '../../Entity/Mshopproduct';
 import M_shopproducts from '../../Models/M_shopproducts';
-import BaseViewModel from '../BaseViewModel';
+import BaseViewModel from '../../../Core/ViewModel/ViewModel';
 import MproductViewModel from '../Mproduct/MproductViewModel';
 
 /**
@@ -7,13 +8,14 @@ import MproductViewModel from '../Mproduct/MproductViewModel';
  */
 class MshopproductViewModel extends BaseViewModel {
 
+    private entity: Mshopproduct;
+
     /**
      *
-     * @param {M_shopproducts} model
+     * @param {Mshopproduct} entity
      */
-    constructor(model: M_shopproducts) {
-        super(true, model);
-        this.model = model;
+    constructor(entity: Mshopproduct) {
+        super(true, entity);
     }
 
     /**
@@ -21,31 +23,32 @@ class MshopproductViewModel extends BaseViewModel {
      * @param {{}} object
      * @return {void}
      */
-    async addResource(object: any): Promise<void> {
-        const product = await this.model.M_Product();
-        object.Product = await (new MproductViewModel(product)).toJson();
+    async addResource(object: any) {
+        const product = await this.entity.getMproduct();
+        if (product) {
+            object.Product = await (new MproductViewModel(product)).toJson();
+        }
     }
 
     /**
      * Model to json data
      * @return {Promise<{}>}
      */
-    async toJson(): Promise<{}>{
-        if (this.model == null) {
-            return {};
+    async toJson() {
+        if (this.entity == null) {
+            return null;
         }
 
         const json = {
-            Id: this.model.Id,
-            M_Shop_Id: this.model.M_Shop_Id,
-            PurchasePrice: this.model.PurchasePrice,
-            SellPrice: this.model.SellPrice,
-            Stock: this.model.Stock,
-            DiscountType: this.model.DiscountType,
-            DiscountValue: this.model.DiscountValue,
-            IsFeatured: this.model.IsFeatured,
-            IsActive: this.model.IsActive,
-            Ordering: this.model.Ordering,
+            Id: this.entity.getId(),
+            PurchasePrice: this.entity.getPurchasePrice(),
+            SellPrice: this.entity.getSellPrice(),
+            Stock: this.entity.getStock(),
+            DiscountType: this.entity.getDiscountType(),
+            DiscountValue: this.entity.getDiscountValue(),
+            IsFeatured: this.entity.getIsFeatured(),
+            IsActive: this.entity.getIsActive(),
+            Ordering: this.entity.getOrdering(),
         };
 
         if (this.getAutoAddResource()) {

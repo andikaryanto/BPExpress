@@ -1,6 +1,9 @@
-import GetAllShopProducts from '../Graphql/Resolvers/GetAllShopProducts';
-import GetAllUsers from '../Graphql/Resolvers/GetAllUsers';
-import UserAdd from '../Graphql/Resolvers/UserAdd';
+import UserAdd from '../Graphql/Resolvers/Mutation/UserAdd';
+import UserLogin from '../Graphql/Resolvers/Mutation/UserLogin';
+import GetAllShopProducts from '../Graphql/Resolvers/Query/GetAllShopProducts';
+import GetAllUsers from '../Graphql/Resolvers/Query/GetAllUsers';
+import GetGroupuserById from '../Graphql/Resolvers/Query/GetGroupuserById';
+
 /**
  * @class GraphQL
  */
@@ -9,21 +12,23 @@ class GraphQL {
      * @return {{}}
      */
     static query() {
-        return {
+        return [
             // register all your graphql query here
-            getAllUsers: GetAllUsers.execute(),
-            getAllShopProducts: GetAllShopProducts.execute(),
-        };
+            'getAllUser.graphql',
+            'getAllShopProducts.graphql',
+            'getGroupuserById.graphql',
+        ];
     }
 
     /**
      * @return {{}}
      */
     static mutation() {
-        return {
+        return [
             // register all your graphql mutation here
-            userAdd: UserAdd.execute(),
-        };
+            'userAdd.graphql',
+            'userLogin.graphql',
+        ];
     }
 
     /**

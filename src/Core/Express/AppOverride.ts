@@ -10,7 +10,11 @@ import Kernel from '../../App/Config/Kernel';
 import Web from '../../App/Routes/Web';
 import Api from '../../App/Routes/Api';
 import csrf from 'csurf';
-import VerifyCsrf from '../Middleware/VerifyCsrf';
+import VerifyCsrf from '../Middleware/VerifyCsrf.js';
+import morgan from 'morgan';
+import config from '../../../config';
+
+const rfs = require('rotating-file-stream');
 const KnexSessionStore = require('connect-session-knex')(session);
 import {
     GraphQLObjectType,
@@ -28,8 +32,13 @@ import GraphQL from '../../App/Config/GraphQL';
 import Container from '../../App/Config/Container';
 import CoreContainer from '../Container/Container';
 import {ContainerBuilder} from 'node-dependency-injection';
-import RequestInstance from '../Middleware/RequestInstance';
-import TypeHelper from '../Libraries/TypeHelper';
+import RequestInstance from '../Middleware/RequestInstance.js';
+import MiddlewareCallback from '../Middleware/MiddlewareCallback.js';
+import Cron from '../../App/Config/Cron.js';
+import CronService from '../Services/CronService.js';
+import ContainerLoader from '../Container/ContainerLoader.js';
+import InstanceLoader from './InstanceLoader.js';
+import GraphQLLoader from '../GraphQL/GraphQLLoader.js';
 
 /**
  * @class AppOverride
@@ -42,9 +51,11 @@ class AppOverride {
     static override(app: Express) {
         AppOverride.use(app);
         // AppOverride.csrf(app);
-        AppOverride.middleware(app);
+        AppOverride.logger(app);
         const container = AppOverride.container();
-        AppOverride.graphQL(app, container);
+        AppOverride.middleware(app, container);
+        AppOverride.graphQL(app);
+        AppOverride.cron();
     }
 
     /**
@@ -52,31 +63,33 @@ class AppOverride {
       * @param {Express} app
       * @param {CoreContainer} container
       */
-    static graphQL(app: Express, container: CoreContainer) {
-        const RootQuery = new GraphQLObjectType({
+    static graphQL(app: Express) {
+        const queryFields = GraphQLLoader.loadQuery(GraphQL.query());
+        const mutationFields = GraphQLLoader.loadMutation(GraphQL.mutation());
+
+        const rootQuery = new GraphQLObjectType({
             name: 'Query',
-            fields: GraphQL.query(),
+            fields: queryFields,
         });
 
-        const RootMutation = new GraphQLObjectType({
+        const rootMutation = new GraphQLObjectType({
             name: 'Mutation',
-            fields: GraphQL.mutation(),
+            fields: mutationFields,
         });
 
         app.use('/graphql',
-            [...Kernel.middlewareGroups.graphql],
             graphqlHTTP(
-                (request) => ({
+                (request, response) => ({
                     schema: new GraphQLSchema({
-                        query: RootQuery,
-                        mutation: RootMutation,
+                        query: rootQuery,
+                        mutation: rootMutation,
                     }),
                     graphiql: true,
-                    context: {...GraphQL.context(), container, request},
+                    context: {...GraphQL.context(), request, response},
                 }),
             ),
         );
-    }
+}
 
     /**
       *
@@ -123,8 +136,18 @@ class AppOverride {
       * @param {Express} app
       */
     static middleware(app: Express) {
-        app.use('/api', [RequestInstance, VerifyCsrf, ...Kernel.middlewares, ...Kernel.middlewareGroups.api], Api());
-        app.use('/', [RequestInstance, ...Kernel.middlewares, ...Kernel.middlewareGroups.web], Web());
+        const eachMiddleware = function(e, i) {
+            return MiddlewareCallback.call(e);
+        };
+
+        const globalMiddlewares = Kernel.middlewares.map(eachMiddleware);
+
+        const apiMiddlewares = Kernel.middlewareGroups.api.map(eachMiddleware);
+
+        const webMiddlewares = Kernel.middlewareGroups.web.map(eachMiddleware);
+
+        app.use('/api', [...globalMiddlewares, ...apiMiddlewares], Api());
+        app.use('/', [...globalMiddlewares, ...webMiddlewares], Web());
     }
 
     /**
@@ -140,14 +163,32 @@ class AppOverride {
      * @return {CoreContainer}
      */
     static container() {
-        const containerBuilder = new ContainerBuilder();
+        return ContainerLoader.load();
+    }
 
-        for (const service of Container.service) {
-            service(containerBuilder);
-        }
+    /**
+     *
+     * @param {Express} app
+     * @return {void}
+     */
+    static logger(app) {
+        const accessLogStream = rfs.createStream('access.log', {
+            interval: '1d',
+            path: config.sourcePath + '/Write/logs',
+        });
 
-        return CoreContainer.getInstance().setContainerBuilder(containerBuilder);
-        // console.log(containerBuilder.getAllService());
+        app.use(morgan('combined', {
+            stream: accessLogStream,
+        }));
+    }
+
+
+    /**
+     *
+     * @return {void}
+     */
+    static cron() {
+        CronService.resetCron();
     }
 }
 

@@ -1,5 +1,7 @@
+import Mshop from '../../Entity/Mshop';
 import M_shops from '../../Models/M_shops';
-import BaseViewModel from '../BaseViewModel';
+import BaseViewModel from '../../../Core/ViewModel/ViewModel';
+import MshopproductCollection from '../Mshopproduct/MshopproductCollection';
 
 /**
  * @class MshopViewModel
@@ -7,10 +9,10 @@ import BaseViewModel from '../BaseViewModel';
 class MshopViewModel extends BaseViewModel {
     /**
      *
-     * @param {M_shops} model
+     * @param {Mshop} entity
      */
-    constructor(model) {
-        super(true, model);
+    constructor(entity) {
+        super(true, entity);
     }
 
     /**
@@ -19,7 +21,9 @@ class MshopViewModel extends BaseViewModel {
      * @return {void}
      */
     async addResource(object) {
-
+        object.Shopproducts =
+            await (new MshopproductCollection(await this.entity?.getMshopproducts()))
+                .proceedAndGetData();
     }
 
     /**
@@ -27,17 +31,17 @@ class MshopViewModel extends BaseViewModel {
      * @return {{}}
      */
     async toJson() {
-        if (this.model == null) {
+        if (this.entity == null) {
             return null;
         }
 
         const json = {
-            Id: this.model.Id,
-            Name: this.model.Name,
-            Owner: this.model.Owner,
-            Phone: this.model.Phone,
-            MapAddress: this.model.MapAddress,
-            Address: this.model.Address,
+            Id: this.entity.getId(),
+            Name: this.entity.getName(),
+            Owner: this.entity.getOwner(),
+            Phone: this.entity.getPhone(),
+            MapAddress: this.entity.getMapAddress(),
+            Address: this.entity.getAddress(),
         };
 
         if (this.getAutoAddResource()) {

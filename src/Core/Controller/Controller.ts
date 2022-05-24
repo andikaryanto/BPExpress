@@ -1,5 +1,5 @@
 import StringLib from '../Libraries/StringLib.js';
-import approot from 'app-root-path';
+import config from '../../../config';
 import fs from 'fs';
 
 /**
@@ -30,12 +30,12 @@ class Controller {
                \nexport default ${controllerName};`;
         };
 
-        const fileName = `${approot}/src/App/Controllers/${path}/${controllerName}.js`;
+        const fileName = config.sourcePath + `/App/Controllers/${path}/${controllerName}.js`;
         fs.open(fileName, 'r', function(err, fd) {
             if (err) {
                 fs.writeFile(fileName, content(), function(err) {
                     if (err) throw err;
-                    console.log('Saved!');
+                    // console.log('Saved!');
                 });
             } else {
                 throw new Error('File is already exist !');

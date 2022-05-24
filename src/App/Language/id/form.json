@@ -1,3 +1,8 @@
 {
-     "name" : "Nama"
+     "name" : "Nama",
+     "no": "No",
+     "groupName": "Nama Grup",
+     "description": "Deskripsi",
+     "created": "Dibuat",
+     "action": "Aksi"
 }
