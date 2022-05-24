@@ -8,12 +8,12 @@ class CreateUser extends Command {
     /**
      * @var {UserService}
      */
-    userService;
+    protected userService: UserService;
 
     /**
      *@param {UserService} userService
      */
-    constructor(userService) {
+    constructor(userService: UserService) {
         super();
         this.userService = userService;
         this.addArgument(Command.REQUIRE_TYPE, 'username', 'Username to be created');
@@ -39,9 +39,9 @@ class CreateUser extends Command {
 
     /**
      * @inheritdoc
-     * @param {{}} args
+     * @param {any} args
      */
-    async execute(args) {
+    async execute(args: any) {
         console.log('command is running...');
 
         const username = args.username;
