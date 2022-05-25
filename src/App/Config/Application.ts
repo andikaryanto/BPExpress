@@ -13,10 +13,10 @@ class Application {
     /**
      *
      * @param {Express} app
-     * @param {express} express
+     * @param {any} express
      */
-    static init(app: Express, express: Express) {
-        // Application.global(app, express);
+    static init(app: Express, express: any) {
+        Application.global(app, express);
         Application.set(app);
         Application.override(app);
     }
@@ -39,13 +39,13 @@ class Application {
 
     /**
      *
-     * @param {Express} app
-     * @param {express} express
+     * @param {any} app
+     * @param {any} express
      */
-    // static global(app: Express, express: Express) {
-    //     app.use('/assets', app.static(path.resolve(config.sourcePath + '/', 'assets')));
-    //     app.use(express.json());
-    //     app.use(express.urlencoded({extended: true}));
-    // }
+    static global(app: any, express: any) {
+        app.use('/assets', express.static(path.resolve(config.sourcePath + '/', 'assets')));
+        app.use(express.json());
+        app.use(express.urlencoded({extended: true}));
+    }
 }
 export default Application;

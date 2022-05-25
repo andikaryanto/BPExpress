@@ -10,9 +10,9 @@ class App {
     /**
      *
      * @param {Express} app
-     * @param {Express} express
+     * @param {any} express
      */
-    static run(app : Express, express : Express) {
+    static run(app : Express, express : any) {
         Application.init(app, express);
         app.listen(process.env.APP_PORT,
             () => console.log(`Server Up And Running. Listening On Port ${process.env.APP_PORT}. 
