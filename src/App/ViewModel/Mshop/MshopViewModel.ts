@@ -1,5 +1,4 @@
 import Mshop from '../../Entity/Mshop';
-import M_shops from '../../Models/M_shops';
 import BaseViewModel from '../../../Core/ViewModel/ViewModel';
 import MshopproductCollection from '../Mshopproduct/MshopproductCollection';
 
@@ -7,11 +6,14 @@ import MshopproductCollection from '../Mshopproduct/MshopproductCollection';
  * @class MshopViewModel
  */
 class MshopViewModel extends BaseViewModel {
+    
+    entity: any;
+
     /**
      *
      * @param {Mshop} entity
      */
-    constructor(entity) {
+    constructor(entity: Mshop) {
         super(true, entity);
     }
 
@@ -20,15 +22,18 @@ class MshopViewModel extends BaseViewModel {
      * @param {{}} object
      * @return {void}
      */
-    async addResource(object) {
-        object.Shopproducts =
-            await (new MshopproductCollection(await this.entity?.getMshopproducts()))
-                .proceedAndGetData();
+    async addResource(object: {}) {
+        const Shopproducts = await (new MshopproductCollection(await this.entity?.getMshopproducts()))
+                .proceedAndGetData()
+        const assignObject = {
+            Shopproducts: Shopproducts 
+        } ;
+        Object.assign(object, Shopproducts);
     }
 
     /**
      * Model to json data
-     * @return {{}}
+     * @return {Promise<{}>|Promise<null>}
      */
     async toJson() {
         if (this.entity == null) {

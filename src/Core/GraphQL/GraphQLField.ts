@@ -3,30 +3,24 @@ import {GraphQLList, GraphQLString} from 'graphql';
 /**
  * @class GraphQLField
  */
-class GraphQLField {
+abstract class GraphQLField {
     /**
      * Return type of the result
-     * @return {GraphQLList}
+     * @return {any}
      */
-    type() {
-        return new GraphQLList(GraphQLString);
-    }
+    abstract type(): any
 
     /**
       * The arguments input
       * @return {{}}
       */
-    args() {
-        return {};
-    }
+    abstract args(): any
 
     /**
       * Description of field
       * @return {string}
       */
-    description() {
-        return '';
-    }
+    abstract description(): string
 
     /**
      * List of middleware, executed before resolve
@@ -41,9 +35,7 @@ class GraphQLField {
       * @param {{}} param
       * @return {any}
       */
-    extensions(props: any) {
-        return '';
-    }
+    abstract extensions(props: any): {}
 
     /**
       * Resolve data
@@ -53,9 +45,7 @@ class GraphQLField {
       * @param {any} context
       * @return {any}
       */
-    async resolve(parent: any, args: any, request: any, context: any) {
-      return ['']
-    }
+    abstract resolve(parent: any, args: any, request: any, context: any) : any
 }
 
 export default GraphQLField;

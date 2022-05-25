@@ -1,22 +1,18 @@
 /**
  * @class Cron
  */
-class Cron {
+abstract class Cron {
     /**
      * Cron value
      * @return {string}
      */
-    time() {
-        return '';
-    }
+    abstract time(): string;
 
     /**
      * Business logic that will be executed
      * @return {any}
      */
-    execute() {
-        return '';
-    }
+    abstract execute(): any;
 }
 
 export default Cron;

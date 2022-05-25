@@ -8,7 +8,7 @@ class EntityLooper {
      *
      * @var {[]}
      */
-    static instance = {};
+    static instance: any = {};
 
     /**
      *
@@ -20,7 +20,7 @@ class EntityLooper {
      *
      * @var {EntityList}
      */
-    entityList = null;
+    entityList:EntityList|null = null;
 
     /**
      *
@@ -38,7 +38,7 @@ class EntityLooper {
      * @param {string} key
      * @return {EntityLooper}
      */
-    static getInstance(key) {
+    static getInstance(key: string) {
         if (!(key in EntityLooper.instance)) {
             EntityLooper.instance[key] = new this;
         }
@@ -69,7 +69,7 @@ class EntityLooper {
      * @param {[]} items
      * @return {EntityLooper}
      */
-    setItems(items) {
+    setItems(items: any[]) {
         this.items = items;
         return this;
     }
@@ -86,7 +86,7 @@ class EntityLooper {
      * @param {EntityList} entityList
      * @return {EntityLooper}
      */
-    setEntityList(entityList) {
+    setEntityList(entityList: EntityList) {
         this.entityList = entityList;
         return this;
     }
@@ -111,7 +111,7 @@ class EntityLooper {
      * @param {boolean} isLastIndex
      * @return {EntityLooper}
      */
-    setIsLastIndex(isLastIndex) {
+    setIsLastIndex(isLastIndex: boolean) {
         this.lastIndex = isLastIndex;
         return this;
     }

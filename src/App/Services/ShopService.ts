@@ -1,4 +1,3 @@
-import CollectionModel from '../../Core/Model/CollectionModel';
 import MshopProductRepository from '../Repositories/MshopProductRepository';
 import MshopRepository from '../Repositories/MshopRepository';
 /**
@@ -49,35 +48,33 @@ class ShopService {
      * Search for shop's product
      * @param {string|number} shopId
      * @param {string} name
-     * @return {Promise<[]>}
+     * @return {Promise<EntityList>}
      */
     async products(shopId: string|number, name: string|null = null) {
-        try {
-            const param = {
-                join: {
-                    'm_products': {
-                        key: [
-                            'm_products.Id', 'm_shopproducts.M_Product_Id',
-                        ],
-                    },
+        const param = {
+            join: {
+                'm_products': {
+                    key: [
+                        'm_products.Id', 'm_shopproducts.M_Product_Id',
+                    ],
                 },
-                where: {
-                    'm_shopproducts.M_Shop_Id': shopId,
-                },
-            };
+            },
+            where: {
+                'm_shopproducts.M_Shop_Id': shopId,
+            },
+        };
 
-            if (name != null) {
-                param['like'] = {
+        if (name != null) {
+            Object.assign(param, {
+                like: {
                     'm_products.Name': name,
-                };
-            }
-
-            const shopProducts = await this.shopProductRepository.collect(param);
-
-            return shopProducts;
-        } catch (e) {
-            console.log(e);
+                }
+            });
         }
+
+        const shopProducts = await this.shopProductRepository.collect(param);
+
+        return shopProducts;
     }
 }
 

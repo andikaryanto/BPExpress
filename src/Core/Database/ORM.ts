@@ -1,4 +1,4 @@
-import ormMap from '../../orm';
+const ormMap = require('../../orm').default;
 
 /**
  * @class ORM
@@ -16,8 +16,13 @@ class ORM {
      * @param {string} key
      * @return {{}}
      */
-    static getProps(key) {
-        const ormFields = ormMap.filter((x) => x[key])[0][key].props;
+    static getProps(key: string) {
+
+        const ormFields = ormMap.filter(function(x: any) {
+            if(key in x){
+                return x.props
+            }
+        });
         return ormFields;
     }
 
@@ -26,8 +31,13 @@ class ORM {
      * @param {string} key
      * @return {string}
      */
-    static getTable(key) {
-        const table = ormMap.filter((x) => x[key])[0][key].table;
+    static getTable(key: string) {
+        const table = ormMap.filter(function(x: any) {
+            if(key in x){
+                return x.props;
+            }
+
+        });
         return table;
     }
 
@@ -36,8 +46,12 @@ class ORM {
      * @param {string} key
      * @return {string}
      */
-    static getPrimaryKey(key) {
-        const table = ormMap.filter((x) => x[key])[0][key].primaryKey;
+    static getPrimaryKey(key: string) {
+        const table = ormMap.filter(function(x: any) {
+            if(key in x){
+                return x.props
+            }
+        });
         return table;
     }
 }

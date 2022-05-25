@@ -8,7 +8,7 @@ class CommonService {
      * @param {string} value
      * @return {string}
      */
-    encryptMd5(value) {
+    encryptMd5(value: string) {
         return CommonLib.encryptMd5(value);
     }
 }

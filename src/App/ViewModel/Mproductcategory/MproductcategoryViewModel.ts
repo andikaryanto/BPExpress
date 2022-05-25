@@ -6,7 +6,7 @@ import BaseViewModel from '../../../Core/ViewModel/ViewModel';
  */
 class MproductcategoryViewModel extends BaseViewModel {
 
-    private entity: Mproductcategory;
+    entity: any;
     /**
      *
      * @param {Mproductcategory} entity

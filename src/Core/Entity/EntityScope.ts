@@ -40,10 +40,10 @@ class EntityScope {
      * Add entity that will be persisted
      *
      * @param {string} perform
-     * @param {Entity} entity
+     * @param {any} entity
      * @return {void}
      */
-    addEntity(perform: string, entity: Entity) {
+    addEntity(perform: string, entity: any) {
         let isEntityExist = false;
         // if (this.entities) {
         for (const existedEntity of this.entities) {

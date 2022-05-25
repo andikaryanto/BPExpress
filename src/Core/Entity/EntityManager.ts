@@ -1,3 +1,4 @@
+import { Knex } from 'knex';
 import Validator from 'validatorjs';
 import Db from '../Database/Connection/DbConnection';
 import ORM from '../Database/ORM';
@@ -7,8 +8,7 @@ import Entity from './Entity';
  * @class EntityManager
  */
 class EntityManager {
-    db;
-    entity;
+    entity: any;
 
     /**
      *
@@ -34,7 +34,7 @@ class EntityManager {
      * @throws {Error}
      * @return {Promise<boolean>}
      */
-    async persist(entity: Entity, transaction: any|null = null) {
+    async persist(entity: Entity, transaction: Knex.Transaction<any, any[]>|null = null) {
         this.setEntity(entity);
         const obj = this.entity;
         const json = await this.createJson(obj);
@@ -47,7 +47,7 @@ class EntityManager {
         const getPrimaryKey = 'get' + primaryKey;
         if (obj[getPrimaryKey]() == null) {
             if (transaction != null) {
-                result = Db.transacting(transaction).into(table).insert(json);
+                result = Db.table(table).transacting(transaction).insert(json);
             } else {
                 result = Db.into(table).insert(json);
             }
@@ -93,7 +93,7 @@ class EntityManager {
         let ret = null;
         const getPrimaryKey = 'get' + primaryKey;
         if (transaction != null) {
-            ret = await Db.transacting(transaction).table(table).where(primaryKey, obj[getPrimaryKey]()).del();
+            ret = await Db.table(table).transacting(transaction).where(primaryKey, obj[getPrimaryKey]()).del();
         } else {
             ret = await Db.table(table).where(primaryKey, obj[getPrimaryKey]()).del();
         }

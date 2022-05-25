@@ -368,7 +368,7 @@ class Mshop extends BaseEntity {
      * @return {Mshop}
      */
     setFund(Mfund: Mfund) {
-        this.Mfund = Fund;
+        this.Mfund = Mfund;
         return this;
     }
 

@@ -21,7 +21,7 @@ class GraphQL {
         return [
             // register all your graphql mutation here
             'userAdd.graphql',
-            'userLogin.graphql',
+            'generateUserToken.graphql',
         ];
     }
 

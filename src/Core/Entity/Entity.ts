@@ -9,7 +9,7 @@ import DateFormat from '../Libraries/DateFormat';
 /**
  * @class Entiry
  */
-class Entity {
+abstract class Entity {
     constrains = {};
     rules = {};
 
@@ -28,8 +28,8 @@ class Entity {
                         const type = require(config.sourcePath + field.type).default;
                         const keyValue = target.constrains[field.foreignKey];
                         const originalMethod = target[prop];
-                        const primaryKey = ORM.getPrimaryKey(type.name);
-                        return async function(...args: any) {
+                        const primaryKey: any = ORM.getPrimaryKey(type.name);
+                        return async function(this: any, ...args: any) {
                             const result = target[prop]();
                             if (result != undefined) {
                                 return result;
@@ -80,7 +80,7 @@ class Entity {
                                     }
                                 }
                             } else if (field.relationType == Orm.MANY_TO_ONE) {
-                                const targetProps = ORM.getProps(type.name);
+                                const targetProps: any = ORM.getProps(type.name);
                                 const primaryKeyValue = target['get' + primaryKey]();
                                 const foreignKey = targetProps[field.mappedBy].foreignKey;
                                 if (primaryKeyValue) {
@@ -161,8 +161,8 @@ class Entity {
      * @return {Promise<{}>}
      */
     async toJson() {
-        const object = {};
-        const entity = this;
+        const object: any = {};
+        const entity: any = this;
         const getProps = ORM.getProps(entity.constructor.name);
         for (const [key, _value] of Object.entries(getProps)) {
             const value: any = _value;
@@ -205,7 +205,7 @@ class Entity {
      * @param {string} rule
      * @return {Entity}
      */
-    setRule(key, rule) {
+    setRule(key: string, rule: string) {
         this.rules = {...this.rules, [key]: rule};
         return this;
     }

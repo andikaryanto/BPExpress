@@ -38,10 +38,6 @@ export default {
             type: 'number',
             isPrimitive: true,
         },
-        DiscountType: {
-            type: 'number',
-            isPrimitive: true,
-        },
         DiscountValue: {
             type: 'decimal',
             isPrimitive: true,

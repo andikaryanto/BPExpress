@@ -1,3 +1,4 @@
+import { Knex } from 'knex';
 import {useCallback} from 'react';
 import Collection from '../../App/Config/Collection';
 import Db from '../Database/Connection/DbConnection';
@@ -13,7 +14,7 @@ import FilterInterface from './FilterInterface';
 class Repository {
     protected table: string|undefined;
     protected columns: Array<string>|undefined;
-    protected entity: Entity|undefined;
+    protected entity: any|undefined;
     protected db: any;
 
     /**
@@ -31,7 +32,8 @@ class Repository {
      * @return {any}
      */
     newEntity() {
-        return new this.entity;
+        const entity: any = this.entity;
+        return new entity();
     }
 
     /**
@@ -52,7 +54,7 @@ class Repository {
       * @param {number|null} size
       * @return {this}
       */
-    setFilter(filter: any = {}, page = null, size = null) {
+    setFilter(filter: any = {}, page: number|null = null, size: number|null = null) {
         if (filter.join != undefined) {
             for (const [key, _value] of Object.entries(filter.join)) {
                 const value: any = _value;
@@ -94,7 +96,7 @@ class Repository {
 
         if (filter.group != undefined) {
             if (filter.group.orLike != undefined) {
-                this.db.where(function() {
+                this.db.where(function(this: Knex<any, unknown[]>) {
                     let i = 0;
                     for (const [key, value] of Object.entries(filter.group.orLike)) {
                         if (i == 0) {
@@ -136,12 +138,12 @@ class Repository {
       * Fetch the data from database
       * @param {{}|Criteria} filter
       * @param {[]} columns
-      * @param {{}} associatedKey
+      * @param {any} associatedKey
       * @param {number|null} page
       * @param {number|null} size
       * @return {Promise<EntityList>}
       */
-    async fetch(filter = {}, columns = [], associatedKey = {}, page: number|null = null, size:number|null = null) {
+    async fetch(filter = {}, columns = [], associatedKey: any = {}, page: number|null = null, size:number|null = null) {
         this.columns = this.entity.getSelectColumns();
         if (columns.length > 0) {
             this.columns = columns;
@@ -176,7 +178,7 @@ class Repository {
       * @param {{}} associatedKey
       * @return {[]}
       */
-    setToEntity(results: Array<any>, associatedKey: Array<any>) {
+    setToEntity(results: Array<any>, associatedKey: any = {} ) {
         const objects = [];
         const newClassName = this.entity;
         const props = this.entity.getProps();
@@ -264,7 +266,7 @@ class Repository {
         if (size == null) {
             size = Collection.numberOfDataReturned();
         }
-        const associatedKey = {};
+        const associatedKey:any = {};
         let totalData = 0; ;
         const result = await this.fetch(filter, [], associatedKey, page, size);
         const entityList = new EntityList(result);

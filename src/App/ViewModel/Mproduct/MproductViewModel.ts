@@ -6,7 +6,7 @@ import MproductcategoryViewModel from '../Mproductcategory/MproductcategoryViewM
  */
 class MproductViewModel extends BaseViewModel {
 
-    private entity: Mproduct;
+    entity: any;
 
     /**
      *

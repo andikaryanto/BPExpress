@@ -31,7 +31,7 @@ class View {
       * @param {{}} data
       * @return {View}
       */
-    static make(view: string, data: {}): View {
+    static make(view: string, data:any = {}): View {
         const instance = View.getInstance();
         instance.view = view;
         instance.data = data;

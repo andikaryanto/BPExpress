@@ -13,7 +13,7 @@ import GraphQLField from '../../../../Core/GraphQL/GraphQLField';
 import MgroupuserRepository from '../../../Repositories/MgroupuserRepository';
 import MgroupuserViewModel from '../../../ViewModel/Mgroupuser/MgroupuserViewModel';
 import MshopproductCollection from '../../../ViewModel/Mshopproduct/MshopproductCollection';
-import OutputGroupuser from '../../Types/Output/OutputGroupuser.ts';
+import OutputGroupuser from '../../Types/Output/OutputGroupuser';
 import OutputShopProduct from '../../Types/Output/OutputShopProduct';
 
 /**

@@ -6,7 +6,7 @@ import MgroupuserViewModel from '../Mgroupuser/MgroupuserViewModel';
  */
 class MuserViewModel extends BaseViewModel {
 
-    private entity: Muser;
+    entity: any;
     /**
      *
      * @param {Muser} entity

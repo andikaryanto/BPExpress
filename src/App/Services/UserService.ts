@@ -10,24 +10,24 @@ import CommonService from './Library/CommonService';
  */
 class UserService {
     /**
-     * @private {CommonService} #_commonService;
+     * @private {CommonService} protected commonService;
      */
-    #_commonService;
+    protected commonService;
 
     /**
-     * @private {MuserRepository} #_userRepository;
+     * @private {MuserRepository} protected userRepository;
      */
-    #_userRepository;
+    protected userRepository;
 
     /**
-     * @private {Jwt} #_jwt;
+     * @private {Jwt} protected jwt;
      */
-    #_jwt;
+    protected jwt;
 
     /**
-     * @private {EntityUnit} #_eu;
+     * @private {EntityUnit} protected eu;
      */
-    #_eu;
+    protected eu;
 
     /**
      *
@@ -36,11 +36,15 @@ class UserService {
      * @param {Jwt} jwt
      * @param {EntityUnit} eu
      */
-    constructor(commonService, userRepository, jwt, eu) {
-        this.#_commonService = commonService;
-        this.#_userRepository = userRepository;
-        this.#_jwt = jwt;
-        this.#_eu = eu;
+    constructor(
+        commonService: CommonService, 
+        userRepository: MuserRepository, 
+        jwt: Jwt, 
+        eu: EntityUnit) {
+        this. commonService = commonService;
+        this. userRepository = userRepository;
+        this. jwt = jwt;
+        this. eu = eu;
     }
     /**
       *
@@ -48,8 +52,8 @@ class UserService {
       * @param {string} password
       * @return {Muser}
       */
-    async login(username, password) {
-        const userpassword = this.#_commonService.encryptMd5(CommonLib.getKey() + password);
+    async login(username: string, password: string) {
+        const userpassword = this. commonService.encryptMd5(CommonLib.getKey() + password);
         const filter = {
             where: {
                 Username: username,
@@ -57,7 +61,7 @@ class UserService {
             },
         };
 
-        const muser = await this.#_userRepository.findOne(filter);
+        const muser = await this. userRepository.findOne(filter);
         return muser;
     }
 
@@ -67,11 +71,11 @@ class UserService {
      * @param {string} password
      * @return {Muser}
      */
-    async createUser(username, password) {
+    async createUser(username: string, password: string) {
         const user = new Muser();
         user.setUsername(username);
         user.setPassword(this.hashPassword(password));
-        await this.#_eu.preparePersistence(user).flush();
+        await this. eu.preparePersistence(user).flush();
         return user;
     }
 
@@ -80,8 +84,8 @@ class UserService {
      * @param {string} password
      * @return {string}
      */
-    hashPassword(password) {
-        return this.#_commonService.encryptMd5(CommonLib.getKey() + password);
+    hashPassword(password: string) {
+        return this. commonService.encryptMd5(CommonLib.getKey() + password);
     }
     /**
      * Create token of user login
@@ -90,10 +94,10 @@ class UserService {
      * @param {string} password
      * @return {string|null}
      */
-    async getToken(username, password) {
+    async getToken(username: string, password: string) {
         const user = await this.login(username, password);
         if (user) {
-            return this.#_jwt.sign(await user.toJson());
+            return this. jwt.sign(await user.toJson());
         }
         return null;
     }

@@ -24,7 +24,9 @@ class GraphqlMiddleware extends Middleware {
             //     throw new Error('Invalid Token');
             // }
         } catch (e) {
-            req.graphqlError = e;
+            Object.assign(req, {
+                graphqlError: e
+            });
         }
 
         next();

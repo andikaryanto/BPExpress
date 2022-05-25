@@ -1,4 +1,5 @@
 import {ContainerBuilder, Reference} from 'node-dependency-injection';
+import EntityManager from '../Core/Entity/EntityManager';
 import EntityUnit from '../Core/Entity/EntityUnit';
 
 /**

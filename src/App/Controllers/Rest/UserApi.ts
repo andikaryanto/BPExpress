@@ -1,9 +1,7 @@
 import UserService from '../../Services/UserService';
 import ResponseCode from '../../Constants/ResponseCode';
-import ModelError from '../../Errors/ModelError';
 import jwt from 'jsonwebtoken';
 import CommonLib from '../../Libraries/CommonLib';
-import M_users from '../../Models/M_users';
 import DbTrans from '../../../Core/Database/DbTrans';
 import Controller from '../../../Core/Controller/Controller';
 import ResponseData from '../../../Core/Controller/ResponseData';
@@ -15,15 +13,15 @@ class UserApi extends Controller {
      *
      * @property {UserService} userService
      */
-    #_userService;
+    protected userService;
 
     /**
      *
      * @param {UserService} userService
      */
-    constructor(userService) {
+    constructor(userService: UserService) {
         super();
-        this.#_userService = userService;
+        this.userService = userService;
     }
     /**
      * User Login \api\user\login
@@ -31,13 +29,13 @@ class UserApi extends Controller {
      * @param {*} request
      * @return {ResponseData}
      */
-    async login({request}) {
+    async login({request}: any) {
         try {
             const body = request.body;
-            const user = await this.#_userService.login(body.Username, body.Password);
+            const user = await this.userService.login(body.Username, body.Password);
 
             if (CommonLib.isNull(user)) {
-                throw new ModelError('Data pengguna tidak valid');
+                throw new Error('Data pengguna tidak valid');
             }
 
             const token = jwt.sign(user.toJson(), CommonLib.getKey());
@@ -58,13 +56,6 @@ class UserApi extends Controller {
                     Response: ResponseCode.INVALID_LOGIN,
                 };
             }
-            if (e instanceof ModelError) {
-                result = {
-                    Message: e.message,
-                    Data: null,
-                    Response: ResponseCode.INVALID_LOGIN,
-                };
-            }
             return ResponseData.status(400).json(result);
         }
     }
@@ -75,25 +66,25 @@ class UserApi extends Controller {
       * @param {*} request
       * @return {ResponseData}
       */
-    async store({request}) {
-        const body = request.body;
-        const trx = await DbTrans.beginTransaction();
-        try {
-            const user = new M_users();
-            user.parseFromRequest();
-            user.setPassword(body.Password);
-            await user.save(trx);
-            trx.commit();
-            return ResponseData.status(200).json(user);
-        } catch (e) {
-            trx.rollback();
-            result = {
-                Message: e.message,
-                Data: null,
-                Response: ResponseCode.FAILED_SAVE_DATA,
-            };
-            return ResponseData.status(400).json(user);
-        }
+    async store({request}: any) {
+        // const body = request.body;
+        // const trx = await DbTrans.beginTransaction();
+        // try {
+        //     const user = new M_users();
+        //     user.parseFromRequest();
+        //     user.setPassword(body.Password);
+        //     await user.save(trx);
+        //     trx.commit();
+        //     return ResponseData.status(200).json(user);
+        // } catch (e) {
+        //     trx.rollback();
+        //     result = {
+        //         Message: e.message,
+        //         Data: null,
+        //         Response: ResponseCode.FAILED_SAVE_DATA,
+        //     };
+        //     return ResponseData.status(400).json(user);
+        // }
     }
 
     /**
@@ -102,24 +93,24 @@ class UserApi extends Controller {
       * @param {*} request
       * @return {ResponseData}
       */
-    async update({request}) {
-        const Id = request.params.Id;
-        const trx = await DbTrans.beginTransaction();
-        try {
-            const user = await M_users.find(Id);
-            user.Username = 'andik';
-            await user.save(trx);
-            trx.commit();
-            return ResponseData.status(200).json(user);
-        } catch (e) {
-            trx.rollback();
-            result = {
-                Message: e.message,
-                Data: null,
-                Response: ResponseCode.FAILED_SAVE_DATA,
-            };
-            return ResponseData.status(400).json(user);
-        }
+    async update({request}: any) {
+        // const Id = request.params.Id;
+        // const trx = await DbTrans.beginTransaction();
+        // try {
+        //     const user = await M_users.find(Id);
+        //     user.Username = 'andik';
+        //     await user.save(trx);
+        //     trx.commit();
+        //     return ResponseData.status(200).json(user);
+        // } catch (e) {
+        //     trx.rollback();
+        //     result = {
+        //         Message: e.message,
+        //         Data: null,
+        //         Response: ResponseCode.FAILED_SAVE_DATA,
+        //     };
+        //     return ResponseData.status(400).json(user);
+        // }
     }
 
     /**
@@ -128,18 +119,18 @@ class UserApi extends Controller {
       * @param {*} request
       * @return {ResponseData}
       */
-    async list({request}) {
-        try {
-            const users = await M_users.findAll();
-            return ResponseData.status(200).json(users);
-        } catch (e) {
-            result = {
-                Message: e.message,
-                Data: null,
-                Response: ResponseCode.FAILED_SAVE_DATA,
-            };
-            return ResponseData.status(400).json(user);
-        }
+    async list({request}: any) {
+        // try {
+        //     const users = await M_users.findAll();
+        //     return ResponseData.status(200).json(users);
+        // } catch (e) {
+        //     result = {
+        //         Message: e.message,
+        //         Data: null,
+        //         Response: ResponseCode.FAILED_SAVE_DATA,
+        //     };
+        //     return ResponseData.status(400).json(user);
+        // }
     }
 }
 

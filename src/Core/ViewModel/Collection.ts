@@ -63,7 +63,7 @@ class Collection {
      * @return {this}
      */
     async proceed() {
-        let arrayCollection: UtilCollection|Array<any>;
+        let arrayCollection: UtilCollection|any[];
         arrayCollection = this.collection;
     
         for (const item of arrayCollection) {

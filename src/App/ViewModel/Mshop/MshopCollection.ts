@@ -1,7 +1,7 @@
-import M_shops from '../../Models/M_shops';
 import BaseCollection from '../../../Core/ViewModel/Collection';
 import MshopViewModel from './MshopViewModel';
 import Collection from '../../../Core/Utilities/Collection';
+import Mshop from '../../Entity/Mshop';
 /**
  * @class MshopCollection
  */
@@ -16,9 +16,9 @@ class MshopCollection extends BaseCollection {
 
     /**
      *
-     * @param {M_shops} entity
+     * @param {Mshop} entity
      */
-    async shape(entity) {
+    async shape(entity: Mshop) {
         await this.addItem(new MshopViewModel(entity));
     }
 }

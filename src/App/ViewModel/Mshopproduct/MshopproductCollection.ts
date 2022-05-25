@@ -1,5 +1,3 @@
-import CollectionModel from '../../../Core/Model/CollectionModel';
-import M_shopproducts from '../../Models/M_shopproducts';
 import BaseCollection from '../../../Core/ViewModel/Collection';
 import MshopproductViewModel from './MshopproductViewModel';
 import Mshopproduct from '../../Entity/Mshopproduct';

@@ -27,7 +27,7 @@ class GetAllUsers extends GraphQLField {
      * @param {MuserRepository} userRepository
      */
     constructor(
-        userRepository,
+        userRepository: MuserRepository,
     ) {
         super();
         this.userRepository = userRepository;
@@ -82,12 +82,11 @@ class GetAllUsers extends GraphQLField {
         };
         if (args.Username != undefined) {
             if (args.Username != null && args.Username != '') {
-                search = {
-                    ...search,
+               Object.assign(search, {
                     like: {
                         Username: args.Username,
                     },
-                };
+                });
             }
         }
 

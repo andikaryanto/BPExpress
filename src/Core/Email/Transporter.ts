@@ -10,7 +10,7 @@ class Transporter {
     /**
      * @var {Transport}
      */
-    transporter = null;
+    protected transporter: any;
 
     /**
      *
@@ -34,7 +34,7 @@ class Transporter {
      * @param {string} emailAddress
      * @return {Transporter}
      */
-    setFrom(emailAddress) {
+    setFrom(emailAddress: string) {
         this.mailData = {...this.mailData, from: emailAddress};
         return this;
     }
@@ -44,7 +44,7 @@ class Transporter {
      * @param {string} emailAddress
      * @return {Transporter}
      */
-    setTo(emailAddress) {
+    setTo(emailAddress: string) {
         this.mailData = {...this.mailData, to: emailAddress};
         return this;
     }
@@ -54,7 +54,7 @@ class Transporter {
      * @param {string} subject
      * @return {Transporter}
      */
-    setSubject(subject) {
+    setSubject(subject: string) {
         this.mailData = {...this.mailData, subject: subject};
         return this;
     }
@@ -64,7 +64,7 @@ class Transporter {
      * @param {string} text
      * @return {Transporter}
      */
-    setText(text) {
+    setText(text: string) {
         this.mailData = {...this.mailData, text: text};
         return this;
     }
@@ -74,7 +74,7 @@ class Transporter {
      * @param {string} html
      * @return {Transporter}
      */
-    setHtml(html) {
+    setHtml(html: string) {
         this.mailData = {...this.mailData, html: html};
         return this;
     }
@@ -83,7 +83,7 @@ class Transporter {
      * Send the email
      */
     sendMail() {
-        this.transporter.sendMail(this.mailData, (err, info) => {
+        this.transporter.sendMail(this.mailData, (err: any, info: any) => {
             if (err) {
                 console.log(err);
             } else {

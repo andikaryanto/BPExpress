@@ -29,14 +29,15 @@ class WebUserMiddleware extends Middleware {
      * @param {NextFunction} next
      */
     async execute(req: Request, res: Response, next: NextFunction) {
+        const request: any = req;
         try {
-            if (req.session.token == undefined || req.session.token == null) {
+            if (request.session.token == undefined || request.session.token == null) {
                 res.redirect('/office/login');
             } else {
-                const token = req.session.token;
-                const decoded = this.jwt.decode(token, {complete: true});
+                const token = request.session.token;
+                const decoded: any = this.jwt.decode(token, {complete: true});
                 const muser = decoded.payload;
-                req.user = muser;
+                request.user = muser;
                 next();
             }
         } catch (e) {

@@ -3,50 +3,46 @@ import Entity from '../Entity/Entity';
 /**
  * @clas ViewModel
  */
-class ViewModel {
-    entity: Entity|null = null;
-    #_autoAddResource = false;
+abstract class ViewModel {
+    entity: any;
+    protected autoAddResource = false;
 
     /**
      *
      * @param {boolean} autoAddResource
      * @param {Entity} entity
      */
-    constructor(autoAddResource: boolean, entity: Entity) {
+    constructor(autoAddResource: boolean, entity: any) {
         this.entity = entity;
-        this.#_autoAddResource = autoAddResource;
+        this.autoAddResource = autoAddResource;
     }
 
     /**
      * Add Resource
      * @param {ViewModel} viewModel
      */
-    async addResource(viewModel: ViewModel) {
-
-    }
+     abstract addResource(viewModel: ViewModel): Promise<void>;
 
     /**
      * Set auto add resource
-     * @param {*} addResource
+     * @param {boolean} autoAddResource
      */
-    setAutoAddResource(addResource = true) {
-        this.#_autoAddResource = addResource;
+    setAutoAddResource(autoAddResource: boolean = true): void {
+        this.autoAddResource = autoAddResource;
     }
 
     /**
      * Get auto add resouce
      * @return {boolean}
      */
-    getAutoAddResource() {
-        return this.#_autoAddResource;
+    getAutoAddResource(): boolean {
+        return this.autoAddResource;
     }
 
     /**
-     *
+     * @return {Promise<any>}
      */
-    async toJson() {
-
-    }
+     abstract toJson(): Promise<any>;
 }
 
 export default ViewModel;

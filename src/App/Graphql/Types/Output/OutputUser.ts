@@ -11,9 +11,9 @@ import {
     GraphQLList,
     GraphQLInt,
 } from 'graphql';
-import OutputGroupuser from './OutputGroupuser.ts';
+import OutputGroupuser from './OutputGroupuser';
 
-const OutputUser = new GraphQLObjectType({
+const OutputUser: GraphQLObjectType = new GraphQLObjectType({
     name: 'User',
     fields: () => ({
         Id: {type: GraphQLInt},

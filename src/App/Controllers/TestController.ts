@@ -22,7 +22,7 @@ class TestController extends Controller {
      * @param {{}} object {request, response, body, params, query}
      * @return {View}
      */
-    async index({request, response}) {
+    async index({request, response}: any) {
         const repo = await (new MshopProductRepository()).findAll();
         console.log(repo);
     }
@@ -32,7 +32,7 @@ class TestController extends Controller {
      * @param {{}} object {request, response, body, params, query}
      * @return {View}
      */
-    form({request}) {
+    form({request}: any) {
         return View.make('test/form');
     }
 
@@ -41,7 +41,7 @@ class TestController extends Controller {
      * @param {{}} object {request, response, body, params, query}
      * @return {View}
      */
-    formPost({error}) {
+    formPost({error}: any) {
         return ResponseData.status(200).json({message: 'berhasil'});
     }
 }

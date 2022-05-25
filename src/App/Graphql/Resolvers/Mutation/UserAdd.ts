@@ -1,4 +1,4 @@
-import M_users from '../../../Models/M_users';
+
 import {
     GraphQLObjectType,
     GraphQLString,
@@ -80,12 +80,12 @@ class UserAdd extends GraphQLField {
        * @inheritdoc
        */
      async resolve(parent: any, args: any, request: any, context: any) {
-        const user = new M_users();
-        user.Username = args.Username;
-        user.M_Groupuser_Id = args.GroupuserId;
-        user.setPassword(args.Password);
-        await user.save();
-        return user.toJson();
+        // const user = new M_users();
+        // user.Username = args.Username;
+        // user.M_Groupuser_Id = args.GroupuserId;
+        // user.setPassword(args.Password);
+        // await user.save();
+        // return user.toJson();
     }
 }
 

@@ -8,12 +8,12 @@ class TestCronDi extends Cron {
     /**
      * @var {MgroupuserRepository}
      */
-    groupuserRepo;
+    protected groupuserRepo;
 
     /**
      * @param {MgroupuserRepository} groupuserRepo
      */
-    constructor(groupuserRepo) {
+    constructor(groupuserRepo: MgroupuserRepository) {
         super();
         this.groupuserRepo = groupuserRepo;
     }

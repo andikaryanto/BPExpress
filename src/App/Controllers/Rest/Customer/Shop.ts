@@ -11,11 +11,6 @@ import RequestService from '../../../Services/Library/RequestService';
  * @clas Shop
  */
 class Shop {
-    /**
-     *
-     * @var {RequestService} requestService
-     */
-    protected requestService;
 
     /**
      *
@@ -28,8 +23,7 @@ class Shop {
      * @param {RequestService} requestService
      * @param {ShopService} shopService
      */
-    constructor(requestService: RequestService, shopService: ShopService) {
-        this.requestService = requestService;
+    constructor(shopService: ShopService) {
         this.shopService = shopService;
     }
     /**
@@ -38,8 +32,9 @@ class Shop {
      * @param {*} object
      * @return {SuccessResponse}
      */
-    async getList() {
-        const name = this.requestService.getQuery('Name');
+    async getList({request}: any) {
+        const queryString = request.query
+        const name = queryString['Name'];
 
         const shoplist = await this.shopService.search(name);
         const shopCollection = new MshopCollection(shoplist);
@@ -53,12 +48,13 @@ class Shop {
      * @param {*} object
      * @return {SuccessResponse}
      */
-    async products() {
-        const shopId = this.requestService.getParams('shopId');
-        const name = this.requestService.getQuery('Name');
+    async products({request}: any) {
+        const queryString = request.query
+        const shopId = queryString['shopId'];
+        const name = queryString['Name'];
 
         const shopProducts = await this.shopService.products(shopId, name);
-        const shopProductCollection = await (new MshopproductCollection(shopProducts)).proceedAndGetData();
+        const shopProductCollection = new MshopproductCollection(shopProducts);
 
         return new SuccessResponse('Success', ResponseCode.OK, shopProductCollection);
     }

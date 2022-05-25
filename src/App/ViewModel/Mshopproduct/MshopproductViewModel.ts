@@ -1,5 +1,4 @@
 import Mshopproduct from '../../Entity/Mshopproduct';
-import M_shopproducts from '../../Models/M_shopproducts';
 import BaseViewModel from '../../../Core/ViewModel/ViewModel';
 import MproductViewModel from '../Mproduct/MproductViewModel';
 
@@ -7,8 +6,12 @@ import MproductViewModel from '../Mproduct/MproductViewModel';
  * @clas MshopproductViewModel
  */
 class MshopproductViewModel extends BaseViewModel {
+    
 
-    private entity: Mshopproduct;
+    /**
+     * @var {any}
+     */
+    entity: any;
 
     /**
      *

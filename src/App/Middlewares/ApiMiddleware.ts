@@ -25,7 +25,9 @@ class ApiMiddleware extends Middleware {
                 throw new Error('Invalid Token');
             }
 
-            req.user = decoded.payload;
+            Object.assign(req, {
+                user: decoded.payload
+            });
 
             next();
         } catch (_e:any) {

@@ -15,7 +15,7 @@ class DateFormat {
          * @param {*} m
          * @return {string}
          */
-        function formated(m) {
+        function formated(m: any) {
             const t = new Date();
             const f = new Intl.DateTimeFormat('en', m);
             return f.format(t);
@@ -36,7 +36,7 @@ class DateFormat {
       * @param {string} format
       * @return {string}
       */
-    static getCurrentDate(format) {
+    static getCurrentDate(format: string) {
         return moment().format(format);
     }
 
@@ -45,7 +45,7 @@ class DateFormat {
      * @param {Date} date
      * @return {string}
      */
-    static databaseDate(date) {
+    static databaseDate(date: Date) {
         return moment(date).format('YYYY-MM-DD hh:mm:ss');
     }
 }

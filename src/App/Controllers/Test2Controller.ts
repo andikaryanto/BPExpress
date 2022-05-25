@@ -124,7 +124,7 @@ class Test2Controller extends Controller {
 
         const transacting = await DbTrans.beginTransaction();
 
-        await this.em.setEntity(user).persist(transacting);
+        await this.em.persist(user, transacting);
         await transacting.commit();
         const viewmodel = new MuserViewModel(user).toJson();
         return new SuccessResponse('Success', ResponseCode.OK, viewmodel);
@@ -139,7 +139,7 @@ class Test2Controller extends Controller {
 
         const transacting = await DbTrans.beginTransaction();
 
-        await this.em.setEntity(groupuser).remove(transacting);
+        await this.em.remove(groupuser, transacting);
         await transacting.rollback();
         const viewmodel = new MgroupuserViewModel(groupuser).toJson();
         return new SuccessResponse('Success', ResponseCode.OK, viewmodel);
@@ -150,7 +150,7 @@ class Test2Controller extends Controller {
      * @param {{}} object {request, response, body, params, query}
      * @return {View}
      */
-    form({request}) {
+    form({request}: any) {
         return View.make('test/form');
     }
 
@@ -159,7 +159,7 @@ class Test2Controller extends Controller {
      * @param {{}} object {request, response, body, params, query}
      * @return {View}
      */
-    formPost({error}) {
+    formPost({error}: any) {
         return ResponseData.status(200).json({message: 'berhasil'});
     }
 }

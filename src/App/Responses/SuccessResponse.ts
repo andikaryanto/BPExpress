@@ -6,10 +6,10 @@ class SuccessResponse extends BaseResponse {
     /**
      *
      * @param {string} message
-     * @param {[]} responseCode
+     * @param {{}} responseCode
      * @param {{}} data
      */
-    constructor(message, responseCode, data) {
+    constructor(message: string, responseCode: {}, data:any = {}) {
         super(message, 200, responseCode, data);
     }
 }

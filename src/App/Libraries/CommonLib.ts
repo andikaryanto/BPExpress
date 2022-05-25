@@ -42,8 +42,8 @@ class CommonLib {
      * Get env Key
      * @return {string}
      */
-    static getKey() {
-        return process.env.APP_KEY;
+    static getKey(): string {
+        return process.env.APP_KEY == undefined ? '' : process.env.APP_KEY;
     }
 
     /**
