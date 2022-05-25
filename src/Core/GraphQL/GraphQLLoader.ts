@@ -30,7 +30,6 @@ class GraphQLLoader {
     static loadFileds(fields: Array<any>) {
         const newFields: any = {};
         for (const field of fields) {
-            console.log(field);
             const fieldIntance = InstanceLoader.load(field);
             const instanceName = fieldIntance.constructor.name;
             const queryName = instanceName.charAt(0).toLowerCase() + instanceName.slice(1);

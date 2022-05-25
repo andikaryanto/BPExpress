@@ -18,12 +18,12 @@ class ORM {
      */
     static getProps(key: string) {
 
-        const ormFields = ormMap.filter(function(x: any) {
+        const entities = ormMap.filter(function(x: any) {
             if(key in x){
-                return x.props
+                return x
             }
         });
-        return ormFields;
+        return entities[0][key].props;
     }
 
     /**
@@ -32,13 +32,13 @@ class ORM {
      * @return {string}
      */
     static getTable(key: string) {
-        const table = ormMap.filter(function(x: any) {
+        const entities = ormMap.filter(function(x: any) {
             if(key in x){
-                return x.props;
+                return x;
             }
 
         });
-        return table;
+        return entities[0][key].table;
     }
 
     /**
@@ -47,12 +47,12 @@ class ORM {
      * @return {string}
      */
     static getPrimaryKey(key: string) {
-        const table = ormMap.filter(function(x: any) {
+        const entities = ormMap.filter(function(x: any) {
             if(key in x){
-                return x.props
+                return x 
             }
         });
-        return table;
+        return entities[0][key].primaryKey;
     }
 }
 
