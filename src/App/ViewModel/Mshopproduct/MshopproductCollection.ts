@@ -6,12 +6,12 @@ import Collection from '../../../Core/Utilities/Collection';
 /**
  * @class MshopproductCollection
  */
-class MshopproductCollection extends BaseCollection {
+class MshopproductCollection extends BaseCollection<Mshopproduct> {
     /**
     *
     * @param {Collection} collection
     */
-    constructor(collection: Collection) {
+    constructor(collection: Collection<Mshopproduct>) {
         super(collection);
     }
 

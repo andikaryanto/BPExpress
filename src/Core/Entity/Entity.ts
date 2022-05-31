@@ -46,7 +46,7 @@ abstract class Entity {
                                             },
                                         };
 
-                                        const entities = await (new Repository(type)).findAll(param);
+                                        const entities = await (new Repository<any>(type)).findAll(param);
                                         let items = {};
                                         for (const entity of entities) {
                                             const getFn = 'get' + primaryKey;
@@ -75,7 +75,7 @@ abstract class Entity {
                                     }
                                 } else {
                                     if (keyValue) {
-                                        const repo = await (new Repository(type)).find(keyValue);
+                                        const repo = await (new Repository<any>(type)).find(keyValue);
                                         target['set' + property](repo);
                                     }
                                 }
@@ -89,12 +89,12 @@ abstract class Entity {
                                             [foreignKey]: primaryKeyValue,
                                         },
                                     };
-                                    const repo = await (new Repository(type)).collect(param);
+                                    const repo = await (new Repository<any>(type)).collect(param);
                                     target['set' + property](repo);
                                 }
                             } else {
                                 if (keyValue) {
-                                    const repo = await (new Repository(type)).find(keyValue);
+                                    const repo = await (new Repository<any>(type)).find(keyValue);
                                     target['set' + property](repo);
                                 }
                             }

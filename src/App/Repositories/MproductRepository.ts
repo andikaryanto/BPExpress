@@ -3,7 +3,7 @@ import Mproduct from '../Entity/Mproduct';
 /**
  * @class MproductRepository
  */
-class MproductRepository extends Repository {
+class MproductRepository extends Repository<Mproduct> {
     /**
      * @inheritdoc
      */

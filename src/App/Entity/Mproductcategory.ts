@@ -1,12 +1,13 @@
 import EntityList from '../../Core/Entity/EntityList';
 import BaseEntity from './BaseEntity';
+import Mproduct from './Mproduct';
 
 /**
  * @class Mproductcategory
  */
 class Mproductcategory extends BaseEntity {
     protected Id: number | string | undefined;
-    protected Mproducts: EntityList|undefined;
+    protected Mproducts: EntityList<Mproduct>|undefined;
     protected Name: string|undefined;
     protected Picture: string|undefined;
     protected Description: string|undefined;
@@ -31,7 +32,7 @@ class Mproductcategory extends BaseEntity {
 
     /**
      *
-     * @return {EntityList}
+     * @return {EntityList<Mproduct>}
      */
     getMproducts() {
         return this.Mproducts;
@@ -39,10 +40,10 @@ class Mproductcategory extends BaseEntity {
 
     /**
      *
-     * @param {EntityList} Mproducts
+     * @param {EntityList<Mproduct>} Mproducts
      * @return {Mproductcategory}
      */
-    setMproducts(Mproducts: EntityList) {
+    setMproducts(Mproducts: EntityList<Mproduct>) {
         this.Mproducts = Mproducts;
         return this;
     }

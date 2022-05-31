@@ -11,7 +11,7 @@ import FilterInterface from './FilterInterface';
 /**
  * @class Respository
  */
-class Repository {
+class Repository<T> {
     protected table: string|undefined;
     protected columns: Array<string>|undefined;
     protected entity: any|undefined;
@@ -31,7 +31,7 @@ class Repository {
      * create new Entity
      * @return {any}
      */
-    newEntity() {
+    newEntity(): T {
         const entity: any = this.entity;
         return new entity();
     }
@@ -141,9 +141,9 @@ class Repository {
       * @param {any} associatedKey
       * @param {number|null} page
       * @param {number|null} size
-      * @return {Promise<EntityList>}
+      * @return {Promise<any>}
       */
-    async fetch(filter = {}, columns = [], associatedKey: any = {}, page: number|null = null, size:number|null = null) {
+    async fetch(filter = {}, columns = [], associatedKey: any = {}, page: number|null = null, size:number|null = null): Promise<any> {
         this.columns = this.entity.getSelectColumns();
         if (columns.length > 0) {
             this.columns = columns;
@@ -258,9 +258,9 @@ class Repository {
     * @param {{}|Criteria} filter
     * @param {number|null} page
     * @param {number|null} size
-    * @return {Promise<EntityList>}
+    * @return {Promise<EntityList<T>>}
     */
-    async collect(filter = {}, page = 1, size: number|null = null) {
+    async collect(filter = {}, page = 1, size: number|null = null): Promise<EntityList<T>> {
         const filterForCounting = filter instanceof Criteria ? filter : {...filter};
 
         if (size == null) {
@@ -269,7 +269,7 @@ class Repository {
         const associatedKey:any = {};
         let totalData = 0; ;
         const result = await this.fetch(filter, [], associatedKey, page, size);
-        const entityList = new EntityList(result);
+        const entityList = new EntityList<T>(result);
         totalData = await this.count(filterForCounting);
 
         if (size > totalData) {

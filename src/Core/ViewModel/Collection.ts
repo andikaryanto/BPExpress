@@ -5,15 +5,15 @@ import BaseViewModel from './ViewModel';
 /**
  * @class Collection
  */
-class Collection {
-    protected collection: UtilCollection|Array<any>;
+class Collection<T> {
+    protected collection: UtilCollection<T>|Array<any>;
     protected element: any[] = [];
 
     /**
      *
      * @param {UtilCollection|Array<any>} collection
      */
-    constructor(collection: UtilCollection|Array<any>) {
+    constructor(collection: UtilCollection<T>|Array<any>) {
         this.collection = collection;
     }
 
@@ -63,7 +63,7 @@ class Collection {
      * @return {this}
      */
     async proceed() {
-        let arrayCollection: UtilCollection|any[];
+        let arrayCollection: UtilCollection<T>|any[];
         arrayCollection = this.collection;
     
         for (const item of arrayCollection) {

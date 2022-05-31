@@ -4,7 +4,7 @@ import EntityLooper from './EntityLooper';
 /**
  * @class EntityList
  */
-class EntityList extends Collection {
+class EntityList<T> extends Collection<T> {
     listOf = '';
     associatedKey = Array<any>();
 
@@ -50,7 +50,8 @@ class EntityList extends Collection {
         const newItems = [];
 
         for (const item of this.items) {
-            newItems.push(await item.toJson());
+            const newItem: any = item;
+            newItems.push(await newItem.toJson());
         };
 
         return newItems;

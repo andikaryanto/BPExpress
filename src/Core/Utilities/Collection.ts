@@ -1,17 +1,17 @@
 /**
  * @class Collection
  */
-class Collection {
-    items: Array<any>;
+class Collection<T> {
+    items: Array<T>;
     page: number|null = null;
     size: number|null = null;
     total: number|null = null;
 
     /**
       *
-      * @param {Array<any>} items
+      * @param {Array<T>} items
       */
-    constructor(items: Array<any> = []) {
+    constructor(items: Array<T> = []) {
         this.items = items;
     }
 

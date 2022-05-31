@@ -6,12 +6,12 @@ import MuserViewModel from './MuserViewModel';
 /**
  * @class MuserCollection
  */
-class MuserCollection extends BaseCollection {
+class MuserCollection extends BaseCollection<Muser> {
     /**
      *
      * @param {Collection} collection
      */
-    constructor(collection: Collection) {
+    constructor(collection: Collection<Muser>) {
         super(collection);
     }
 

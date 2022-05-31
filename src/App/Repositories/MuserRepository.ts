@@ -4,7 +4,7 @@ import Muser from '../Entity/Muser';
 /**
  * @class MuserRepository
  */
-class MuserRepository extends Repository {
+class MuserRepository extends Repository<Muser> {
     /**
      *
      */

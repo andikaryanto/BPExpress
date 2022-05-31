@@ -5,12 +5,12 @@ import Mshop from '../../Entity/Mshop';
 /**
  * @class MshopCollection
  */
-class MshopCollection extends BaseCollection {
+class MshopCollection extends BaseCollection<Mshop> {
     /**
     *
     * @param {Collection} collection
     */
-    constructor(collection: Collection) {
+    constructor(collection: Collection<Mshop>) {
         super(collection);
     }
 

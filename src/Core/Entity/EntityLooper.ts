@@ -3,7 +3,7 @@ import EntityList from './EntityList';
 /**
  * this class is used to cache N+1 query eager load loop
  */
-class EntityLooper {
+class EntityLooper<T> {
     /**
      *
      * @var {[]}
@@ -18,9 +18,9 @@ class EntityLooper {
 
     /**
      *
-     * @var {EntityList}
+     * @var {EntityList<T>}
      */
-    entityList:EntityList|null = null;
+    entityList:EntityList<T>|null = null;
 
     /**
      *
@@ -38,7 +38,7 @@ class EntityLooper {
      * @param {string} key
      * @return {EntityLooper}
      */
-    static getInstance(key: string) {
+    static getInstance(key: string): any {
         if (!(key in EntityLooper.instance)) {
             EntityLooper.instance[key] = new this;
         }
@@ -83,16 +83,16 @@ class EntityLooper {
     }
 
     /**
-     * @param {EntityList} entityList
-     * @return {EntityLooper}
+     * @param {EntityList<T>} entityList
+     * @return {EntityLooper<T>}
      */
-    setEntityList(entityList: EntityList) {
+    setEntityList(entityList: EntityList<T>) {
         this.entityList = entityList;
         return this;
     }
 
     /**
-     * @return {EntityList}
+     * @return {EntityList<T>}
      */
     getEntityList() {
         return this.entityList;
@@ -109,7 +109,7 @@ class EntityLooper {
     /**
      *
      * @param {boolean} isLastIndex
-     * @return {EntityLooper}
+     * @return {EntityLooper<T>}
      */
     setIsLastIndex(isLastIndex: boolean) {
         this.lastIndex = isLastIndex;
