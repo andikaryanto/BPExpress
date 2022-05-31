@@ -9,7 +9,7 @@ class Response {
     protected message: string;
     protected code: number;
     protected responseCode: ResponseCode;
-    protected data: Collection|ViewModel|Array<any>|{};
+    protected data: Collection<any>|ViewModel|Array<any>|{};
     protected additionalData = {};
 
     /**
@@ -19,7 +19,7 @@ class Response {
      * @param {[]} responseCode
      * @param {Collection|ViewModel|Array<any>|{}} data
      */
-    constructor(message: string, code: number, responseCode: ResponseCode, data:Collection|ViewModel|Array<any>|{}) {
+    constructor(message: string, code: number, responseCode: ResponseCode, data:Collection<any>|ViewModel|Array<any>|{}) {
        this.message = message;
        this.code = code;
        this.responseCode = responseCode;
