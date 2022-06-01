@@ -127,7 +127,7 @@ class Routers {
     doRoute(route, middleware, controller, fn, additionalData = {}, method = 'GET', isNamed = false) {
         let currentRoute = route;
 
-        const midlewares = middleware.map((e, i) => {
+        const middlewares = middleware.map((e, i) => {
             return MiddlewareCallback.call(e);
         });
 
@@ -135,13 +135,13 @@ class Routers {
             if (this.#_route != null) {
                 currentRoute = `${this.#_route}${route}`;
                 // this.#_namedRoute = currentRoute;
-                this.#_namedMiddleware = midlewares;
+                this.#_namedMiddleware = middlewares;
                 this.#_namedController = controller;
                 this.#_namedFunction = fn;
                 this.#_namedMethod = method;
                 this.#_namedData = additionalData;
             } else {
-                this.#_namedMiddleware = midlewares;
+                this.#_namedMiddleware = middlewares;
                 this.#_namedController = controller;
                 this.#_namedFunction = fn;
                 this.#_namedMethod = method;
@@ -154,19 +154,19 @@ class Routers {
         const resReq = ControllerCallback.call(controller, fn, additionalData);
 
         if (method.toUpperCase() == 'GET') {
-            this.#_router.get(`${currentRoute}`, [...this.#_middleware, ...middleware], resReq);
+            this.#_router.get(`${currentRoute}`, [...this.#_middleware, ...middlewares], resReq);
         }
 
         if (method.toUpperCase() == 'POST') {
-            this.#_router.post(`${currentRoute}`, [...this.#_middleware, ...middleware], resReq);
+            this.#_router.post(`${currentRoute}`, [...this.#_middleware, ...middlewares], resReq);
         }
 
         if (method.toUpperCase() == 'PUT') {
-            this.#_router.put(`${currentRoute}`, [...this.#_middleware, ...middleware], resReq);
+            this.#_router.put(`${currentRoute}`, [...this.#_middleware, ...middlewares], resReq);
         }
 
         if (method.toUpperCase() == 'DELETE') {
-            this.#_router.delete(`${currentRoute}`, [...this.#_middleware, ...middleware], resReq);
+            this.#_router.delete(`${currentRoute}`, [...this.#_middleware, ...middlewares], resReq);
         }
     }
 
