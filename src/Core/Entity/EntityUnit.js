@@ -14,8 +14,8 @@ class EntityUnit {
      * @return {EntityUnit}
      */
     preparePersistence(entity) {
-        const entityUnit = EntityScope.getInstance();
-        entityUnit.addEntity(EntityScope.PERFORM_ADD_UPDATE, entity);
+        const enttityScope = EntityScope.getInstance();
+        enttityScope.addEntity(EntityScope.PERFORM_ADD_UPDATE, entity);
         return this;
     }
 
@@ -26,8 +26,8 @@ class EntityUnit {
      * @return {EntityUnit}
      */
     prepareRemove(entity) {
-        const entityUnit = EntityScope.getInstance();
-        entityUnit.addEntity(EntityScope.PERFORM_DELETE, entity);
+        const enttityScope = EntityScope.getInstance();
+        enttityScope.addEntity(EntityScope.PERFORM_DELETE, entity);
         return this;
     }
 

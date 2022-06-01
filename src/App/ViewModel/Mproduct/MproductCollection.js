@@ -1,13 +1,14 @@
 import M_products from '../../Models/M_products';
 import BaseCollection from '../../../Core/ViewModel/Collection';
 import MproductViewModel from './MproductViewModel';
+import Collection from '../../../Core/Utilities/Collection';
 /**
  * @class MproductCollection
  */
 class MproductCollection extends BaseCollection {
     /**
     *
-    * @param {CollectionModel|array} collection
+    * @param {Collection|array} collection
     */
     constructor(collection) {
         super(collection);

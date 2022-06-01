@@ -19,7 +19,7 @@ class MgroupuserViewModel extends BaseViewModel {
      * @param {{}} object
      */
     async addResource(object) {
-        
+
     }
 
     /**

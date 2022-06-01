@@ -8,49 +8,96 @@ import {
     GraphQLNonNull,
     GraphQLList,
 } from 'graphql';
+import GraphQLField from '../../../../Core/GraphQL/GraphQLField';
+import MuserRepository from '../../../Repositories/MuserRepository';
 import MuserCollection from '../../../ViewModel/Musers/MuserCollection';
 import OutputUser from '../../Types/Output/OutputUser';
 
 /**
  * @class GetAllUsers
  */
-class GetAllUsers {
+class GetAllUsers extends GraphQLField {
     /**
-     * Execute graphql to return object of
-     * @return {{}}
+     * @var {MuserRepository}
      */
-    static execute() {
+    userRepository;
+
+    /**
+     *
+     * @param {MuserRepository} userRepository
+     */
+    constructor(
+        userRepository,
+    ) {
+        super();
+        this.userRepository = userRepository;
+    }
+
+    /**
+     * Return type of the result
+     * @return {GraphQLList}
+     */
+    type() {
+        return new GraphQLList(OutputUser);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    args() {
         return {
-            type: new GraphQLList(OutputUser),
-            args: {
-                Username: {type: GraphQLString},
-            },
-            resolve: async function(parent, args, context) {
-                const request = context.request;
-                if (request.graphqlError != undefined) {
-                    throw request.graphqlError;
-                }
-
-                let search = {
-                    page: 1,
-                    size: 10,
-                };
-                if (args.Username != undefined) {
-                    if (args.Username != null && args.Username != '') {
-                        search = {
-                            ...search,
-                            like: {
-                                Username: args.Username,
-                            },
-                        };
-                    }
-                }
-
-                const muserRepository = context.container.get('user.repository');
-                const userList = await muserRepository.collect(search);
-                return await (new MuserCollection(userList)).proceedAndGetData();
-            },
+            Username: { type: GraphQLString },
         };
+    }
+
+    /**
+      * @inheritdoc
+     */
+    description() {
+        return 'Get list of user';
+    }
+
+    /**
+    * @inheritdoc
+    */
+    middlewares() {
+        return ['auth-graphql.middleware'];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    extensions({ document, variables, operationName, result, context }) {
+        return '';
+    }
+
+    /**
+     * Resolve data
+     * @param {any} parent
+     * @param {any} args
+       * @param {any} request
+     * @param {any} context
+     * @return {[]}
+     */
+    async resolve(parent, args, request, context) {
+
+        let search = {
+            page: 1,
+            size: 10,
+        };
+        if (args.Username != undefined) {
+            if (args.Username != null && args.Username != '') {
+                search = {
+                    ...search,
+                    like: {
+                        Username: args.Username,
+                    },
+                };
+            }
+        }
+
+        const userList = await this.userRepository.collect();
+        return await (new MuserCollection(userList)).proceedAndGetData();
     }
 }
 

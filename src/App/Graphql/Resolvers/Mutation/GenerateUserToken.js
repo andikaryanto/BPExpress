@@ -1,4 +1,4 @@
-import M_users from '../../../Models/M_users';
+
 import {
     GraphQLObjectType,
     GraphQLString,
@@ -9,35 +9,37 @@ import {
     GraphQLNonNull,
     GraphQLList,
 } from 'graphql';
-import OutputUser from '../../Types/Output/OutputUser';
 import GraphQLField from '../../../../Core/GraphQL/GraphQLField';
+import UserService from '../../../Services/UserService';
+import InputUserLogin from '../../Types/Input/InputUserLogin';
+import OutputUserLogin from '../../Types/Output/OutputUserLogin';
 
 /**
- * @clas UserAdd
+ * @clas UserLogin
  */
-class UserAdd extends GraphQLField {
+class GenerateUserToken extends GraphQLField {
     /**
-     * @var {ShopService}
+     * @var {UserService}
      */
-    #_shopService;
+    #_userService;
 
     /**
        *
-       * @param {ShopService} shopService
+       * @param {UserService} userService
        */
     constructor(
-        shopService,
+        userService,
     ) {
         super();
-        this.#_shopService = shopService;
+        this.#_userService = userService;
     }
 
     /**
        * Return type of the result
-       * @return {OutputUser}
+       * @return {OutputUserLogin}
        */
     type() {
-        return OutputUser;
+        return OutputUserLogin;
     }
 
     /**
@@ -45,9 +47,7 @@ class UserAdd extends GraphQLField {
        */
     args() {
         return {
-            Username: {type: GraphQLString},
-            Password: {type: GraphQLString},
-            GroupuserId: {type: GraphQLID},
+            InputUserLogin: {type: InputUserLogin},
         };
     }
 
@@ -55,14 +55,7 @@ class UserAdd extends GraphQLField {
        * @inheritdoc
        */
     description() {
-        return 'Add new user';
-    }
-
-    /**
-    * @inheritdoc
-    */
-    middlewares() {
-        return ['auth-graphql.middleware'];
+        return 'Get user token';
     }
 
     /**
@@ -81,13 +74,14 @@ class UserAdd extends GraphQLField {
        * @return {[]}
        */
     async resolve(parent, args, request, context) {
-        const user = new M_users();
-        user.Username = args.Username;
-        user.M_Groupuser_Id = args.GroupuserId;
-        user.setPassword(args.Password);
-        await user.save();
-        return user.toJson();
+        const username = args.InputUserLogin.username;
+        const password = args.InputUserLogin.password;
+        const token = await this.#_userService.getToken(username, password);
+        if(token == null){
+            throw Error('Could not get user token');
+        }
+        return {token};
     }
 }
 
-export default UserAdd;
+export default GenerateUserToken;
