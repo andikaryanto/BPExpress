@@ -83,10 +83,10 @@ class Collection<T> {
 
     /**
      * Add item element
-     * @param {BaseViewModel} viewModel
+     * @param {BaseViewModel<T>} viewModel
      * @return {void}
      */
-    async addItem(viewModel: BaseViewModel) {
+    async addItem(viewModel: BaseViewModel<T>) {
         const item = await viewModel.toJson();
         this.element.push(item);
     }

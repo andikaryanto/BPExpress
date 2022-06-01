@@ -9,7 +9,7 @@ class Response {
     protected message: string;
     protected code: number;
     protected responseCode: ResponseCode;
-    protected data: Collection<any>|ViewModel|Array<any>|{};
+    protected data: Collection<any>|ViewModel<any>|Array<any>|{};
     protected additionalData = {};
 
     /**
@@ -19,7 +19,12 @@ class Response {
      * @param {[]} responseCode
      * @param {Collection|ViewModel|Array<any>|{}} data
      */
-    constructor(message: string, code: number, responseCode: ResponseCode, data:Collection<any>|ViewModel|Array<any>|{}) {
+    constructor(
+        message: string, 
+        code: number, 
+        responseCode: ResponseCode, 
+        data:Collection<any>|ViewModel<any>|Array<any>|{}
+    ) {
        this.message = message;
        this.code = code;
        this.responseCode = responseCode;
@@ -59,9 +64,9 @@ class Response {
             const strPage: any = this.data.getPage()?.toString();
             const strSize: any = this.data.getSize()?.toString();
             const strTotal: any = this.data.getTotal()?.toString();
-            page = this.data.getPage() != null ? parseInt(strPage) : null;
-            size =this.data.getSize() != null ? parseInt(strSize) : null;
-            total =this.data.getTotal() != null ? parseInt(strTotal) : null;
+            page = this.data.getPage() != null ? parseInt(strPage) : 0;
+            size =this.data.getSize() != null ? parseInt(strSize) : 0;
+            total =this.data.getTotal() != null ? parseInt(strTotal) : 0;
             data = await this.data.proceedAndGetData();
         } else if (this.data instanceof ViewModel) {
             data = await this.data.toJson();
@@ -69,22 +74,18 @@ class Response {
             data =this.data;
         }
 
-        let result = {
+        let result: any = {
             Data: data,
             Code:this.responseCode,
             Message:this.message,
-            AdditionalData:this.additionalData,
-            Page: 0,
-            Size: 0,
-            Total: 0
+            AdditionalData:this.additionalData
         };
 
-        // if (this.data instanceof Collection) {
-        //     result.Page = page,
-        //         Size: size,
-        //         Total: total
-        //     };
-        // }
+        if (this.data instanceof Collection) {
+            result.Page = page;
+            result.Size = size;
+            result.Total= total;
+        }
 
         return result;
     }

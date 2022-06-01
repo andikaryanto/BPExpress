@@ -9,7 +9,7 @@ import Collection from '../../../Core/Utilities/Collection';
 class MshopproductCollection extends BaseCollection<Mshopproduct> {
     /**
     *
-    * @param {Collection} collection
+    * @param {Collection|undefined} collection
     */
     constructor(collection: Collection<Mshopproduct>) {
         super(collection);

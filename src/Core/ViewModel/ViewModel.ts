@@ -3,25 +3,25 @@ import Entity from '../Entity/Entity';
 /**
  * @clas ViewModel
  */
-abstract class ViewModel {
-    entity: any;
+abstract class ViewModel<T> {
+    entity: T;
     protected autoAddResource = false;
 
     /**
      *
      * @param {boolean} autoAddResource
-     * @param {Entity} entity
+     * @param {T} entity
      */
-    constructor(autoAddResource: boolean, entity: any) {
+    constructor(autoAddResource: boolean, entity: T) {
         this.entity = entity;
         this.autoAddResource = autoAddResource;
     }
 
     /**
      * Add Resource
-     * @param {ViewModel} viewModel
+     * @param {any} object
      */
-     abstract addResource(viewModel: ViewModel): Promise<void>;
+     abstract addResource(object: any): Promise<void>;
 
     /**
      * Set auto add resource

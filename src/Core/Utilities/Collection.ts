@@ -18,10 +18,10 @@ class Collection<T> {
     /**
       * add data to collection
       *
-      * @param {any} item
+      * @param {T} item
       * @return {Collection}
       */
-    add(item: any) {
+    add(item: T) {
         this.items.push(item);
         return this;
     }

@@ -5,14 +5,8 @@ import MproductViewModel from '../Mproduct/MproductViewModel';
 /**
  * @clas MshopproductViewModel
  */
-class MshopproductViewModel extends BaseViewModel {
+class MshopproductViewModel extends BaseViewModel<Mshopproduct> {
     
-
-    /**
-     * @var {any}
-     */
-    entity: any;
-
     /**
      *
      * @param {Mshopproduct} entity

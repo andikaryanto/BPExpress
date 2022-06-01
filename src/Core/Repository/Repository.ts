@@ -14,14 +14,14 @@ import FilterInterface from './FilterInterface';
 class Repository<T> {
     protected table: string|undefined;
     protected columns: Array<string>|undefined;
-    protected entity: any|undefined;
+    protected entity: typeof Entity;
     protected db: any;
 
     /**
     *
      * @param {any} entity
      */
-    constructor(entity: any) {
+    constructor(entity: typeof Entity) {
         this.entity = entity;
         const table = this.entity.getTable();
         this.db = Db.table(table);
@@ -180,11 +180,11 @@ class Repository<T> {
       */
     setToEntity(results: Array<any>, associatedKey: any = {} ) {
         const objects = [];
-        const newClassName = this.entity;
+        const newClassName: any = this.entity;
         const props = this.entity.getProps();
         for (const result of results) {
             const e = result;
-            const obj = new newClassName();
+            const obj: any = new newClassName();
             for (const [key, _value] of Object.entries(props)) {
                 const value: any = _value;
                 if (value.isPrimitive) {
@@ -260,7 +260,7 @@ class Repository<T> {
     * @param {number|null} size
     * @return {Promise<EntityList<T>>}
     */
-    async collect(filter = {}, page = 1, size: number|null = null): Promise<EntityList<T>> {
+    async collect(filter = {}, page: number = 1, size: number|null = null): Promise<EntityList<T>> {
         const filterForCounting = filter instanceof Criteria ? filter : {...filter};
 
         if (size == null) {
