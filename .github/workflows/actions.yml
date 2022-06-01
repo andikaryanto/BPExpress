@@ -31,11 +31,11 @@ jobs:
     - name: Install dependencies
       run: yarn install
     
-    - name: Run linting for js using eslint
-      run: yarn run lint
-
     - name: Build application with babel
       run: yarn run build
+      
+    - name: Run linting for js using eslint
+      run: yarn run lint
     
     - name: Run unit test
       run: yarn run test
