@@ -1,6 +1,6 @@
 import DateFormat from './DateFormat';
 import UploadedFile from './UploadedFile';
-import config from '../../../config';
+import config from '../../config';
 import UploadedFileError from '../Errors/UploadedFileError';
 import md5 from 'md5';
 import {v4 as uuidv4} from 'uuid';
@@ -9,23 +9,23 @@ import {v4 as uuidv4} from 'uuid';
  * @class File
  */
 class File {
-    #_files = null;
-    #_destination = null;
-    #_maxSize = 0;
-    #_allowedType = [];
-    #_errorMessage = null;
-    #_urlfile = null;
+    protected files: UploadedFile|null = null;
+    protected destination: string;
+    protected maxSize: number = 0;
+    protected allowedType: string[];
+    protected errorMessage: string = '';
+    protected urlfile: string = '';
 
     /**
       *
       * @param {string} destination
       * @param {number} maxSize
-      * @param {[]} allowedType
+      * @param {string[]} allowedType
       */
-    constructor(destination, maxSize = 0, allowedType = []) {
-        this.#_destination = destination;
-        this.#_maxSize = maxSize * 1000;
-        this.#_allowedType = allowedType;
+    constructor(destination: string, maxSize: number = 0, allowedType: string[] = []) {
+        this.destination = destination;
+        this.maxSize = maxSize * 1000;
+        this.allowedType = allowedType;
     }
 
     /**
@@ -35,19 +35,19 @@ class File {
       * @param {boolean} useHashName default true
       * @return {boolean}
       */
-    upload(uploadedFiles, usePrefixName = true, useHashName = true) {
+    upload(uploadedFiles: UploadedFile, usePrefixName = true, useHashName = true) {
         return new Promise((resolve, reject) => {
-            this.#_files = uploadedFiles;
-            if (this.#_maxSize != 0 && this.#_files.getSize() > this.#_maxSize) {
-                this.#_errorMessage = 'File size is to big';
-                throw new UploadedFileError(this.#_errorMessage);
+            this.files = uploadedFiles;
+            if (this.maxSize != 0 && this.files.getSize() > this.maxSize) {
+                this.errorMessage = 'File size is to big';
+                throw new UploadedFileError(this.errorMessage);
             }
 
-            if (this.#_allowedType.length > 0) {
-                const allowed = this.#_allowedType.filter((x) => x == uploadedFiles.getExtension()).length != 0;
+            if (this.allowedType.length > 0) {
+                const allowed = this.allowedType.filter((x) => x == uploadedFiles.getExtension()).length != 0;
                 if (!allowed) {
-                    this.#_errorMessage = 'File type is not supported';
-                    throw new UploadedFileError(this.#_errorMessage);
+                    this.errorMessage = 'File type is not supported';
+                    throw new UploadedFileError(this.errorMessage);
                 }
             }
 
@@ -63,12 +63,12 @@ class File {
                 newName = nameex + md5(uuidv4()) + '.' + uploadedFiles.getExtension();
             }
 
-            uploadedFiles.move(config.sourcePath + '/' + this.#_destination + '/' + newName, (err) => {
+            uploadedFiles.move(config.sourcePath + '/' + this.destination + '/' + newName, (err: any) => {
                 if (err) {
-                    this.#_errorMessage = 'Failed To upload file';
-                    reject(new UploadedFileError(this.#_errorMessage));
+                    this.errorMessage = 'Failed To upload file';
+                    reject(new UploadedFileError(this.errorMessage));
                 } else {
-                    this.#_urlfile = this.#_destination + '/' + newName;
+                    this.urlfile = this.destination + '/' + newName;
                     resolve(true);
                 }
             });
@@ -79,16 +79,16 @@ class File {
       *
       * @return {string}
       */
-    getFileUrl() {
-        return this.#_urlfile;
+    getFileUrl(): string {
+        return this.urlfile;
     }
 
     /**
       *
       * @param {string} ext
       */
-    addExtention(ext) {
-        this.#_allowedType.push(ext);
+    addExtention(ext: string) {
+        this.allowedType.push(ext);
     }
 }
 

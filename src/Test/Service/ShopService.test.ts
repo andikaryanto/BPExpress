@@ -1,31 +1,30 @@
 import MshopRepository from '../../App/Repositories/MshopRepository';
 import ShopService from '../../App/Services/ShopService';
-import CollectionModel from '../../Core/Model/CollectionModel';
-import M_shops from '../../App/Models/M_shops';
-import M_shopproducts from '../../App/Models/M_shopproducts';
-import MshopProductRepository from '../../App/Repositories/MshopProductRepository';
 import MockModule from '../../Core/Test/MockModule';
 import Collection from '../../Core/Utilities/Collection';
 import Mshop from '../../App/Entity/Mshop';
 import Mshopproduct from '../../App/Entity/Mshopproduct';
+import ContainerLoader from '../../Core/Container/ContainerLoader';
+import EntityList from '../../Core/Entity/EntityList';
 
 describe('beforeRun', () => {
-    const shopRepository = new MshopRepository();
-    const shopProductRepository = new MshopProductRepository();
+    const container = ContainerLoader.load();
+    const shopRepository = container.get('shop.repository');
+    const shopProductRepository = container.get('shopproduct.repository');
 
     describe('search()', () => {
         it('should return return array', async () => {
             const shopRepoCollect = MockModule.mockModule(MshopRepository, 'collect', () => {
                 const shop = (new Mshop()).setId(1);
-                const modelCollection = new Collection([shop]);
+                const modelCollection = new EntityList<Mshop>([shop]);
                 return modelCollection;
             });
 
 
-            const service = new ShopService(shopRepository);
+            const service = new ShopService(shopRepository, shopProductRepository);
             const result = await service.search('name');
 
-            expect(result).toBeInstanceOf(Collection);
+            expect(result).toBeInstanceOf(EntityList);
             expect(result.getItems().length).toEqual(1);
             expect(shopRepoCollect).toHaveBeenCalledTimes(1);
         });

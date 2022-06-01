@@ -5,12 +5,12 @@ import Collection from '../../../Core/Utilities/Collection';
 /**
  * @class MgroupuserCollection
  */
-class MgroupuserCollection extends BaseCollection {
+class MgroupuserCollection extends BaseCollection<Mgroupuser> {
     /**
     *
     * @param {Collection} collection
     */
-    constructor(collection: Collection) {
+    constructor(collection: Collection<Mgroupuser>) {
         super(collection);
     }
 
@@ -18,7 +18,7 @@ class MgroupuserCollection extends BaseCollection {
      *
      * @param {Mgroupuser} entity
      */
-    async shape(entity) {
+    async shape(entity: Mgroupuser) {
         await this.addItem(new MgroupuserViewModel(entity));
     }
 }

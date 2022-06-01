@@ -3,6 +3,7 @@ import Mfund from './Mfund';
 import Mvillage from './Mvillage';
 import Mcanvasser from './Mcanvasser';
 import EntityList from '../../Core/Entity/EntityList';
+import Mshopproduct from './Mshopproduct';
 /**
  * @class Mgroupuser
  */
@@ -10,7 +11,7 @@ class Mshop extends BaseEntity {
     protected Id: number | string | undefined;
     protected Mcanvasser: Mcanvasser|undefined;
     protected Mvillage: Mvillage|undefined;
-    protected Mshopproducts: EntityList|undefined;
+    protected Mshopproducts: EntityList<Mshopproduct>|undefined;
     protected Name: string|undefined;
     protected Owner: string|undefined;
     protected Phone: string|undefined;
@@ -86,10 +87,10 @@ class Mshop extends BaseEntity {
 
     /**
      *
-     * @param {EntityList} Mshopproducts
+     * @param {EntityList<Mshopproduct>} Mshopproducts
      * @return {Mshop}
      */
-    setMshopproducts(Mshopproducts: EntityList) {
+    setMshopproducts(Mshopproducts: EntityList<Mshopproduct>) {
         this.Mshopproducts = Mshopproducts;
         return this;
     }

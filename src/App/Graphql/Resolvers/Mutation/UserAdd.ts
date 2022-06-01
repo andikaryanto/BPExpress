@@ -23,7 +23,6 @@ class UserAdd extends GraphQLField {
     protected shopService: ShopService;
 
 
-
     /**
        *
        * @param {ShopService} shopService
@@ -72,7 +71,7 @@ class UserAdd extends GraphQLField {
        * @inheritdoc
        */
     extensions(props: any) {
-        let {document, variables, operationName, result, context} = props;
+        const {document, variables, operationName, result, context} = props;
         return '';
     }
 

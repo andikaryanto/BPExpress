@@ -11,8 +11,8 @@ class Yaml {
      * @param {string} key
      * @return {{}}
      */
-    static load(path: string, key: string|null = null) {
-        const value = yaml.load(fs.readFileSync(approot + '/' + path + '.yml', 'utf8'));
+    static load(path: string, key: string|null = null): {} {
+        const value: any = yaml.load(fs.readFileSync(approot + '/' + path + '.yml', 'utf8'));
         if (key != null) {
             return value[key];
         }

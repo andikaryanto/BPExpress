@@ -1,7 +1,7 @@
 /**
  * @class Command
  */
-class Command {
+abstract class Command {
     static REQUIRE_TYPE = 'required';
     static OPTION_TYPE = 'option';
 
@@ -20,7 +20,7 @@ class Command {
      * @param {string} name
      * @param {string} description
      */
-    addArgument(type: string, name: string, description: string) {
+    addArgument(type: string, name: string, description: string): void {
         const arg: any = {type, name, description};
         this.arguments.push(arg);
     }
@@ -29,35 +29,29 @@ class Command {
      * get all current command
      * @return {[]}
      */
-    getArguments() {
+    getArguments(): any[] {
         return this.arguments;
     }
 
     /**
      * Name of command
-     * @return {string}
+     * @return {void}
      */
-    name() {
-        return '';
-    }
+    abstract name(): void
 
     /**
      * Description of command
      *
-     * @return {string}
+     * @return {void}
      */
-    description() {
-        return '';
-    }
+    abstract description(): void;
 
     /**
      *
      * @param {any} args
-     * @return {any}
+     * @return {void}
      */
-    async execute(args: any) {
-
-    }
+    abstract execute(args: any): void
 }
 
 export default Command;

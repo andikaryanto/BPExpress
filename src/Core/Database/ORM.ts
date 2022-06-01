@@ -16,11 +16,10 @@ class ORM {
      * @param {string} key
      * @return {{}}
      */
-    static getProps(key: string) {
-
+    static getProps(key: string): {} {
         const entities = ormMap.filter(function(x: any) {
-            if(key in x){
-                return x
+            if (key in x) {
+                return x;
             }
         });
         return entities[0][key].props;
@@ -31,12 +30,11 @@ class ORM {
      * @param {string} key
      * @return {string}
      */
-    static getTable(key: string) {
+    static getTable(key: string): string {
         const entities = ormMap.filter(function(x: any) {
-            if(key in x){
+            if (key in x) {
                 return x;
             }
-
         });
         return entities[0][key].table;
     }
@@ -46,10 +44,10 @@ class ORM {
      * @param {string} key
      * @return {string}
      */
-    static getPrimaryKey(key: string) {
+    static getPrimaryKey(key: string): string {
         const entities = ormMap.filter(function(x: any) {
-            if(key in x){
-                return x 
+            if (key in x) {
+                return x;
             }
         });
         return entities[0][key].primaryKey;

@@ -1,4 +1,4 @@
-import { Knex } from 'knex';
+import {Knex} from 'knex';
 import Validator from 'validatorjs';
 import Db from '../Database/Connection/DbConnection';
 import ORM from '../Database/ORM';
@@ -21,7 +21,7 @@ class EntityManager {
      * @param {Entity} entity
      * @return {EntityManager}
      */
-    setEntity(entity: Entity) {
+    setEntity(entity: Entity): EntityManager {
         this.entity = entity;
         return this;
     }
@@ -34,7 +34,7 @@ class EntityManager {
      * @throws {Error}
      * @return {Promise<boolean>}
      */
-    async persist(entity: Entity, transaction: Knex.Transaction<any, any[]>|null = null) {
+    async persist(entity: Entity, transaction: Knex.Transaction<any, any[]>|null = null): Promise<boolean> {
         this.setEntity(entity);
         const obj = this.entity;
         const json = await this.createJson(obj);
@@ -75,7 +75,7 @@ class EntityManager {
      * @param {Entity} entity
      * @return {Promise<{}>}
      */
-    async createJson(entity: Entity) {
+    async createJson(entity: Entity): Promise<{}> {
         return await entity.toJson();
     }
 
@@ -85,7 +85,7 @@ class EntityManager {
      * @param {any} transaction
      * @return {boolean}
      */
-    async remove(entity: Entity, transaction: any = null) {
+    async remove(entity: Entity, transaction: any = null): Promise<boolean> {
         this.setEntity(entity);
         const obj = this.entity;
         const primaryKey = obj.constructor.getPrimaryKey();
@@ -108,7 +108,7 @@ class EntityManager {
      * @param {{}} object
      * @return {EntityManager}
      */
-    validate(object: any) {
+    validate(object: any): EntityManager {
         const rules = this.entity.getRules();
         const validation = new Validator(object, rules);
         if (validation.fails()) {

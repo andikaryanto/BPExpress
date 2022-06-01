@@ -1,4 +1,6 @@
+import Repository from '../../Core/Repository/Repository';
 import Cron from '../../Core/Utilities/Cron';
+import Mgroupuser from '../Entity/Mgroupuser';
 import MgroupuserRepository from '../Repositories/MgroupuserRepository';
 
 /**
@@ -30,7 +32,10 @@ class TestCronDi extends Cron {
      */
     async execute() {
         console.log('TestCronDi');
-        console.log(await (await this.groupuserRepo.find(8)).toJson());
+        const grouup = new Repository<Mgroupuser>(Mgroupuser);
+        const entity = grouup.newEntity();
+        entity.getMusers();
+        // console.log(await (await this.groupuserRepo.find(8)).toJson());
         // .then(groupuser => {
         //     console.log(groupuser);
         // })

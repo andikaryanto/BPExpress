@@ -9,7 +9,7 @@ class Response {
     protected message: string;
     protected code: number;
     protected responseCode: ResponseCode;
-    protected data: Collection|ViewModel|Array<any>|{};
+    protected data: Collection<any>|ViewModel<any>|Array<any>|{};
     protected additionalData = {};
 
     /**
@@ -19,7 +19,12 @@ class Response {
      * @param {[]} responseCode
      * @param {Collection|ViewModel|Array<any>|{}} data
      */
-    constructor(message: string, code: number, responseCode: ResponseCode, data:Collection|ViewModel|Array<any>|{}) {
+    constructor(
+        message: string,
+        code: number,
+        responseCode: ResponseCode,
+        data:Collection<any>|ViewModel<any>|Array<any>|{},
+    ) {
        this.message = message;
        this.code = code;
        this.responseCode = responseCode;
@@ -32,16 +37,16 @@ class Response {
      * @param {{}} additionalData
      * @return {Response}
      */
-    setAdditionalData(additionalData: {}) {
+    setAdditionalData(additionalData: {}): Response {
        this.additionalData = additionalData;
         return this;
     }
 
     /**
      * Send object data
-     * @return {ResponseData}
+     * @return {Promise<ResponseData>}
      */
-    async send() {
+    async send(): Promise<ResponseData> {
         return ResponseData.status(this.code).json(await this.getResult());
     }
 
@@ -49,7 +54,7 @@ class Response {
      * get result body
      * @return {{}}
      */
-    async getResult() {
+    async getResult(): Promise<any> {
         let data = null;
         let page = null;
         let size = null;
@@ -69,31 +74,27 @@ class Response {
             data =this.data;
         }
 
-        let result = {
+        const result: any = {
             Data: data,
-            Code:this.responseCode,
-            Message:this.message,
-            AdditionalData:this.additionalData,
-            Page: 0,
-            Size: 0,
-            Total: 0
+            Code: this.responseCode,
+            Message: this.message,
+            AdditionalData: this.additionalData,
         };
 
-        // if (this.data instanceof Collection) {
-        //     result.Page = page,
-        //         Size: size,
-        //         Total: total
-        //     };
-        // }
+        if (this.data instanceof Collection) {
+            result.Page = page;
+            result.Size = size;
+            result.Total= total;
+        }
 
         return result;
     }
 
     /**
      * Get status code
-     * @return {int}
+     * @return {number}
      */
-    getStatusCode() {
+    getStatusCode(): number {
         return this.code;
     }
 }

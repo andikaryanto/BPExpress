@@ -1,27 +1,27 @@
 /**
  * @class Collection
  */
-class Collection {
-    items: Array<any>;
+class Collection<T> {
+    items: Array<T>;
     page: number|null = null;
     size: number|null = null;
     total: number|null = null;
 
     /**
       *
-      * @param {Array<any>} items
+      * @param {T[]} items
       */
-    constructor(items: Array<any> = []) {
+    constructor(items: T[] = []) {
         this.items = items;
     }
 
     /**
       * add data to collection
       *
-      * @param {any} item
+      * @param {T} item
       * @return {Collection}
       */
-    add(item: any) {
+    add(item: T): Collection<T> {
         this.items.push(item);
         return this;
     }
@@ -30,7 +30,7 @@ class Collection {
      *
      * @return {number}
      */
-    getTotal() {
+    getTotal(): number|null {
         return this.total;
     }
 
@@ -46,9 +46,9 @@ class Collection {
 
     /**
      *
-     * @return {number}
+     * @return {number|null}
      */
-    getPage() {
+    getPage(): number|null {
         return this.page;
     }
 
@@ -64,9 +64,9 @@ class Collection {
 
     /**
      *
-     * @return {number}
+     * @return {number|null}
      */
-    getSize() {
+    getSize(): number|null {
         return this.size;
     }
 
@@ -85,7 +85,7 @@ class Collection {
       * @param {Function} closure
       * @return {Collection}
       */
-    async filter(closure: Function) {
+    async filter(closure: Function): Promise<Collection<T>> {
         const newdata = [];
         for (const item of this.items) {
             const resultData = closure(item);
@@ -108,7 +108,7 @@ class Collection {
       * @param {Function} closure
       * @return {[]}
       */
-    async where(closure:Function) {
+    async where(closure:Function): Promise<Collection<T>> {
         const newdata = [];
         for (const item of this.items) {
             const resultData = closure(item);
@@ -130,7 +130,7 @@ class Collection {
       *
       * @return {boolean}
       */
-    isEmpty() {
+    isEmpty(): boolean {
         return this.items.length == 0;
     }
 
@@ -138,7 +138,7 @@ class Collection {
      * Get first item of collection
      * @return {any}
      */
-    first() {
+    first(): T|null {
         if (this.items.length > 0) {
             return this.items[0];
         }
@@ -149,7 +149,7 @@ class Collection {
      * Map items of collection
      * @param {Function} closure
      */
-    async map(closure: Function) {
+    async map(closure: Function): Promise<Collection<T>> {
         const newdata = [];
         for (const item of this.items) {
             const resultData = closure(item);
@@ -170,7 +170,7 @@ class Collection {
       * @param {number} number
       * @return {[]}
       */
-    take(number: number) {
+    take(number: number): Collection<T> {
         if (number <= 0) {
             throw new Error('Number must be greater than 0 (zero)');
         }
@@ -188,7 +188,7 @@ class Collection {
       *
       * @return {number}
       */
-    count() {
+    count(): number {
         return this.items.length;
     }
 
@@ -196,7 +196,7 @@ class Collection {
       *
       * @return {[]}
       */
-    getItems() {
+    getItems(): T[] {
         return this.items;
     }
 
@@ -205,7 +205,7 @@ class Collection {
       * @return {[]}
       * @throws {Error}
       */
-    getItemsOrFail() {
+    getItemsOrFail(): T[] {
         if (this.isEmpty()) {
             throw new Error('No Data Found');
         }

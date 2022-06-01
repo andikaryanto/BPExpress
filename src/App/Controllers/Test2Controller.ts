@@ -48,10 +48,10 @@ class Test2Controller extends Controller {
      * @param {MgroupuserRepository} groupuserRepo;
      */
     constructor(
-        em: EntityManager, 
-        eu: EntityUnit, 
-        userRepo: MuserRepository, 
-        groupuserRepo: MgroupuserRepository
+        em: EntityManager,
+        eu: EntityUnit,
+        userRepo: MuserRepository,
+        groupuserRepo: MgroupuserRepository,
     ) {
         super();
         this.em = em;
@@ -65,8 +65,7 @@ class Test2Controller extends Controller {
      * @return {View}
      */
     async index(props: any) {
-
-        let { response } = props;
+        const {response, query} = props;
         // console.log(DateFormat.makeDbDate(new Date()))
         // const param = {
         //     where: {
@@ -75,21 +74,23 @@ class Test2Controller extends Controller {
         // };
 
         // const data = [];
-        // const repo = await (new MuserRepository()).collect({}, query.page, query.size);
+        const repo = await (new MuserRepository()).collect({}, query.page, query.size);
+
         // for (const r of repo) {
-        //     console.log(r.getCreated()?.getFullYear());
+        //     console.log((await (r.getMgroupuser()))?.getGroupName());
+        //     // console.log(r.getMgroupuser()?.getGroupName());
         // }
-        // const userViewModel = (new MuserCollection(repo));
+        const userViewModel = (new MuserCollection(repo));
         // Info.create(
         //     'userViewModel_',
         //     'userViewModel ' + JSON.stringify(await userViewModel.proceedAndGetData()),
         // );
-        // return (new SuccessResponse('oke', ResponseCode.OK, userViewModel));
-        let eny = await (new MgroupuserRepository()).find(8);
-        let groupuser = await (eny).toJson();
-        console.log(eny.getRules());
-        console.log(groupuser);
-        response.send({ok:"ok"});
+        return (new SuccessResponse('oke', ResponseCode.OK, userViewModel));
+        // let eny = await (new MgroupuserRepository()).newEntity();
+        // let groupuser = await (eny).();
+        // console.log(eny.getRules());
+        // console.log(groupuser);
+        return new SuccessResponse('Success', ResponseCode.OK);
     }
 
     /**
@@ -97,7 +98,7 @@ class Test2Controller extends Controller {
      * @return {SuccessResponse}
      */
     async store() {
-        const groupuser = await this.groupuserRepo.find(6);
+        const groupuser = await this.groupuserRepo.findOrAny(6);
         const user = this.userRepo.newEntity();
         user.setUsername('Tes UserName 1')
             .setPassword('Desc Password 1')
@@ -119,15 +120,18 @@ class Test2Controller extends Controller {
      */
     async update() {
         const user = await this.userRepo.find(6);
-        user.setGroupName('Test 67')
-            .setDescription('Test 67');
+        if (user) {
+            user.setUsername('Test 67')
+                .setPassword('Test 67');
 
-        const transacting = await DbTrans.beginTransaction();
+            const transacting = await DbTrans.beginTransaction();
 
-        await this.em.persist(user, transacting);
-        await transacting.commit();
-        const viewmodel = new MuserViewModel(user).toJson();
-        return new SuccessResponse('Success', ResponseCode.OK, viewmodel);
+            await this.em.persist(user, transacting);
+            await transacting.commit();
+            // const viewmodel = new MuserViewModel(user).toJson();
+        }
+
+        return new SuccessResponse('Success', ResponseCode.OK);
     }
 
     /**
@@ -135,14 +139,15 @@ class Test2Controller extends Controller {
      * @return {SuccessResponse}
      */
     async destroy() {
-        const groupuser = await this.userRepo.find(17);
+        // const groupuser = await this.userRepo.find(17);
 
-        const transacting = await DbTrans.beginTransaction();
+        // const transacting = await DbTrans.beginTransaction();
 
-        await this.em.remove(groupuser, transacting);
-        await transacting.rollback();
-        const viewmodel = new MgroupuserViewModel(groupuser).toJson();
-        return new SuccessResponse('Success', ResponseCode.OK, viewmodel);
+        // if(groupuser)
+        //     await this.em.remove(groupuser, transacting);
+        // await transacting.rollback();
+        // const viewmodel = new MgroupuserViewModel(groupuser).toJson();
+        // return new SuccessResponse('Success', ResponseCode.OK, viewmodel);
     }
 
     /**

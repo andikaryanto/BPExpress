@@ -1,14 +1,16 @@
 import EntityList from '../../Core/Entity/EntityList';
 import BaseEntity from './BaseEntity';
+import Mcanvasser from './Mcanvasser';
 import Mdistrict from './Mdistrict';
+import Mshop from './Mshop';
 /**
  * @class Mvillage
  */
 class Mvillage extends BaseEntity {
     protected Id: number|string|undefined;
-    protected Mcanvassers: EntityList|undefined;
+    protected Mcanvassers: EntityList<Mcanvasser>|undefined;
     protected Mdistrict: Mdistrict|undefined;
-    protected Mshops: EntityList|undefined;
+    protected Mshops: EntityList<Mshop>|undefined;
     protected Name: string|undefined;
     protected Description: string|undefined;
 
@@ -33,7 +35,7 @@ class Mvillage extends BaseEntity {
 
     /**
      *
-     * @return {EntityList}
+     * @return {EntityList<Mcanvasser>}
      */
     getMcanvassers() {
         return this.Mcanvassers;
@@ -41,10 +43,10 @@ class Mvillage extends BaseEntity {
 
     /**
      *
-     * @param {EntityList} Mcanvassers
+     * @param {EntityList<Mcanvasser>} Mcanvassers
      * @return {Mvillage}
      */
-    setMcanvassers(Mcanvassers: EntityList) {
+    setMcanvassers(Mcanvassers: EntityList<Mcanvasser>) {
         this.Mcanvassers = Mcanvassers;
         return this;
     }
@@ -70,7 +72,7 @@ class Mvillage extends BaseEntity {
 
     /**
      *
-     * @return {EntityList}
+     * @return {EntityList<Mshop>}
      */
     getMshops() {
         return this.Mshops;
@@ -78,10 +80,10 @@ class Mvillage extends BaseEntity {
 
     /**
      *
-     * @param {EntityList} Mshops
+     * @param {EntityList<Mshop>} Mshops
      * @return {Mvillage}
      */
-    setMshops(Mshops: EntityList) {
+    setMshops(Mshops: EntityList<Mshop>) {
         this.Mshops = Mshops;
         return this;
     }

@@ -3,6 +3,9 @@
         "browser": true,
         "es2021": true
     },
+    "plugins" : [
+        "@babel/eslint-plugin"
+    ],
     "extends": [
         "google"
     ],
@@ -10,7 +13,9 @@
         "ecmaVersion": "latest",
         "sourceType": "module"
     },
-    "ignorePatterns": ["src/assets/*"],
+	"parser": "@babel/eslint-parser",
+    // "parser": "babel-eslint",
+    "ignorePatterns": ["src/assets/*", "./node_modules/*"],
     "rules": {
         "max-len": [
             2, {
@@ -18,7 +23,12 @@
              }
         ],
         "camelcase" : 0,
-        "indent": [2, 4],
+        "indent": [0, 4],
+        // "indent": [2, "tab", {
+        //     "ignoredNodes": ["TemplateLiteral"]
+        // }],
+        // "indent": "off",
+        "template-curly-spacing" : "off",
         "no-unused-vars": 0,
         "new-cap" : [
             2,{

@@ -1,6 +1,6 @@
 
 import {ErrorRequestHandler, Request, Response, NextFunction} from 'express';
-import { JwtPayload } from 'jsonwebtoken';
+import {JwtPayload} from 'jsonwebtoken';
 import Jwt from '../../Core/Libraries/Jwt';
 import Middleware from '../../Core/Middleware/Middleware';
 
@@ -8,22 +8,21 @@ import Middleware from '../../Core/Middleware/Middleware';
  *
  */
 class AuthGraphqlMiddleware extends Middleware {
+    /**
+    * @var {Jwt}
+    */
+    protected jwt: Jwt;
 
-     /**
-     * @var {Jwt}
+    /**
+     *
+     * @param {Jwt} jwt
      */
-      protected jwt: Jwt;
-
-      /**
-       *
-       * @param {Jwt} jwt
-       */
-      constructor(
-          jwt: Jwt,
-      ) {
-          super();
-          this.jwt = jwt;
-      }
+    constructor(
+        jwt: Jwt,
+    ) {
+        super();
+        this.jwt = jwt;
+    }
 
     /**
      *
@@ -38,14 +37,13 @@ class AuthGraphqlMiddleware extends Middleware {
 
         const decoded: any = this.jwt.decode(token, {complete: true});
 
-        if(decoded == null){
+        if (decoded == null) {
             throw new Error('Not authorized or invalid token');
         }
 
         Object.assign(req, {
-            user: decoded.payload
+            user: decoded.payload,
         });
-
     };
 }
 

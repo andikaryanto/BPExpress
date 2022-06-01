@@ -1,4 +1,4 @@
-import { Knex } from 'knex';
+import {Knex} from 'knex';
 import {useCallback} from 'react';
 import Collection from '../../App/Config/Collection';
 import Db from '../Database/Connection/DbConnection';
@@ -11,17 +11,17 @@ import FilterInterface from './FilterInterface';
 /**
  * @class Respository
  */
-class Repository {
+class Repository<T> {
     protected table: string|undefined;
-    protected columns: Array<string>|undefined;
-    protected entity: any|undefined;
+    protected columns: string[]|undefined;
+    protected entity: typeof Entity;
     protected db: any;
 
     /**
     *
      * @param {any} entity
      */
-    constructor(entity: any) {
+    constructor(entity: typeof Entity) {
         this.entity = entity;
         const table = this.entity.getTable();
         this.db = Db.table(table);
@@ -31,7 +31,7 @@ class Repository {
      * create new Entity
      * @return {any}
      */
-    newEntity() {
+    newEntity(): T {
         const entity: any = this.entity;
         return new entity();
     }
@@ -42,8 +42,9 @@ class Repository {
       * @param {[]} columns
       * @param {number|null} page
       * @param {number|null} size
+      * @return {Promise<T[]>}
       */
-    async findAll(filter = {}, columns = [], page = null, size = null) {
+    async findAll(filter = {}, columns = [], page = null, size = null):Promise<T[]> {
         return await this.fetch(filter, columns, {}, page, size);
     }
 
@@ -54,7 +55,7 @@ class Repository {
       * @param {number|null} size
       * @return {this}
       */
-    setFilter(filter: any = {}, page: number|null = null, size: number|null = null) {
+    setFilter(filter: any = {}, page: number|null = null, size: number|null = null): Repository<T> {
         if (filter.join != undefined) {
             for (const [key, _value] of Object.entries(filter.join)) {
                 const value: any = _value;
@@ -141,9 +142,15 @@ class Repository {
       * @param {any} associatedKey
       * @param {number|null} page
       * @param {number|null} size
-      * @return {Promise<EntityList>}
+      * @return {Promise<any>}
       */
-    async fetch(filter = {}, columns = [], associatedKey: any = {}, page: number|null = null, size:number|null = null) {
+    async fetch(
+        filter:Criteria|{} = {},
+        columns = [],
+        associatedKey: any = {},
+        page: number|null = null,
+        size: number|null = null,
+    ): Promise<T[]> {
         this.columns = this.entity.getSelectColumns();
         if (columns.length > 0) {
             this.columns = columns;
@@ -178,13 +185,13 @@ class Repository {
       * @param {{}} associatedKey
       * @return {[]}
       */
-    setToEntity(results: Array<any>, associatedKey: any = {} ) {
-        const objects = [];
-        const newClassName = this.entity;
+    setToEntity(results: Array<any>, associatedKey: any = {} ): T[] {
+        const objects: T[] = [];
+        const newClassName: any = this.entity;
         const props = this.entity.getProps();
         for (const result of results) {
             const e = result;
-            const obj = new newClassName();
+            const obj: any = new newClassName();
             for (const [key, _value] of Object.entries(props)) {
                 const value: any = _value;
                 if (value.isPrimitive) {
@@ -223,7 +230,7 @@ class Repository {
       * @throws {Error}
       * @return {Promise<Entity>|Promise<null>}
       */
-    async find(id: number|string) {
+    async findOrAny(id: number|string): Promise<T | any> {
         const primaryKey = this.entity.getPrimaryKey();
         const filter = {
             where: {
@@ -231,11 +238,85 @@ class Repository {
             },
         };
         const objects = await this.findAll(filter);
-        if (objects.length > 0) {
-            return objects[0];
+
+        if (objects) {
+            if (objects.length > 0) {
+                return objects[0];
+            }
+            return null;
         } else {
             return null;
         }
+    }
+
+
+    /**
+      * Get one data from database by id primary key, If Data not found will reeturn null
+      * @param {number|string} id
+      * @throws {Error}
+      * @return {Promise<Entity>|Promise<null>}
+      */
+     async find(id: number|string): Promise<T | null> {
+        const primaryKey = this.entity.getPrimaryKey();
+        const filter = {
+            where: {
+                [primaryKey]: id,
+            },
+        };
+        const objects = await this.findAll(filter);
+
+        if (objects) {
+            if (objects.length > 0) {
+                return objects[0];
+            }
+        }
+        return null;
+    }
+
+    /**
+      * Get one data from database by id primary key, If Data not found will reeturn null
+      * @param {number|string} id
+      * @throws {Error}
+      * @return {Promise<Entity>|Promise<null>}
+      */
+     async findOrError(id: number|string): Promise<T> {
+        const primaryKey = this.entity.getPrimaryKey();
+        const filter = {
+            where: {
+                [primaryKey]: id,
+            },
+        };
+        const objects = await this.findAll(filter);
+
+        if (objects) {
+            if (objects.length > 0) {
+                return objects[0];
+            }
+        }
+        throw Error('No such entity found');
+    }
+
+    /**
+      * Get one data from database by id primary key, If Data not found will reeturn null
+      * @param {number|string} id
+      * @throws {Error}
+      * @return {Promise<Entity>|Promise<null>}
+      */
+     async findOrNew(id: number|string): Promise<T> {
+        const primaryKey = this.entity.getPrimaryKey();
+        const filter = {
+            where: {
+                [primaryKey]: id,
+            },
+        };
+        const objects = await this.findAll(filter);
+
+        if (objects) {
+            if (objects.length > 0) {
+                return objects[0];
+            }
+        }
+        return this.newEntity();
     }
 
     /**
@@ -244,13 +325,68 @@ class Repository {
       * @throws {Error}
       * @return {{}|null}
       */
-    async findOne(filter = {}) {
+    async findOne(filter = {}): Promise<T | null> {
         const objects = await this.findAll(filter);
-        if (objects.length > 0) {
-            return objects[0];
-        } else {
-            return null;
+
+        if (objects) {
+            if (objects.length > 0) {
+                return objects[0];
+            }
         }
+        return null;
+    }
+
+    /**
+      * Get one data from database by id primary key, If Data not found will reeturn null
+      * @param {{}|Criteria} filter
+      * @throws {Error}
+      * @return {{}|null}
+      */
+     async findOneOrError(filter = {}): Promise<T> {
+        const objects = await this.findAll(filter);
+
+        if (objects) {
+            if (objects.length > 0) {
+                return objects[0];
+            }
+        }
+
+        throw Error('No such entity found');
+    }
+
+    /**
+      * Get one data from database by id primary key, If Data not found will reeturn null
+      * @param {{}|Criteria} filter
+      * @throws {Error}
+      * @return {{}|null}
+      */
+     async findOneOrNew(filter = {}): Promise<T> {
+        const objects = await this.findAll(filter);
+
+        if (objects) {
+            if (objects.length > 0) {
+                return objects[0];
+            }
+        }
+
+        return this.newEntity();
+    }
+
+    /**
+      * Get one data from database by id primary key, If Data not found will reeturn null
+      * @param {{}|Criteria} filter
+      * @throws {Error}
+      * @return {{}|null}
+      */
+     async findOneOrAny(filter = {}): Promise<T | any> {
+        const objects = await this.findAll(filter);
+
+        if (objects) {
+            if (objects.length > 0) {
+                return objects[0];
+            }
+        }
+        return null;
     }
 
     /**
@@ -258,9 +394,9 @@ class Repository {
     * @param {{}|Criteria} filter
     * @param {number|null} page
     * @param {number|null} size
-    * @return {Promise<EntityList>}
+    * @return {Promise<EntityList<T>>}
     */
-    async collect(filter = {}, page = 1, size: number|null = null) {
+    async collect(filter = {}, page: number = 1, size: number|null = null): Promise<EntityList<T>> {
         const filterForCounting = filter instanceof Criteria ? filter : {...filter};
 
         if (size == null) {
@@ -268,8 +404,8 @@ class Repository {
         }
         const associatedKey:any = {};
         let totalData = 0; ;
-        const result = await this.fetch(filter, [], associatedKey, page, size);
-        const entityList = new EntityList(result);
+        const result: T[]|null = await this.fetch(filter, [], associatedKey, page, size);
+        const entityList = new EntityList<T>(result);
         totalData = await this.count(filterForCounting);
 
         if (size > totalData) {
@@ -289,7 +425,7 @@ class Repository {
     * @param {{}|Criteria} filter
      * @return {number}
      */
-    async count(filter = {}) {
+    async count(filter = {}): Promise<number> {
         if (filter instanceof Criteria) {
             filter = filter.getFilter();
         }

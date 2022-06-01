@@ -5,10 +5,7 @@ import MshopproductCollection from '../Mshopproduct/MshopproductCollection';
 /**
  * @class MshopViewModel
  */
-class MshopViewModel extends BaseViewModel {
-    
-    entity: any;
-
+class MshopViewModel extends BaseViewModel<Mshop> {
     /**
      *
      * @param {Mshop} entity
@@ -22,13 +19,13 @@ class MshopViewModel extends BaseViewModel {
      * @param {{}} object
      * @return {void}
      */
-    async addResource(object: {}) {
-        const Shopproducts = await (new MshopproductCollection(await this.entity?.getMshopproducts()))
-                .proceedAndGetData()
-        const assignObject = {
-            Shopproducts: Shopproducts 
-        } ;
-        Object.assign(object, Shopproducts);
+    async addResource(object: any) {
+        const shopProducts = await this.entity?.getMshopproducts();
+        if (shopProducts) {
+            const Shopproducts = await (new MshopproductCollection(shopProducts))
+                .proceedAndGetData();
+            object.Shopproducts = Shopproducts;
+        }
     }
 
     /**

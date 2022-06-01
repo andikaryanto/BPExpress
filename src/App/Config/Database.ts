@@ -1,6 +1,6 @@
 import dotenv from 'dotenv';
 import approot from 'app-root-path';
-import config from '../../../config';
+import config from '../../config';
 dotenv.config({path: approot + '/.env'});
 
 const database = {

@@ -1,14 +1,2 @@
-let config = require('./config');
-require('@babel/register')({
-    presets: [
-        [
-            '@babel/preset-env',
-            {
-                targets: {
-                    node: 'current',
-                },
-            },
-        ],
-    ],
-});
+import config from './config';
 require(config.sourcePath + '/app');

@@ -25,7 +25,7 @@ class GraphqlMiddleware extends Middleware {
             // }
         } catch (e) {
             Object.assign(req, {
-                graphqlError: e
+                graphqlError: e,
             });
         }
 

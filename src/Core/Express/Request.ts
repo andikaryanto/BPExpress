@@ -1,4 +1,4 @@
-import UploadedFile from "../Libraries/UploadedFile";
+import UploadedFile from '../Libraries/UploadedFile';
 
 declare namespace Express {
     export interface Request {

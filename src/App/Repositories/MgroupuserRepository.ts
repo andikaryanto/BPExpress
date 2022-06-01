@@ -4,7 +4,7 @@ import Mgroupuser from '../Entity/Mgroupuser';
 /**
  * @class MgroupuserRepository
  */
-class MgroupuserRepository extends Repository {
+class MgroupuserRepository extends Repository<Mgroupuser> {
     /**
      * @inheritdoc
      */

@@ -12,7 +12,7 @@ import Api from '../../App/Routes/Api';
 import csrf from 'csurf';
 import VerifyCsrf from '../Middleware/VerifyCsrf';
 import morgan from 'morgan';
-import config from '../../../config';
+import config from '../../config';
 
 const rfs = require('rotating-file-stream');
 const KnexSessionStore = require('connect-session-knex')(session);
@@ -49,7 +49,7 @@ class AppOverride {
       *
       * @param {Express} app
       */
-    static override(app: Express) {
+    static override(app: Express): void {
         AppOverride.use(app);
         // AppOverride.csrf(app);
         AppOverride.logger(app);
@@ -63,7 +63,7 @@ class AppOverride {
       *
       * @param {Express} app
       */
-    static graphQL(app: Express) {
+    static graphQL(app: Express): void {
         const queryFields = GraphQLLoader.loadQuery(GraphQL.query());
         const mutationFields = GraphQLLoader.loadMutation(GraphQL.mutation());
 

@@ -9,7 +9,7 @@ class ForbiddenResponse extends BaseResponse {
      * @param {[]} responseCode
      * @param {{}} data
      */
-    constructor(message, responseCode, data) {
+    constructor(message: string, responseCode: {}, data: any) {
         super(message, 403, responseCode, data);
     }
 }

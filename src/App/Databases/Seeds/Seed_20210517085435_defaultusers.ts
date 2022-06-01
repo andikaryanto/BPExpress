@@ -15,7 +15,7 @@ const Seed_20210517085435_defaultusers = {
 
 };
 
-exports.seed = async function(knex) {
+exports.seed = async function(knex: any) {
     const isDataSeedExist = await Seeds.isSeedExist(knex, 'Seed_20210517085435_defaultusers');
     if (!isDataSeedExist) {
         await Seeds.insertSeedBatch(knex, 'Seed_20210517085435_defaultusers');

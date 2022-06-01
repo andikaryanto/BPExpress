@@ -13,7 +13,7 @@ class EntityUnit {
      * @param {Entity} entity
      * @return {EntityUnit}
      */
-    preparePersistence(entity: Entity) {
+    preparePersistence(entity: Entity): EntityUnit {
         const enttityScope = EntityScope.getInstance();
         enttityScope.addEntity(EntityScope.PERFORM_ADD_UPDATE, entity);
         return this;
@@ -25,7 +25,7 @@ class EntityUnit {
      * @param {Entity} entity
      * @return {EntityUnit}
      */
-    prepareRemove(entity: Entity) {
+    prepareRemove(entity: Entity): EntityUnit {
         const enttityScope = EntityScope.getInstance();
         enttityScope.addEntity(EntityScope.PERFORM_DELETE, entity);
         return this;
@@ -36,7 +36,7 @@ class EntityUnit {
      *
      * @return {Promise<void>}
      */
-    async flush() {
+    async flush(): Promise<void> {
         const entityScope = EntityScope.getInstance();
 
         const entityManager = new EntityManager();

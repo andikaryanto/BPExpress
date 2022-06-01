@@ -1,11 +1,12 @@
 import EntityList from '../../Core/Entity/EntityList';
 import BaseEntity from './BaseEntity';
+import Mcity from './Mcity';
 /**
  * @class Mprovince
  */
 class Mprovince extends BaseEntity {
     protected Id: number | string | undefined;
-    protected Mcities: EntityList|undefined;
+    protected Mcities: EntityList<Mcity>|undefined;
     protected Name: string|undefined;
     protected Description: string|undefined;
 
@@ -29,7 +30,7 @@ class Mprovince extends BaseEntity {
 
     /**
      *
-     * @return {EntityList}
+     * @return {EntityList<Mcity>}
      */
     getMcities() {
         return this.Mcities;
@@ -37,10 +38,10 @@ class Mprovince extends BaseEntity {
 
     /**
      *
-     * @param {EntityList} Mcities
+     * @param {EntityList<Mcity>} Mcities
      * @return {Mprovince}
      */
-    setMcities(Mcities: EntityList) {
+    setMcities(Mcities: EntityList<Mcity>) {
         this.Mcities = Mcities;
         return this;
     }

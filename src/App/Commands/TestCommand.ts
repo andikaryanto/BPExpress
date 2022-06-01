@@ -32,7 +32,7 @@ class TestCommand extends Command {
      * @inheritdoc
      * @param {[]} args
      */
-    async execute(args) {
+    async execute(args: any) {
         console.log('args', args);
         console.log('command executed');
     }

@@ -4,9 +4,7 @@ import BaseViewModel from '../../../Core/ViewModel/ViewModel';
 /**
  * @class MproductcategoryViewModel
  */
-class MproductcategoryViewModel extends BaseViewModel {
-
-    entity: any;
+class MproductcategoryViewModel extends BaseViewModel<Mproductcategory> {
     /**
      *
      * @param {Mproductcategory} entity

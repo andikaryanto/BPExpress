@@ -37,9 +37,9 @@ class UserService {
      * @param {EntityUnit} eu
      */
     constructor(
-        commonService: CommonService, 
-        userRepository: MuserRepository, 
-        jwt: Jwt, 
+        commonService: CommonService,
+        userRepository: MuserRepository,
+        jwt: Jwt,
         eu: EntityUnit) {
         this. commonService = commonService;
         this. userRepository = userRepository;
@@ -61,7 +61,7 @@ class UserService {
             },
         };
 
-        const muser = await this. userRepository.findOne(filter);
+        const muser = await this.userRepository.findOne(filter);
         return muser;
     }
 

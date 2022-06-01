@@ -1,5 +1,5 @@
 import {Express} from 'express';
-import config from '../../../config';
+import config from '../../config';
 /**
  * @class View
  */
@@ -17,7 +17,7 @@ class View {
       * Register functions and variables to be used in view
       * @return {{}}
       */
-    static hook() {
+    static hook(): any {
         // current reserved variables are :
         // * csrfToken
         // * lang

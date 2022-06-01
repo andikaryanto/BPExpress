@@ -5,7 +5,7 @@ import ResponseData from './ResponseData';
 import View from './View';
 import BaseResponse from './Response';
 import {Request, Response} from 'express';
-import config from '../../../config';
+import config from '../../config';
 import Template from '../Template/Template';
 import ConfigView from '../../App/Config/View';
 import InstanceLoader from '../Express/InstanceLoader';
@@ -20,9 +20,9 @@ class ControllerCallback {
      * @param {string} controller
      * @param {string} fn
      * @param {{}} additionalData
-     * @return {Function}
+     * @return {any}
      */
-    static call(controller: string, fn: any, additionalData: {}) {
+    static call(controller: string, fn: any, additionalData: {}): any {
         return async (req: any, res: any, next: any) => {
             try {
                 const controllerInstance = InstanceLoader.load(controller);
@@ -45,7 +45,7 @@ class ControllerCallback {
                 }
                 await ControllerCallback.response(req, res, returnedData);
             } catch (_e) {
-                const e: any = _e
+                const e: any = _e;
                 Error.create('error', e.stack);
 
                 if (process.env.APP_MODE == 'development') {
@@ -64,12 +64,13 @@ class ControllerCallback {
       * @param {Request} req
       * @param {Response} res
       * @param {ResponseData|View|Redirect} returnedData
+      * @return {Promise<void>}
       */
     static async response(
-        req: Request, 
-        res: Response, 
-        returnedData: ResponseData|View|Redirect
-    ) {
+        req: Request,
+        res: Response,
+        returnedData: ResponseData|View|Redirect,
+    ): Promise<void> {
         if (returnedData == undefined) {
             res.status(400).send('Unexpected Error, Method didnt return anything');
         }

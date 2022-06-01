@@ -8,7 +8,7 @@ import Mprovince from './Mprovince';
 class Mcity extends BaseEntity {
     protected Id: number|string|undefined;
     protected Mprovince: Mprovince|undefined;
-    protected Mdistricts: EntityList|undefined;
+    protected Mdistricts: EntityList<Mdistrict>|undefined;
     protected Name: string|undefined;
     protected Description: string|undefined;
 
@@ -50,7 +50,7 @@ class Mcity extends BaseEntity {
 
     /**
      *
-     * @return {EntityList}
+     * @return {EntityList<Mdistrict>}
      */
     getMdistricts() {
         return this.Mdistricts;
@@ -58,10 +58,10 @@ class Mcity extends BaseEntity {
 
     /**
      *
-     * @param {Mdistricts} Mdistricts
+     * @param {EntityList<Mdistrict>} Mdistricts
      * @return {Mcity}
      */
-    setMdistricts(Mdistricts: EntityList) {
+    setMdistricts(Mdistricts: EntityList<Mdistrict>) {
         this.Mdistricts = Mdistricts;
         return this;
     }

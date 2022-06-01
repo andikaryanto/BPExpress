@@ -1,13 +1,14 @@
 import EntityList from '../../Core/Entity/EntityList';
 import BaseEntity from './BaseEntity';
 import Mcity from './Mcity';
+import Mvillage from './Mvillage';
 /**
  * @class Mdistrict
  */
 class Mdistrict extends BaseEntity {
     protected Id: number|string|undefined;
     protected Mcity: Mcity|undefined;
-    protected Mvillages: EntityList|undefined;
+    protected Mvillages: EntityList<Mvillage>|undefined;
     protected Name: string|undefined;
     protected Description: string|undefined;
 
@@ -50,7 +51,7 @@ class Mdistrict extends BaseEntity {
 
     /**
      *
-     * @return {EntityList}
+     * @return {EntityList<Mvillage>}
      */
     getMvillages() {
         return this.Mvillages;
@@ -58,10 +59,10 @@ class Mdistrict extends BaseEntity {
 
     /**
      *
-     * @param {EntityList} Mvillages
+     * @param {EntityList<Mvillage>} Mvillages
      * @return {Mdistrict}
      */
-    setMvillages(Mvillages: EntityList) {
+    setMvillages(Mvillages: EntityList<Mvillage>) {
         this.Mvillages = Mvillages;
         return this;
     }

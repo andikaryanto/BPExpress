@@ -3,7 +3,7 @@ import MshopProductRepository from '../App/Repositories/MshopProductRepository';
 import MshopRepository from '../App/Repositories/MshopRepository';
 import MuserRepository from '../App/Repositories/MuserRepository';
 import MgroupuserRepository from '../App/Repositories/MgroupuserRepository';
-import { ContainerBuilder } from 'node-dependency-injection';
+import {ContainerBuilder} from 'node-dependency-injection';
 
 /**
  * @param {ContainerBuilder} container

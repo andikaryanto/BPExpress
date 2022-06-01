@@ -6,9 +6,9 @@ import ResetCron from '../Command/ResetCron';
 class Command {
     /**
      * Register crons class here, using class or container key
-     * @return {[]}
+     * @return {any[]}
      */
-    static register() {
+    static register(): any[] {
         return [
             ResetCron,
         ];

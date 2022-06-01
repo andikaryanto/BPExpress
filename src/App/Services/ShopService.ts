@@ -68,7 +68,7 @@ class ShopService {
             Object.assign(param, {
                 like: {
                     'm_products.Name': name,
-                }
+                },
             });
         }
 

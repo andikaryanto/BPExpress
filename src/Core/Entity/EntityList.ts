@@ -4,15 +4,15 @@ import EntityLooper from './EntityLooper';
 /**
  * @class EntityList
  */
-class EntityList extends Collection {
-    listOf = '';
-    associatedKey = Array<any>();
+class EntityList<T> extends Collection<T> {
+    listOf: string = '';
+    associatedKey: number[] = [];
 
     /**
      *
      * @param {string} listOf
      */
-    setListOf(listOf: string) {
+    setListOf(listOf: string): void {
         this.listOf = listOf;
     }
 
@@ -20,25 +20,25 @@ class EntityList extends Collection {
      *
      * @return {string}
      */
-    getListOf() {
+    getListOf(): string {
         return this.listOf;
     }
 
     /**
     *
-    * @param {Array<T>} associatedKey
-    * @return {EntityList}
+    * @param {Array<any>} associatedKey
+    * @return {EntityList<T>}
     */
-    setAssociatedKey(associatedKey: Array<any>) {
+    setAssociatedKey(associatedKey: Array<any>): EntityList<T> {
         this.associatedKey = associatedKey;
         return this;
     }
 
     /**
     *
-    * @return {[]}
+    * @return {any[]}
     */
-    getAssociatedKey() {
+    getAssociatedKey(): any[] {
         return this.associatedKey;
     }
 
@@ -46,11 +46,12 @@ class EntityList extends Collection {
      * Convert each entity in collection to json
      * @return {array}
      */
-    async eachJson() {
+    async eachJson(): Promise<any[]> {
         const newItems = [];
 
         for (const item of this.items) {
-            newItems.push(await item.toJson());
+            const newItem: any = item;
+            newItems.push(await newItem.toJson());
         };
 
         return newItems;

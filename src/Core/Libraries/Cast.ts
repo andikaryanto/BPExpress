@@ -8,7 +8,7 @@ class Cast {
      * @param {string} type
      * @return {any}
      */
-    static to(value, type) {
+    static to(value: any, type: string): any {
         switch (type) {
         case 'boolean':
             return Boolean(value);

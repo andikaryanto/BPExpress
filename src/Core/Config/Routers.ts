@@ -29,8 +29,9 @@ class Routers {
       * @param {string} route
       * @param {any} middleware
       * @param {Function} callback
+      * @return {void}
       */
-    group(route: string, middleware: any, callback: Function) {
+    group(route: string, middleware: any, callback: Function): void {
         const intance = new Routers();
 
 
@@ -56,6 +57,7 @@ class Routers {
       * @param {Controller} controller
       * @param {string} fn
       * @param {{}} additionalData
+      * @return {void}
       */
     delete(route: string, middleware: [], controller: string, fn: string, additionalData: {} = {}): void {
         this.doRoute(route, middleware, controller, fn, additionalData, 'DELETE');
@@ -68,8 +70,9 @@ class Routers {
       * @param {Controller} controller
       * @param {string} fn
       * @param {{}} additionalData
+      * @return {void}
       */
-    put(route: string, middleware: [], controller: string, fn: string, additionalData: {} = {}) {
+    put(route: string, middleware: [], controller: string, fn: string, additionalData: {} = {}): void {
         this.doRoute(route, middleware, controller, fn, additionalData, 'PUT');
     }
 
@@ -80,8 +83,9 @@ class Routers {
       * @param {Controller} controller
       * @param {string} fn
       * @param {{}} additionalData
+      * @return {void}
       */
-    post(route: string, middleware: [], controller: string, fn: string, additionalData: {} = {}) {
+    post(route: string, middleware: [], controller: string, fn: string, additionalData: {} = {}): void {
         this.doRoute(route, middleware, controller, fn, additionalData, 'POST');
     }
 
@@ -123,8 +127,17 @@ class Routers {
       * @param {{}} additionalData
       * @param {string} method
       * @param {boolean} isNamed
+      * @return {void}
       */
-    doRoute(route: string, middleware: [], controller: string, fn: string, additionalData: {} = {}, method: string = 'GET', isNamed: boolean = false) {
+    doRoute(
+        route: string,
+        middleware: any[],
+        controller: string,
+        fn: string,
+        additionalData: {} = {},
+        method: string = 'GET',
+        isNamed: boolean = false,
+    ): void {
         let currentRoute = route;
 
         const midlewares = middleware.map((e, i) => {

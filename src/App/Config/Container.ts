@@ -15,7 +15,7 @@ class Container {
      * Get all service container
      * @return {[]}
      */
-    static get service() {
+    static get service(): any[] {
         return [
             Command,
             Cron,

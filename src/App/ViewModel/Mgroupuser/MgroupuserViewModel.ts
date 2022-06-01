@@ -5,9 +5,7 @@ import MuserCollection from '../Musers/MuserCollection';
 /**
  * @class MgroupuserViewModel
  */
-class MgroupuserViewModel extends BaseViewModel {
-
-    entity: any;
+class MgroupuserViewModel extends BaseViewModel<Mgroupuser> {
     /**
      *
      * @param {Mgroupuser} entity

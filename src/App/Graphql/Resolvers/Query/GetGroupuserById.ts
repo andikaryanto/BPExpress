@@ -73,7 +73,7 @@ class GetGroupuserById extends GraphQLField {
      * @inheritdoc
      */
     extensions(props: any) {
-        let {document, variables, operationName, result, context} = props;
+        const {document, variables, operationName, result, context} = props;
         return '';
     }
 
@@ -81,14 +81,13 @@ class GetGroupuserById extends GraphQLField {
      * @inheritdoc
      */
      async resolve(parent: any, args: any, request: any, context: any) {
-        
         if (request.graphqlError != undefined) {
             throw request.graphqlError;
         }
 
         const id = args.Id;
 
-        const groupuser = await this.mgroupuserRepository.find(id);
+        const groupuser = await this.mgroupuserRepository.findOrAny(id);
         const viewModel = new MgroupuserViewModel(groupuser);
         return await viewModel.toJson();
     }

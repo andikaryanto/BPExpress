@@ -1,7 +1,7 @@
 
-exports.up = function(knex) {
+exports.up = function(knex: any) {
     return knex.schema
-        .createTable('m_groupusers', function(table) {
+        .createTable('m_groupusers', function(table: any) {
             table.increments('Id').primary();
             table.string('GroupName', 100).nullable();
             table.string('Description', 300).nullable();
@@ -12,6 +12,6 @@ exports.up = function(knex) {
         });
 };
 
-exports.down = function(knex) {
+exports.down = function(knex: any) {
 
 };

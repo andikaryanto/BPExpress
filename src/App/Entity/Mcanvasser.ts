@@ -5,7 +5,6 @@ import Mvillage from './Mvillage';
  * @class Mcanvasser
  */
 class Mcanvasser extends BaseEntity {
-
     protected Id: number|string|undefined;
     protected Muser: Muser|undefined;
     protected Mvillage: Mvillage|undefined;
@@ -43,7 +42,7 @@ class Mcanvasser extends BaseEntity {
 
     /**
      *
-     * @param {Muser} User
+     * @param {Muser} Muser
      * @return {Mcanvasser}
      */
     setUser(Muser: Muser) {

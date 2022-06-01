@@ -1,11 +1,12 @@
 import EntityList from '../../Core/Entity/EntityList';
 import BaseEntity from './BaseEntity';
+import Muser from './Muser';
 /**
  * @class Mgroupuser
  */
 class Mgroupuser extends BaseEntity {
     protected Id: number | string | undefined;
-    protected Musers: EntityList|undefined;
+    protected Musers: EntityList<Muser>|undefined;
     protected GroupName: string|undefined;
     protected Description: string|undefined;
 
@@ -44,10 +45,10 @@ class Mgroupuser extends BaseEntity {
 
     /**
      * set list of Musers
-     * @param {EntityList} Musers
+     * @param {EntityList<Muser>} Musers
      * @return {Mgroupuser}
      */
-    setMusers(Musers: EntityList) {
+    setMusers(Musers: EntityList<Muser>) {
         this.Musers = Musers;
         return this;
     }

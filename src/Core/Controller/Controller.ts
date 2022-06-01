@@ -1,5 +1,5 @@
 import StringLib from '../Libraries/StringLib';
-import config from '../../../config';
+import config from '../../config';
 import fs from 'fs';
 
 /**
@@ -17,9 +17,10 @@ class Controller {
       *
       * @param {string} path
       * @param {string} controllerName
+      * @return {void}
       * @throws {Error}
       */
-    static makeController(path: string, controllerName: string) {
+    static makeController(path: string, controllerName: string): void {
         controllerName = StringLib.ucFirst(controllerName);
         const content = function() {
             return `import Controller from "../../Core/Controller/Controller";

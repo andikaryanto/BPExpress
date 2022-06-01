@@ -10,9 +10,9 @@ class Seeds {
       *
       * @param {any} knex
       * @param {string} seedFileName
-      * @return {boolean}
+      * @return {Promise<boolean>}
       */
-    static async isSeedExist(knex, seedFileName) {
+    static async isSeedExist(knex: any, seedFileName: string): Promise<boolean> {
         return (await knex.table('seeds').where({name: seedFileName})).length > 0;
     }
 
@@ -22,7 +22,7 @@ class Seeds {
       * @param {*} knex
       * @param {string} seedFileName
       */
-    static async insertSeedBatch(knex, seedFileName) {
+    static async insertSeedBatch(knex: any, seedFileName: string) {
         await knex('seeds').insert({
             id: null,
             name: seedFileName,

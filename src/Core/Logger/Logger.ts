@@ -1,6 +1,6 @@
 
-import config from '../../../config';
-import Rollbar, { Configuration, Level } from 'rollbar';
+import config from '../../config';
+import Rollbar, {Configuration, Level} from 'rollbar';
 /**
  * @class Logger
  */

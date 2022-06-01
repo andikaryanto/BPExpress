@@ -67,7 +67,7 @@ class GetAllShopProducts extends GraphQLField {
       * @inheritdoc
       */
     extensions(props: any) {
-        let {document, variables, operationName, result, context} = props;
+        const {document, variables, operationName, result, context} = props;
         return '';
     }
 
@@ -82,7 +82,6 @@ class GetAllShopProducts extends GraphQLField {
       * @inheritdoc
       */
      async resolve(parent: any, args: any, request: any, context: any) {
-        
         if (request.graphqlError != undefined) {
             throw request.graphqlError;
         }

@@ -4,9 +4,7 @@ import MgroupuserViewModel from '../Mgroupuser/MgroupuserViewModel';
 /**
  * @class MuserViewModel
  */
-class MuserViewModel extends BaseViewModel {
-
-    entity: any;
+class MuserViewModel extends BaseViewModel<Muser> {
     /**
      *
      * @param {Muser} entity
@@ -22,8 +20,10 @@ class MuserViewModel extends BaseViewModel {
      */
     async addResource(object: any) {
         const groupuser = await this.entity.getMgroupuser();
-        const groupUserViewModel = await (new MgroupuserViewModel(groupuser)).toJson();
-        object.Groupuser = groupUserViewModel;
+        if (groupuser) {
+            const groupUserViewModel = await (new MgroupuserViewModel(groupuser)).toJson();
+            object.Groupuser = groupUserViewModel;
+        }
     }
 
     /**
@@ -36,8 +36,8 @@ class MuserViewModel extends BaseViewModel {
         }
 
         const json = {
-            Id: this.entity.Id,
-            Username: this.entity.Username,
+            Id: this.entity.getId(),
+            Username: this.entity.getUsername(),
         };
 
         if (this.getAutoAddResource()) {

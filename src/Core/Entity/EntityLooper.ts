@@ -3,7 +3,7 @@ import EntityList from './EntityList';
 /**
  * this class is used to cache N+1 query eager load loop
  */
-class EntityLooper {
+class EntityLooper<T> {
     /**
      *
      * @var {[]}
@@ -18,9 +18,9 @@ class EntityLooper {
 
     /**
      *
-     * @var {EntityList}
+     * @var {EntityList<T>}
      */
-    entityList:EntityList|null = null;
+    entityList:EntityList<T>|null = null;
 
     /**
      *
@@ -36,7 +36,7 @@ class EntityLooper {
 
     /**
      * @param {string} key
-     * @return {EntityLooper}
+     * @return {EntityLooper<T>}
      */
     static getInstance(key: string) {
         if (!(key in EntityLooper.instance)) {
@@ -48,9 +48,9 @@ class EntityLooper {
     /**
      * Clean the item that had been collected
      *
-     * @return {EntityLooper}
+     * @return {EntityLooper<Text>}
      */
-    clean() {
+    clean(): EntityLooper<T> {
         this.lastIndex = false;
         this.entityList = null;
         this.items = [];
@@ -61,7 +61,7 @@ class EntityLooper {
      * check if current loop has data
      * @return {boolean}
      */
-    hasEntityList() {
+    hasEntityList(): boolean {
         return this.entityList != null;
     }
 
@@ -69,32 +69,32 @@ class EntityLooper {
      * @param {[]} items
      * @return {EntityLooper}
      */
-    setItems(items: any[]) {
+    setItems(items: any[]): EntityLooper<T> {
         this.items = items;
         return this;
     }
 
 
     /**
-     * @return {[]}
+     * @return {{}}
      */
     getItems() {
         return this.items;
     }
 
     /**
-     * @param {EntityList} entityList
-     * @return {EntityLooper}
+     * @param {EntityList<T>} entityList
+     * @return {EntityLooper<T>}
      */
-    setEntityList(entityList: EntityList) {
+    setEntityList(entityList: EntityList<T>): EntityLooper<T> {
         this.entityList = entityList;
         return this;
     }
 
     /**
-     * @return {EntityList}
+     * @return {EntityList<T>}
      */
-    getEntityList() {
+    getEntityList(): EntityList<T>|null {
         return this.entityList;
     }
 
@@ -102,16 +102,16 @@ class EntityLooper {
      *
      * @return {boolean}
      */
-    isLastIndex() {
+    isLastIndex(): boolean {
         return this.lastIndex;
     }
 
     /**
      *
      * @param {boolean} isLastIndex
-     * @return {EntityLooper}
+     * @return {EntityLooper<T>}
      */
-    setIsLastIndex(isLastIndex: boolean) {
+    setIsLastIndex(isLastIndex: boolean): EntityLooper<T> {
         this.lastIndex = isLastIndex;
         return this;
     }

@@ -14,7 +14,7 @@ class Cron {
      * Register crons class here, using class or container key
      * @return {[]}
      */
-    static register() {
+    static register(): any[] {
         return [
             'cron.testdi',
         ];
