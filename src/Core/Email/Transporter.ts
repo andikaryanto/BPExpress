@@ -1,5 +1,5 @@
 import {createTransport, Transporter as Transport} from 'nodemailer';
-import config from '../../../config';
+import config from '../../config';
 
 /**
  * @class Transporter
@@ -16,7 +16,7 @@ class Transporter {
      *
      * @return {Transporter}
      */
-    createTransport() {
+    createTransport(): Transporter {
         this.transporter = createTransport({
             port: config.transportPort,
             host: config.transportHost,
@@ -34,7 +34,7 @@ class Transporter {
      * @param {string} emailAddress
      * @return {Transporter}
      */
-    setFrom(emailAddress: string) {
+    setFrom(emailAddress: string): Transporter {
         this.mailData = {...this.mailData, from: emailAddress};
         return this;
     }
@@ -44,7 +44,7 @@ class Transporter {
      * @param {string} emailAddress
      * @return {Transporter}
      */
-    setTo(emailAddress: string) {
+    setTo(emailAddress: string): Transporter {
         this.mailData = {...this.mailData, to: emailAddress};
         return this;
     }
@@ -54,7 +54,7 @@ class Transporter {
      * @param {string} subject
      * @return {Transporter}
      */
-    setSubject(subject: string) {
+    setSubject(subject: string): Transporter {
         this.mailData = {...this.mailData, subject: subject};
         return this;
     }
@@ -64,7 +64,7 @@ class Transporter {
      * @param {string} text
      * @return {Transporter}
      */
-    setText(text: string) {
+    setText(text: string): Transporter {
         this.mailData = {...this.mailData, text: text};
         return this;
     }
@@ -74,7 +74,7 @@ class Transporter {
      * @param {string} html
      * @return {Transporter}
      */
-    setHtml(html: string) {
+    setHtml(html: string): Transporter {
         this.mailData = {...this.mailData, html: html};
         return this;
     }
@@ -82,7 +82,7 @@ class Transporter {
     /**
      * Send the email
      */
-    sendMail() {
+    sendMail(): void {
         this.transporter.sendMail(this.mailData, (err: any, info: any) => {
             if (err) {
                 console.log(err);

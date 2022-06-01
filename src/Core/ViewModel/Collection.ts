@@ -29,7 +29,7 @@ class Collection<T> {
      *
      * @return {number|null}
      */
-    getPage() {
+    getPage(): number|null {
         if (this.collection instanceof UtilCollection) {
             return this.collection.getPage();
         }
@@ -40,7 +40,7 @@ class Collection<T> {
      *
      * @return {number|null}
      */
-    getSize() {
+    getSize(): number|null {
         if (this.collection instanceof UtilCollection) {
             return this.collection.getSize();
         }
@@ -51,7 +51,7 @@ class Collection<T> {
      *
      * @return {number|null}
      */
-    getTotal() {
+    getTotal(): number|null {
         if (this.collection instanceof UtilCollection) {
             return this.collection.getTotal();
         }
@@ -62,10 +62,9 @@ class Collection<T> {
      * proceed shaping to view model
      * @return {this}
      */
-    async proceed() {
-        let arrayCollection: UtilCollection<T>|any[];
-        arrayCollection = this.collection;
-    
+    async proceed(): Promise<Collection<T>> {
+        const arrayCollection: UtilCollection<T>|any[] = this.collection;
+
         for (const item of arrayCollection) {
             await this.shape(item);
         }
@@ -77,7 +76,7 @@ class Collection<T> {
      * Process all data and return it
      * @return {[]}
      */
-    async proceedAndGetData() {
+    async proceedAndGetData(): Promise<any[]> {
         return (await this.proceed()).getElements();
     }
 
@@ -95,7 +94,7 @@ class Collection<T> {
      * Get elemet
      * @return {[]}
      */
-    getElements() {
+    getElements(): any[] {
         return this.element;
     }
 }

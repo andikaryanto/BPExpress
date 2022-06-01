@@ -16,7 +16,7 @@ class ResetCron extends Command {
      *
      * @inheritdoc
      */
-    name() {
+    name(): string {
         return 'core:reset-cron';
     }
 
@@ -24,7 +24,7 @@ class ResetCron extends Command {
      *
      * @inheritdoc
      */
-    description() {
+    description(): string {
         return 'Reset cron if any changing cron ';
     }
 
@@ -32,7 +32,7 @@ class ResetCron extends Command {
      *
      * @inheritdoc
      */
-    async execute(args) {
+    async execute(args: any): Promise<void> {
         CronService.resetCron();
     }
 }

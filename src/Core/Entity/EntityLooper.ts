@@ -36,9 +36,9 @@ class EntityLooper<T> {
 
     /**
      * @param {string} key
-     * @return {EntityLooper}
+     * @return {EntityLooper<T>}
      */
-    static getInstance(key: string): any {
+    static getInstance(key: string) {
         if (!(key in EntityLooper.instance)) {
             EntityLooper.instance[key] = new this;
         }
@@ -48,9 +48,9 @@ class EntityLooper<T> {
     /**
      * Clean the item that had been collected
      *
-     * @return {EntityLooper}
+     * @return {EntityLooper<Text>}
      */
-    clean() {
+    clean(): EntityLooper<T> {
         this.lastIndex = false;
         this.entityList = null;
         this.items = [];
@@ -61,7 +61,7 @@ class EntityLooper<T> {
      * check if current loop has data
      * @return {boolean}
      */
-    hasEntityList() {
+    hasEntityList(): boolean {
         return this.entityList != null;
     }
 
@@ -69,14 +69,14 @@ class EntityLooper<T> {
      * @param {[]} items
      * @return {EntityLooper}
      */
-    setItems(items: any[]) {
+    setItems(items: any[]): EntityLooper<T> {
         this.items = items;
         return this;
     }
 
 
     /**
-     * @return {[]}
+     * @return {{}}
      */
     getItems() {
         return this.items;
@@ -86,7 +86,7 @@ class EntityLooper<T> {
      * @param {EntityList<T>} entityList
      * @return {EntityLooper<T>}
      */
-    setEntityList(entityList: EntityList<T>) {
+    setEntityList(entityList: EntityList<T>): EntityLooper<T> {
         this.entityList = entityList;
         return this;
     }
@@ -94,7 +94,7 @@ class EntityLooper<T> {
     /**
      * @return {EntityList<T>}
      */
-    getEntityList() {
+    getEntityList(): EntityList<T>|null {
         return this.entityList;
     }
 
@@ -102,7 +102,7 @@ class EntityLooper<T> {
      *
      * @return {boolean}
      */
-    isLastIndex() {
+    isLastIndex(): boolean {
         return this.lastIndex;
     }
 
@@ -111,7 +111,7 @@ class EntityLooper<T> {
      * @param {boolean} isLastIndex
      * @return {EntityLooper<T>}
      */
-    setIsLastIndex(isLastIndex: boolean) {
+    setIsLastIndex(isLastIndex: boolean): EntityLooper<T> {
         this.lastIndex = isLastIndex;
         return this;
     }

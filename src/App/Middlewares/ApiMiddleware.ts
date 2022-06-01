@@ -26,12 +26,12 @@ class ApiMiddleware extends Middleware {
             }
 
             Object.assign(req, {
-                user: decoded.payload
+                user: decoded.payload,
             });
 
             next();
         } catch (_e:any) {
-            let e: Error = _e;
+            const e: Error = _e;
             const result = {
                 Message: e.message,
                 Data: null,

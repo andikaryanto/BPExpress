@@ -1,7 +1,7 @@
 
-exports.up = function(knex) {
+exports.up = function(knex: any) {
     return knex.schema
-        .createTable('m_users', function(table) {
+        .createTable('m_users', function(table: any) {
             table.increments('Id').primary();
             table.integer('M_Groupuser_Id', 10).unsigned().nullable();
             table.string('Username', 100).nullable();
@@ -21,6 +21,6 @@ exports.up = function(knex) {
         });
 };
 
-exports.down = function(knex) {
+exports.down = function(knex: any) {
 
 };

@@ -4,7 +4,7 @@ import Shop from '../App/Controllers/Rest/Customer/Shop';
 import UserApi from '../App/Controllers/Rest/UserApi';
 import Test2Controller from '../App/Controllers/Test2Controller';
 import TestController from '../App/Controllers/TestController';
-import config from '../../config';
+import config from '../config';
 
 /**
  * @param {ContainerBuilder} container

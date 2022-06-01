@@ -10,7 +10,7 @@ class Jwt {
      * @param {any} payload
      * @return {string}
      */
-    sign(payload: any) {
+    sign(payload: any): string {
         const token = jwt.sign(payload, CommonLib.getKey());
         return token;
     }

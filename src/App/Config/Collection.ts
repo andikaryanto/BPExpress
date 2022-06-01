@@ -10,7 +10,7 @@ class Collection {
      *
      * @return {number}
      */
-    static numberOfDataReturned() {
+    static numberOfDataReturned(): number {
         return 500;
     }
 }

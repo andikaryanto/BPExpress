@@ -2,13 +2,13 @@
  * @class UploadedFile
  */
 class UploadedFile {
-    #_item = null;
+    protected item: any = null;
     /**
      *
      * @param {{}} item
      */
-    constructor(item) {
-        this.#_item = item;
+    constructor(item: any) {
+        this.item = item;
     }
 
     /**
@@ -16,7 +16,7 @@ class UploadedFile {
      * @return {{}}
      */
     getItem() {
-        return this.#_item;
+        return this.item;
     }
 
     /**
@@ -24,7 +24,7 @@ class UploadedFile {
      * @return {string}
      */
     getName() {
-        return this.#_item.name;
+        return this.item.name;
     }
 
     /**
@@ -41,7 +41,7 @@ class UploadedFile {
      * @return {number}
      */
     getSize() {
-        return this.#_item.size;
+        return this.item.size;
     }
 
     /**
@@ -49,7 +49,7 @@ class UploadedFile {
      * @return {string}
      */
     getMimeType() {
-        return this.#_item.mimetype;
+        return this.item.mimetype;
     }
 
     /**
@@ -59,8 +59,8 @@ class UploadedFile {
      * @param {Function} callback
      * @return {void}
      */
-    move(uploadPath, callback) {
-        return this.#_item.mv(uploadPath, callback);
+    move(uploadPath: string, callback: Function) {
+        return this.item.mv(uploadPath, callback);
     }
 }
 

@@ -13,7 +13,7 @@ class CommandLoader {
     /**
      * load the exist command
      */
-    static load() {
+    static load(): void {
         ContainerLoader.load();
         let commands = Command.register();
         yargonaut.style('green');

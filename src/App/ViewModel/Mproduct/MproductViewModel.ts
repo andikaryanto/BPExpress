@@ -5,7 +5,6 @@ import MproductcategoryViewModel from '../Mproductcategory/MproductcategoryViewM
  * @class MproductViewModel
  */
 class MproductViewModel extends BaseViewModel<Mproduct> {
-
     /**
      *
      * @param {Mproduct} entity

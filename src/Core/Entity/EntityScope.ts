@@ -1,4 +1,3 @@
-import Entity from './Entity';
 
 /**
  * @class EntityScope
@@ -17,7 +16,7 @@ class EntityScope {
      *
      * @var {Array<any>}
      */
-    protected entities = Array<any>();
+    protected entities: any[] = [];
 
     /**
      *
@@ -29,7 +28,7 @@ class EntityScope {
      *
      * @return {EntityScope}
      */
-    static getInstance() {
+    static getInstance(): EntityScope {
         if (EntityScope.instance == null) {
             EntityScope.instance = new this;
         }
@@ -43,7 +42,7 @@ class EntityScope {
      * @param {any} entity
      * @return {void}
      */
-    addEntity(perform: string, entity: any) {
+    addEntity(perform: string, entity: any): void {
         let isEntityExist = false;
         // if (this.entities) {
         for (const existedEntity of this.entities) {
@@ -67,7 +66,7 @@ class EntityScope {
      *
      * @return {[]}
      */
-    getEntities() {
+    getEntities(): any[] {
         return this.entities;
     }
 
@@ -76,7 +75,7 @@ class EntityScope {
      *
      * @return {void}
      */
-    clean() {
+    clean(): void {
         this.entities = [];
     }
 }

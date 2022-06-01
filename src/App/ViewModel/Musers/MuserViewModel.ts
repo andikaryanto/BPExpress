@@ -5,7 +5,6 @@ import MgroupuserViewModel from '../Mgroupuser/MgroupuserViewModel';
  * @class MuserViewModel
  */
 class MuserViewModel extends BaseViewModel<Muser> {
-
     /**
      *
      * @param {Muser} entity
@@ -32,7 +31,6 @@ class MuserViewModel extends BaseViewModel<Muser> {
      * @return {Promise<{}>|Promise<null>}
      */
     async toJson() {
-
         if (this.entity == null) {
             return null;
         }

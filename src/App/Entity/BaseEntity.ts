@@ -4,7 +4,6 @@ import Entity from '../../Core/Entity/Entity';
  * @class BaseEntity
  */
 class BaseEntity extends Entity {
-    
     protected Created: Date|undefined;
     protected CreatedBy: string|undefined;
     protected Modified: Date|undefined;
@@ -38,7 +37,7 @@ class BaseEntity extends Entity {
 
     /**
      * Get createdBy
-     * @param {boolean} createdBy
+     * @param {boolean} CreatedBy
      * @return {string}
      */
     setCreatedBy(CreatedBy: string) {
@@ -56,7 +55,7 @@ class BaseEntity extends Entity {
 
     /**
      * set Id
-     * @param {Date} modified
+     * @param {Date} Modified
      * @return {this}
      */
     setModified(Modified: Date) {
@@ -74,7 +73,7 @@ class BaseEntity extends Entity {
 
     /**
      * set Id
-     * @param {string} modifiedBy
+     * @param {string} ModifiedBy
      * @return {this}
      */
     setModifiedBy(ModifiedBy: string) {

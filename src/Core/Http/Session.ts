@@ -1,8 +1,8 @@
-import { Request, Response,  } from 'express';
+import {Request, Response} from 'express';
 import dotenv from 'dotenv';
-import { v4 as uuidv4 } from 'uuid';
+import {v4 as uuidv4} from 'uuid';
 import PlainObject from '../Libraries/PlainObject';
-import { NextFunction } from 'express-serve-static-core';
+import {NextFunction} from 'express-serve-static-core';
 dotenv.config();
 
 /**

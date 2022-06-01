@@ -4,13 +4,13 @@
 abstract class Cron {
     /**
      * Cron value
-     * @return {string}
+     * @return {void}
      */
     abstract time(): string;
 
     /**
      * Business logic that will be executed
-     * @return {any}
+     * @return {void}
      */
     abstract execute(): any;
 }

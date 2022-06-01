@@ -3,7 +3,7 @@ import dotenv from 'dotenv';
 import ExpressOverride from './ExpressOverride';
 import View from './View';
 import {Express} from 'express';
-import config from '../../../config';
+import config from '../../config';
 const path = require('path');
 dotenv.config();
 /**

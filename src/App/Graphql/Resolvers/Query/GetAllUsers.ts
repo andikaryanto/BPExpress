@@ -46,7 +46,7 @@ class GetAllUsers extends GraphQLField {
      */
     args() {
         return {
-            Username: { type: GraphQLString },
+            Username: {type: GraphQLString},
         };
     }
 
@@ -68,7 +68,7 @@ class GetAllUsers extends GraphQLField {
      * @inheritdoc
      */
     extensions(props: any) {
-        let {document, variables, operationName, result, context} = props;
+        const {document, variables, operationName, result, context} = props;
         return '';
     }
 
@@ -76,7 +76,7 @@ class GetAllUsers extends GraphQLField {
       * @inheritdoc
       */
      async resolve(parent: any, args: any, request: any, context: any) {
-        let search = {
+        const search = {
             page: 1,
             size: 10,
         };

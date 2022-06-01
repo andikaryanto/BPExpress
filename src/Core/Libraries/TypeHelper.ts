@@ -1,23 +1,21 @@
-import { BlobOptions } from "buffer";
 
 /**
  * @class TypeHelper
  */
 class TypeHelper {
-
     /**
-     * 
-     * @param value 
-     * @returns {string}
+     *
+     * @param {any} value
+     * @return {string}
      */
     static getString(value: any): string {
         return String(value);
     }
 
     /**
-     * 
-     * @param value 
-     * @returns {boolean}
+     *
+     * @param {any} value
+     * @return {boolean}
      */
     static getBool(value: any): boolean {
         return Boolean(value);

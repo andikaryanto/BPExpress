@@ -5,7 +5,7 @@ class GraphQL {
     /**
      * @return {{}}
      */
-    static query() {
+    static query(): any[] {
         return [
             // register all your graphql query here
             'getAllUser.graphql',
@@ -17,7 +17,7 @@ class GraphQL {
     /**
      * @return {{}}
      */
-    static mutation() {
+    static mutation(): any[] {
         return [
             // register all your graphql mutation here
             'userAdd.graphql',
@@ -28,7 +28,7 @@ class GraphQL {
     /**
      * @return {{}}
      */
-    static context() {
+    static context(): any {
         return {
 
         };

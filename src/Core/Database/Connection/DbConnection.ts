@@ -6,12 +6,15 @@ dotenv.config;
 
 const appMode = TypeHelper.getString(process.env.APP_MODE);
 let databaseCon = {};
-if(appMode == 'production')
+if (appMode == 'production') {
     databaseCon = database.production;
-if(appMode == 'development')
+}
+if (appMode == 'development') {
     databaseCon = database.development;
-if(appMode == 'staging')
+}
+if (appMode == 'staging') {
     databaseCon = database.staging;
+}
 
 const DbConnection = conn(databaseCon);
 

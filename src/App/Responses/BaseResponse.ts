@@ -3,10 +3,10 @@ import ResponseData from '../../Core/Controller/ResponseData';
  * @class BaseResponse
  */
 class BaseResponse {
-    #_message = null;
-    #_code = null;
-    #_responseCode = null;
-    #_data = null;
+    protected message: string;
+    protected code: number;
+    protected responseCode: {};
+    protected data: {};
     /**
      *
      * @param {string} message
@@ -14,11 +14,11 @@ class BaseResponse {
      * @param {[]} responseCode
      * @param {{}} data
      */
-    constructor(message, code, responseCode, data) {
-        this.#_message = message;
-        this.#_code = code;
-        this.#_responseCode = responseCode;
-        this.#_data = data;
+    constructor(message: string, code: number, responseCode: {}, data: {}) {
+        this.message = message;
+        this.code = code;
+        this.responseCode = responseCode;
+        this.data = data;
     }
 
     /**
@@ -27,12 +27,12 @@ class BaseResponse {
      */
     send() {
         const result = {
-            Message: this.#_message,
-            Data: this.#_data,
-            Response: this.#_responseCode,
+            Message: this.message,
+            Data: this.data,
+            Response: this.responseCode,
         };
 
-        return ResponseData.status(this.#_code).json(result);
+        return ResponseData.status(this.code).json(result);
     }
 }
 

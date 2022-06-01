@@ -10,7 +10,7 @@ class ContainerLoader {
      *
      * @return {CoreContainer}
      */
-    static load() {
+    static load(): CoreContainer {
         const containerBuilder = new ContainerBuilder();
 
         for (const service of Container.service) {

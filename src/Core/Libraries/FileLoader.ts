@@ -1,11 +1,11 @@
 import fs from 'fs';
-import config from '../../../config';
+import config from '../../config';
 
 /**
  * @class FileLoader
  */
 class FileLoader {
-    private path!: string;
+    private path: string;
 
     /**
      *
@@ -17,9 +17,9 @@ class FileLoader {
 
     /**
      * Get data as object
-     * @return {any}
+     * @return {{}}
      */
-    getData(): any {
+    getData(): {} {
         const rawdata = fs.readFileSync(this.path);
         const json = JSON.parse(rawdata.toString());
         return json;

@@ -9,7 +9,7 @@ class DateFormat {
      * @param {string} seprator
      * @return {string}
      */
-    static getFormattedCurrentDate(format = [], seprator = '_') {
+    static getFormattedCurrentDate(format = [], seprator = '_'): string {
         /**
          *
          * @param {*} m
@@ -36,7 +36,7 @@ class DateFormat {
       * @param {string} format
       * @return {string}
       */
-    static getCurrentDate(format: string) {
+    static getCurrentDate(format: string): string {
         return moment().format(format);
     }
 
@@ -45,7 +45,7 @@ class DateFormat {
      * @param {Date} date
      * @return {string}
      */
-    static databaseDate(date: Date) {
+    static databaseDate(date: Date): string {
         return moment(date).format('YYYY-MM-DD hh:mm:ss');
     }
 }

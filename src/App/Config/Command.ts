@@ -9,7 +9,7 @@ class Command {
      * Register crons class here, using class or container key
      * @return {[]}
      */
-    static register() {
+    static register(): any[] {
         return [
             TestCommand,
             'create-user.command',

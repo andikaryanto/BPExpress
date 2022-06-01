@@ -46,7 +46,7 @@ class Mvillage extends BaseEntity {
      * @param {EntityList<Mcanvasser>} Mcanvassers
      * @return {Mvillage}
      */
-    setMcanvassers(Mcanvassers: EntiEntityList<Mcanvasser>tyList) {
+    setMcanvassers(Mcanvassers: EntityList<Mcanvasser>) {
         this.Mcanvassers = Mcanvassers;
         return this;
     }

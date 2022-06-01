@@ -6,7 +6,6 @@ import MproductViewModel from '../Mproduct/MproductViewModel';
  * @clas MshopproductViewModel
  */
 class MshopproductViewModel extends BaseViewModel<Mshopproduct> {
-    
     /**
      *
      * @param {Mshopproduct} entity

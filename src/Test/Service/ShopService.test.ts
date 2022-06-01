@@ -8,7 +8,7 @@ import ContainerLoader from '../../Core/Container/ContainerLoader';
 import EntityList from '../../Core/Entity/EntityList';
 
 describe('beforeRun', () => {
-    const container =  ContainerLoader.load();
+    const container = ContainerLoader.load();
     const shopRepository = container.get('shop.repository');
     const shopProductRepository = container.get('shopproduct.repository');
 

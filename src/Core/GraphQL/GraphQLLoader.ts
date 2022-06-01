@@ -9,7 +9,7 @@ class GraphQLLoader {
      * @param {Array<any>} queries
      * @return {[]}
      */
-    static loadQuery(queries: Array<any>) {
+    static loadQuery(queries: Array<any>): any {
         return this.loadFileds(queries);
     }
 
@@ -18,7 +18,7 @@ class GraphQLLoader {
      * @param {Array<any>} mutations
      * @return {[]}
      */
-    static loadMutation(mutations: Array<any>) {
+    static loadMutation(mutations: Array<any>): any {
         return this.loadFileds(mutations);
     }
 
@@ -27,7 +27,7 @@ class GraphQLLoader {
      * @param {Array<any>} fields
      * @return {[]}
      */
-    static loadFileds(fields: Array<any>) {
+    static loadFileds(fields: Array<any>): any {
         const newFields: any = {};
         for (const field of fields) {
             const fieldIntance = InstanceLoader.load(field);
@@ -40,7 +40,7 @@ class GraphQLLoader {
                 extensions: fieldIntance.extensions,
                 resolve: async function(parent: any, args: any, context: any) {
                     const middlewares = fieldIntance.middlewares();
-                    for(const middleware of middlewares){
+                    for (const middleware of middlewares) {
                         const middlewareInstance = InstanceLoader.load(middleware);
                         await middlewareInstance.execute(context.request, context.response);
                     }

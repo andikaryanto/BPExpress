@@ -22,14 +22,14 @@ yargs
 // make model
     .command('make:model', 'Create Model', () => {
         console.log('one');
-    }, (options) => {
+    }, (options: any) => {
         Table.makeModel(options.name);
     })
 
 // make controller
     .command('make:controller', 'Create Controller', () => {
         console.log('one');
-    }, (options) => {
+    }, (options: any) => {
         Controller.makeController(options.path, options.name);
     })
 

@@ -11,7 +11,6 @@ import RequestService from '../../../Services/Library/RequestService';
  * @clas Shop
  */
 class Shop {
-
     /**
      *
      * @var {ShopService} shopService
@@ -20,7 +19,6 @@ class Shop {
 
     /**
      *
-     * @param {RequestService} requestService
      * @param {ShopService} shopService
      */
     constructor(shopService: ShopService) {
@@ -32,9 +30,8 @@ class Shop {
      * @param {*} object
      * @return {SuccessResponse}
      */
-    async getList({request}: any) {
-        const queryString = request.query
-        const name = queryString['Name'];
+    async getList({query}: any) {
+        const name = query['Name'];
 
         const shoplist = await this.shopService.search(name);
         const shopCollection = new MshopCollection(shoplist);
@@ -48,10 +45,9 @@ class Shop {
      * @param {*} object
      * @return {SuccessResponse}
      */
-    async products({request}: any) {
-        const queryString = request.query
-        const shopId = queryString['shopId'];
-        const name = queryString['Name'];
+    async products({query, param}: any) {
+        const shopId = param['shopId'];
+        const name = query['Name'];
 
         const shopProducts = await this.shopService.products(shopId, name);
         const shopProductCollection = new MshopproductCollection(shopProducts);

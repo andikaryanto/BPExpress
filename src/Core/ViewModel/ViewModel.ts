@@ -40,7 +40,7 @@ abstract class ViewModel<T> {
     }
 
     /**
-     * @return {Promise<any>}
+     * @return {void}
      */
      abstract toJson(): Promise<any>;
 }

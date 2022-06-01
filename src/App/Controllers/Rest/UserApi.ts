@@ -37,8 +37,10 @@ class UserApi extends Controller {
             if (CommonLib.isNull(user)) {
                 throw new Error('Data pengguna tidak valid');
             }
-
-            const token = jwt.sign(user.toJson(), CommonLib.getKey());
+            let token = '';
+            if (user) {
+                 token = jwt.sign(user.toJson(), CommonLib.getKey());
+            }
 
             const result = {
                 Message: 'Login Berhasil',

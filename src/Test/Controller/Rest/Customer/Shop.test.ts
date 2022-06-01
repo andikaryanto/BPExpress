@@ -13,7 +13,7 @@ import EntityList from '../../../../Core/Entity/EntityList';
 import ContainerLoader from '../../../../Core/Container/ContainerLoader';
 
 describe('beforeRun', () => {
-    const container =  ContainerLoader.load();
+    const container = ContainerLoader.load();
     const shopService = container.get('shop.service');
 
     const service = new Shop(shopService);
@@ -33,9 +33,9 @@ describe('beforeRun', () => {
             });
 
             const query = {
-                Name: 'Test'
+                Name: 'Test',
             };
-            const result = await service.getList({ query });
+            const result = await service.getList({query});
 
             expect(result).toBeInstanceOf(SuccessResponse);
 
@@ -88,12 +88,12 @@ describe('beforeRun', () => {
             const shopServiceProducts = MockModule.mockModule(ShopService, 'products', modelCollection);
 
             const shopProductViewModel = new MshopproductViewModel(shopProduct);
-           
+
             const param = {
-                shopId: 123
+                shopId: 123,
             };
             const query = {
-                Name: 'Ciki'
+                Name: 'Ciki',
             };
 
             const result = await service.products({param, query});

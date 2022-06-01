@@ -1,7 +1,7 @@
 import DbConnection from './Connection/DbConnection';
 import fs from 'fs';
 import StringLib from '../Libraries/StringLib';
-import config from '../../../config';
+import config from '../../config';
 /**
  * Class Table
  */
@@ -10,7 +10,7 @@ class Table {
       * get table colum info
       * @param {string} tableName
       */
-    static async columnInfo(tableName) {
+    static async columnInfo(tableName: string) {
         return await DbConnection.table(tableName).columnInfo();
     }
 
@@ -18,7 +18,7 @@ class Table {
      * Create Model file with intended table
      * @param {string} tableName
      */
-    static async makeModel(tableName) {
+    static async makeModel(tableName: string): Promise<any> {
         const modelName = StringLib.ucFirst(tableName);
         const actualColumns = await Table.columnInfo(tableName);
         const columns = Object.keys(actualColumns);

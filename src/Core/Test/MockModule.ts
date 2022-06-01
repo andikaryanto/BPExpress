@@ -7,9 +7,9 @@ class MockModule {
      * @param {any} module
      * @param {any} fnName
      * @param {any} returnValue
-     * @return {*any
+     * @return {any}
      */
-    static mockModule(module: any, fnName: any, returnValue: any|null = null) {
+    static mockModule(module: any, fnName: any, returnValue: any|null = null): any {
         const jestInstance = jest.spyOn(module['prototype'], fnName);
         let result: any|null = null;
         if (typeof returnValue === 'function') {

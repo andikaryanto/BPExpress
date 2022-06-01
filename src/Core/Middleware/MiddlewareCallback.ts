@@ -13,7 +13,7 @@ class MiddlewareCallback {
      * @param {string} middleware
      * @return {Function}
      */
-    static call(middleware: string) {
+    static call(middleware: string): any {
         return async (req: any, res: any, next: any) => {
             try {
                 const middlewareInstance = InstanceLoader.load(middleware);
@@ -27,7 +27,7 @@ class MiddlewareCallback {
                     returnedData = data;
                 }
             } catch (_e) {
-                let e: any = _e;
+                const e: any = _e;
                 Error.create('error', e.stack);
 
                 if (process.env.APP_MODE == 'development') {

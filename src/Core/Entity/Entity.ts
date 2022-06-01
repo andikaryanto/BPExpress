@@ -1,6 +1,6 @@
 import ORM from '../Database/ORM';
 import Repository from '../Repository/Repository';
-import config from '../../../config';
+import config from '../../config';
 import Orm from '../../Orm/Common/Orm';
 import EntityLooper from './EntityLooper';
 import PlainObject from '../Libraries/PlainObject';
@@ -10,8 +10,8 @@ import DateFormat from '../Libraries/DateFormat';
  * @class Entiry
  */
 abstract class Entity {
-    constrains = {};
-    rules = {};
+    constrains: any = {};
+    rules: any = {};
 
     /**
      *
@@ -114,9 +114,9 @@ abstract class Entity {
 
     /**
      * Get all props name
-     * @return {[]}
+     * @return {{}}
      */
-    static getProps() {
+    static getProps(): {} {
         return ORM.getProps(this.name);
     }
 
@@ -124,7 +124,7 @@ abstract class Entity {
      * get Table Name
      * @return {string}
      */
-    static getTable() {
+    static getTable(): string {
         return ORM.getTable(this.name);
     }
 
@@ -132,16 +132,16 @@ abstract class Entity {
      * GetP primary key field
      * @return {string}
      */
-    static getPrimaryKey() {
+    static getPrimaryKey(): string {
         return ORM.getPrimaryKey(this.name);
     }
 
     /**
      * Get select columns
-     * @return {{}}
+     * @return {string}
      */
-    static getSelectColumns() {
-        const selectedColumn = [];
+    static getSelectColumns(): string[] {
+        const selectedColumn: string[] = [];
         const colums = this.getProps();
         for (const [key, _value] of Object.entries(colums)) {
             const value: any = _value;
@@ -160,7 +160,7 @@ abstract class Entity {
      *
      * @return {Promise<{}>}
      */
-    async toJson() {
+    async toJson(): Promise<{}> {
         const object: any = {};
         const entity: any = this;
         const getProps = ORM.getProps(entity.constructor.name);
@@ -205,16 +205,16 @@ abstract class Entity {
      * @param {string} rule
      * @return {Entity}
      */
-    setRule(key: string, rule: string) {
+    setRule(key: string, rule: string): Entity {
         this.rules = {...this.rules, [key]: rule};
         return this;
     }
 
     /**
      * Get rules
-     * @return {[]}
+     * @return {{}}
      */
-    getRules() {
+    getRules(): {} {
         return this.rules;
     }
 }

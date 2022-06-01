@@ -7,7 +7,7 @@ class PlainObject {
       * @param {{}} object
       * @return {boolean}
       */
-    static isEmpty(object = {}) {
+    static isEmpty(object = {}): boolean {
         return Object.keys(object).length === 0;
     }
 }
