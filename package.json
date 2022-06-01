@@ -19,6 +19,7 @@
     "@babel/eslint-plugin": "^7.17.7",
     "@babel/preset-react": "^7.13.13",
     "@babel/preset-typescript": "^7.17.12",
+    "@babel/types": "^7.18.4",
     "@react-ssr/core": "^0.24.0",
     "@react-ssr/express": "^0.24.0",
     "@types/app-root-path": "^1.2.4",

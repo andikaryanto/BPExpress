@@ -23,7 +23,9 @@
              }
         ],
         "camelcase" : 0,
-        "indent": [0, 4],
+        "indent": ["error", 4, {
+                "ignoredNodes": ["TemplateLiteral"]
+        }],
         // "indent": [2, "tab", {
         //     "ignoredNodes": ["TemplateLiteral"]
         // }],
