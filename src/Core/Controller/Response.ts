@@ -64,9 +64,9 @@ class Response {
             const strPage: any = this.data.getPage()?.toString();
             const strSize: any = this.data.getSize()?.toString();
             const strTotal: any = this.data.getTotal()?.toString();
-            page = this.data.getPage() != null ? parseInt(strPage) : 0;
-            size =this.data.getSize() != null ? parseInt(strSize) : 0;
-            total =this.data.getTotal() != null ? parseInt(strTotal) : 0;
+            page = this.data.getPage() != null ? parseInt(strPage) : null;
+            size =this.data.getSize() != null ? parseInt(strSize) : null;
+            total =this.data.getTotal() != null ? parseInt(strTotal) : null;
             data = await this.data.proceedAndGetData();
         } else if (this.data instanceof ViewModel) {
             data = await this.data.toJson();

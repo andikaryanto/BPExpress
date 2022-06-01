@@ -61,7 +61,7 @@ class UserService {
             },
         };
 
-        const muser = await this. userRepository.findOne(filter);
+        const muser = await this.userRepository.findOne(filter);
         return muser;
     }
 

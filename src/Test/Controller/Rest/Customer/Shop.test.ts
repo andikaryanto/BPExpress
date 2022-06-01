@@ -1,4 +1,3 @@
-import RequestService from '../../../../App/Services/Library/RequestService';
 import ShopService from '../../../../App/Services/ShopService';
 import Shop from '../../../../App/Controllers/Rest/Customer/Shop';
 import SuccessResponse from '../../../../App/Responses/SuccessResponse';
@@ -11,20 +10,13 @@ import Mproduct from '../../../../App/Entity/Mproduct';
 import MshopproductViewModel from '../../../../App/ViewModel/Mshopproduct/MshopproductViewModel';
 import Mproductcategory from '../../../../App/Entity/Mproductcategory';
 import EntityList from '../../../../Core/Entity/EntityList';
+import ContainerLoader from '../../../../Core/Container/ContainerLoader';
 
 describe('beforeRun', () => {
-    const requestService = new RequestService();
-    const shopService = new ShopService();
+    const container =  ContainerLoader.load();
+    const shopService = container.get('shop.service');
 
-    const requestServiceGetQuery = jest
-        .spyOn(RequestService.prototype, 'getQuery')
-        .mockImplementation(() => 'shop123');
-
-    const requestServiceGetParam = jest
-        .spyOn(RequestService.prototype, 'getParams')
-        .mockImplementation(() => 'Citos');
-
-    const service = new Shop(requestService, shopService);
+    const service = new Shop(shopService);
 
     describe('getList', () => {
         it('should return return array of', async () => {
@@ -40,7 +32,10 @@ describe('beforeRun', () => {
                 return modelCollection;
             });
 
-            const result = await service.getList();
+            const query = {
+                Name: 'Test'
+            };
+            const result = await service.getList({ query });
 
             expect(result).toBeInstanceOf(SuccessResponse);
 
@@ -62,11 +57,10 @@ describe('beforeRun', () => {
                 ],
                 Message: 'Success',
                 Code: ResponseCode.OK,
-                AdditionalData: null,
+                AdditionalData: {},
 
             });
             expect(shopServiceSearch).toHaveBeenCalled();
-            expect(requestServiceGetQuery).toHaveBeenCalled();
         });
     });
 
@@ -94,18 +88,17 @@ describe('beforeRun', () => {
             const shopServiceProducts = MockModule.mockModule(ShopService, 'products', modelCollection);
 
             const shopProductViewModel = new MshopproductViewModel(shopProduct);
-            const shopServiceProceedAndGetData = MockModule.mockModule(
-                MshopproductCollection,
-                'proceedAndGetData',
-                await shopProductViewModel.toJson(),
-            );
+           
+            const param = {
+                shopId: 123
+            };
+            const query = {
+                Name: 'Ciki'
+            };
 
-            const result = await service.products();
+            const result = await service.products({param, query});
             expect(result).toBeInstanceOf(SuccessResponse);
             expect(shopServiceProducts).toHaveBeenCalled();
-            expect(shopServiceProceedAndGetData).toHaveBeenCalled();
-            expect(requestServiceGetQuery).toHaveBeenCalled();
-            expect(requestServiceGetParam).toHaveBeenCalled();
         });
     });
 });
