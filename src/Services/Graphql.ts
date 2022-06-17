@@ -20,6 +20,6 @@ export default (container: ContainerBuilder) => {
 
     container.register('userAdd.graphql', UserAdd);
 
-    container.register('generateUserToken.graphql', GenerateUserToken)
+container.register('generateUserToken.graphql', GenerateUserToken)
         .addArgument(new Reference('user.service'));
 };
