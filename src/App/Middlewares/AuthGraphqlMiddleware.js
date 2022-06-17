@@ -28,7 +28,7 @@ class AuthGraphqlMiddleware extends Middleware {
     * @param {Request} req
     * @param {Response} res
      */
-    async execute(req, res) {
+    async hasToken(req, res) {
         const token = req.headers.authorization;
         if (token == undefined || token == null) {
             throw new Error('Empty token');

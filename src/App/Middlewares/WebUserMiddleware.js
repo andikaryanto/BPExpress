@@ -28,7 +28,7 @@ class WebUserMiddleware extends Middleware {
      * @param {Response} res
      * @param {NextFunction} next
      */
-    async execute(req, res, next) {
+    async isUserLoggedIn(req, res, next) {
         try {
             if (req.session.token == undefined || req.session.token == null) {
                 res.redirect('/office/login');

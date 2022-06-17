@@ -13,7 +13,7 @@ class ApiMiddleware extends Middleware {
     * @param {NextFunction} next
     * @return {void}
      */
-    async execute(req, res, next) {
+    async hasToken(req, res, next) {
         try {
             const token = req.headers.authorization;
             if (token == undefined || token == null) {

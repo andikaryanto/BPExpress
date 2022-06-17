@@ -13,8 +13,8 @@ const Api = () => {
     //     routers.get('/list', [], GroupuserApi, 'getList').named('groupuser.list');
     // });
 
-    routers.group('/customer', ['api.middleware'], (routers) => {
-        routers.group('/shop', ['api.middleware'], (routers) => {
+    routers.group('/customer', ['api.middleware:hasToken'], (routers) => {
+        routers.group('/shop', ['api.middleware:hasToken'], (routers) => {
             routers.get('/list', [], 'rest.customer.shop.controller:getList');
             routers.get('/:shopId/products', [], 'rest.customer.shop.controller:products');
         });

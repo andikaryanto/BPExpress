@@ -16,16 +16,14 @@ class MiddlewareCallback {
     static call(middleware) {
         return async (req, res, next) => {
             try {
-                const middlewareInstance = InstanceLoader.load(middleware);
 
-                const data = middlewareInstance.execute(req, res, next);
+                const middlewareFunction = middleware.split(':');
+                const middlewareAlias = middlewareFunction[0];
+                const fn = middlewareFunction[1];
+                const middlewareInstance = InstanceLoader.load(middlewareAlias);
 
-                let returnedData = null;
-                if (data instanceof Promise) {
-                    returnedData = await data;
-                } else {
-                    returnedData = data;
-                }
+                const data = middlewareInstance[fn](req, res, next);
+
             } catch (e) {
                 Error.create('error', e.stack);
 
