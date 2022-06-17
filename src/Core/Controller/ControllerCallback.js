@@ -65,7 +65,6 @@ class ControllerCallback {
 
                     afterMiddlewareIndex++;
                 };
-                console.log(afterMiddlewareReturns);
                 await ControllerCallback.response(req, res, returnedData, afterMiddlewareReturns);
             } catch (e) {
                 Error.create('error', e.stack);
