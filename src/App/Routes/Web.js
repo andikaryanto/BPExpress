@@ -54,7 +54,7 @@ const Web = () => {
     // });
 
     // routers.get('/container', [], TestController, 'index');
-    return routers.getRouter();
+    return routers;
 };
 
 export default Web;

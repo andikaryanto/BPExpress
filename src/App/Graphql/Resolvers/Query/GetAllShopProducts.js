@@ -86,7 +86,6 @@ class GetAllShopProducts extends GraphQLField {
       * @return {[]}
       */
     async resolve(parent, args, request, context) {
-        
         if (request.graphqlError != undefined) {
             throw request.graphqlError;
         }

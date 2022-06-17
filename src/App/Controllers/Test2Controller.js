@@ -55,29 +55,29 @@ class Test2Controller extends Controller {
      * @return {View}
      */
     async index({request, response, query}) {
-        // console.log(DateFormat.makeDbDate(new Date()))
-        // const param = {
-        //     where: {
-        //         Username: 'test',
-        //     },
-        // };
+        console.log(DateFormat.databaseDate(new Date()))
+        const param = {
+            where: {
+                Username: 'test',
+            },
+        };
 
-        // const data = [];
-        // const repo = await (new MuserRepository()).collect({}, query.page, query.size);
-        // for (const r of repo) {
-        //     console.log(r.getCreated()?.getFullYear());
-        // }
-        // const userViewModel = (new MuserCollection(repo));
+        const data = [];
+        const repo = await (new MuserRepository()).collect({}, query.page, query.size);
+        for (const r of repo) {
+            console.log(r.getCreated()?.getFullYear());
+        }
+        const userViewModel = (new MuserCollection(repo));
         // Info.create(
         //     'userViewModel_',
         //     'userViewModel ' + JSON.stringify(await userViewModel.proceedAndGetData()),
         // );
-        // return (new SuccessResponse('oke', ResponseCode.OK, userViewModel));
-        let eny = await (new MgroupuserRepository()).find(8);
-        let groupuser = await (eny).toJson();
-        console.log(eny.getRules());
-        console.log(groupuser);
-        response.send({ok:"ok"});
+        return (new SuccessResponse('oke', ResponseCode.OK, userViewModel));
+    //     const eny = await (new MgroupuserRepository()).find(8);
+    //     const groupuser = await (eny).toJson();
+    //     console.log(eny.getRules());
+    //     console.log(groupuser);
+    //     response.send({ok: 'ok'});
     }
 
     /**

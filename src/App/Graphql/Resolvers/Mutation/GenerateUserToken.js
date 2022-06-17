@@ -77,7 +77,7 @@ class GenerateUserToken extends GraphQLField {
         const username = args.InputUserLogin.username;
         const password = args.InputUserLogin.password;
         const token = await this.#_userService.getToken(username, password);
-        if(token == null){
+        if (token == null) {
             throw Error('Could not get user token');
         }
         return {token};

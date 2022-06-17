@@ -7,22 +7,21 @@ import Middleware from '../../Core/Middleware/Middleware';
  *
  */
 class AuthGraphqlMiddleware extends Middleware {
-
-     /**
+    /**
      * @var {Jwt}
      */
-      #_jwt;
+    #_jwt;
 
-      /**
+    /**
        *
        * @param {Jwt} jwt
        */
-      constructor(
-          jwt,
-      ) {
-          super();
-          this.#_jwt = jwt;
-      }
+    constructor(
+        jwt,
+    ) {
+        super();
+        this.#_jwt = jwt;
+    }
 
     /**
      *
@@ -36,7 +35,7 @@ class AuthGraphqlMiddleware extends Middleware {
         }
 
         const decoded = this.#_jwt.decode(token, {complete: true});
-        if(decoded){
+        if (decoded) {
             req.user = decoded.payload;
         } else {
             throw new Error('Not authorized or invalid token');

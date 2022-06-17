@@ -20,7 +20,7 @@ const Api = () => {
         });
     });
 
-    return routers.getRouter();
+    return routers;
 };
 
 export default Api;
