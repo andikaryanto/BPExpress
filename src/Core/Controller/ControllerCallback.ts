@@ -37,7 +37,7 @@ class ControllerCallback {
                     },
                 );
 
-                let returnedData = null;
+                let returnedData: any = null;
                 if (data instanceof Promise) {
                     returnedData = await data;
                 } else {
