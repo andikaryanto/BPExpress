@@ -73,10 +73,15 @@ class GetAllUsers extends GraphQLField {
     }
 
     /**
-      * @inheritdoc
-      */
-     async resolve(parent: any, args: any, request: any, context: any) {
-        const search = {
+     * Resolve data
+     * @param {any} parent
+     * @param {any} args
+       * @param {any} request
+     * @param {any} context
+     * @return {[]}
+     */
+    async resolve(parent: any, args: any, request: any, context: any) {
+        let search = {
             page: 1,
             size: 10,
         };

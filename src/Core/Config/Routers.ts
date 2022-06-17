@@ -140,7 +140,7 @@ class Routers {
     ): void {
         let currentRoute = route;
 
-        const midlewares = middleware.map((e, i) => {
+        const middlewares = middleware.map((e, i) => {
             return MiddlewareCallback.call(e);
         });
 
@@ -148,13 +148,13 @@ class Routers {
             if (this.route != null) {
                 currentRoute = `${this.route}${route}`;
                 // this.namedRoute = currentRoute;
-                this.namedMiddleware = midlewares;
+                this.namedMiddleware = middlewares;
                 this.namedController = controller;
                 this.namedFunction = fn;
                 this.namedMethod = method;
                 this.namedData = additionalData;
             } else {
-                this.namedMiddleware = midlewares;
+                this.namedMiddleware = middlewares;
                 this.namedController = controller;
                 this.namedFunction = fn;
                 this.namedMethod = method;
@@ -167,19 +167,19 @@ class Routers {
         const resReq = ControllerCallback.call(controller, fn, additionalData);
 
         if (method.toUpperCase() == 'GET') {
-            this.router.get(`${currentRoute}`, [...this.middleware, ...middleware], resReq);
+            this.router.get(`${currentRoute}`, [...this.middleware, ...middlewares], resReq);
         }
 
         if (method.toUpperCase() == 'POST') {
-            this.router.post(`${currentRoute}`, [...this.middleware, ...middleware], resReq);
+            this.router.post(`${currentRoute}`, [...this.middleware, ...middlewares], resReq);
         }
 
         if (method.toUpperCase() == 'PUT') {
-            this.router.put(`${currentRoute}`, [...this.middleware, ...middleware], resReq);
+            this.router.put(`${currentRoute}`, [...this.middleware, ...middlewares], resReq);
         }
 
         if (method.toUpperCase() == 'DELETE') {
-            this.router.delete(`${currentRoute}`, [...this.middleware, ...middleware], resReq);
+            this.router.delete(`${currentRoute}`, [...this.middleware, ...middlewares], resReq);
         }
     }
 
