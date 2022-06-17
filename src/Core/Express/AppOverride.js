@@ -146,8 +146,8 @@ class AppOverride {
 
         const webMiddlewares = Kernel.middlewareGroups.web.map(eachMiddleware);
 
-        app.use('/api', [...globalMiddlewares, ...apiMiddlewares], Api());
-        app.use('/', [...globalMiddlewares, ...webMiddlewares], Web());
+        app.use('/api', [...globalMiddlewares, ...apiMiddlewares], Api().getRouter());
+        app.use('/', [...globalMiddlewares, ...webMiddlewares], Web().getRouter());
     }
 
     /**
