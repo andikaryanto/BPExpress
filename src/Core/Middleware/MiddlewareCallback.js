@@ -16,9 +16,13 @@ class MiddlewareCallback {
     static callBefore(middleware) {
         return async (req, res, next) => {
             try {
-                const middlewareFunction = middleware.split(':');
-                const middlewareAlias = middlewareFunction[0];
-                const fn = middlewareFunction[1];
+                let fn = 'execute';
+                let middlewareAlias = middleware;
+                if (typeof middleware == 'string') {
+                    const middlewareFunction = middleware.split(':');
+                    middlewareAlias = middlewareFunction[0];
+                    fn = middlewareFunction[1];
+                }
                 const middlewareInstance = InstanceLoader.load(middlewareAlias);
 
                 const data = middlewareInstance[fn](req, res, next);
@@ -43,14 +47,18 @@ class MiddlewareCallback {
      * @param {any} req
      * @return {Function}
      */
-     static callAfter(middleware, req) {
-        const middlewareFunction = middleware.split(':');
-        const middlewareAlias = middlewareFunction[0];
-        const fn = middlewareFunction[1];
+    static callAfter(middleware, req) {
+        let fn = 'execute';
+        let middlewareAlias = middleware;
+        if (typeof middleware == 'string') {
+            const middlewareFunction = middleware.split(':');
+            middlewareAlias = middlewareFunction[0];
+            fn = middlewareFunction[1];
+        }
+        console.log(middleware);
         const middlewareInstance = InstanceLoader.load(middlewareAlias);
 
         return middlewareInstance[fn](req);
-       
     }
 }
 

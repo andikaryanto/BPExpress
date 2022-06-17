@@ -3,7 +3,7 @@ import Middleware from '../../Core/Middleware/Middleware.js';
 /**
  *
  */
-class AfterMiddleware  extends Middleware {
+class AfterMiddleware extends Middleware {
     /**
     * @param {Request} req
     * @return {void}
@@ -13,4 +13,4 @@ class AfterMiddleware  extends Middleware {
     }
 };
 
-export default AfterMiddleware ;
+export default AfterMiddleware;

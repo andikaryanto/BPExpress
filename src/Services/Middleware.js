@@ -19,6 +19,6 @@ export default (container) => {
 
     container.register('auth-graphql.middleware', AfterMiddleware)
         .addArgument(new Reference('library.jwt.service'));
-        
+
     container.register('after.middleware', AfterMiddleware);
 };

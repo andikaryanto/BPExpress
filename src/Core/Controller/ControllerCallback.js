@@ -1,4 +1,3 @@
-import Container from '../Container/Container';
 import Error from '../Logger/Error';
 import Redirect from './Redirect';
 import ResponseData from './ResponseData';
@@ -50,14 +49,23 @@ class ControllerCallback {
 
                 let afterMiddlewareReturns = {};
                 let afterMiddlewareIndex = 0;
-                for(const afterMiddleware in afterMiddlewares){
+                for (const afterMiddleware of afterMiddlewares) {
+                    const afterReturn = MiddlewareCallback.callAfter(afterMiddleware, req);
+                    let afterReturnedData = null;
+
+                    if (afterReturn instanceof Promise) {
+                        afterReturnedData = await afterReturn;
+                    } else {
+                        afterReturnedData = afterReturn;
+                    }
                     afterMiddlewareReturns = {
-                        ...afterMiddlewareReturns, 
-                        afterMiddlewareIndex : MiddlewareCallback.callAfter(afterMiddleware, req)
+                        ...afterMiddlewareReturns,
+                        [afterMiddlewareIndex]: afterReturnedData,
                     };
+
                     afterMiddlewareIndex++;
                 };
-
+                console.log(afterMiddlewareReturns);
                 await ControllerCallback.response(req, res, returnedData, afterMiddlewareReturns);
             } catch (e) {
                 Error.create('error', e.stack);
@@ -78,10 +86,10 @@ class ControllerCallback {
       * @param {Request} req
       * @param {Response} res
       * @param {ResponseData|View|Redirect} returnedData
+      * @param {Response} afterMiddlewareReturns
       */
     static async response(req, res, returnedData, afterMiddlewareReturns = {}) {
-
-        afterMiddlewareReturns = {After: afterMiddlewareReturns}
+        afterMiddlewareReturns = {After: afterMiddlewareReturns};
 
         if (returnedData == undefined) {
             res.status(400).send('Unexpected Error, Method didnt return anything');
@@ -101,7 +109,12 @@ class ControllerCallback {
                 res.send(returnedData.view);
             }
             if (returnedData.type == 'view') {
-                res.render(returnedData.view, {...returnedData.data, ...afterMiddlewareReturns, ...Template(), ...ConfigView.hook()});
+                res.render(returnedData.view, {
+                    ...returnedData.data,
+                    ...afterMiddlewareReturns,
+                    ...Template(),
+                    ...ConfigView.hook(),
+                });
             }
             if (returnedData.type == 'sendFile') {
                 res.sendFile(config.sourcePath + '/App/Views/' + returnedData.view);

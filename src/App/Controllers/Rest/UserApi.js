@@ -25,13 +25,14 @@ class UserApi extends Controller {
         super();
         this.#_userService = userService;
     }
+
     /**
      * User Login \api\user\login
      * @method POST
      * @param {*} request
      * @return {ResponseData}
      */
-    async login({request}) {
+    async login({request, body, query}) {
         try {
             const body = request.body;
             const user = await this.#_userService.login(body.Username, body.Password);

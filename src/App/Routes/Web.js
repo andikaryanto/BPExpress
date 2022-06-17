@@ -1,15 +1,10 @@
-import Routers from '../../Core/Config/Routers.js';
-import LoginController from '../Controllers/Office/LoginController.js';
-import MgroupuserController from '../Controllers/Office/MgroupuserController.js';
-import MuserController from '../Controllers/Office/MuserController.js';
-import TestController from '../Controllers/TestController.js';
-import OfficeMiddleware from '../Middlewares/OfficeMiddleware.js';
+import Routers from '../../Core/Route/Routers.js';
 
 const Web = () => {
     const routers = new Routers();
 
     // routers.get('/', [], LoginController, 'index');
-    routers.get('/test', 'web.test.controller:index').named('named.test');
+    routers.get('/test', 'web.test.controller:index');
     routers.get('/test/store', 'web.test.controller:store');
     routers.get('/test/update', 'web.test.controller', 'update');
     routers.get('/test/remove', 'web.test.controller:destroy');
@@ -28,18 +23,25 @@ const Web = () => {
 
     routers.group('/office', (routers) => {
         routers.group('/mgroupuser', (routers) => {
-            routers.get('', 'web.office-groupuser.controller:index');
+            routers.get('', 'web.office-groupuser.controller:index')
+                .before('web-user.middleware:isUserLoggedIn');
+
             routers.get(
                 '/:Id/edit',
                 'web.office-groupuser.controller:getById',
                 {routedata: 'This data is sent from routing'},
-            );
-            routers.post('/getalldata', 'web.office-groupuser.controller:fetAllData');
+            )
+                .before('web-user.middleware:isUserLoggedIn'); ;
+
+            routers.post('/getalldata', 'web.office-groupuser.controller:fetAllData')
+                .before('web-user.middleware:isUserLoggedIn'); ;
+
             routers.group('/data', function(routers) {
-                routers.get('/list', 'web.office-groupuser.controller:list');
+                routers.get('/list', 'web.office-groupuser.controller:list')
+                    .before('web-user.middleware:isUserLoggedIn'); ;
             });
         });
-    }).before('web-user.middleware:isUserLoggedIn');
+    });
 
     //     routers.group('/muser', (routers) => {
     //         routers.get('', MuserController, 'index');
