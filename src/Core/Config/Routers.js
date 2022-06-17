@@ -53,7 +53,6 @@ class Routers {
       * @param {string} route
       * @param {[]} middleware
       * @param {Controller} controller
-      * @param {string} fn
       * @param {{}} additionalData
       */
     delete(route, middleware, controller, additionalData = {}) {
@@ -65,7 +64,6 @@ class Routers {
       * @param {string} route
       * @param {[]} middleware
       * @param {Controller} controller
-      * @param {string} fn
       * @param {{}} additionalData
       */
     put(route, middleware, controller, additionalData = {}) {
@@ -77,7 +75,6 @@ class Routers {
       * @param {string} route
       * @param {[]} middleware
       * @param {Controller} controller
-      * @param {string} fn
       * @param {{}} additionalData
       */
     post(route, middleware, controller, additionalData = {}) {
@@ -89,7 +86,6 @@ class Routers {
       * @param {string} route
       * @param {[]} middleware
       * @param {Controller} controller
-      * @param {string} fn
       * @param {{}} additionalData
       * @return {Router}
       */
@@ -117,7 +113,6 @@ class Routers {
       * @param {string} route
       * @param {[]} middleware
       * @param {Controller} controller
-      * @param {string} fn
       * @param {{}} additionalData
       * @param {string} method
       * @param {boolean} isNamed

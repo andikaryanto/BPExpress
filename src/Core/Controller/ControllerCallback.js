@@ -18,7 +18,6 @@ class ControllerCallback {
      * Will instanciate controller class wether from DI or class
      *
      * @param {string} controller
-     * @param {string} fn
      * @param {{}} additionalData
      * @return {Function}
      */

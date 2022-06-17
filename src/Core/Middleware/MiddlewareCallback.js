@@ -16,14 +16,12 @@ class MiddlewareCallback {
     static call(middleware) {
         return async (req, res, next) => {
             try {
-
                 const middlewareFunction = middleware.split(':');
                 const middlewareAlias = middlewareFunction[0];
                 const fn = middlewareFunction[1];
                 const middlewareInstance = InstanceLoader.load(middlewareAlias);
 
                 const data = middlewareInstance[fn](req, res, next);
-
             } catch (e) {
                 Error.create('error', e.stack);
 
