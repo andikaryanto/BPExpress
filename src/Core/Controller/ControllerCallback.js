@@ -22,10 +22,13 @@ class ControllerCallback {
      * @param {{}} additionalData
      * @return {Function}
      */
-    static call(controller, fn, additionalData) {
+    static call(controller, additionalData) {
         return async (req, res, next) => {
             try {
-                const controllerInstance = InstanceLoader.load(controller);
+                const controllerFunction = controller.split(':');
+                const controllerAlias = controllerFunction[0];
+                const fn = controllerFunction[1];
+                const controllerInstance = InstanceLoader.load(controllerAlias);
                 const data = controllerInstance[fn](
                     {
                         request: req,

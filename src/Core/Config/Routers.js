@@ -12,7 +12,6 @@ class Routers {
     #_namedRoute = '';
     #_namedMiddleware = '';
     #_namedController = '';
-    #_namedFunction = '';
     #_namedData = '';
     #_namedMethod = '';
 
@@ -57,8 +56,8 @@ class Routers {
       * @param {string} fn
       * @param {{}} additionalData
       */
-    delete(route, middleware, controller, fn, additionalData = {}) {
-        this.doRoute(route, middleware, controller, fn, additionalData, 'DELETE');
+    delete(route, middleware, controller, additionalData = {}) {
+        this.doRoute(route, middleware, controller, additionalData, 'DELETE');
     }
 
     /**
@@ -69,8 +68,8 @@ class Routers {
       * @param {string} fn
       * @param {{}} additionalData
       */
-    put(route, middleware, controller, fn, additionalData = {}) {
-        this.doRoute(route, middleware, controller, fn, additionalData, 'PUT');
+    put(route, middleware, controller, additionalData = {}) {
+        this.doRoute(route, middleware, controller, additionalData, 'PUT');
     }
 
     /**
@@ -81,8 +80,8 @@ class Routers {
       * @param {string} fn
       * @param {{}} additionalData
       */
-    post(route, middleware, controller, fn, additionalData = {}) {
-        this.doRoute(route, middleware, controller, fn, additionalData, 'POST');
+    post(route, middleware, controller, additionalData = {}) {
+        this.doRoute(route, middleware, controller, additionalData, 'POST');
     }
 
     /**
@@ -94,8 +93,8 @@ class Routers {
       * @param {{}} additionalData
       * @return {Router}
       */
-    get(route, middleware, controller, fn, additionalData = {}) {
-        this.doRoute(route, middleware, controller, fn, additionalData, 'GET');
+    get(route, middleware, controller, additionalData = {}) {
+        this.doRoute(route, middleware, controller, additionalData, 'GET');
         return this;
     }
 
@@ -107,7 +106,6 @@ class Routers {
         this.doRoute(name,
             this.#_namedMiddleware,
             this.#_namedController,
-            this.#_namedFunction,
             this.#_namedData,
             this.#_namedMethod,
             true,
@@ -124,7 +122,7 @@ class Routers {
       * @param {string} method
       * @param {boolean} isNamed
       */
-    doRoute(route, middleware, controller, fn, additionalData = {}, method = 'GET', isNamed = false) {
+    doRoute(route, middleware, controller, additionalData = {}, method = 'GET', isNamed = false) {
         let currentRoute = route;
 
         const middlewares = middleware.map((e, i) => {
@@ -137,13 +135,11 @@ class Routers {
                 // this.#_namedRoute = currentRoute;
                 this.#_namedMiddleware = middlewares;
                 this.#_namedController = controller;
-                this.#_namedFunction = fn;
                 this.#_namedMethod = method;
                 this.#_namedData = additionalData;
             } else {
                 this.#_namedMiddleware = middlewares;
                 this.#_namedController = controller;
-                this.#_namedFunction = fn;
                 this.#_namedMethod = method;
                 this.#_namedData = additionalData;
             }
@@ -151,7 +147,7 @@ class Routers {
             currentRoute = `/${route}`;
         }
 
-        const resReq = ControllerCallback.call(controller, fn, additionalData);
+        const resReq = ControllerCallback.call(controller, additionalData);
 
         if (method.toUpperCase() == 'GET') {
             this.#_router.get(`${currentRoute}`, [...this.#_middleware, ...middlewares], resReq);
