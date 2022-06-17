@@ -80,7 +80,7 @@ class GetAllUsers extends GraphQLField {
      * @param {any} context
      * @return {[]}
      */
-    async resolve(parent, args, request, context) {
+    async resolve(parent: any, args: any, request: any, context: any) {
         let search = {
             page: 1,
             size: 10,
