@@ -65,7 +65,7 @@ class Collection {
     async proceed() {
         let arrayCollection = [];
         arrayCollection = this.#_collection;
-    
+
         for (const item of arrayCollection) {
             await this.shape(item);
         }

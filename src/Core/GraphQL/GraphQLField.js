@@ -32,8 +32,8 @@ class GraphQLField {
      * List of middleware, executed before resolve
      * @return {[]}
      */
-    middlewares(){
-      return [];
+    middlewares() {
+        return [];
     }
 
     /**

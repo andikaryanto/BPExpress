@@ -40,7 +40,7 @@ class GraphQLLoader {
                 extensions: fieldIntance.extensions,
                 resolve: async function(parent, args, context) {
                     const middlewares = fieldIntance.middlewares();
-                    for(const middleware of middlewares){
+                    for (const middleware of middlewares) {
                         const middlewareInstance = InstanceLoader.load(middleware);
                         await middlewareInstance.execute(context.request, context.response);
                     }
