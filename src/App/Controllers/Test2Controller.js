@@ -55,7 +55,7 @@ class Test2Controller extends Controller {
      * @return {View}
      */
     async index({request, response, query}) {
-        console.log(DateFormat.databaseDate(new Date()))
+        console.log(DateFormat.databaseDate(new Date()));
         const param = {
             where: {
                 Username: 'test',

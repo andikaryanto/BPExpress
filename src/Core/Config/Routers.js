@@ -7,10 +7,10 @@ import ControllerCallback from '../Controller/ControllerCallback';
  */
 class Routers {
     #_router = null;
-    #_middleware = [];
+    #_routerChild = null;
+    #_beforeMiddlewares = [];
+    #_afterMiddlewares = [];
     #_route = null;
-    #_namedRoute = '';
-    #_namedMiddleware = '';
     #_namedController = '';
     #_namedData = '';
     #_namedMethod = '';
@@ -26,72 +26,61 @@ class Routers {
     /**
       *
       * @param {string} route
-      * @param {[]} middleware
       * @param {Function} callback
       */
-    group(route, middleware, callback) {
-        const intance = new Routers();
-
+    group(route, callback) {
+        const instance = new Routers();
 
         if (this.#_route != null) {
-            intance.#_route = `${this.#_route}${route}`;
+            instance.#_route = `${this.#_route}${route}`;
         } else {
-            intance.#_route = `${route}`;
+            instance.#_route = `${route}`;
         }
-        this.#_router.use(intance.#_router);
-
-        const midlewares = middleware.map((e, i) => {
-            return MiddlewareCallback.call(e);
-        });
-
-        intance.#_middleware = [...this.#_middleware, ...midlewares];
-        callback(intance);
+        this.#_router.use(instance.#_router);
+        this.#_routerChild = instance;
+        callback(instance);
+        return this;
     }
 
     /**
       *
       * @param {string} route
-      * @param {[]} middleware
       * @param {Controller} controller
       * @param {{}} additionalData
       */
-    delete(route, middleware, controller, additionalData = {}) {
-        this.doRoute(route, middleware, controller, additionalData, 'DELETE');
+    delete(route, controller, additionalData = {}) {
+        return this.doRoute(route, controller, additionalData, 'DELETE');
     }
 
     /**
       *
       * @param {string} route
-      * @param {[]} middleware
       * @param {Controller} controller
       * @param {{}} additionalData
       */
-    put(route, middleware, controller, additionalData = {}) {
-        this.doRoute(route, middleware, controller, additionalData, 'PUT');
+    put(route, controller, additionalData = {}) {
+        return this.doRoute(route, controller, additionalData, 'PUT');
     }
 
     /**
       *
       * @param {string} route
-      * @param {[]} middleware
       * @param {Controller} controller
       * @param {{}} additionalData
       */
-    post(route, middleware, controller, additionalData = {}) {
-        this.doRoute(route, middleware, controller, additionalData, 'POST');
+    post(route, controller, additionalData = {}) {
+        return this.doRoute(route, controller, additionalData, 'POST');
     }
 
     /**
       *
       * @param {string} route
-      * @param {[]} middleware
       * @param {Controller} controller
       * @param {{}} additionalData
       * @return {Router}
       */
-    get(route, middleware, controller, additionalData = {}) {
-        this.doRoute(route, middleware, controller, additionalData, 'GET');
-        return this;
+    get(route, controller, additionalData = {}) {
+        return this.doRoute(route, controller, additionalData, 'GET');
     }
 
     /**
@@ -100,7 +89,6 @@ class Routers {
       */
     named(name) {
         this.doRoute(name,
-            this.#_namedMiddleware,
             this.#_namedController,
             this.#_namedData,
             this.#_namedMethod,
@@ -109,31 +97,48 @@ class Routers {
     }
 
     /**
+     * 
+     * @param {string} middleware 
+     */
+    before(middleware){
+        this.#_routerChild.#_beforeMiddlewares = [...this.#_beforeMiddlewares, middleware];
+        console.log(this.#_routerChild);
+        return this;
+    }
+
+    /**
+     * 
+     * @param {string} middleware 
+     */
+    after(middleware){
+        this.#_routerChild.#_afterMiddlewares = [...this.#_afterMiddlewares, middleware];
+        return this;
+    }
+
+    /**
       *
       * @param {string} route
-      * @param {[]} middleware
       * @param {Controller} controller
       * @param {{}} additionalData
       * @param {string} method
       * @param {boolean} isNamed
       */
-    doRoute(route, middleware, controller, additionalData = {}, method = 'GET', isNamed = false) {
+    doRoute(route, controller, additionalData = {}, method = 'GET', isNamed = false) {
         let currentRoute = route;
 
-        const middlewares = middleware.map((e, i) => {
-            return MiddlewareCallback.call(e);
+        console.log('beofre', this.#_beforeMiddlewares);
+        const beforeMiddlewares = this.#_beforeMiddlewares.map((e, i) => {
+            return MiddlewareCallback.callBefore(e);
         });
 
         if (!isNamed) {
             if (this.#_route != null) {
                 currentRoute = `${this.#_route}${route}`;
                 // this.#_namedRoute = currentRoute;
-                this.#_namedMiddleware = middlewares;
                 this.#_namedController = controller;
                 this.#_namedMethod = method;
                 this.#_namedData = additionalData;
             } else {
-                this.#_namedMiddleware = middlewares;
                 this.#_namedController = controller;
                 this.#_namedMethod = method;
                 this.#_namedData = additionalData;
@@ -142,23 +147,25 @@ class Routers {
             currentRoute = `/${route}`;
         }
 
-        const resReq = ControllerCallback.call(controller, additionalData);
+        console.log('after', this.#_beforeMiddlewares);
+        const resReq = ControllerCallback.call(controller, additionalData, this.#_afterMiddlewares);
 
         if (method.toUpperCase() == 'GET') {
-            this.#_router.get(`${currentRoute}`, [...this.#_middleware, ...middlewares], resReq);
+            this.#_router.get(`${currentRoute}`, beforeMiddlewares, resReq);
         }
 
         if (method.toUpperCase() == 'POST') {
-            this.#_router.post(`${currentRoute}`, [...this.#_middleware, ...middlewares], resReq);
+            this.#_router.post(`${currentRoute}`, beforeMiddlewares, resReq);
         }
 
         if (method.toUpperCase() == 'PUT') {
-            this.#_router.put(`${currentRoute}`, [...this.#_middleware, ...middlewares], resReq);
+            this.#_router.put(`${currentRoute}`, beforeMiddlewares, resReq);
         }
 
         if (method.toUpperCase() == 'DELETE') {
-            this.#_router.delete(`${currentRoute}`, [...this.#_middleware, ...middlewares], resReq);
+            this.#_router.delete(`${currentRoute}`, beforeMiddlewares, resReq);
         }
+        return this;
     }
 
     /**

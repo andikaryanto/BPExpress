@@ -8,12 +8,12 @@ const {default: Container} = require('../Container/Container');
  */
 class MiddlewareCallback {
     /**
-     * Will instanciate middleware class class wether from DI or class
+     * Will instanciate middleware class class wether from DI
      *
      * @param {string} middleware
      * @return {Function}
      */
-    static call(middleware) {
+    static callBefore(middleware) {
         return async (req, res, next) => {
             try {
                 const middlewareFunction = middleware.split(':');
@@ -34,6 +34,23 @@ class MiddlewareCallback {
                 }
             }
         };
+    }
+
+    /**
+     * Will instanciate middleware class class wether from DI
+     *
+     * @param {string} middleware
+     * @param {any} req
+     * @return {Function}
+     */
+     static callAfter(middleware, req) {
+        const middlewareFunction = middleware.split(':');
+        const middlewareAlias = middlewareFunction[0];
+        const fn = middlewareFunction[1];
+        const middlewareInstance = InstanceLoader.load(middlewareAlias);
+
+        return middlewareInstance[fn](req);
+       
     }
 }
 

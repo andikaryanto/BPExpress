@@ -137,7 +137,7 @@ class AppOverride {
       */
     static middleware(app) {
         const eachMiddleware = function(e, i) {
-            return MiddlewareCallback.call(e);
+            return MiddlewareCallback.callBefore(e);
         };
 
         const globalMiddlewares = Kernel.middlewares.map(eachMiddleware);
