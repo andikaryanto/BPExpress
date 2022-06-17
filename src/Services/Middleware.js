@@ -1,4 +1,5 @@
 import {Reference} from 'node-dependency-injection';
+import AfterMiddleware from '../App/Middlewares/AfterMiddleware ';
 import ApiMiddleware from '../App/Middlewares/ApiMiddleware';
 import AuthGraphqlMiddleware from '../App/Middlewares/AuthGraphqlMiddleware';
 import GraphqlMiddleware from '../App/Middlewares/GraphqlMiddleware';
@@ -16,6 +17,8 @@ export default (container) => {
     container.register('web-user.middleware', WebUserMiddleware)
         .addArgument(new Reference('library.jwt.service'));
 
-    container.register('auth-graphql.middleware', AuthGraphqlMiddleware)
+    container.register('auth-graphql.middleware', AfterMiddleware)
         .addArgument(new Reference('library.jwt.service'));
+
+    container.register('after.middleware', AfterMiddleware);
 };

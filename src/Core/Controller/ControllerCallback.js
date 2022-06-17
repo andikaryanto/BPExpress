@@ -1,4 +1,3 @@
-import Container from '../Container/Container';
 import Error from '../Logger/Error';
 import Redirect from './Redirect';
 import ResponseData from './ResponseData';
@@ -9,6 +8,7 @@ import config from '../../../config';
 import Template from '../Template/Template';
 import ConfigView from '../../App/Config/View';
 import InstanceLoader from '../Express/InstanceLoader';
+import MiddlewareCallback from '../Middleware/MiddlewareCallback';
 
 /**
  * @class ControllerCallback
@@ -19,9 +19,10 @@ class ControllerCallback {
      *
      * @param {string} controller
      * @param {{}} additionalData
+     * @param {[]} afterMiddlewares
      * @return {Function}
      */
-    static call(controller, additionalData) {
+    static call(controller, additionalData, afterMiddlewares) {
         return async (req, res, next) => {
             try {
                 const controllerFunction = controller.split(':');
@@ -45,7 +46,27 @@ class ControllerCallback {
                 } else {
                     returnedData = data;
                 }
-                await ControllerCallback.response(req, res, returnedData);
+
+                let afterMiddlewareReturns = {};
+                let afterMiddlewareIndex = 0;
+                for (const afterMiddleware of afterMiddlewares) {
+                    const afterReturn = MiddlewareCallback.callAfter(afterMiddleware, req);
+                    let afterReturnedData = null;
+
+                    if (afterReturn instanceof Promise) {
+                        afterReturnedData = await afterReturn;
+                    } else {
+                        afterReturnedData = afterReturn;
+                    }
+                    afterMiddlewareReturns = {
+                        ...afterMiddlewareReturns,
+                        [afterMiddlewareIndex]: afterReturnedData,
+                    };
+
+                    afterMiddlewareIndex++;
+                };
+                console.log(afterMiddlewareReturns);
+                await ControllerCallback.response(req, res, returnedData, afterMiddlewareReturns);
             } catch (e) {
                 Error.create('error', e.stack);
 
@@ -65,8 +86,11 @@ class ControllerCallback {
       * @param {Request} req
       * @param {Response} res
       * @param {ResponseData|View|Redirect} returnedData
+      * @param {Response} afterMiddlewareReturns
       */
-    static async response(req, res, returnedData) {
+    static async response(req, res, returnedData, afterMiddlewareReturns = {}) {
+        afterMiddlewareReturns = {After: afterMiddlewareReturns};
+
         if (returnedData == undefined) {
             res.status(400).send('Unexpected Error, Method didnt return anything');
         }
@@ -77,7 +101,7 @@ class ControllerCallback {
         }
 
         if (response instanceof ResponseData) {
-            res.status(response.code).json(response.data);
+            res.status(response.code).json({...response.data, ...afterMiddlewareReturns});
         }
 
         if (returnedData instanceof View) {
@@ -85,7 +109,12 @@ class ControllerCallback {
                 res.send(returnedData.view);
             }
             if (returnedData.type == 'view') {
-                res.render(returnedData.view, {...returnedData.data, ...Template(), ...ConfigView.hook()});
+                res.render(returnedData.view, {
+                    ...returnedData.data,
+                    ...afterMiddlewareReturns,
+                    ...Template(),
+                    ...ConfigView.hook(),
+                });
             }
             if (returnedData.type == 'sendFile') {
                 res.sendFile(config.sourcePath + '/App/Views/' + returnedData.view);
