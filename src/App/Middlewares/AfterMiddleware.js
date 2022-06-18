@@ -1,14 +1,15 @@
 import Middleware from '../../Core/Middleware/Middleware.js';
 
 /**
- *
+ * @class AfterMiddleware
  */
 class AfterMiddleware extends Middleware {
     /**
-    * @param {Request} req
-    * @return {void}
+     *
+     * @param {any} param0
+     * @return {string}
      */
-    async anyData(req) {
+    async anyData() {
         return 'any data returned';
     }
 };

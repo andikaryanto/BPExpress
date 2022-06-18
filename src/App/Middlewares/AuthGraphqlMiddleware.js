@@ -25,18 +25,17 @@ class AuthGraphqlMiddleware extends Middleware {
 
     /**
      *
-    * @param {Request} req
-    * @param {Response} res
+     * @param {*} param0
      */
-    async hasToken(req, res) {
-        const token = req.headers.authorization;
+    async hasToken({request}) {
+        const token = request.headers.authorization;
         if (token == undefined || token == null) {
             throw new Error('Empty token');
         }
 
         const decoded = this.#_jwt.decode(token, {complete: true});
         if (decoded) {
-            req.user = decoded.payload;
+            request.user = decoded.payload;
         } else {
             throw new Error('Not authorized or invalid token');
         }

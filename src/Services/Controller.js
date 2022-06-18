@@ -2,7 +2,8 @@ import {Reference} from 'node-dependency-injection';
 import Email from '../App/Controllers/Email';
 import LoginController from '../App/Controllers/Office/LoginController';
 import MgroupuserController from '../App/Controllers/Office/MgroupuserController';
-import Shop from '../App/Controllers/Rest/Customer/Shop';
+import * as CustomerShop from '../App/Controllers/Rest/Customer/Shop';
+import Shop from '../App/Controllers/Rest/Shop';
 import UserApi from '../App/Controllers/Rest/UserApi';
 import Test2Controller from '../App/Controllers/Test2Controller';
 import TestController from '../App/Controllers/TestController';
@@ -12,7 +13,7 @@ import config from '../../config';
  * @param {ContainerBuilder} container
  */
 export default (container) => {
-    container.register('rest.customer.shop.controller', Shop)
+    container.register('rest.customer.shop.controller', CustomerShop)
         .addArgument(new Reference('library.request.service'))
         .addArgument(new Reference('shop.service'));
 
@@ -37,4 +38,6 @@ export default (container) => {
 
     container.register('web.email.controller', Email)
         .addArgument(new Reference('transporter.service'));
+
+    container.register('rest.shop.controller', Shop);
 };

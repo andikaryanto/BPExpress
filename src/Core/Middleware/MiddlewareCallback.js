@@ -16,6 +16,16 @@ class MiddlewareCallback {
     static callBefore(middleware) {
         return async (req, res, next) => {
             try {
+                const middlewareParams = {
+                    request: req,
+                    session: req.session,
+                    params: req.params,
+                    query: req.query,
+                    body: req.body,
+                    response: res,
+                    next,
+                };
+
                 let fn = 'execute';
                 let middlewareAlias = middleware;
                 if (typeof middleware == 'string') {
@@ -25,7 +35,7 @@ class MiddlewareCallback {
                 }
                 const middlewareInstance = InstanceLoader.load(middlewareAlias);
 
-                const data = middlewareInstance[fn](req, res, next);
+                const data = middlewareInstance[fn](middlewareParams);
             } catch (e) {
                 Error.create('error', e.stack);
 

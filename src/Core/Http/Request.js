@@ -36,9 +36,25 @@ class Request {
      */
     setRequest(req) {
         req = Request.files(req);
-        this.request = req;
-
+        Request.resource(req);
         return this;
+    }
+
+    /**
+     *
+     * @param {any} req
+     */
+    static resource(req) {
+        req.resource = null;
+        req.setResource = (resource) => {
+            req.resource = resource;
+        };
+
+        req.getResource = () => {
+            return req.resource;
+        };
+
+        this.request = req;
     }
 
     /**

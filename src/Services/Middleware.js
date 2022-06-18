@@ -1,9 +1,10 @@
 import {Reference} from 'node-dependency-injection';
-import AfterMiddleware from '../App/Middlewares/AfterMiddleware ';
+import AfterMiddleware from '../App/Middlewares/AfterMiddleware';
 import ApiMiddleware from '../App/Middlewares/ApiMiddleware';
 import AuthGraphqlMiddleware from '../App/Middlewares/AuthGraphqlMiddleware';
 import GraphqlMiddleware from '../App/Middlewares/GraphqlMiddleware';
 import OfficeMiddleware from '../App/Middlewares/OfficeMiddleware';
+import ShopHydratorMiddleware from '../App/Middlewares/ShopHydratorMiddleware';
 import WebUserMiddleware from '../App/Middlewares/WebUserMiddleware';
 
 /**
@@ -21,4 +22,7 @@ export default (container) => {
         .addArgument(new Reference('library.jwt.service'));
 
     container.register('after.middleware', AfterMiddleware);
+
+    container.register('shop-hydartor.middleware', ShopHydratorMiddleware)
+        .addArgument(new Reference('shop.repository')); ;
 };

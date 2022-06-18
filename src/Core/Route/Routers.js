@@ -41,7 +41,7 @@ class Routers {
       * @param {string} route
       * @param {string} controller
       * @param {{}} additionalData
-      * @return {Routers}
+      * @return {Method}
       */
     delete(route, controller, additionalData = {}) {
         return this.doRoute(route, controller, additionalData, 'DELETE');
@@ -52,7 +52,7 @@ class Routers {
       * @param {string} route
       * @param {Controller} controller
       * @param {{}} additionalData
-      * @return {Routers}
+      * @return {Method}
       */
     put(route, controller, additionalData = {}) {
         return this.doRoute(route, controller, additionalData, 'PUT');
@@ -63,7 +63,7 @@ class Routers {
       * @param {string} route
       * @param {Controller} controller
       * @param {{}} additionalData
-      * @return {Routers}
+      * @return {Method}
       */
     post(route, controller, additionalData = {}) {
         return this.doRoute(route, controller, additionalData, 'POST');
@@ -74,7 +74,7 @@ class Routers {
       * @param {string} route
       * @param {Controller} controller
       * @param {{}} additionalData
-      * @return {Router}
+      * @return {Method}
       */
     get(route, controller, additionalData = {}) {
         return this.doRoute(route, controller, additionalData, 'GET');
@@ -110,7 +110,7 @@ class Routers {
       */
     getRouter() {
         const routerCollector = RouteCollector.getInstance();
-        
+
         for (const method of routerCollector.getMethods()) {
             const controller = method.getController();
             const additionalData = method.getAdditionalData();

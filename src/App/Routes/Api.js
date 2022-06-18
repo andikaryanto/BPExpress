@@ -25,6 +25,9 @@ const Api = () => {
         });
     });
 
+    routers.get('/shop/:shopId', 'rest.shop.controller:get')
+        .before('shop-hydartor.middleware:hidrate');
+
     return routers;
 };
 

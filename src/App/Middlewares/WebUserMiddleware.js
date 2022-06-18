@@ -24,23 +24,21 @@ class WebUserMiddleware extends Middleware {
 
     /**
      *
-     * @param {Request} req
-     * @param {Response} res
-     * @param {NextFunction} next
+     * @param {*} param0
      */
-    async isUserLoggedIn(req, res, next) {
+    async isUserLoggedIn({request, response, params}) {
         try {
-            if (req.session.token == undefined || req.session.token == null) {
-                res.redirect('/office/login');
+            if (request.session.token == undefined || request.session.token == null) {
+                response.redirect('/office/login');
             } else {
-                const token = req.session.token;
+                const token = request.session.token;
                 const decoded = this.#_jwt.decode(token, {complete: true});
                 const muser = decoded.payload;
-                req.user = muser;
+                request.user = muser;
                 next();
             }
         } catch (e) {
-            res.redirect('/office/login');
+            response.redirect('/office/login');
         }
     }
 }

@@ -8,11 +8,9 @@ import Middleware from '../../Core/Middleware/Middleware.js';
 class OfficeMiddleware extends Middleware {
     /**
      *
-     * @param {Request} req
-     * @param {Response} res
-     * @param {NextFunction} next
+     * @param {*} param0
      */
-    async execute(req, res, next) {
+    async execute({next}) {
         next();
     }
 }

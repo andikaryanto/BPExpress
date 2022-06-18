@@ -8,13 +8,11 @@ import Middleware from '../../Core/Middleware/Middleware';
 class GraphqlMiddleware extends Middleware {
     /**
      *
-    * @param {Request} req
-    * @param {Response} res
-    * @param {NextFunction} next
+     * @param {*} param0
      */
-    async execute(req, res, next) {
+    async execute({request, next}) {
         try {
-            const token = req.headers.authorization;
+            const token = request.headers.authorization;
             // if (token == undefined || token == null) {
             //     throw new Error('Token anda Kosong');
             // }
@@ -24,7 +22,7 @@ class GraphqlMiddleware extends Middleware {
             //     throw new Error('Invalid Token');
             // }
         } catch (e) {
-            req.graphqlError = e;
+            request.graphqlError = e;
         }
 
         next();

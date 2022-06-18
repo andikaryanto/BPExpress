@@ -8,14 +8,12 @@ import Middleware from '../../Core/Middleware/Middleware.js';
  */
 class ApiMiddleware extends Middleware {
     /**
-    * @param {Request} req
-    * @param {Response} res
-    * @param {NextFunction} next
-    * @return {void}
+     *
+     * @param {*} param0
      */
-    async hasToken(req, res, next) {
+    async hasToken({request, response, next}) {
         try {
-            const token = req.headers.authorization;
+            const token = request.headers.authorization;
             if (token == undefined || token == null) {
                 throw new Error('Cannot verify empty token');
             }
@@ -25,7 +23,7 @@ class ApiMiddleware extends Middleware {
                 throw new Error('Invalid Token');
             }
 
-            req.user = decoded.payload;
+            request.user = decoded.payload;
 
             next();
         } catch (e) {
@@ -34,7 +32,7 @@ class ApiMiddleware extends Middleware {
                 Data: null,
                 Response: ResponseCode.FAILED_TO_VERIFY,
             };
-            res.status(400).json(result);
+            response.status(400).json(result);
         }
     }
 };
