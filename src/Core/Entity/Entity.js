@@ -167,20 +167,26 @@ class Entity {
             const getProp = 'get' + key;
             const propValue = entity[getProp]();
             if (value.isPrimitive) {
-                this.setRule(key, value.rule);
+                if (value.rule != undefined && value.rule != null) {
+                    this.setRule(key, value.rule);
+                }
+
                 if (value.type == 'datetime') {
                     if (propValue) {
                         object[key] = DateFormat.databaseDate(propValue);
                     } else {
-                        object[key] = propValue;
+                        object[key] = null;
                     }
                 } else {
-                    object[key] = propValue;
+                    object[key] = propValue == undefined ? null : propValue;
                 }
             } else {
                 const related = await propValue;
                 if (value.relationType == Orm.ONE_TO_MANY) {
-                    this.setRule(value.foreignKey, value.rule);
+                    if (value.rule != undefined && value.rule != null) {
+                        this.setRule(value.foreignKey, value.rule);
+                    }
+
                     if (related) {
                         const primaryKey = ORM.getPrimaryKey(related.constructor.name);
                         const getPrimary = 'get' + primaryKey;

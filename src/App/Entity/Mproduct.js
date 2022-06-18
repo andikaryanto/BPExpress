@@ -1,9 +1,9 @@
-import Entity from '../../Core/Entity/Entity';
+import BaseEntity from './BaseEntity';
 import Mproductcategory from './Mproductcategory';
 /**
  * @class Mproduct
  */
-class Mproduct extends Entity {
+class Mproduct extends BaseEntity {
     Id;
     Mproductcategory;
     Name;

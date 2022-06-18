@@ -49,9 +49,13 @@ class EntityUnit {
             try {
                 for (const value of entities) {
                     if (value.perform == EntityScope.PERFORM_ADD_UPDATE) {
-                        await entityManager.persist(value.entity, transaction);
+                        if (!(await entityManager.persist(value.entity, transaction))) {
+                            throw new Error('Failed to persist data to database');
+                        }
                     } else if (value.perform == EntityScope.PERFORM_DELETE) {
-                        await entityManager.remove(value.entity, transaction);
+                        if (!(await entityManager.remove(value.entity, transaction))) {
+                            throw new Error('Failed to delete data from database');
+                        };
                     }
                 }
                 await transaction.commit();

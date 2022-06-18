@@ -28,6 +28,10 @@ const Api = () => {
     routers.get('/shop/:shopId', 'rest.shop.controller:get')
         .before('shop-hydartor.middleware:hidrate');
 
+
+    routers.post('/product', 'rest.product.controller:store')
+        .before('api.middleware:hasToken');
+
     return routers;
 };
 

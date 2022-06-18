@@ -37,6 +37,7 @@ class MproductViewModel extends BaseViewModel {
             Id: this.entity.getId(),
             Name: this.entity.getName(),
             Description: this.entity.getDescription(),
+            Price: this.entity.getPrice(),
             Producer: this.entity.getProducer(),
             PackSize: this.entity.getPackSize(),
             Quality: this.entity.getQuality(),

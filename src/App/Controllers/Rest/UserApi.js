@@ -7,6 +7,7 @@ import M_users from '../../Models/M_users.js';
 import DbTrans from '../../../Core/Database/DbTrans.js';
 import Controller from '../../../Core/Controller/Controller.js';
 import ResponseData from '../../../Core/Controller/ResponseData.js';
+import SuccessResponse from '../../Responses/SuccessResponse.js';
 /**
  * @class UserApi
  */
@@ -34,22 +35,20 @@ class UserApi extends Controller {
      */
     async login({request, body, query}) {
         try {
-            const body = request.body;
-            const user = await this.#_userService.login(body.Username, body.Password);
+            // const body = request.body;
+            const user = await this.#_userService.login(body.username, body.password);
 
             if (CommonLib.isNull(user)) {
                 throw new ModelError('Data pengguna tidak valid');
             }
 
-            const token = jwt.sign(user.toJson(), CommonLib.getKey());
+            const token = jwt.sign(await user.toJson(), CommonLib.getKey());
 
             const result = {
-                Message: 'Login Berhasil',
                 Token: token,
-                Response: ResponseCode.OK,
             };
 
-            return ResponseData.status(200).json(result);
+            return new SuccessResponse('OK', ResponseCode.OK, result);
         } catch (e) {
             let result = {};
             if (e instanceof Error) {

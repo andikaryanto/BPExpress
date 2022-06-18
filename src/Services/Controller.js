@@ -8,6 +8,7 @@ import UserApi from '../App/Controllers/Rest/UserApi';
 import Test2Controller from '../App/Controllers/Test2Controller';
 import TestController from '../App/Controllers/TestController';
 import config from '../../config';
+import ProductController from '../App/Controllers/Rest/ProductController';
 
 /**
  * @param {ContainerBuilder} container
@@ -40,4 +41,8 @@ export default (container) => {
         .addArgument(new Reference('transporter.service'));
 
     container.register('rest.shop.controller', Shop);
+
+    container.register('rest.product.controller', ProductController)
+        .addArgument(new Reference('entity-unit'))
+        .addArgument(new Reference('product.repository'));
 };
