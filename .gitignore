@@ -2,3 +2,5 @@ node_modules
 build
 package.json.old
 Requests
+dist
+src/Write/logs
